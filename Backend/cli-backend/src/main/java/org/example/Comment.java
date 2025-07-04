@@ -68,6 +68,12 @@ public class Comment implements Likeable {
         this.body = body;
     }
 
+    public boolean isReply() {
+        return parentComment != null;
+    }
 
+    public boolean hasReplies() {
+        return !replies.isEmpty();
+    }
 
 }
