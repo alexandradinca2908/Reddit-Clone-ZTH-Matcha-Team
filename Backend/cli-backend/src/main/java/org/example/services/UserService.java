@@ -19,7 +19,7 @@ public class UserService {
         return instance;
     }
 
-    public void userRegisterCLI() {
+    public User userRegisterCLI() {
         System.out.println("Welcome to Register Page\n");
         Scanner sc = new Scanner(System.in);
 
@@ -29,7 +29,25 @@ public class UserService {
 
         users.add(new User(username, email, password));
         System.out.println("Registration successful! Welcome, " + username + "!");
-//        showAllUsers();
+        return users.getLast(); // Return the registered user for instant login
+    }
+
+    public void userLoginCLI() {
+        System.out.println("Welcome to Login Page\n");
+        System.out.println("Please enter your username:");
+        String username = sc.nextLine();
+
+        System.out.println("Please enter your password:");
+        String password = sc.nextLine();
+
+        for (User user : users) {
+            if (user.getUsername().equalsIgnoreCase(username) &&
+                passwordService.checkPassword(password, user.getPassword())) {
+                System.out.println("Login successful! Welcome back, " + username + "!");
+                return;
+            }
+        }
+        System.out.println("Invalid username or password. Please try again.");
     }
 
     private String readPassword() {
@@ -45,7 +63,7 @@ public class UserService {
             password = sc.nextLine();
         }
 
-        password = passwordService.hashPassword(password);
+        password = PasswordService.hashPassword(password);
         return password;
     }
 
