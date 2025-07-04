@@ -60,17 +60,15 @@ public class ActionState {
                 if (sanitizedInput.equalsIgnoreCase("show feed")) {
                     //  TODO SHOW FEED
                     changeState(State.ON_FEED);
+                }  else if (sanitizedInput.equalsIgnoreCase("create post")) {
+                    //  TODO CREATE POST
+                } else if (sanitizedInput.equalsIgnoreCase("add comment")) {
+                    //  TODO ADD COMMENT
                 } else if (sanitizedInput.equalsIgnoreCase("logout")) {
                     user = null;
                     changeState(State.LOGOUT);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
-                } else if (sanitizedInput.equalsIgnoreCase("show feed")) {
-                    changeState(State.SHOW_FEED);
-                } else if (sanitizedInput.equalsIgnoreCase("add comment")) {
-                    //to do
-                } else if (sanitizedInput.equalsIgnoreCase("add post")) {
-                    //to do
                 }
 
                 break;
