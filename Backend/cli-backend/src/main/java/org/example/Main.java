@@ -1,6 +1,7 @@
 package org.example;
 import org.example.services.UserService;
 import java.util.Scanner;
+import org.example.services.UserService;
 
 public class Main {
     private final static UserService userService = new UserService();
@@ -20,6 +21,7 @@ public class Main {
                 break;
             }
         }
+        userService.showAllUsers();
         System.out.println("See you soon!");
     }
 }
