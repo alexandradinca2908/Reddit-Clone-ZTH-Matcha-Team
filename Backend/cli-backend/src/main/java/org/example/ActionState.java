@@ -16,27 +16,35 @@ public class ActionState {
         QUIT
     }
 
-    State currentState = State.NOT_LOGGED_IN;
-    private final static UserService userService = new UserService();
+    private final static UserService userService = UserService.getInstance();
     private final static PostService postService = new PostService();
-    Scanner scan = new Scanner(System.in);
+    State currentState = State.NOT_LOGGED_IN;
+    User user;
 
     public boolean executeAction() {
+        Scanner scan = new Scanner(System.in);
         String option;
         String sanitizedInput;
 
         switch (currentState) {
             case NOT_LOGGED_IN:
-                System.out.println("1. Login\n2. Register\n3. Logout\n4. Quit" );
+                System.out.println("1. Login\n2. Register\n3. Show feed\n4. Quit" );
 
                 option = scan.nextLine();
                 sanitizedInput = sanitizeInput(option);
 
-                if (sanitizedInput.equalsIgnoreCase("register")) {
-                    userService.userRegisterCLI();
+                if (sanitizedInput.equalsIgnoreCase("login")) {
+                    user = userService.userLoginCLI();
+
+                    //  Display login menu only if action was successful
+                    if (user != null) {
+                        changeState(State.LOGGED_IN);
+                    }
+                } else if (sanitizedInput.equalsIgnoreCase("register")) {
+                    user = userService.userRegisterCLI();
                     changeState(State.LOGGED_IN);
-                } else if (sanitizedInput.equalsIgnoreCase("logout")) {
-                    changeState(State.LOGOUT);
+                } else if (sanitizedInput.equalsIgnoreCase("show feed")) {
+                    //  TODO SHOW FEED
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
                 }
@@ -49,7 +57,10 @@ public class ActionState {
                 option = scan.nextLine();
                 sanitizedInput = sanitizeInput(option);
 
-                if (sanitizedInput.equalsIgnoreCase("logout")) {
+                if (sanitizedInput.equalsIgnoreCase("show feed")) {
+                    //  TODO SHOW FEED
+                } else if (sanitizedInput.equalsIgnoreCase("logout")) {
+                    user = null;
                     changeState(State.LOGOUT);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
@@ -62,7 +73,6 @@ public class ActionState {
                 }
 
                 break;
-
 
             case LOGOUT:
                 System.out.println("You have been logged out.");
@@ -96,7 +106,7 @@ public class ActionState {
                         return "register";
 
                     case "3":
-                        return "logout";
+                        return "show feed";
 
                     case "4":
                         return "quit";
@@ -119,7 +129,6 @@ public class ActionState {
 
                     case "5":
                         return "quit";
-
                 }
         }
 
