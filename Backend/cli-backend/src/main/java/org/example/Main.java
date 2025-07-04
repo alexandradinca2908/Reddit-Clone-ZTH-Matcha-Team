@@ -1,18 +1,22 @@
-package main.java.org.example;
-
-import java.sql.SQLOutput;
+package org.example;
+import org.example.services.UserService;
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+    private final static UserService userService = new UserService();
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
+
         System.out.println("Welcome to Reddit!\n Please choose an option:\n");
         System.out.println("1. Login\n2. Register\n3. Logout\n4. Quit" );
-        while(true){
+
+        while (true){
             String option = scan.nextLine();
-            if (option.equals("4") || option.equalsIgnoreCase("quit")){
+            if (option.equals("2") || option.equalsIgnoreCase("register")) {
+                userService.userRegisterCLI();
+            }
+            else if (option.equals("4") || option.equalsIgnoreCase("quit")){
                 break;
             }
         }
