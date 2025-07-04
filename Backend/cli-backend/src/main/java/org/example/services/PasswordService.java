@@ -20,4 +20,9 @@ public class PasswordService {
             throw new RuntimeException("SHA-256 not available", e);
         }
     }
+
+    public boolean checkPassword(String password, String password1) {
+        String hashedPassword = hashPassword(password);
+        return hashedPassword.equals(password1);
+    }
 }
