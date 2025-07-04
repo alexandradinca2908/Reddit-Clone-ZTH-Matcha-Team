@@ -18,6 +18,10 @@ public class Post implements Likeable{
         return ownershipName;
     }
 
+    public int getCommentsCounter() {
+        return commentsCounter;
+    }
+
     @Override
     public void upvote() {
         voteCount++;

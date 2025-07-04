@@ -24,6 +24,7 @@ public class PostService {
         Post post = new Post(title, body, username);
 
         posts.add(post);
+        System.out.println("Successfully added post");
 
     }
 
@@ -36,15 +37,13 @@ public class PostService {
     }
 
     public void showFeed() {
-        for  (Post iter : posts) {
-            System.out.println(iter.getPostID());
+        for (Post iter : posts) {
+            System.out.println("\n---------------");
+            System.out.println("Post ID: " + iter.getPostID() + " | User ID: " + iter.getOwnershipID() + "\n");
             System.out.println(iter.title);
-            System.out.println();
-            System.out.println(iter.body.substring(0, Math.min(iter.body.length(), 10)).concat("..."));
-            System.out.println();
-            System.out.print("UP ".concat(String.valueOf(iter.voteCount)));
-            System.out.println("DOWN");
-            System.out.println("---");
+            String preview = iter.body.length() > 20 ? iter.body.substring(0, 10) + "..." : iter.body;
+            System.out.println(preview + "\n");
+            System.out.println("UP " + iter.voteCount + " DOWN | " + iter.getCommentsCounter() + " comments");
         }
     }
 
@@ -53,13 +52,11 @@ public class PostService {
         int postID = Integer.parseInt(sc.nextLine());
         for (Post iter : posts) {
             if  (iter.getPostID() == postID) {
+                System.out.println("---------------");
+                System.out.println("\nPost ID: " + iter.getPostID() + " | User ID: " + iter.getOwnershipID());
                 System.out.println(iter.title);
-                System.out.println();
-                System.out.println(iter.body);
-                System.out.println();
-                System.out.print("UP ".concat(String.valueOf(iter.voteCount)));
-                System.out.println("DOWN");
-                System.out.println();
+                System.out.println(iter.body + "\n");
+                System.out.println("UP " + iter.voteCount + " DOWN | " + iter.getCommentsCounter() + " comments\n");
             }
 
         }
