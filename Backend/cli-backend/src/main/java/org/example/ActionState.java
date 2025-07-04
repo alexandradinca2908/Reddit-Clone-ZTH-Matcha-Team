@@ -53,7 +53,13 @@ public class ActionState {
                 break;
 
             case LOGGED_IN:
-                System.out.println("1. Show feed\n2. Create post\n3. Add comment\n4. Logout\n5. Delete Account\n6. Quit");
+                System.out.println("""
+                        1. Show feed
+                        2. Create post
+                        3. Add comment
+                        4. Logout
+                        5. Delete Account
+                        6. Quit""");
 
                 option = scan.nextLine();
                 sanitizedInput = sanitizeInput(option);
@@ -93,8 +99,14 @@ public class ActionState {
                 break;
 
             case ON_POST:
-                System.out.println("1. Comment\n2. Upvote\n 3. Downvote\n4. Select comment\n5. Return to feed\n" +
-                        "6. Logout\n7. Quit");
+                System.out.println("""
+                        1. Comment
+                        2. Upvote
+                        3. Downvote
+                        4. Select comment
+                        5. Return to feed
+                        6. Logout
+                        7. Quit""");
 
                 option = scan.nextLine();
                 sanitizedInput = sanitizeInput(option);
@@ -120,7 +132,32 @@ public class ActionState {
                 break;
 
             case ON_COMMENT:
-                //  TODO ON_COMMENT STATE
+                System.out.println("""
+                        1. Reply
+                        2. Upvote
+                        3. Downvote
+                        4. Return to post
+                        5. Logout
+                        6. Quit""");
+
+                option = scan.nextLine();
+                sanitizedInput = sanitizeInput(option);
+
+                if (sanitizedInput.equalsIgnoreCase("reply")) {
+                    //  TODO REPLY
+                } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
+                    //  TODO UPVOTE
+                } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
+                    //  TODO DOWNVOTE
+                } else if (sanitizedInput.equalsIgnoreCase("return to post")) {
+                    postService.expandPost();
+                    changeState(State.ON_POST);
+                } else if (sanitizedInput.equalsIgnoreCase("logout")) {
+                    user = null;
+                    changeState(State.LOGOUT);
+                } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+                    changeState(State.QUIT);
+                }
                 break;
 
             case LOGOUT:
@@ -213,6 +250,29 @@ public class ActionState {
                         return "logout";
 
                     case "7":
+                        return "quit";
+                }
+
+            case ON_COMMENT:
+                //  1. Reply,2. Upvote, 3. Downvote,
+                //  4. Return to post, 5. Logout, 6. Quit
+                switch (input) {
+                    case "1":
+                        return "reply";
+
+                    case "2":
+                        return "upvote";
+
+                    case "3":
+                        return "downvote";
+
+                    case "4":
+                        return "return to post";
+
+                    case "5":
+                        return "logout";
+
+                    case "6":
                         return "quit";
                 }
         }
