@@ -24,7 +24,7 @@ public class Comment implements Likeable {
         allComments.add(this);
     }
 
-    // Constructor pentru reply-uri
+    // Constructor pentru reply-uri.
     public Comment(String body, User author, Post parentPost, Comment parentComment) {
         this.body = body;
         this.author = author;
