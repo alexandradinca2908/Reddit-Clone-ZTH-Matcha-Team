@@ -9,9 +9,9 @@ public class PostService {
     Scanner sc = new Scanner(System.in);
     private static ArrayList<Post> posts = new ArrayList<>(
             List.of(
-                    new Post("First Post", "This is the body of the first post.", "darius"),
-                    new Post("Second Post", "This is the body of the second post.", "alexandra"),
-                    new Post("Third Post", "This is the body of the third post.", "cosmin")
+                    new Post("First Post", "This is the body of the first post.", "TestUser1"),
+                    new Post("Second Post", "This is the body of the second post.", "TestUser2"),
+                    new Post("Third Post", "This is the body of the third post.", "TestUser1")
             )
     );
 
