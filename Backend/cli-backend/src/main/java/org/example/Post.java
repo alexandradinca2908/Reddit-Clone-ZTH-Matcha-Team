@@ -1,24 +1,44 @@
 package org.example;
+import java.util.ArrayList;
 
 public class Post implements Likeable{
+    private static ArrayList<Post> posts = new ArrayList<Post>();
+    static int postsCounter = 0;
     int postID;
-    static int postCounter = 0;
-    int voteCount = 0;
+    int ownershipID;
     String title;
     String body;
+    int voteCount;
 
     @Override
     public void upvote() {
-        postCounter++;
+        voteCount++;
     }
     @Override
     public void downvote() {
-        postCounter--;
+        voteCount--;
     }
     @Override
     public int getVotes() {
         return voteCount;
     }
+
+    public Post(String title, String body, int ownershipID) {
+        this.title = title;
+        this.body = body;
+        this.voteCount = 0;
+        this.ownershipID = ownershipID;
+        postID = postsCounter++;
+    }
+
+    public void addPost(Post post) {
+        posts.add(post);
+    }
+
+    public void deletePost(Post post) {
+        posts.remove(post);
+    }
+
 
 
 }
