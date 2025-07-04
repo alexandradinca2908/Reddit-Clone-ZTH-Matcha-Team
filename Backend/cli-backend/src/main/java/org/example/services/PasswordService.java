@@ -21,8 +21,8 @@ public class PasswordService {
         }
     }
 
-    public boolean checkPassword(String password, String password1) {
-        String hashedPassword = hashPassword(password);
-        return hashedPassword.equals(password1);
+    public boolean checkPassword(String inputPassword, String storedHashedPassword) {
+        String hashedInputPassword = hashPassword(inputPassword);
+        return hashedInputPassword.equals(storedHashedPassword);
     }
 }

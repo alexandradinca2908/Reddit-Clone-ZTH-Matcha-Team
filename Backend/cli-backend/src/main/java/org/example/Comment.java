@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class Comment implements Likeable {
+    private int commentID;
+    private int commentCounter = 0;
     private int voteCount = 0;
     private int replyCount = 0;
     private String body;
@@ -20,6 +22,7 @@ public class Comment implements Likeable {
         this.author = author;
         this.parentPost = parentPost;
         this.parentComment = null;
+        this.commentID = commentCounter++;
         this.replies = new ArrayList<>();
         allComments.add(this);
     }
@@ -30,6 +33,7 @@ public class Comment implements Likeable {
         this.author = author;
         this.parentPost = parentPost;
         this.parentComment = parentComment;
+        this.commentID = commentCounter++;
         this.replies = new ArrayList<>();
     }
 
@@ -79,6 +83,10 @@ public class Comment implements Likeable {
             allComments.add(reply);
             addAllReplies(reply, allComments);
         }
+    }
+
+    public int getCommentID() {
+        return commentID;
     }
 
     public String getBody() {
