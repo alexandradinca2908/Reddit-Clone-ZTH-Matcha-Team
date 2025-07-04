@@ -52,13 +52,16 @@ public class PostService {
         System.out.println("Please enter postID: ");
         int postID = Integer.parseInt(sc.nextLine());
         for (Post iter : posts) {
-            System.out.println(iter.title);
-            System.out.println();
-            System.out.println(iter.body);
-            System.out.println();
-            System.out.print("UP ".concat(String.valueOf(iter.voteCount)));
-            System.out.println("DOWN");
-            System.out.println();
+            if  (iter.getPostID() == postID) {
+                System.out.println(iter.title);
+                System.out.println();
+                System.out.println(iter.body);
+                System.out.println();
+                System.out.print("UP ".concat(String.valueOf(iter.voteCount)));
+                System.out.println("DOWN");
+                System.out.println();
+            }
+
         }
     }
 }
