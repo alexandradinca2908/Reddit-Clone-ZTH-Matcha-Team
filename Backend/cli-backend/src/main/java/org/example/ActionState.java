@@ -38,7 +38,6 @@ public class ActionState {
                     changeState(State.LOGGED_IN);
                 } else if (sanitizedInput.equalsIgnoreCase("show feed")) {
                     //  TODO SHOW FEED
-                    changeState(State.LOGOUT);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
                 }
@@ -52,7 +51,7 @@ public class ActionState {
                 sanitizedInput = sanitizeInput(option);
 
                 if (sanitizedInput.equalsIgnoreCase("show feed")) {
-                    changeState(State.LOGOUT);
+                    //  TODO SHOW FEED
                 } else if (sanitizedInput.equalsIgnoreCase("logout")) {
                     changeState(State.LOGOUT);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
