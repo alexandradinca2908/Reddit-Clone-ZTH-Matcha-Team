@@ -61,7 +61,7 @@ public class UserService {
         System.out.println("Invalid username or password. Do you want to try again? (y/n)");
         String response = sc.nextLine();
         if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yes")) {
-            userLoginCLI();
+            return userLoginCLI();
         } else {
             System.out.println("Login cancelled.");
         }

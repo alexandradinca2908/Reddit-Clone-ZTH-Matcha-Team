@@ -53,7 +53,7 @@ public class ActionState {
                 break;
 
             case LOGGED_IN:
-                System.out.println("1. Show feed\n2. Create post\n3. Logout\n4. Quit");
+                System.out.println("1. Show feed\n2. Create post\n3. Add comment\n4. Logout\n5. Delete Account\n6. Quit");
 
                 option = scan.nextLine();
                 sanitizedInput = sanitizeInput(option);
