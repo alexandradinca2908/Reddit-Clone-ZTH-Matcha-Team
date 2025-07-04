@@ -8,6 +8,7 @@ public class UserService {
     private static UserService instance;
     private static ArrayList<User> users = new ArrayList<>();
     private static final Scanner sc = new Scanner(System.in);
+    private static final PasswordService passwordService = new PasswordService();
 
     public UserService() {}
 
@@ -28,17 +29,37 @@ public class UserService {
 
         users.add(new User(username, email, password));
         System.out.println("Registration successful! Welcome, " + username + "!");
+//        showAllUsers();
     }
 
     private String readPassword() {
+        System.out.println("Password must be at least 8 characters long " +
+                "and contain a mix of upper and lower case letters, numbers, and special characters.");
         System.out.println("Please enter your password:");
         String password = sc.nextLine();
+
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$";
+        while (!password.matches(passwordRegex)
+    ) {
+            System.out.println("Invalid password format. Please try again.");
+            password = sc.nextLine();
+        }
+
+        password = passwordService.hashPassword(password);
         return password;
     }
 
     private String readEmail() {
         System.out.println("Please enter your email:");
         String email = sc.nextLine();
+
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+
+        if (!email.matches(emailRegex)) {
+            System.out.println("Invalid email format. Please try again.");
+            email = sc.nextLine();
+        }
+
         return email;
     }
 
@@ -48,8 +69,10 @@ public class UserService {
         String username = sc.nextLine();
 
         // Validate username format
-        while (!usernameValidation(username)) {
+        while (!username.matches("^[A-Za-z0-9_]{3,20}$")) {
             System.out.println("Invalid username format. Please use only letters, numbers, and underscores.");
+            System.out.println("Username must be between 3 and 20 characters long.");
+            System.out.println("Please try again:");
             username = sc.nextLine();
         }
 
@@ -71,15 +94,12 @@ public class UserService {
         }
         return false;
     }
-    
-    private boolean usernameValidation(String username) {
-        return username.matches("^[A-Za-z0-9_]{3,20}$");
-    }
 
     public void showAllUsers() {
         System.out.println("Registered Users:");
         for (User user : users) {
-            System.out.println("User ID: " + user.getUserID() + ", Username: " + user.getUsername() + ", Email: " + user.getEmail());
+            System.out.println("User ID: " + user.getUserID() + ", Username: " + user.getUsername() + ", Email: " + user.getEmail() +
+                    ", Password: " + user.getPassword());
         }
     }
 }
