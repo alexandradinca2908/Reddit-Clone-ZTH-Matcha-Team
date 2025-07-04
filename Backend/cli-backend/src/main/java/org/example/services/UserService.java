@@ -1,7 +1,7 @@
 package org.example.services;
 import java.util.ArrayList;
 import java.util.Scanner;
-import main.java.org.example.User;
+import org.example.User;
 
 public class UserService {
     private static UserService instance;
