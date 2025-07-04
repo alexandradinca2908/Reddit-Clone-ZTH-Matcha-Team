@@ -67,6 +67,9 @@ public class ActionState {
                 } else if (sanitizedInput.equalsIgnoreCase("logout")) {
                     user = null;
                     changeState(State.LOGOUT);
+                } else if (sanitizedInput.equalsIgnoreCase("delete account")) {
+                    userService.userDeleteCLI(this.user);
+                    changeState(State.NOT_LOGGED_IN);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
                 }

@@ -138,4 +138,12 @@ public class UserService {
                     ", Password: " + user.getPassword());
         }
     }
+
+    public void userDeleteCLI(User user) {
+        if (users.remove(user)) {
+            System.out.println("User " + user.getUsername() + " deleted successfully.");
+        } else {
+            System.out.println("User not found.");
+        }
+    }
 }

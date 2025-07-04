@@ -2,11 +2,18 @@ package org.example.services;
 import org.example.Post;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PostService {
     Scanner sc = new Scanner(System.in);
-    private static ArrayList<Post> posts = new ArrayList<>();
+    private static ArrayList<Post> posts = new ArrayList<>(
+            List.of(
+                    new Post("First Post", "This is the body of the first post.", 1),
+                    new Post("Second Post", "This is the body of the second post.", 2),
+                    new Post("Third Post", "This is the body of the third post.", 1)
+            )
+    );
 
     public void addPost(Post post) {
         posts.add(post);
