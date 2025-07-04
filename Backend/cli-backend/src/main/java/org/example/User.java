@@ -14,7 +14,7 @@ public class User {
         this.userID = userCounter++;
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return userName;
     }
 
@@ -30,7 +30,7 @@ public class User {
         return password;
     }
 
-    public void setUserName(String userName) {
+    public void setUsername(String userName) {
         this.userName = userName;
     }
 
