@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 public class UserService {
     private static UserService instance;
-    private static ArrayList<User> users = new ArrayList<>();
+    private static final ArrayList<User> users = new ArrayList<>();
     private static final Scanner sc = new Scanner(System.in);
     private static final PasswordService passwordService = new PasswordService();
 
-    public UserService() {}
+    private UserService() {}
 
     public static UserService getInstance() {
         if (instance == null) {
@@ -32,7 +32,7 @@ public class UserService {
         return users.getLast(); // Return the registered user for instant login
     }
 
-    public void userLoginCLI() {
+    public User userLoginCLI() {
         System.out.println("Welcome to Login Page\n");
         System.out.println("Please enter your username:");
         String username = sc.nextLine();
@@ -41,13 +41,20 @@ public class UserService {
         String password = sc.nextLine();
 
         for (User user : users) {
-            if (user.getUsername().equalsIgnoreCase(username) &&
+            if (user.getUsername().equals(username) &&
                 passwordService.checkPassword(password, user.getPassword())) {
                 System.out.println("Login successful! Welcome back, " + username + "!");
-                return;
+                return user;
             }
         }
-        System.out.println("Invalid username or password. Please try again.");
+        System.out.println("Invalid username or password. Do you want to try again? (yes/no)");
+        String response = sc.nextLine();
+        if (response.equalsIgnoreCase("yes")) {
+            userLoginCLI();
+        } else {
+            System.out.println("Login cancelled.");
+        }
+        return null;
     }
 
     private String readPassword() {
