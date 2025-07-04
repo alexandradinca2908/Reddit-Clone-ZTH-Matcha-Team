@@ -9,9 +9,8 @@ public class ActionState {
     public enum State {
         NOT_LOGGED_IN,
         LOGGED_IN,
-        SHOW_FEED,
-        REGISTER,
-        LOGIN,
+        ON_FEED,
+        ON_POST,
         LOGOUT,
         QUIT
     }
@@ -45,6 +44,7 @@ public class ActionState {
                     changeState(State.LOGGED_IN);
                 } else if (sanitizedInput.equalsIgnoreCase("show feed")) {
                     //  TODO SHOW FEED
+                    changeState(State.ON_FEED);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
                 }
@@ -59,19 +59,55 @@ public class ActionState {
 
                 if (sanitizedInput.equalsIgnoreCase("show feed")) {
                     //  TODO SHOW FEED
+                    changeState(State.ON_FEED);
+                }  else if (sanitizedInput.equalsIgnoreCase("create post")) {
+                    //  TODO CREATE POST
+                } else if (sanitizedInput.equalsIgnoreCase("add comment")) {
+                    //  TODO ADD COMMENT
                 } else if (sanitizedInput.equalsIgnoreCase("logout")) {
                     user = null;
                     changeState(State.LOGOUT);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
-                } else if (sanitizedInput.equalsIgnoreCase("show feed")) {
-                    changeState(State.SHOW_FEED);
-                } else if (sanitizedInput.equalsIgnoreCase("add comment")) {
-                    //to do
-                } else if (sanitizedInput.equalsIgnoreCase("add post")) {
-                    //to do
                 }
 
+                break;
+
+            case ON_FEED:
+                System.out.println("1. Expand post\n2. Logout\n3. Quit");
+
+                option = scan.nextLine();
+                sanitizedInput = sanitizeInput(option);
+
+                if (sanitizedInput.equalsIgnoreCase("expand post")) {
+                    //  TODO EXPAND POST
+                    changeState(State.ON_POST);
+                } else if (sanitizedInput.equalsIgnoreCase("logout")) {
+                    user = null;
+                    changeState(State.LOGOUT);
+                } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+                    changeState(State.QUIT);
+                }
+                break;
+
+            case ON_POST:
+                System.out.println("1. Comment\n2. Upvote\n 3.Downvote\n4. Logout\n5. Quit");
+
+                option = scan.nextLine();
+                sanitizedInput = sanitizeInput(option);
+
+                if (sanitizedInput.equalsIgnoreCase("comment")) {
+                    //  TODO COMMENT
+                } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
+                    //  TODO UPVOTE
+                } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
+                    //  TODO DOWNVOTE
+                } else if (sanitizedInput.equalsIgnoreCase("logout")) {
+                    user = null;
+                    changeState(State.LOGOUT);
+                } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+                    changeState(State.QUIT);
+                }
                 break;
 
             case LOGOUT:
