@@ -11,6 +11,7 @@ public class ActionState {
         LOGGED_IN,
         ON_FEED,
         ON_POST,
+        ON_COMMENT,
         LOGOUT,
         QUIT
     }
@@ -92,7 +93,8 @@ public class ActionState {
                 break;
 
             case ON_POST:
-                System.out.println("1. Comment\n2. Upvote\n 3.Downvote\n4. Logout\n5. Quit");
+                System.out.println("1. Comment\n2. Upvote\n 3. Downvote\n4. Select comment\n5. Return to feed\n" +
+                        "6. Logout\n7. Quit");
 
                 option = scan.nextLine();
                 sanitizedInput = sanitizeInput(option);
@@ -103,12 +105,22 @@ public class ActionState {
                     //  TODO UPVOTE
                 } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
                     //  TODO DOWNVOTE
+                } else if (sanitizedInput.equalsIgnoreCase("select comment")) {
+                    //  TODO SELECT COMMENT
+                    changeState(State.ON_COMMENT);
+                } else if (sanitizedInput.equalsIgnoreCase("return to feed")) {
+                    postService.showFeed();
+                    changeState(State.ON_FEED);
                 } else if (sanitizedInput.equalsIgnoreCase("logout")) {
                     user = null;
                     changeState(State.LOGOUT);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
                 }
+                break;
+
+            case ON_COMMENT:
+                //  TODO ON_COMMENT STATE
                 break;
 
             case LOGOUT:
@@ -179,7 +191,8 @@ public class ActionState {
                 }
 
             case ON_POST:
-                //  1. Comment, 2. Upvote, 3. Downvote, 4. Logout, 5. Quit
+                //  1. Comment, 2. Upvote, 3. Downvote, 4. Select comment
+                //  5. Return to feed, 6. Logout, 7. Quit
                 switch (input) {
                     case "1":
                         return "comment";
@@ -191,9 +204,15 @@ public class ActionState {
                         return "downvote";
 
                     case "4":
-                        return "logout";
+                        return "select comment";
 
                     case "5":
+                        return "return to feed";
+
+                    case "6":
+                        return "logout";
+
+                    case "7":
                         return "quit";
                 }
         }
