@@ -1,4 +1,4 @@
-package main.java.org.example;
+package org.example;
 
 public class User {
     int userID;
