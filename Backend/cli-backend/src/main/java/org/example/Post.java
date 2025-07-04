@@ -35,10 +35,12 @@ public class Post implements Likeable{
         posts.add(post);
     }
 
-    public void deletePost(Post post) {
-        posts.remove(post);
+    public void deletePost(int postID) {
+        for (Post iter : posts) {
+            if (iter.postID == postID) {
+                posts.remove(iter);
+            }
+        }
     }
-
-
-
 }
+
