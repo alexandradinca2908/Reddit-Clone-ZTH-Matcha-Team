@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.services.PostService;
 import org.example.services.UserService;
 
 import java.util.Scanner;
@@ -17,6 +18,7 @@ public class ActionState {
 
     State currentState = State.NOT_LOGGED_IN;
     private final static UserService userService = new UserService();
+    private final static PostService postService = new PostService();
     Scanner scan = new Scanner(System.in);
 
     public boolean executeAction() {
@@ -42,7 +44,7 @@ public class ActionState {
                 break;
 
             case LOGGED_IN:
-                System.out.println("1. Show feed\n2. Logout\n3. Quit");
+                System.out.println("1. Show feed\n2. Create post\n3. Add comment\n4. Logout\n5. Quit");
 
                 option = scan.nextLine();
                 sanitizedInput = sanitizeInput(option);
@@ -51,9 +53,16 @@ public class ActionState {
                     changeState(State.LOGOUT);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
+                } else if (sanitizedInput.equalsIgnoreCase("show feed")) {
+                    changeState(State.SHOW_FEED);
+                } else if (sanitizedInput.equalsIgnoreCase("add comment")) {
+                    //to do
+                } else if (sanitizedInput.equalsIgnoreCase("add post")) {
+                    //to do
                 }
 
                 break;
+
 
             case LOGOUT:
                 System.out.println("You have been logged out.");
@@ -94,16 +103,23 @@ public class ActionState {
                 }
 
             case LOGGED_IN:
-                //  1. Show feed, 2. Logout, 3. Quit
+                //  1. Show feed, 2. Create post, 3. Add comment, 4. Logout, 5. Quit
                 switch (input) {
                     case "1":
                         return "show feed";
 
                     case "2":
-                        return "logout";
+                        return "create post";
 
                     case "3":
+                        return "add comment";
+
+                    case "4":
+                        return "logout";
+
+                    case "5":
                         return "quit";
+
                 }
         }
 
