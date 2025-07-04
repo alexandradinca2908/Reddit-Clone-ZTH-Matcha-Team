@@ -20,43 +20,94 @@ public class ActionState {
     Scanner scan = new Scanner(System.in);
 
     public boolean executeAction() {
+        String option;
+        String sanitizedInput;
+
         switch (currentState) {
             case NOT_LOGGED_IN:
                 System.out.println("1. Login\n2. Register\n3. Logout\n4. Quit" );
 
-                String option = scan.nextLine();
+                option = scan.nextLine();
+                sanitizedInput = sanitizeInput(option);
 
-                if (option.equals("2") || option.equalsIgnoreCase("register")) {
+                if (sanitizedInput.equalsIgnoreCase("register")) {
                     userService.userRegisterCLI();
-                } else if (option.equals("4") || option.equalsIgnoreCase("quit")){
-                    return false;
+                    changeState(State.LOGGED_IN);
+                } else if (sanitizedInput.equalsIgnoreCase("logout")) {
+                    changeState(State.LOGOUT);
+                } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+                    changeState(State.QUIT);
                 }
 
                 break;
 
             case LOGGED_IN:
                 System.out.println("1. Show feed\n2. Logout\n3. Quit");
-                break;
 
-            case REGISTER:
-                System.out.println("Register User");
-                break;
+                option = scan.nextLine();
+                sanitizedInput = sanitizeInput(option);
 
-            case LOGIN:
-                System.out.println("Login");
+                if (sanitizedInput.equalsIgnoreCase("logout")) {
+                    changeState(State.LOGOUT);
+                } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+                    changeState(State.QUIT);
+                }
+
                 break;
 
             case LOGOUT:
                 System.out.println("You have been logged out.");
+                changeState(State.NOT_LOGGED_IN);
+                break;
 
             case QUIT:
                 System.out.println("See you soon!");
+                return false;
 
             default:
                 break;
         }
 
         return true;
+    }
+
+    private void changeState(State state) {
+        currentState = state;
+    }
+
+    private String sanitizeInput(String input) {
+        switch (currentState) {
+            case NOT_LOGGED_IN:
+                // 1. Login, 2. Register, 3. Logout, 4. Quit
+                switch (input) {
+                    case "1":
+                        return "login";
+
+                    case "2":
+                        return "register";
+
+                    case "3":
+                        return "logout";
+
+                    case "4":
+                        return "quit";
+                }
+
+            case LOGGED_IN:
+                //  1. Show feed, 2. Logout, 3. Quit
+                switch (input) {
+                    case "1":
+                        return "show feed";
+
+                    case "2":
+                        return "logout";
+
+                    case "3":
+                        return "quit";
+                }
+        }
+
+        return input;
     }
 
 }
