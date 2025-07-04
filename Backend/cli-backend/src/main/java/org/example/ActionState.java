@@ -15,11 +15,13 @@ public class ActionState {
         QUIT
     }
 
+    private final static UserService userService = UserService.getInstance();
+
     State currentState = State.NOT_LOGGED_IN;
-    private final static UserService userService = new UserService();
-    Scanner scan = new Scanner(System.in);
+    User user;
 
     public boolean executeAction() {
+        Scanner scan = new Scanner(System.in);
         String option;
         String sanitizedInput;
 
@@ -31,10 +33,10 @@ public class ActionState {
                 sanitizedInput = sanitizeInput(option);
 
                 if (sanitizedInput.equalsIgnoreCase("login")) {
-                    //  TODO LOGIN
+                    user = userService.userLoginCLI();
                     changeState(State.LOGGED_IN);
                 } else if (sanitizedInput.equalsIgnoreCase("register")) {
-                    userService.userRegisterCLI();
+                    user = userService.userRegisterCLI();
                     changeState(State.LOGGED_IN);
                 } else if (sanitizedInput.equalsIgnoreCase("show feed")) {
                     //  TODO SHOW FEED
@@ -53,6 +55,7 @@ public class ActionState {
                 if (sanitizedInput.equalsIgnoreCase("show feed")) {
                     //  TODO SHOW FEED
                 } else if (sanitizedInput.equalsIgnoreCase("logout")) {
+                    user = null;
                     changeState(State.LOGOUT);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
