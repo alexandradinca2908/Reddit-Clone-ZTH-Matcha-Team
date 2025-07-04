@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Comment implements Likeable {
     private int voteCount = 0;
@@ -10,7 +11,9 @@ public class Comment implements Likeable {
     private List<Comment> replies;
     private User author;
     private Post parentPost;
+    private ArrayList<Comment> comments;
     private Comment parentComment;
+    private static List<Comment> allComments = new ArrayList<>();
 
     public Comment(String body, User author, Post parentPost) {
         this.body = body;
@@ -18,6 +21,7 @@ public class Comment implements Likeable {
         this.parentPost = parentPost;
         this.parentComment = null;
         this.replies = new ArrayList<>();
+        allComments.add(this);
     }
 
     // Constructor pentru reply-uri
@@ -52,8 +56,29 @@ public class Comment implements Likeable {
         return new ArrayList<>(replies);
     }
 
-    public String getComment() {
-        return body;
+    public static List<Comment> getCommentsForPost(Post post) {
+        return allComments.stream()
+                .filter(comment -> comment.parentPost.equals(post))
+                .collect(Collectors.toList());
+    }
+
+    public static List<Comment> getAllCommentsForPost(Post post) {
+        List<Comment> allPostComments = new ArrayList<>();
+        List<Comment> topLevelComments = getCommentsForPost(post);
+
+        for (Comment comment : topLevelComments) {
+            allPostComments.add(comment);
+            addAllReplies(comment, allPostComments);
+        }
+
+        return allPostComments;
+    }
+
+    private static void addAllReplies(Comment comment, List<Comment> allComments) {
+        for (Comment reply : comment.replies) {
+            allComments.add(reply);
+            addAllReplies(reply, allComments);
+        }
     }
 
     public String getBody() {
