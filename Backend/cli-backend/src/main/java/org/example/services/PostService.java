@@ -40,7 +40,7 @@ public class PostService {
             System.out.println(iter.getPostID());
             System.out.println(iter.title);
             System.out.println();
-            System.out.println(iter.body.substring(0, 40).concat("..."));
+            System.out.println(iter.body.substring(0, Math.min(iter.body.length(), 10)).concat("..."));
             System.out.println();
             System.out.print("UP ".concat(String.valueOf(iter.voteCount)));
             System.out.println("DOWN");
@@ -48,7 +48,9 @@ public class PostService {
         }
     }
 
-    public void expandPost(int postID) {
+    public void expandPost() {
+        System.out.println("Please enter postID: ");
+        int postID = Integer.parseInt(sc.nextLine());
         for (Post iter : posts) {
             System.out.println(iter.title);
             System.out.println();

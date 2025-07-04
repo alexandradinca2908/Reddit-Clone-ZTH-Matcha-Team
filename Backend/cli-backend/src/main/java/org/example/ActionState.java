@@ -81,7 +81,7 @@ public class ActionState {
                 sanitizedInput = sanitizeInput(option);
 
                 if (sanitizedInput.equalsIgnoreCase("expand post")) {
-                    //  TODO EXPAND POST
+                    postService.expandPost();
                     changeState(State.ON_POST);
                 } else if (sanitizedInput.equalsIgnoreCase("logout")) {
                     user = null;
