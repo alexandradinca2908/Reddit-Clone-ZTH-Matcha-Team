@@ -5,13 +5,17 @@ public class Post implements Likeable{
     static int postsCounter = 0;
     int commentsCounter;
     int postID;
-    int ownershipID;
+    int ownershipName;
     public String title;
     public String body;
     public int voteCount;
 
     public int getPostID() {
         return postID;
+    }
+
+    public int getOwnershipID() {
+        return ownershipName;
     }
 
     @Override
@@ -27,12 +31,12 @@ public class Post implements Likeable{
         return voteCount;
     }
 
-    public Post(String title, String body, int ownershipID) {
+    public Post(String title, String body, String username) {
         this.title = title;
         this.body = body;
         this.voteCount = 0;
         this.commentsCounter = 0;
-        this.ownershipID = ownershipID;
+        this.ownershipName = ownershipName;
         postID = postsCounter++;
     }
 

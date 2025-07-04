@@ -43,7 +43,7 @@ public class ActionState {
                     user = userService.userRegisterCLI();
                     changeState(State.LOGGED_IN);
                 } else if (sanitizedInput.equalsIgnoreCase("show feed")) {
-                    //  TODO SHOW FEED
+                    postService.showFeed();
                     changeState(State.ON_FEED);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
@@ -52,18 +52,16 @@ public class ActionState {
                 break;
 
             case LOGGED_IN:
-                System.out.println("1. Show feed\n2. Create post\n3. Add comment\n4. Logout\n5. Quit");
+                System.out.println("1. Show feed\n2. Create post\n3. Logout\n4. Quit");
 
                 option = scan.nextLine();
                 sanitizedInput = sanitizeInput(option);
 
                 if (sanitizedInput.equalsIgnoreCase("show feed")) {
-                    //  TODO SHOW FEED
+                    postService.showFeed();
                     changeState(State.ON_FEED);
                 }  else if (sanitizedInput.equalsIgnoreCase("create post")) {
-                    //  TODO CREATE POST
-                } else if (sanitizedInput.equalsIgnoreCase("add comment")) {
-                    //  TODO ADD COMMENT
+                    postService.addPost(user.getUsername());
                 } else if (sanitizedInput.equalsIgnoreCase("logout")) {
                     user = null;
                     changeState(State.LOGOUT);
@@ -158,12 +156,9 @@ public class ActionState {
                         return "create post";
 
                     case "3":
-                        return "add comment";
-
-                    case "4":
                         return "logout";
 
-                    case "5":
+                    case "4":
                         return "quit";
                 }
         }

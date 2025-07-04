@@ -8,8 +8,16 @@ public class PostService {
     Scanner sc = new Scanner(System.in);
     private static ArrayList<Post> posts = new ArrayList<>();
 
-    public void addPost(Post post) {
+    public void addPost(String username) {
+        System.out.println("Please enter title: ");
+        String title = sc.nextLine();
+        System.out.println("Please enter description: ");
+        String body = sc.nextLine();
+
+        Post post = new Post(title, body, username);
+
         posts.add(post);
+
     }
 
     public void deletePost(int postID) {
@@ -22,6 +30,7 @@ public class PostService {
 
     public void showFeed() {
         for  (Post iter : posts) {
+            System.out.println(iter.getPostID());
             System.out.println(iter.title);
             System.out.println();
             System.out.println(iter.body.substring(0, 40).concat("..."));
