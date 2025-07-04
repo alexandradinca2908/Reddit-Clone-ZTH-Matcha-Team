@@ -15,6 +15,17 @@ public class UserService {
     public static UserService getInstance() {
         if (instance == null) {
             instance = new UserService();
+
+            // Pre-populate with a default user for testing purposes
+            String defaultUsername = "TestUser1";
+            String defaultEmail = "test1@user.com";
+            String defaultPassword = PasswordService.hashPassword("TestUser1!");
+            users.add(new User(defaultUsername, defaultEmail, defaultPassword));
+
+            defaultUsername = "TestUser2";
+            defaultEmail = "test2@user.com";
+            defaultPassword = PasswordService.hashPassword("TestUser2!");
+            users.add(new User(defaultUsername, defaultEmail, defaultPassword));
         }
         return instance;
     }
@@ -47,9 +58,9 @@ public class UserService {
                 return user;
             }
         }
-        System.out.println("Invalid username or password. Do you want to try again? (yes/no)");
+        System.out.println("Invalid username or password. Do you want to try again? (y/n)");
         String response = sc.nextLine();
-        if (response.equalsIgnoreCase("yes")) {
+        if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yes")) {
             userLoginCLI();
         } else {
             System.out.println("Login cancelled.");
@@ -125,6 +136,14 @@ public class UserService {
         for (User user : users) {
             System.out.println("User ID: " + user.getUserID() + ", Username: " + user.getUsername() + ", Email: " + user.getEmail() +
                     ", Password: " + user.getPassword());
+        }
+    }
+
+    public void userDeleteCLI(User user) {
+        if (users.remove(user)) {
+            System.out.println("User " + user.getUsername() + " deleted successfully.");
+        } else {
+            System.out.println("User not found.");
         }
     }
 }

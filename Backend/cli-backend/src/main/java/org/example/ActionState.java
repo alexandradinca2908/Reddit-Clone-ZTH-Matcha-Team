@@ -65,6 +65,9 @@ public class ActionState {
                 } else if (sanitizedInput.equalsIgnoreCase("logout")) {
                     user = null;
                     changeState(State.LOGOUT);
+                } else if (sanitizedInput.equalsIgnoreCase("delete account")) {
+                    userService.userDeleteCLI(this.user);
+                    changeState(State.NOT_LOGGED_IN);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
                 }
@@ -159,6 +162,38 @@ public class ActionState {
                         return "logout";
 
                     case "4":
+                        return "quit";
+                }
+
+            case ON_FEED:
+                //  1. Expand post, 2. Logout, 3. Quit
+                switch (input) {
+                    case "1":
+                        return "expand post";
+
+                    case "2":
+                        return "logout";
+
+                    case "3":
+                        return "quit";
+                }
+
+            case ON_POST:
+                //  1. Comment, 2. Upvote, 3. Downvote, 4. Logout, 5. Quit
+                switch (input) {
+                    case "1":
+                        return "comment";
+
+                    case "2":
+                        return "upvote";
+
+                    case "3":
+                        return "downvote";
+
+                    case "4":
+                        return "logout";
+
+                    case "5":
                         return "quit";
                 }
         }
