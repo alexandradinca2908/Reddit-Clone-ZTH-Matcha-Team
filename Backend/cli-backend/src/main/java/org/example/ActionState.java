@@ -34,7 +34,11 @@ public class ActionState {
 
                 if (sanitizedInput.equalsIgnoreCase("login")) {
                     user = userService.userLoginCLI();
-                    changeState(State.LOGGED_IN);
+
+                    //  Display login menu only if action was successful
+                    if (user != null) {
+                        changeState(State.LOGGED_IN);
+                    }
                 } else if (sanitizedInput.equalsIgnoreCase("register")) {
                     user = userService.userRegisterCLI();
                     changeState(State.LOGGED_IN);
