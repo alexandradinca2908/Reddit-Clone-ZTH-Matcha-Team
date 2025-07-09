@@ -1,8 +1,14 @@
 package org.example.services;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.example.loggerobjects.LogLevel;
+import org.example.loggerobjects.LogManager;
+import org.example.loggerobjects.Logger;
+
 public class PasswordService {
+    private static LogManager logManager = LogManager.getInstance();
     public static String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -14,9 +20,11 @@ public class PasswordService {
                 hexString.append(String.format("%02x", b));
             }
 
+            // TODO: Uncomment the line below to enable logging
+//            logManager.getLogger("FileLogger1").log(LogLevel.VERBOSE, "Password hashed successfully.");
             return hexString.toString();
 
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException | IOException e) {
             throw new RuntimeException("SHA-256 not available", e);
         }
     }

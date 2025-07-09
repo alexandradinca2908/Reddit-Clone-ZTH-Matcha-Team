@@ -1,43 +1,51 @@
 package org.example.loggerobjects;
 
-import org.example.textprocessors.AnsiColors;
-
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public abstract class Logger {
-    String name;
-    DateTimeFormatter dateTimeFormatter;
+    private String name;
+    private DateTimeFormatter dateTimeFormatter;
 
     public Logger(String name, String dateTimeFormat) {
         this.name = name;
         this.dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);
     }
 
-    String formatDate() {
-        return LocalDate.now().format(dateTimeFormatter);
+    public String getName() {
+        return name;
     }
 
-    void log(LogLevel level, String message) throws IOException {
+    String formatDate() {
+        return LocalDateTime.now().format(dateTimeFormatter);
+    }
+
+    public void log(LogLevel level, String message) throws IOException {
         switch (level) {
             case VERBOSE:
                 verbose(message);
+                break;
 
             case DEBUG:
                 debug(message);
+                break;
 
             case INFO:
                 info(message);
+                break;
 
             case WARN:
                 warn(message);
+                break;
 
             case ERROR:
                 error(message);
+                break;
 
             case FATAL:
                 fatal(message);
+                break;
         }
     }
 

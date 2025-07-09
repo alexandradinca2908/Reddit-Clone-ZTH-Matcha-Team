@@ -37,6 +37,7 @@ public class Post extends AnsiColors implements Likeable{
 
     public void addComment(User parentUser, String commentText) {
         Comment comment = new Comment(this, parentUser, commentText);
+        this.commentList.add(comment);
         commentsCounter++;
     }
 
@@ -65,17 +66,37 @@ public class Post extends AnsiColors implements Likeable{
     }
 
     public void printComments(int indentLevel) {
-        for  (Comment comment : commentList) {
-            System.out.println(AnsiColors.toGreen("CID: " + comment.getCommentID() + " | USER: " + comment.getParentUser()));
-            System.out.print(comment.getCommentText());
-            System.out.print(AnsiColors.toRed("UP ") + comment.getVoteCount() + AnsiColors.toBlue(" DOWN "));
-            System.out.println( "| " + comment.replyList.toArray().length + " replies");
-            System.out.println(LINE_SEPARATOR);
+        String indent = "    ".repeat(indentLevel); // 4 spaces per level
+
+        for (Comment comment : commentList) {
+            // Print the main comment
+            System.out.println(indent + AnsiColors.toOrange("CID: " + comment.getCommentID() + " | USER: " + comment.getParentUser().getUsername()));
+            System.out.println(indent + comment.getCommentText());
+            System.out.print(indent + AnsiColors.toRed("UP ") + comment.getVoteCount() + AnsiColors.toBlue(" DOWN "));
+            System.out.println("| " + comment.replyList.size() + " replies");
+            System.out.println(indent + LINE_SEPARATOR);
+
+            // Now print replies with increased indent
+            for (CommentReply reply : comment.replyList) {
+                printReply(reply, indentLevel + 1);
+            }
         }
     }
 
+    public void printReply(CommentReply reply, int indentLevel) {
+        String indent = "    ".repeat(indentLevel);
 
+        System.out.println(indent + AnsiColors.toYellow("RID " + reply.getCommentReplyID() + " | USER: " + reply.getParentUser().getUsername()));
+        System.out.println(indent + reply.getCommentReplyText());
+        System.out.print(indent + AnsiColors.toRed("UP ") + reply.getVotes() + AnsiColors.toBlue(" DOWN "));
+        System.out.println("| " + reply.commentReplies.size() + " replies");
+        System.out.println(indent + LINE_SEPARATOR);
 
+        // daca o sa avem nested replies
+        for (CommentReply nested : reply.getCommentReplies()) {
+            printReply(nested, indentLevel + 1);
+        }
+    }
 
 }
 

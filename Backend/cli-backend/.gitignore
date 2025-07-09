@@ -40,3 +40,6 @@ build/
 ### Built Releases ###
 matcha.tar
 *.tar.gz
+
+### Logs ###
+*.log
