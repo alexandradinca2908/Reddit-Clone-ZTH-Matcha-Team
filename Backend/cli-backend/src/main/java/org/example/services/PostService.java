@@ -86,6 +86,7 @@ public class PostService extends AnsiColors {
                 break;
             }
         }
+
         if (!found) {
             throw new IllegalArgumentException(AnsiColors.toRed("Post with ID " + postID + " not found."));
         }

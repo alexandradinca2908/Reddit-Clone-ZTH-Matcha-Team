@@ -39,10 +39,6 @@ public class ActionState {
     }
 
     boolean executeAction() {
-        Scanner scan = new Scanner(System.in);
-        String option;
-        String sanitizedInput;
-
         switch (currentState) {
             case MAIN_MENU:
                 if (!isLoggedIn) {
@@ -156,8 +152,13 @@ public class ActionState {
         String sanitizedInput = sanitizeInput(option);
 
         if (sanitizedInput.equalsIgnoreCase("expand post")) {
-            postService.expandPost();
-            changeState(State.ON_POST);
+            try {
+                postService.expandPost();
+                changeState(State.ON_POST);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
         } else if (sanitizedInput.equalsIgnoreCase("return to menu")) {
             changeState(State.MAIN_MENU);
         } else if (sanitizedInput.equalsIgnoreCase("quit")) {
