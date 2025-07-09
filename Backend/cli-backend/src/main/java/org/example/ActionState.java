@@ -43,6 +43,11 @@ public class ActionState {
                         }
                     } else if (sanitizedInput.equalsIgnoreCase("register")) {
                         user = userService.userRegisterCLI();
+
+                        //  Display login menu only if action was successful
+                        if (user != null) {
+                            isLoggedIn = true;
+                        }
                     } else if (sanitizedInput.equalsIgnoreCase("show feed")) {
                         postService.showFeed();
                         changeState(State.ON_FEED);
@@ -53,10 +58,9 @@ public class ActionState {
                     System.out.println("""
                             1. Show feed
                             2. Create post
-                            3. Add comment
-                            4. Logout
-                            5. Delete Account
-                            6. Quit""");
+                            3. Logout
+                            4. Delete Account
+                            5. Quit""");
 
                     option = scan.nextLine();
                     sanitizedInput = sanitizeInput(option);
@@ -67,7 +71,6 @@ public class ActionState {
                     }  else if (sanitizedInput.equalsIgnoreCase("create post")) {
                         postService.addPost(user.getUsername());
                     } else if (sanitizedInput.equalsIgnoreCase("logout")) {
-                        user = null;
                         changeState(State.LOGOUT);
                     } else if (sanitizedInput.equalsIgnoreCase("delete account")) {
                         userService.userDeleteCLI(this.user);
@@ -102,7 +105,6 @@ public class ActionState {
                         postService.expandPost();
                         changeState(State.ON_POST);
                     } else if (sanitizedInput.equalsIgnoreCase("logout")) {
-                        user = null;
                         changeState(State.LOGOUT);
                     } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                         changeState(State.QUIT);
@@ -112,7 +114,22 @@ public class ActionState {
                 break;
 
             case ON_POST:
-                System.out.println("""
+                if (!isLoggedIn) {
+                    System.out.println("""
+                        1. Return to feed
+                        2. Quit""");
+
+                    option = scan.nextLine();
+                    sanitizedInput = sanitizeInput(option);
+
+                    if (sanitizedInput.equalsIgnoreCase("return to feed")) {
+                        postService.showFeed();
+                        changeState(State.ON_FEED);
+                    } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+                        changeState(State.QUIT);
+                    }
+                } else {
+                    System.out.println("""
                         1. Comment
                         2. Upvote
                         3. Downvote
@@ -121,27 +138,28 @@ public class ActionState {
                         6. Logout
                         7. Quit""");
 
-                option = scan.nextLine();
-                sanitizedInput = sanitizeInput(option);
+                    option = scan.nextLine();
+                    sanitizedInput = sanitizeInput(option);
 
-                if (sanitizedInput.equalsIgnoreCase("comment")) {
-                    //  TODO COMMENT
-                } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
-                    //  TODO UPVOTE
-                } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
-                    //  TODO DOWNVOTE
-                } else if (sanitizedInput.equalsIgnoreCase("select comment")) {
-                    //  TODO SELECT COMMENT
-                    changeState(State.ON_COMMENT);
-                } else if (sanitizedInput.equalsIgnoreCase("return to feed")) {
-                    postService.showFeed();
-                    changeState(State.ON_FEED);
-                } else if (sanitizedInput.equalsIgnoreCase("logout")) {
-                    user = null;
-                    changeState(State.LOGOUT);
-                } else if (sanitizedInput.equalsIgnoreCase("quit")) {
-                    changeState(State.QUIT);
+                    if (sanitizedInput.equalsIgnoreCase("comment")) {
+                        //  TODO COMMENT
+                    } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
+                        //  TODO UPVOTE
+                    } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
+                        //  TODO DOWNVOTE
+                    } else if (sanitizedInput.equalsIgnoreCase("select comment")) {
+                        //  TODO SELECT COMMENT
+                        changeState(State.ON_COMMENT);
+                    } else if (sanitizedInput.equalsIgnoreCase("return to feed")) {
+                        postService.showFeed();
+                        changeState(State.ON_FEED);
+                    } else if (sanitizedInput.equalsIgnoreCase("logout")) {
+                        changeState(State.LOGOUT);
+                    } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+                        changeState(State.QUIT);
+                    }
                 }
+
                 break;
 
             case ON_COMMENT:
@@ -166,7 +184,6 @@ public class ActionState {
                     postService.expandPost();
                     changeState(State.ON_POST);
                 } else if (sanitizedInput.equalsIgnoreCase("logout")) {
-                    user = null;
                     changeState(State.LOGOUT);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
@@ -174,8 +191,12 @@ public class ActionState {
                 break;
 
             case LOGOUT:
-                System.out.println("You have been logged out.");
                 isLoggedIn  = false;
+                user = null;
+                System.out.println("You have been logged out.");
+
+                changeState(State.MAIN_MENU);
+                
                 break;
 
             case QUIT:
@@ -207,9 +228,12 @@ public class ActionState {
 
                         case "3":
                             return "show feed";
+
+                        case "4":
+                            return "quit";
                     }
                 } else {
-                    //  1. Show feed, 2. Create post, 3. Add comment, 4. Logout, 5. Quit
+                    //  1. Show feed, 2. Create post, 3. Logout, 4. Delete Account, 5. Quit
                     switch (input) {
                         case "1":
                             return "show feed";
@@ -219,11 +243,13 @@ public class ActionState {
 
                         case "3":
                             return "logout";
-                    }
-                }
 
-                if (input.equals("4")) {
-                    return "quit";
+                        case "4":
+                            return "delete account";
+
+                        case "5":
+                            return "quit";
+                    }
                 }
 
             case ON_FEED:
@@ -252,29 +278,40 @@ public class ActionState {
                 }
 
             case ON_POST:
-                //  1. Comment, 2. Upvote, 3. Downvote, 4. Select comment
-                //  5. Return to feed, 6. Logout, 7. Quit
-                switch (input) {
-                    case "1":
-                        return "comment";
+                if (!isLoggedIn) {
+                    //  1. Return to feed, 2. Quit
+                    switch (input) {
+                        case "1":
+                            return "return to feed";
 
-                    case "2":
-                        return "upvote";
+                        case "2":
+                            return "quit";
+                    }
+                } else {
+                    //  1. Comment, 2. Upvote, 3. Downvote, 4. Select comment
+                    //  5. Return to feed, 6. Logout, 7. Quit
+                    switch (input) {
+                        case "1":
+                            return "comment";
 
-                    case "3":
-                        return "downvote";
+                        case "2":
+                            return "upvote";
 
-                    case "4":
-                        return "select comment";
+                        case "3":
+                            return "downvote";
 
-                    case "5":
-                        return "return to feed";
+                        case "4":
+                            return "select comment";
 
-                    case "6":
-                        return "logout";
+                        case "5":
+                            return "return to feed";
 
-                    case "7":
-                        return "quit";
+                        case "6":
+                            return "logout";
+
+                        case "7":
+                            return "quit";
+                    }
                 }
 
             case ON_COMMENT:
