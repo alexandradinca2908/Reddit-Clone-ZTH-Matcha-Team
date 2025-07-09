@@ -1,7 +1,5 @@
 package org.example.loggerobjects;
 
-import org.example.textprocessors.AnsiColors;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

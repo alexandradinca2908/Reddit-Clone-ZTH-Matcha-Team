@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         ActionState actionState = ActionState.getInstance();
         LogManager logManager = LogManager.getInstance();
-        logManager.addLogger("FileLoggger1", "dd-mm-yyyy", "logging.txt");
+        logManager.addLogger("FileLogger1", "dd-mm-yyyy", "logging.txt");
         boolean isActive = true;
 
         System.out.println(AnsiColors.toOrange("Welcome to Reddit!\nPlease choose an option:\n"));
