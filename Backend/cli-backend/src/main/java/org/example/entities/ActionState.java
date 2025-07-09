@@ -1,11 +1,11 @@
-package org.example;
+package org.example.entities;
 
 import org.example.services.PostService;
 import org.example.services.UserService;
 
 import java.util.Scanner;
 
-import static org.example.InputTranslator.translateInput;
+import static org.example.textprocessors.InputTranslator.translateInput;
 
 public class ActionState {
     private static ActionState actionState;
@@ -32,7 +32,7 @@ public class ActionState {
         return actionState;
     }
 
-    boolean executeAction() {
+    public boolean executeAction() {
         switch (currentState) {
             case MAIN_MENU:
                 if (!isLoggedIn) {

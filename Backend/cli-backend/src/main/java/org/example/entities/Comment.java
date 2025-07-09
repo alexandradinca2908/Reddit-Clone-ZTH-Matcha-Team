@@ -1,8 +1,6 @@
-package org.example;
+package org.example.entities;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class Comment implements Likeable {
     private static int commentID = 0;

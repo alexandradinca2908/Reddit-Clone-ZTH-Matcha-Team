@@ -1,4 +1,4 @@
-package org.example;
+package org.example.entities;
 import java.util.ArrayList;
 
 public class Post implements Likeable{

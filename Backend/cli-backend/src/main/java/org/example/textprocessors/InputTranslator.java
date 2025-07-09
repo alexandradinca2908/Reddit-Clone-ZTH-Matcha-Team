@@ -1,4 +1,6 @@
-package org.example;
+package org.example.textprocessors;
+
+import org.example.entities.State;
 
 public class InputTranslator {
     static String translateInput(String input, State currentState, boolean isLoggedIn) {

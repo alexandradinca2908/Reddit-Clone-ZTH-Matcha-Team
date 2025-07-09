@@ -1,4 +1,4 @@
-package org.example;
+package org.example.entities;
 
 public class CommentReply implements Likeable {
     private static int commentReplyID = 0;

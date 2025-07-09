@@ -1,6 +1,6 @@
 package org.example.services;
-import org.example.AnsiColors;
-import org.example.Post;
+import org.example.textprocessors.AnsiColors;
+import org.example.entities.Post;
 
 import java.util.ArrayList;
 import java.util.List;

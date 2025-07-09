@@ -1,5 +1,5 @@
 package org.example.services;
-import org.example.User;
+import org.example.entities.User;
 
 import java.util.ArrayList;
 import java.util.Scanner;
