@@ -1,4 +1,6 @@
 package org.example.entities;
+import org.example.textprocessors.AnsiColors;
+
 import java.util.ArrayList;
 import java.util.List;
 
