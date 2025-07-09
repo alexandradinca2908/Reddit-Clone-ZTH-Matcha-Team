@@ -2,15 +2,16 @@ package org.example.entities;
 
 import org.example.services.PostService;
 import org.example.services.UserService;
+import org.example.textprocessors.AnsiColors;
 
 import java.util.Scanner;
 
 import static org.example.textprocessors.InputTranslator.translateInput;
 
 public class ActionState {
-    private static ActionState actionState;
     private final static UserService userService = UserService.getInstance();
     private final static PostService postService = new PostService();
+    private static ActionState actionState;
     private boolean isLoggedIn;
     private State currentState;
     private User user;
@@ -23,8 +24,7 @@ public class ActionState {
         this.post = null;
     }
 
-    public static ActionState getInstance()
-    {
+    public static ActionState getInstance() {
         if (actionState == null)
             actionState = new ActionState();
 
@@ -104,6 +104,8 @@ public class ActionState {
             changeState(State.ON_FEED);
         } else if (sanitizedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
+        } else {
+            unknownCommand();
         }
     }
 
@@ -131,6 +133,8 @@ public class ActionState {
             isLoggedIn = false;
         } else if (sanitizedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
+        } else {
+            unknownCommand();
         }
     }
 
@@ -157,6 +161,8 @@ public class ActionState {
             changeState(State.MAIN_MENU);
         } else if (sanitizedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
+        } else {
+            unknownCommand();
         }
 
     }
@@ -175,6 +181,8 @@ public class ActionState {
             changeState(State.ON_FEED);
         } else if (sanitizedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
+        } else {
+            unknownCommand();
         }
     }
 
@@ -205,6 +213,8 @@ public class ActionState {
             changeState(State.ON_FEED);
         } else if (sanitizedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
+        } else {
+            unknownCommand();
         }
     }
 
@@ -232,6 +242,8 @@ public class ActionState {
             changeState(State.ON_POST);
         } else if (sanitizedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
+        } else {
+            unknownCommand();
         }
     }
 
@@ -253,9 +265,11 @@ public class ActionState {
         System.out.println("See you soon!");
     }
 
+    private void unknownCommand() {
+        System.out.println(AnsiColors.toRed("Unknown command."));
+    }
+
     private void changeState(State state) {
         currentState = state;
     }
-
-
 }
