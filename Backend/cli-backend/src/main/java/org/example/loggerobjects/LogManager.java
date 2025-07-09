@@ -22,4 +22,14 @@ public class LogManager {
         Logger logger = new FileLogger(name, dateTimeFormat, filename);
         loggers.add(logger);
     }
+
+    public Logger getLogger(String name) {
+        for (Logger logger : loggers) {
+            if (logger.getName().equals(name)) {
+                return logger;
+            }
+        }
+
+        return null;
+    }
 }

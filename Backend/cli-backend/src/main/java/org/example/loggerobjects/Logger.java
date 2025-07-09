@@ -5,12 +5,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public abstract class Logger {
-    String name;
-    DateTimeFormatter dateTimeFormatter;
+    private String name;
+    private DateTimeFormatter dateTimeFormatter;
 
     public Logger(String name, String dateTimeFormat) {
         this.name = name;
         this.dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);
+    }
+
+    public String getName() {
+        return name;
     }
 
     String formatDate() {
