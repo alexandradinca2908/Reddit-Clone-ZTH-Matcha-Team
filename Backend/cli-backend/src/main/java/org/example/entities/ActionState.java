@@ -1,5 +1,6 @@
 package org.example.entities;
 
+import org.example.services.CommentService;
 import org.example.services.PostService;
 import org.example.services.UserService;
 import org.example.textprocessors.AnsiColors;
@@ -11,11 +12,13 @@ import static org.example.textprocessors.InputTranslator.translateInput;
 public class ActionState {
     private final static UserService userService = UserService.getInstance();
     private final static PostService postService = new PostService();
+    private final static CommentService commentService = new CommentService();
     private static ActionState actionState;
     private boolean isLoggedIn;
     private State currentState;
     private User user;
     private Post post;
+    private Comment comment;
 
     private ActionState() {
         this.isLoggedIn = false;
@@ -200,13 +203,14 @@ public class ActionState {
         String sanitizedInput = translateInput(option, currentState, isLoggedIn);
 
         if (sanitizedInput.equalsIgnoreCase("comment")) {
-            //  TODO COMMENT
+            commentService.addComment(user, post);
         } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
             //  TODO UPVOTE
         } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
             //  TODO DOWNVOTE
         } else if (sanitizedInput.equalsIgnoreCase("select comment")) {
-            //  TODO SELECT COMMENT
+            comment = commentService.selectComment(user, post);
+            //commentService.addReply(user, post, comment);
             changeState(State.ON_COMMENT);
         } else if (sanitizedInput.equalsIgnoreCase("return to feed")) {
             postService.showFeed();
@@ -232,7 +236,7 @@ public class ActionState {
         String sanitizedInput = translateInput(option, currentState, isLoggedIn);
 
         if (sanitizedInput.equalsIgnoreCase("reply")) {
-            //  TODO REPLY
+            commentService.addReply(user, post, comment);
         } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
             //  TODO UPVOTE
         } else if (sanitizedInput.equalsIgnoreCase("downvote")) {

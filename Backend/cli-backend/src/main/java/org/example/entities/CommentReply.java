@@ -1,18 +1,22 @@
 package org.example.entities;
 
+import java.util.ArrayList;
+
 public class CommentReply implements Likeable {
-    private static int commentReplyID = 0;
-    private final Comment perentComment;
+    private static int commentReplyCounter = 0;
+    private int commentReplyID;
+    private final Comment parentComment;
     private final User parentUser;
     private String commentReplyText;
     private int voteCount;
+    public ArrayList<CommentReply> commentReplies = new ArrayList<CommentReply>();
 
-    public CommentReply(Comment perentComment, User parentUser, String commentReplyText) {
-        this.perentComment = perentComment;
+    public CommentReply(Comment parentComment, User parentUser, String commentReplyText) {
+        this.parentComment = parentComment;
         this.parentUser = parentUser;
         this.commentReplyText = commentReplyText;
         this.voteCount = 0;
-        commentReplyID++;
+        commentReplyID = commentReplyCounter++;
     }
 
     @Override
@@ -39,11 +43,18 @@ public class CommentReply implements Likeable {
     }
 
     public Comment getPerentComment() {
-        return perentComment;
+        return parentComment;
     }
 
     public void setCommentReplyText(String commentReplyText) {
         this.commentReplyText = commentReplyText;
     }
 
+    public ArrayList<CommentReply> getCommentReplies() {
+        return commentReplies;
+    }
+
+    public int getCommentReplyID() {
+        return commentReplyID;
+    }
 }
