@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Built Releases ###
+matcha.tar
+*.tar.gz
