@@ -81,4 +81,43 @@ public class PostService extends AnsiColors {
 
         throw new IllegalArgumentException(AnsiColors.toRed("Post with ID " + postID + " not found."));
     }
+
+    public void votePost(int userID, int postID, String vote) {
+        for(Post iter : Post.posts) {
+            if(iter.getPostID() == postID) {
+                if(vote.equalsIgnoreCase("upvote")) {
+                    if(iter.votingUserID.containsKey(userID)) { // am votat deja
+                        if(iter.votingUserID.get(userID).equals(1)) { //am votat deja upvote
+                            iter.downvote();
+                            iter.votingUserID.remove(userID);
+                        }
+                        else {
+                            iter.upvote();
+                            iter.upvote();
+                            iter.votingUserID.put(userID, 1);
+                        }
+                    }
+                    else {
+                        iter.upvote();
+                        iter.votingUserID.put(userID, 1);
+                    }
+                }
+                else if(vote.equalsIgnoreCase("downvote")) {
+                    if(iter.votingUserID.containsKey(userID)) {
+                        if(iter.votingUserID.get(userID).equals(-1)) {
+                            iter.upvote();
+                            iter.votingUserID.remove(userID);
+                        }
+                        else {
+                            iter.downvote();
+                            iter.downvote();
+                            iter.votingUserID.put(userID, -1);
+                        }
+                    }
+                }
+                break;
+            }
+        }
+
+    }
 }
