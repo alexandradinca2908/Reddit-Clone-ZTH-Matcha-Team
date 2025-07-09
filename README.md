@@ -14,7 +14,7 @@ Navighează la secțiunea Releases a acestui proiect.
 
 Descarcă cea mai recentă versiune, sub forma unei arhive proiect-final.tar.gz.
 
-## 2️⃣ Dezarhivează
+### 2️⃣ Dezarhivează
 
 Extrage conținutul arhivei descărcate.
 
@@ -23,7 +23,7 @@ Deschide un terminal și navighează în folderul nou creat.
 ``` Bash
 cd cale/catre/folderul-extras
 ```
-## 3️⃣ Încarcă imaginea (doar o dată)
+### 3️⃣ Încarcă imaginea (doar o dată)
 
 Rulează comanda de mai jos pentru a încărca imaginea Docker a aplicației.
 
