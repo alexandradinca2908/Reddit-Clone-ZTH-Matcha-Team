@@ -3,7 +3,7 @@ package org.example.textprocessors;
 import org.example.entities.State;
 
 public class InputTranslator {
-    static String translateInput(String input, State currentState, boolean isLoggedIn) {
+    public static String translateInput(String input, State currentState, boolean isLoggedIn) {
         switch (currentState) {
             case MAIN_MENU:
                 if (!isLoggedIn) {

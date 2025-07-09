@@ -11,8 +11,7 @@ public class ActionState {
     private static ActionState actionState;
     private final static UserService userService = UserService.getInstance();
     private final static PostService postService = new PostService();
-    private final static Scanner scanner = new Scanner(System.in);
-    private boolean isLoggedIn = false;
+    private boolean isLoggedIn;
     private State currentState;
     private User user;
     private Post post;
@@ -147,13 +146,14 @@ public class ActionState {
 
         if (sanitizedInput.equalsIgnoreCase("expand post")) {
             try {
-                postService.expandPost();
+                post = postService.expandPost();
                 changeState(State.ON_POST);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
 
         } else if (sanitizedInput.equalsIgnoreCase("return to menu")) {
+            post = null;
             changeState(State.MAIN_MENU);
         } else if (sanitizedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);

@@ -66,7 +66,7 @@ public class PostService extends AnsiColors {
         }
     }
 
-    public void expandPost() {
+    public Post expandPost() {
         System.out.println(AnsiColors.toGreen("Please enter PID: "));
         int postID = Integer.parseInt(sc.nextLine());
 
@@ -83,12 +83,11 @@ public class PostService extends AnsiColors {
                 System.out.println( "| " + iter.getCommentsCounter() + " comments");
                 System.out.println(LINE_SEPARATOR);
                 System.out.println("//insert comments here");
-                break;
+
+                return iter;
             }
         }
 
-        if (!found) {
-            throw new IllegalArgumentException(AnsiColors.toRed("Post with ID " + postID + " not found."));
-        }
+        throw new IllegalArgumentException(AnsiColors.toRed("Post with ID " + postID + " not found."));
     }
 }
