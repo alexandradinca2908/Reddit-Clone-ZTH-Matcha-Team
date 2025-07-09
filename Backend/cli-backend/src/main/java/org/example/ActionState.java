@@ -5,19 +5,13 @@ import org.example.services.UserService;
 
 import java.util.Scanner;
 
-public class ActionState {
-    public enum State {
-        MAIN_MENU,
-        ON_FEED,
-        ON_POST,
-        ON_COMMENT,
-        LOGOUT,
-        QUIT
-    }
+import static org.example.InputTranslator.translateInput;
 
+public class ActionState {
     private static ActionState actionState;
     private final static UserService userService = UserService.getInstance();
     private final static PostService postService = new PostService();
+    private final static Scanner scanner = new Scanner(System.in);
     private boolean isLoggedIn = false;
     private State currentState;
     private User user;
@@ -90,7 +84,7 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option);
+        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
 
         if (sanitizedInput.equalsIgnoreCase("login")) {
             user = userService.userLoginCLI();
@@ -124,7 +118,7 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option);
+        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
 
         if (sanitizedInput.equalsIgnoreCase("show feed")) {
             postService.showFeed();
@@ -149,7 +143,7 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option);
+        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
 
         if (sanitizedInput.equalsIgnoreCase("expand post")) {
             try {
@@ -174,7 +168,7 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option);
+        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
 
         if (sanitizedInput.equalsIgnoreCase("return to feed")) {
             postService.showFeed();
@@ -195,7 +189,7 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option);
+        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
 
         if (sanitizedInput.equalsIgnoreCase("comment")) {
             //  TODO COMMENT
@@ -225,7 +219,7 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option);
+        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
 
         if (sanitizedInput.equalsIgnoreCase("reply")) {
             //  TODO REPLY
@@ -263,98 +257,5 @@ public class ActionState {
         currentState = state;
     }
 
-    private String translateInput(String input) {
-        switch (currentState) {
-            case MAIN_MENU:
-                if (!isLoggedIn) {
-                    return translateMenuInputNotLoggedIn(input);
-                } else {
-                    return translateMenuInputLoggedIn(input);
-                }
 
-            case ON_FEED:
-                return translateOnFeedInput(input);
-
-            case ON_POST:
-                if (!isLoggedIn) {
-                    return translateOnPostInputNotLoggedIn(input);
-                } else {
-                    return translatePostInputLoggedIn(input);
-                }
-
-            case ON_COMMENT:
-                return translateOnCommentInput(input);
-        }
-
-        return input;
-    }
-
-    private String translateMenuInputNotLoggedIn(String input) {
-        // 1. Login, 2. Register, 3. Logout, 4. Quit
-        return switch (input) {
-            case "1" -> "login";
-            case "2" -> "register";
-            case "3" -> "show feed";
-            case "4" -> "quit";
-            default -> "";
-        };
-    }
-
-    private String translateMenuInputLoggedIn(String input) {
-        //  1. Show feed, 2. Create post, 3. Logout, 4. Delete Account, 5. Quit
-        return switch (input) {
-            case "1" -> "show feed";
-            case "2" -> "create post";
-            case "3" -> "logout";
-            case "4" -> "delete account";
-            case "5" -> "quit";
-            default -> "";
-        };
-    }
-
-    private String translateOnFeedInput(String input) {
-        //  1. Expand post, 2. Return to menu, 3. Quit
-        return switch (input) {
-            case "1" -> "expand post";
-            case "2" -> "return to menu";
-            case "3" -> "quit";
-            default -> "";
-        };
-    }
-
-    private String translateOnPostInputNotLoggedIn(String input) {
-        //  1. Return to feed, 2. Quit
-        return switch (input) {
-            case "1" -> "return to feed";
-            case "2" -> "quit";
-            default -> "";
-        };
-    }
-
-    private String translatePostInputLoggedIn(String input) {
-        //  1. Comment, 2. Upvote, 3. Downvote, 4. Select comment
-        //  5. Return to feed, 6. Logout, 7. Quit
-        return switch (input) {
-            case "1" -> "comment";
-            case "2" -> "upvote";
-            case "3" -> "downvote";
-            case "4" -> "select comment";
-            case "5" -> "return to feed";
-            case "6" -> "logout";
-            case "7" -> "quit";
-            default -> "";
-        };
-    }
-
-    private String translateOnCommentInput(String input) {
-        //  1. Reply, 2. Upvote, 3. Downvote, 4. Return to post, 5. Quit
-        return switch (input) {
-            case "1" -> "reply";
-            case "2" -> "upvote";
-            case "3" -> "downvote";
-            case "4" -> "return to post";
-            case "5" -> "quit";
-            default -> "";
-        };
-    }
 }
