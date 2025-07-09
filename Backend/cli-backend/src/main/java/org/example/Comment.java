@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class Comment implements Likeable {
-    private static int commentID = 0;
+    private static int commentCounter = 0;
+    private int commentID;
     private String commentText;
     private final Post parentPost;
     private final User parentUser;
@@ -18,7 +19,7 @@ public class Comment implements Likeable {
         this.commentText = commentText;
         this.replyList = new ArrayList<>();
         this.voteCount = 0;
-        commentID++;
+        this.commentID = commentCounter++;
     }
 
     @Override
@@ -40,6 +41,10 @@ public class Comment implements Likeable {
         return commentText;
     }
 
+    public int getCommentID() {
+        return commentID;
+    }
+
     public Post getParentPost() {
         return parentPost;
     }
@@ -50,6 +55,9 @@ public class Comment implements Likeable {
 
     public void setCommentText(String commentText) {
         this.commentText = commentText;
+    }
+    public int getVoteCount() {
+        return voteCount;
     }
 
     public void addComentReply(String commentReplyText, User replyParentUser) {

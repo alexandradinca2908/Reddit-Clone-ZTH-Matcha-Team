@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.services.CommentService;
 import org.example.services.PostService;
 import org.example.services.UserService;
 
@@ -21,6 +22,8 @@ public class ActionState {
     private boolean isLoggedIn = false;
     private State currentState;
     private User user;
+    private Post post;
+    private final static CommentService commentService = new CommentService();
 
     private ActionState() {
         this.isLoggedIn = false;
@@ -48,7 +51,6 @@ public class ActionState {
                 } else {
                     mainMenuIsLoggedIn();
                 }
-
                 break;
 
             case ON_FEED:
@@ -96,7 +98,7 @@ public class ActionState {
                     sanitizedInput = sanitizeInput(option);
 
                     if (sanitizedInput.equalsIgnoreCase("comment")) {
-                        //  TODO COMMENT
+                        commentService.addComment(user, post);
                     } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
                         //  TODO UPVOTE
                     } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
