@@ -9,7 +9,7 @@ public class Comment implements Likeable {
     private final Post parentPost;
     private final User parentUser;
     private int voteCount;
-    ArrayList<CommentReply> replyList;
+    public ArrayList<CommentReply> replyList;
 
     public Comment(Post parentPost, User parentUser, String commentText) {
         this.parentPost = parentPost;
