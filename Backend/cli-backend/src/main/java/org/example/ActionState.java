@@ -44,7 +44,7 @@ public class ActionState {
                 if (!isLoggedIn) {
                     mainMenuNotLoggedIn();
                 } else {
-                    mainMenuIsLoggedIn();
+                    mainMenuLoggedIn();
                 }
 
                 break;
@@ -114,7 +114,7 @@ public class ActionState {
         }
     }
 
-    private void mainMenuIsLoggedIn() {
+    private void mainMenuLoggedIn() {
         System.out.println("""
                             1. Show feed
                             2. Create post
@@ -267,111 +267,94 @@ public class ActionState {
         switch (currentState) {
             case MAIN_MENU:
                 if (!isLoggedIn) {
-                    // 1. Login, 2. Register, 3. Logout, 4. Quit
-                    switch (input) {
-                        case "1":
-                            return "login";
-
-                        case "2":
-                            return "register";
-
-                        case "3":
-                            return "show feed";
-
-                        case "4":
-                            return "quit";
-                    }
+                    return translateMenuInputNotLoggedIn(input);
                 } else {
-                    //  1. Show feed, 2. Create post, 3. Logout, 4. Delete Account, 5. Quit
-                    switch (input) {
-                        case "1":
-                            return "show feed";
-
-                        case "2":
-                            return "create post";
-
-                        case "3":
-                            return "logout";
-
-                        case "4":
-                            return "delete account";
-
-                        case "5":
-                            return "quit";
-                    }
+                    return translateMenuInputLoggedIn(input);
                 }
 
             case ON_FEED:
-                //  1. Expand post, 2. Return to menu, 3. Quit
-                switch (input) {
-                    case "1":
-                        return "expand post";
-
-                    case "2":
-                        return "return to menu";
-
-                    case "3":
-                        return "quit";
-                }
+                return translateOnFeedInput(input);
 
             case ON_POST:
                 if (!isLoggedIn) {
-                    //  1. Return to feed, 2. Quit
-                    switch (input) {
-                        case "1":
-                            return "return to feed";
-
-                        case "2":
-                            return "quit";
-                    }
+                    return translateOnPostInputNotLoggedIn(input);
                 } else {
-                    //  1. Comment, 2. Upvote, 3. Downvote, 4. Select comment
-                    //  5. Return to feed, 6. Logout, 7. Quit
-                    switch (input) {
-                        case "1":
-                            return "comment";
-
-                        case "2":
-                            return "upvote";
-
-                        case "3":
-                            return "downvote";
-
-                        case "4":
-                            return "select comment";
-
-                        case "5":
-                            return "return to feed";
-
-                        case "6":
-                            return "logout";
-
-                        case "7":
-                            return "quit";
-                    }
+                    return translatePostInputLoggedIn(input);
                 }
 
             case ON_COMMENT:
-                //  1. Reply, 2. Upvote, 3. Downvote, 4. Return to post, 5. Quit
-                switch (input) {
-                    case "1":
-                        return "reply";
-
-                    case "2":
-                        return "upvote";
-
-                    case "3":
-                        return "downvote";
-
-                    case "4":
-                        return "return to post";
-
-                    case "5":
-                        return "quit";
-                }
+                return translateOnCommentInput(input);
         }
 
         return input;
     }
 
+    private String translateMenuInputNotLoggedIn(String input) {
+        // 1. Login, 2. Register, 3. Logout, 4. Quit
+        return switch (input) {
+            case "1" -> "login";
+            case "2" -> "register";
+            case "3" -> "show feed";
+            case "4" -> "quit";
+            default -> "";
+        };
+    }
+
+    private String translateMenuInputLoggedIn(String input) {
+        //  1. Show feed, 2. Create post, 3. Logout, 4. Delete Account, 5. Quit
+        return switch (input) {
+            case "1" -> "show feed";
+            case "2" -> "create post";
+            case "3" -> "logout";
+            case "4" -> "delete account";
+            case "5" -> "quit";
+            default -> "";
+        };
+    }
+
+    private String translateOnFeedInput(String input) {
+        //  1. Expand post, 2. Return to menu, 3. Quit
+        return switch (input) {
+            case "1" -> "expand post";
+            case "2" -> "return to menu";
+            case "3" -> "quit";
+            default -> "";
+        };
+    }
+
+    private String translateOnPostInputNotLoggedIn(String input) {
+        //  1. Return to feed, 2. Quit
+        return switch (input) {
+            case "1" -> "return to feed";
+            case "2" -> "quit";
+            default -> "";
+        };
+    }
+
+    private String translatePostInputLoggedIn(String input) {
+        //  1. Comment, 2. Upvote, 3. Downvote, 4. Select comment
+        //  5. Return to feed, 6. Logout, 7. Quit
+        return switch (input) {
+            case "1" -> "comment";
+            case "2" -> "upvote";
+            case "3" -> "downvote";
+            case "4" -> "select comment";
+            case "5" -> "return to feed";
+            case "6" -> "logout";
+            case "7" -> "quit";
+            default -> "";
+        };
+    }
+
+    private String translateOnCommentInput(String input) {
+        //  1. Reply, 2. Upvote, 3. Downvote, 4. Return to post, 5. Quit
+        return switch (input) {
+            case "1" -> "reply";
+            case "2" -> "upvote";
+            case "3" -> "downvote";
+            case "4" -> "return to post";
+            case "5" -> "quit";
+            default -> "";
+        };
+    }
 }
