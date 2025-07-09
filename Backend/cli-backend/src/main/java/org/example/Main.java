@@ -4,10 +4,10 @@ import org.example.services.UserService;
 
 public class Main {
     public static void main(String[] args) {
-        ActionState actionState = new ActionState();
+        ActionState actionState = ActionState.getInstance();
         boolean isActive = true;
 
-        System.out.println("Welcome to Reddit!\n Please choose an option:\n");
+        System.out.println("Welcome to Reddit!\n4Please choose an option:\n");
 
         while (isActive) {
             isActive = actionState.executeAction();
