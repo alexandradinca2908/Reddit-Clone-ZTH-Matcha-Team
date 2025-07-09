@@ -21,11 +21,13 @@ public class ActionState {
     private boolean isLoggedIn = false;
     private State currentState;
     private User user;
+    private Post post;
 
     private ActionState() {
         this.isLoggedIn = false;
         this.currentState = State.MAIN_MENU;
         this.user = null;
+        this.post = null;
     }
 
     public static ActionState getInstance()
@@ -52,111 +54,28 @@ public class ActionState {
                 break;
 
             case ON_FEED:
-                System.out.println("1. Expand post\n2. Return to menu\n3. Quit");
-
-                option = scan.nextLine();
-                sanitizedInput = sanitizeInput(option);
-
-                if (sanitizedInput.equalsIgnoreCase("expand post")) {
-                    postService.expandPost();
-                    changeState(State.ON_POST);
-                } else if (sanitizedInput.equalsIgnoreCase("return to menu")) {
-                    changeState(State.MAIN_MENU);
-                } else if (sanitizedInput.equalsIgnoreCase("quit")) {
-                    changeState(State.QUIT);
-                }
-
+                onFeed();
                 break;
 
             case ON_POST:
                 if (!isLoggedIn) {
-                    System.out.println("""
-                        1. Return to feed
-                        2. Quit""");
-
-                    option = scan.nextLine();
-                    sanitizedInput = sanitizeInput(option);
-
-                    if (sanitizedInput.equalsIgnoreCase("return to feed")) {
-                        postService.showFeed();
-                        changeState(State.ON_FEED);
-                    } else if (sanitizedInput.equalsIgnoreCase("quit")) {
-                        changeState(State.QUIT);
-                    }
+                    onPostNotLoggedIn();
                 } else {
-                    System.out.println("""
-                        1. Comment
-                        2. Upvote
-                        3. Downvote
-                        4. Select comment
-                        5. Return to feed
-                        6. Quit""");
-
-                    option = scan.nextLine();
-                    sanitizedInput = sanitizeInput(option);
-
-                    if (sanitizedInput.equalsIgnoreCase("comment")) {
-                        //  TODO COMMENT
-                    } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
-                        //  TODO UPVOTE
-                    } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
-                        //  TODO DOWNVOTE
-                    } else if (sanitizedInput.equalsIgnoreCase("select comment")) {
-                        //  TODO SELECT COMMENT
-                        changeState(State.ON_COMMENT);
-                    } else if (sanitizedInput.equalsIgnoreCase("return to feed")) {
-                        postService.showFeed();
-                        changeState(State.ON_FEED);
-                    } else if (sanitizedInput.equalsIgnoreCase("quit")) {
-                        changeState(State.QUIT);
-                    }
+                    onPostLoggedIn();
                 }
 
                 break;
 
             case ON_COMMENT:
-                //  This state can only be accessed if the user is logged in
-                System.out.println("""
-                        1. Reply
-                        2. Upvote
-                        3. Downvote
-                        4. Return to post
-                        5. Quit""");
-
-                option = scan.nextLine();
-                sanitizedInput = sanitizeInput(option);
-
-                if (sanitizedInput.equalsIgnoreCase("reply")) {
-                    //  TODO REPLY
-                } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
-                    //  TODO UPVOTE
-                } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
-                    //  TODO DOWNVOTE
-                } else if (sanitizedInput.equalsIgnoreCase("return to post")) {
-                    postService.expandPost();
-                    changeState(State.ON_POST);
-                } else if (sanitizedInput.equalsIgnoreCase("quit")) {
-                    changeState(State.QUIT);
-                }
+                onComment();
                 break;
 
             case LOGOUT:
-                isLoggedIn  = false;
-                user = null;
-                System.out.println("You have been logged out.");
-
-                changeState(State.MAIN_MENU);
-
+                logout();
                 break;
 
             case QUIT:
-                if (isLoggedIn) {
-                    isLoggedIn  = false;
-                    user = null;
-                    System.out.println("You have been automatically logged out.");
-                }
-
-                System.out.println("See you soon!");
+                quit();
                 return false;
 
             default:
@@ -167,7 +86,11 @@ public class ActionState {
     }
 
     private void mainMenuNotLoggedIn() {
-        System.out.println("1. Login\n2. Register\n3. Show feed\n4. Quit" );
+        System.out.println("""
+                            1. Login
+                            2. Register
+                            3. Show feed
+                            4. Quit""");
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
@@ -221,7 +144,120 @@ public class ActionState {
             changeState(State.QUIT);
         }
     }
-    
+
+    private void onFeed() {
+        System.out.println("""
+                            1. Expand post
+                            2. Return to menu
+                            3. Quit""");
+
+        Scanner scan = new Scanner(System.in);
+        String option = scan.nextLine();
+        String sanitizedInput = sanitizeInput(option);
+
+        if (sanitizedInput.equalsIgnoreCase("expand post")) {
+            postService.expandPost();
+            changeState(State.ON_POST);
+        } else if (sanitizedInput.equalsIgnoreCase("return to menu")) {
+            changeState(State.MAIN_MENU);
+        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+            changeState(State.QUIT);
+        }
+
+    }
+
+    private void onPostNotLoggedIn() {
+        System.out.println("""
+                        1. Return to feed
+                        2. Quit""");
+
+        Scanner scan = new Scanner(System.in);
+        String option = scan.nextLine();
+        String sanitizedInput = sanitizeInput(option);
+
+        if (sanitizedInput.equalsIgnoreCase("return to feed")) {
+            postService.showFeed();
+            changeState(State.ON_FEED);
+        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+            changeState(State.QUIT);
+        }
+    }
+
+    private void onPostLoggedIn() {
+        System.out.println("""
+                        1. Comment
+                        2. Upvote
+                        3. Downvote
+                        4. Select comment
+                        5. Return to feed
+                        6. Quit""");
+
+        Scanner scan = new Scanner(System.in);
+        String option = scan.nextLine();
+        String sanitizedInput = sanitizeInput(option);
+
+        if (sanitizedInput.equalsIgnoreCase("comment")) {
+            //  TODO COMMENT
+        } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
+            //  TODO UPVOTE
+        } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
+            //  TODO DOWNVOTE
+        } else if (sanitizedInput.equalsIgnoreCase("select comment")) {
+            //  TODO SELECT COMMENT
+            changeState(State.ON_COMMENT);
+        } else if (sanitizedInput.equalsIgnoreCase("return to feed")) {
+            postService.showFeed();
+            changeState(State.ON_FEED);
+        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+            changeState(State.QUIT);
+        }
+    }
+
+    private void onComment() {
+        //  This state can only be accessed if the user is logged in
+        System.out.println("""
+                        1. Reply
+                        2. Upvote
+                        3. Downvote
+                        4. Return to post
+                        5. Quit""");
+
+        Scanner scan = new Scanner(System.in);
+        String option = scan.nextLine();
+        String sanitizedInput = sanitizeInput(option);
+
+        if (sanitizedInput.equalsIgnoreCase("reply")) {
+            //  TODO REPLY
+        } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
+            //  TODO UPVOTE
+        } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
+            //  TODO DOWNVOTE
+        } else if (sanitizedInput.equalsIgnoreCase("return to post")) {
+            postService.expandPost();
+            changeState(State.ON_POST);
+        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+            changeState(State.QUIT);
+        }
+    }
+
+    private void logout() {
+        isLoggedIn  = false;
+        user = null;
+        System.out.println("You have been logged out.");
+
+        changeState(State.MAIN_MENU);
+    }
+
+    private void quit() {
+        if (isLoggedIn) {
+            isLoggedIn  = false;
+            user = null;
+            System.out.println("You have been automatically logged out.");
+        }
+
+        System.out.println("See you soon!");
+    }
+
     private void changeState(State state) {
         currentState = state;
     }
