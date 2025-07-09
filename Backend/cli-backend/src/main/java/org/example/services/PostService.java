@@ -114,6 +114,10 @@ public class PostService extends AnsiColors {
                             iter.votingUserID.put(userID, -1);
                         }
                     }
+                    else {
+                        iter.downvote();
+                        iter.votingUserID.put(userID, -1);
+                    }
                 }
                 break;
             }
