@@ -30,6 +30,6 @@ public class LogManager {
             }
         }
 
-        return null;
+        return loggers.get(0);
     }
 }
