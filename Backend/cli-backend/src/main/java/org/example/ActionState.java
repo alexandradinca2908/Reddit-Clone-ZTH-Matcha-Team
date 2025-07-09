@@ -90,7 +90,7 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = sanitizeInput(option);
+        String sanitizedInput = translateInput(option);
 
         if (sanitizedInput.equalsIgnoreCase("login")) {
             user = userService.userLoginCLI();
@@ -124,7 +124,7 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = sanitizeInput(option);
+        String sanitizedInput = translateInput(option);
 
         if (sanitizedInput.equalsIgnoreCase("show feed")) {
             postService.showFeed();
@@ -149,7 +149,7 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = sanitizeInput(option);
+        String sanitizedInput = translateInput(option);
 
         if (sanitizedInput.equalsIgnoreCase("expand post")) {
             try {
@@ -174,7 +174,7 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = sanitizeInput(option);
+        String sanitizedInput = translateInput(option);
 
         if (sanitizedInput.equalsIgnoreCase("return to feed")) {
             postService.showFeed();
@@ -195,7 +195,7 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = sanitizeInput(option);
+        String sanitizedInput = translateInput(option);
 
         if (sanitizedInput.equalsIgnoreCase("comment")) {
             //  TODO COMMENT
@@ -225,7 +225,7 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = sanitizeInput(option);
+        String sanitizedInput = translateInput(option);
 
         if (sanitizedInput.equalsIgnoreCase("reply")) {
             //  TODO REPLY
@@ -263,7 +263,7 @@ public class ActionState {
         currentState = state;
     }
 
-    private String sanitizeInput(String input) {
+    private String translateInput(String input) {
         switch (currentState) {
             case MAIN_MENU:
                 if (!isLoggedIn) {
