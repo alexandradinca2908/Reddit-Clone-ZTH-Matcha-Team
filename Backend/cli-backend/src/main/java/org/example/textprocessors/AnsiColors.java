@@ -1,4 +1,4 @@
-package org.example;
+package org.example.textprocessors;
 
 public class AnsiColors {
     public static final int MAX_TEXT_LENGTH = 20;

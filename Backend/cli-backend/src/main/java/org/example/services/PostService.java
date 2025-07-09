@@ -1,7 +1,6 @@
 package org.example.services;
-import org.example.AnsiColors;
-import org.example.Comment;
-import org.example.Post;
+import org.example.textprocessors.AnsiColors;
+import org.example.entities.Post;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,7 @@ public class PostService extends AnsiColors {
         }
     }
 
-    public void expandPost() {
+    public Post expandPost() {
         System.out.println(AnsiColors.toGreen("Please enter PID: "));
         int postID = Integer.parseInt(sc.nextLine());
 
@@ -63,12 +62,12 @@ public class PostService extends AnsiColors {
                 System.out.print(AnsiColors.toRed("UP ") + iter.voteCount + AnsiColors.toBlue(" DOWN "));
                 System.out.println( "| " + iter.getCommentsCounter() + " comments");
                 System.out.println(LINE_SEPARATOR);
-                iter.printComments(0);
-                break;
+                System.out.println("//insert comments here");
+
+                return iter;
             }
         }
-        if (!found) {
-            throw new IllegalArgumentException(AnsiColors.toRed("Post with ID " + postID + " not found."));
-        }
+
+        throw new IllegalArgumentException(AnsiColors.toRed("Post with ID " + postID + " not found."));
     }
 }

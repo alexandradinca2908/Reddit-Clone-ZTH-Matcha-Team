@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.entities.Post;
+import org.example.entities.User;
 import org.example.services.CommentService;
 import org.example.services.PostService;
 import org.example.services.UserService;
