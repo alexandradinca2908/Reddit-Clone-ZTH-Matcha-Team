@@ -135,8 +135,7 @@ public class ActionState {
                         3. Downvote
                         4. Select comment
                         5. Return to feed
-                        6. Logout
-                        7. Quit""");
+                        6. Quit""");
 
                     option = scan.nextLine();
                     sanitizedInput = sanitizeInput(option);
@@ -153,8 +152,6 @@ public class ActionState {
                     } else if (sanitizedInput.equalsIgnoreCase("return to feed")) {
                         postService.showFeed();
                         changeState(State.ON_FEED);
-                    } else if (sanitizedInput.equalsIgnoreCase("logout")) {
-                        changeState(State.LOGOUT);
                     } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                         changeState(State.QUIT);
                     }
@@ -163,13 +160,13 @@ public class ActionState {
                 break;
 
             case ON_COMMENT:
+                //  This state can only be accessed if the user is logged in
                 System.out.println("""
                         1. Reply
                         2. Upvote
                         3. Downvote
                         4. Return to post
-                        5. Logout
-                        6. Quit""");
+                        5. Quit""");
 
                 option = scan.nextLine();
                 sanitizedInput = sanitizeInput(option);
@@ -183,8 +180,6 @@ public class ActionState {
                 } else if (sanitizedInput.equalsIgnoreCase("return to post")) {
                     postService.expandPost();
                     changeState(State.ON_POST);
-                } else if (sanitizedInput.equalsIgnoreCase("logout")) {
-                    changeState(State.LOGOUT);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
                     changeState(State.QUIT);
                 }
@@ -196,10 +191,16 @@ public class ActionState {
                 System.out.println("You have been logged out.");
 
                 changeState(State.MAIN_MENU);
-                
+
                 break;
 
             case QUIT:
+                if (isLoggedIn) {
+                    isLoggedIn  = false;
+                    user = null;
+                    System.out.println("You have been automatically logged out.");
+                }
+
                 System.out.println("See you soon!");
                 return false;
 
@@ -315,8 +316,7 @@ public class ActionState {
                 }
 
             case ON_COMMENT:
-                //  1. Reply, 2. Upvote, 3. Downvote,
-                //  4. Return to post, 5. Logout, 6. Quit
+                //  1. Reply, 2. Upvote, 3. Downvote, 4. Return to post, 5. Quit
                 switch (input) {
                     case "1":
                         return "reply";
@@ -331,9 +331,6 @@ public class ActionState {
                         return "return to post";
 
                     case "5":
-                        return "logout";
-
-                    case "6":
                         return "quit";
                 }
         }
