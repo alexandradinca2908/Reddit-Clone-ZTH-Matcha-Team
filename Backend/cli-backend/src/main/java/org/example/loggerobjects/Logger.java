@@ -1,7 +1,7 @@
 package org.example.loggerobjects;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public abstract class Logger {
@@ -18,28 +18,34 @@ public abstract class Logger {
     }
 
     String formatDate() {
-        return LocalDate.now().format(dateTimeFormatter);
+        return LocalDateTime.now().format(dateTimeFormatter);
     }
 
-    void log(LogLevel level, String message) throws IOException {
+    public void log(LogLevel level, String message) throws IOException {
         switch (level) {
             case VERBOSE:
                 verbose(message);
+                break;
 
             case DEBUG:
                 debug(message);
+                break;
 
             case INFO:
                 info(message);
+                break;
 
             case WARN:
                 warn(message);
+                break;
 
             case ERROR:
                 error(message);
+                break;
 
             case FATAL:
                 fatal(message);
+                break;
         }
     }
 
