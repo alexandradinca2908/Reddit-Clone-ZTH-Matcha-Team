@@ -9,12 +9,8 @@ public class CommentService {
     private Post post;
     private User user;
 
-    CommentService(User user, Post post) {
-        this.post = post;
-        this.user = user;
-    }
 
-    public void addComment() {
+    public void addComment(User user, Post post) {
         System.out.println("Please enter comment text: ");
         String commentText = sc.nextLine();
         post.addComment(user, commentText);

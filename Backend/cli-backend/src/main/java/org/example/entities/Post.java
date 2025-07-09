@@ -1,21 +1,31 @@
 package org.example.entities;
-import java.util.ArrayList;
+import org.example.textprocessors.AnsiColors;
 
-public class Post implements Likeable{
-    static int postsCounter = 0;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Post extends AnsiColors implements Likeable{
+    public static int postsCounter = 0;
+    public static ArrayList<Post> posts = new ArrayList<>(
+            List.of(
+                    new Post("First Post", "This is the body of the first post.", "TestUser1"),
+                    new Post("Second Post", "This is the body of the second post.", "TestUser2"),
+                    new Post("Third Post", "This is the body of the third post.", "TestUser1")
+            )
+    );
     int commentsCounter;
     int postID;
-    int ownershipName;
+    String ownershipName;
     public String title;
     public String body;
     public int voteCount;
-    ArrayList<Comment> commentList;
+    public ArrayList<Comment> commentList;
 
     public int getPostID() {
         return postID;
     }
 
-    public int getOwnershipID() {
+    public String getOwnershipName() {
         return ownershipName;
     }
 
@@ -46,9 +56,19 @@ public class Post implements Likeable{
         this.body = body;
         this.voteCount = 0;
         this.commentsCounter = 0;
-        this.ownershipName = ownershipName;
+        this.ownershipName = username;
         this.commentList = new ArrayList<>();
         postID = postsCounter++;
+    }
+
+    public void printComments(int indentLevel) {
+        for  (Comment comment : commentList) {
+            System.out.println(AnsiColors.toGreen("CID: " + comment.getCommentID() + " | USER: " + comment.getParentUser()));
+            System.out.print(comment.getCommentText());
+            System.out.print(AnsiColors.toRed("UP ") + comment.getVoteCount() + AnsiColors.toBlue(" DOWN "));
+            System.out.println( "| " + comment.replyList.toArray().length + " replies");
+            System.out.println(LINE_SEPARATOR);
+        }
     }
 
 

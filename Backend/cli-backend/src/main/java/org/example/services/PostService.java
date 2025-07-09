@@ -7,16 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PostService extends AnsiColors {
-    public static final int MAX_TEXT_LENGTH = 20;
-    public static final String LINE_SEPARATOR = "----------------------";
     Scanner sc = new Scanner(System.in);
-    private static ArrayList<Post> posts = new ArrayList<>(
-            List.of(
-                    new Post("First Post", "This is the body of the first post.", "TestUser1"),
-                    new Post("Second Post", "This is the body of the second post.", "TestUser2"),
-                    new Post("Third Post", "This is the body of the third post.", "TestUser1")
-            )
-    );
 
     public void addPost(String username) {
         System.out.println(AnsiColors.toGreen("Please enter title: "));
@@ -34,24 +25,24 @@ public class PostService extends AnsiColors {
 
         Post post = new Post(title, body, username);
 
-        posts.add(post);
+        Post.posts.add(post);
         System.out.println(AnsiColors.toGreen("Post added successfully!"));
 
     }
 
     public void deletePost(int postID) {
-        for (Post iter : posts) {
+        for (Post iter : Post.posts) {
             if (iter.getPostID() == postID) {
-                posts.remove(iter);
+                Post.posts.remove(iter);
             }
         }
     }
 
     public void showFeed() {
-        System.out.println(AnsiColors.toGreen("=== Welcome to Reddit v1.0 ==="));
+        System.out.println(AnsiColors.toGreen("=== Showing a total of " + Post.postsCounter + " posts ==="));
         System.out.println(LINE_SEPARATOR);
-        for (Post iter : posts) {
-            System.out.println(AnsiColors.toGreen("PID: " + iter.getPostID() + " | UID: " + iter.getOwnershipID() + "\n"));
+        for (Post iter : Post.posts) {
+            System.out.println(AnsiColors.toGreen("PID: " + iter.getPostID() + " | USER: " + iter.getOwnershipName() + "\n"));
             System.out.println(iter.title);
             String preview;
             if (iter.body.length() > MAX_TEXT_LENGTH) {
@@ -72,11 +63,11 @@ public class PostService extends AnsiColors {
 
         boolean found = false;
 
-        for (Post iter : posts) {
+        for (Post iter : Post.posts) {
             if  (iter.getPostID() == postID) {
                 found = true;
                 System.out.println(LINE_SEPARATOR);
-                System.out.println(AnsiColors.toGreen("PID: " + iter.getPostID() + " | UID: " + iter.getOwnershipID() + "\n"));
+                System.out.println(AnsiColors.toGreen("PID: " + iter.getPostID() + " | USER: " + iter.getOwnershipName() + "\n"));
                 System.out.println(iter.title);
                 System.out.println(iter.body + "\n");
                 System.out.print(AnsiColors.toRed("UP ") + iter.voteCount + AnsiColors.toBlue(" DOWN "));
