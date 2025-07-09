@@ -9,6 +9,7 @@ public class Post implements Likeable{
     public String title;
     public String body;
     public int voteCount;
+    ArrayList<Comment> commentList;
 
     public int getPostID() {
         return postID;
@@ -20,6 +21,10 @@ public class Post implements Likeable{
 
     public int getCommentsCounter() {
         return commentsCounter;
+    }
+
+    public void addComment(User parentUser, String commentText) {
+        Comment comment = new Comment(this, parentUser, commentText);
     }
 
     @Override
@@ -41,6 +46,7 @@ public class Post implements Likeable{
         this.voteCount = 0;
         this.commentsCounter = 0;
         this.ownershipName = ownershipName;
+        this.commentList = new ArrayList<>();
         postID = postsCounter++;
     }
 
