@@ -6,12 +6,14 @@ import java.io.IOException;
 public class FileLogger extends Logger {
     FileWriter fileWriter;
 
-    public FileLogger(String filename) throws IOException {
+    public FileLogger(String name, String dateTimeFormat, String filename) throws IOException {
+        super(name, dateTimeFormat);
         fileWriter = new FileWriter(filename);
     }
-    
-    @Override
-    void write(String message) {
 
+    @Override
+    void write(String message) throws IOException {
+        fileWriter.write(message + "\n");
+        fileWriter.flush();
     }
 }
