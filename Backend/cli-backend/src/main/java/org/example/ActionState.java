@@ -44,55 +44,9 @@ public class ActionState {
         switch (currentState) {
             case MAIN_MENU:
                 if (!isLoggedIn) {
-                    System.out.println("1. Login\n2. Register\n3. Show feed\n4. Quit" );
-
-                    option = scan.nextLine();
-                    sanitizedInput = sanitizeInput(option);
-
-                    if (sanitizedInput.equalsIgnoreCase("login")) {
-                        user = userService.userLoginCLI();
-
-                        //  Display login menu only if action was successful
-                        if (user != null) {
-                            isLoggedIn = true;
-                        }
-                    } else if (sanitizedInput.equalsIgnoreCase("register")) {
-                        user = userService.userRegisterCLI();
-
-                        //  Display login menu only if action was successful
-                        if (user != null) {
-                            isLoggedIn = true;
-                        }
-                    } else if (sanitizedInput.equalsIgnoreCase("show feed")) {
-                        postService.showFeed();
-                        actionState.changeState(State.ON_FEED);
-                    } else if (sanitizedInput.equalsIgnoreCase("quit")) {
-                        actionState.changeState(State.QUIT);
-                    }
+                    mainMenuNotLoggedIn();
                 } else {
-                    System.out.println("""
-                            1. Show feed
-                            2. Create post
-                            3. Logout
-                            4. Delete Account
-                            5. Quit""");
-
-                    option = scan.nextLine();
-                    sanitizedInput = sanitizeInput(option);
-
-                    if (sanitizedInput.equalsIgnoreCase("show feed")) {
-                        postService.showFeed();
-                        actionState.changeState(State.ON_FEED);
-                    }  else if (sanitizedInput.equalsIgnoreCase("create post")) {
-                        postService.addPost(user.getUsername());
-                    } else if (sanitizedInput.equalsIgnoreCase("logout")) {
-                        actionState.changeState(State.LOGOUT);
-                    } else if (sanitizedInput.equalsIgnoreCase("delete account")) {
-                        userService.userDeleteCLI(this.user);
-                        isLoggedIn = false;
-                    } else if (sanitizedInput.equalsIgnoreCase("quit")) {
-                        actionState.changeState(State.QUIT);
-                    }
+                    mainMenuIsLoggedIn();
                 }
 
                 break;
@@ -105,11 +59,11 @@ public class ActionState {
 
                 if (sanitizedInput.equalsIgnoreCase("expand post")) {
                     postService.expandPost();
-                    actionState.changeState(State.ON_POST);
+                    changeState(State.ON_POST);
                 } else if (sanitizedInput.equalsIgnoreCase("return to menu")) {
-                    actionState.changeState(State.MAIN_MENU);
+                    changeState(State.MAIN_MENU);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
-                    actionState.changeState(State.QUIT);
+                    changeState(State.QUIT);
                 }
 
                 break;
@@ -125,9 +79,9 @@ public class ActionState {
 
                     if (sanitizedInput.equalsIgnoreCase("return to feed")) {
                         postService.showFeed();
-                        actionState.changeState(State.ON_FEED);
+                        changeState(State.ON_FEED);
                     } else if (sanitizedInput.equalsIgnoreCase("quit")) {
-                        actionState.changeState(State.QUIT);
+                        changeState(State.QUIT);
                     }
                 } else {
                     System.out.println("""
@@ -149,12 +103,12 @@ public class ActionState {
                         //  TODO DOWNVOTE
                     } else if (sanitizedInput.equalsIgnoreCase("select comment")) {
                         //  TODO SELECT COMMENT
-                        actionState.changeState(State.ON_COMMENT);
+                        changeState(State.ON_COMMENT);
                     } else if (sanitizedInput.equalsIgnoreCase("return to feed")) {
                         postService.showFeed();
-                        actionState.changeState(State.ON_FEED);
+                        changeState(State.ON_FEED);
                     } else if (sanitizedInput.equalsIgnoreCase("quit")) {
-                        actionState.changeState(State.QUIT);
+                        changeState(State.QUIT);
                     }
                 }
 
@@ -180,9 +134,9 @@ public class ActionState {
                     //  TODO DOWNVOTE
                 } else if (sanitizedInput.equalsIgnoreCase("return to post")) {
                     postService.expandPost();
-                    actionState.changeState(State.ON_POST);
+                    changeState(State.ON_POST);
                 } else if (sanitizedInput.equalsIgnoreCase("quit")) {
-                    actionState.changeState(State.QUIT);
+                    changeState(State.QUIT);
                 }
                 break;
 
@@ -191,7 +145,7 @@ public class ActionState {
                 user = null;
                 System.out.println("You have been logged out.");
 
-                actionState.changeState(State.MAIN_MENU);
+                changeState(State.MAIN_MENU);
 
                 break;
 
@@ -213,9 +167,61 @@ public class ActionState {
     }
 
     private void mainMenuNotLoggedIn() {
+        System.out.println("1. Login\n2. Register\n3. Show feed\n4. Quit" );
 
+        Scanner scan = new Scanner(System.in);
+        String option = scan.nextLine();
+        String sanitizedInput = sanitizeInput(option);
+
+        if (sanitizedInput.equalsIgnoreCase("login")) {
+            user = userService.userLoginCLI();
+
+            //  Display login menu only if action was successful
+            if (user != null) {
+                isLoggedIn = true;
+            }
+        } else if (sanitizedInput.equalsIgnoreCase("register")) {
+            user = userService.userRegisterCLI();
+
+            //  Display login menu only if action was successful
+            if (user != null) {
+                isLoggedIn = true;
+            }
+        } else if (sanitizedInput.equalsIgnoreCase("show feed")) {
+            postService.showFeed();
+            changeState(State.ON_FEED);
+        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+            changeState(State.QUIT);
+        }
     }
 
+    private void mainMenuIsLoggedIn() {
+        System.out.println("""
+                            1. Show feed
+                            2. Create post
+                            3. Logout
+                            4. Delete Account
+                            5. Quit""");
+
+        Scanner scan = new Scanner(System.in);
+        String option = scan.nextLine();
+        String sanitizedInput = sanitizeInput(option);
+
+        if (sanitizedInput.equalsIgnoreCase("show feed")) {
+            postService.showFeed();
+            changeState(State.ON_FEED);
+        }  else if (sanitizedInput.equalsIgnoreCase("create post")) {
+            postService.addPost(user.getUsername());
+        } else if (sanitizedInput.equalsIgnoreCase("logout")) {
+            changeState(State.LOGOUT);
+        } else if (sanitizedInput.equalsIgnoreCase("delete account")) {
+            userService.userDeleteCLI(this.user);
+            isLoggedIn = false;
+        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+            changeState(State.QUIT);
+        }
+    }
+    
     private void changeState(State state) {
         currentState = state;
     }
