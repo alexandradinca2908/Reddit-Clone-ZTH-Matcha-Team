@@ -25,6 +25,7 @@ public class Post implements Likeable{
 
     public void addComment(User parentUser, String commentText) {
         Comment comment = new Comment(this, parentUser, commentText);
+        commentsCounter++;
     }
 
     @Override
