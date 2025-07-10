@@ -237,8 +237,8 @@ public class ActionState {
                         2. Upvote
                         3. Downvote
                         4. Select reply
-                        4. Return to post
-                        5. Quit""");
+                        5. Return to post
+                        6. Quit""");
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
