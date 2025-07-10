@@ -1,17 +1,26 @@
 package org.example.services;
-import org.example.loggerobjects.LogLevel;
-import org.example.loggerobjects.LogManager;
-import org.example.loggerobjects.Logger;
+import org.example.repositories.PostRepo;
 import org.example.textprocessors.AnsiColors;
 import org.example.entities.Post;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class PostService extends AnsiColors {
+    private static PostService instance;
+    private static final PostRepo postRepo = PostRepo.getInstance();
     Scanner sc = new Scanner(System.in);
+
+    private PostService() {}
+
+    public static PostService getInstance() {
+        if (instance == null) {
+            instance = new PostService();
+
+            postRepo.load(Post.posts);
+        }
+        return instance;
+    }
 
     public void addPost(String username) {
         System.out.println(AnsiColors.toGreen("Please enter title: "));
@@ -32,6 +41,7 @@ public class PostService extends AnsiColors {
         Post.posts.add(post);
         System.out.println(AnsiColors.toGreen("Post added successfully!"));
 
+        postRepo.save(post);
     }
 
     public void deletePost(int postID) {
@@ -42,7 +52,7 @@ public class PostService extends AnsiColors {
         System.out.println(AnsiColors.toGreen("=== Showing a total of " + Post.postsCounter + " posts ==="));
         System.out.println(LINE_SEPARATOR);
         for (Post iter : Post.posts) {
-            System.out.println(AnsiColors.toGreen("PID: " + iter.getPostID() + " | USER: " + iter.getOwnershipName() + "\n"));
+            System.out.println(AnsiColors.toGreen("PID: " + iter.getPostID() + " | USER: " + iter.getUsername() + "\n"));
             System.out.println(iter.title);
             String preview;
             if (iter.body.length() > MAX_TEXT_LENGTH) {
@@ -74,7 +84,7 @@ public class PostService extends AnsiColors {
         for (Post iter : Post.posts) {
             if  (iter.getPostID() == postID) {
                 System.out.println(LINE_SEPARATOR);
-                System.out.println(AnsiColors.toGreen("PID: " + iter.getPostID() + " | USER: " + iter.getOwnershipName() + "\n"));
+                System.out.println(AnsiColors.toGreen("PID: " + iter.getPostID() + " | USER: " + iter.getUsername() + "\n"));
                 System.out.println(iter.title);
                 System.out.println(iter.body + "\n");
                 System.out.print(AnsiColors.toRed("UP ") + iter.voteCount + AnsiColors.toBlue(" DOWN "));

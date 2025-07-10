@@ -7,16 +7,10 @@ import java.util.List;
 
 public class Post extends AnsiColors implements Likeable{
     public static int postsCounter = 0;
-    public static ArrayList<Post> posts = new ArrayList<>(
-            List.of(
-                    new Post("First Post", "This is the body of the first post.", "TestUser1"),
-                    new Post("Second Post", "This is the body of the second post.", "TestUser2"),
-                    new Post("Third Post", "This is the body of the third post.", "TestUser1")
-            )
-    );
+    public static ArrayList<Post> posts = new ArrayList<>();
     int commentsCounter;
     int postID;
-    String ownershipName;
+    String username;
     public String title;
     public String body;
     public int voteCount;
@@ -27,8 +21,8 @@ public class Post extends AnsiColors implements Likeable{
         return postID;
     }
 
-    public String getOwnershipName() {
-        return ownershipName;
+    public String getUsername() {
+        return username;
     }
 
     public int getCommentsCounter() {
@@ -59,10 +53,9 @@ public class Post extends AnsiColors implements Likeable{
         this.body = body;
         this.voteCount = 0;
         this.commentsCounter = 0;
-        this.ownershipName = username;
+        this.username = username;
         this.commentList = new ArrayList<>();
         this.votingUserID = new HashMap<>();
-        postID = postsCounter++;
     }
 
     public void printComments(int indentLevel) {
@@ -96,5 +89,16 @@ public class Post extends AnsiColors implements Likeable{
         }
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setPostId(int dbPostID) {
+        this.postID = dbPostID;
+    }
 }
 
