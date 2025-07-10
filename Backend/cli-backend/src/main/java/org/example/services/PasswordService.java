@@ -8,7 +8,6 @@ import org.example.loggerobjects.LogManager;
 import org.example.loggerobjects.Logger;
 
 public class PasswordService {
-    private static LogManager logManager = LogManager.getInstance();
     public static String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
