@@ -7,7 +7,7 @@ import org.example.textprocessors.AnsiColors;
 
 import java.util.Scanner;
 
-public class CommentService {
+public class CommentService extends AnsiColors {
     Scanner sc = new Scanner(System.in);
     private Post post;
     private User user;
@@ -49,6 +49,14 @@ public class CommentService {
         String cid = sc.nextLine();
         for (Comment comm: post.commentList) {
             if (comm.getCommentID() == Integer.parseInt(cid)) {
+                // show comment
+                int indentLevel = 0;
+                System.out.println(AnsiColors.toOrange("CID: " + comm.getCommentID() + " | USER: " + comm.getParentUser().getUsername()));
+                System.out.println(comm.getCommentText());
+                System.out.print(AnsiColors.toRed("UP ") + comm.getVoteCount() + AnsiColors.toBlue(" DOWN "));
+                System.out.println("| " + comm.replyList.size() + " replies");
+                System.out.println(LINE_SEPARATOR);
+
                 return comm;
             }
         }
