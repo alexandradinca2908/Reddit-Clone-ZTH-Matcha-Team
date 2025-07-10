@@ -24,7 +24,7 @@ public class PasswordService {
 //            logManager.getLogger("FileLogger1").log(LogLevel.VERBOSE, "Password hashed successfully.");
             return hexString.toString();
 
-        } catch (NoSuchAlgorithmException | IOException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("SHA-256 not available", e);
         }
     }

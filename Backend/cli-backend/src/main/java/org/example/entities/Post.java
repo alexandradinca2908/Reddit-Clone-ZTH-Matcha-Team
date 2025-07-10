@@ -83,7 +83,7 @@ public class Post extends AnsiColors implements Likeable{
     public void printReply(CommentReply reply, int indentLevel) {
         String indent = "    ".repeat(indentLevel);
 
-        System.out.println(indent + AnsiColors.toYellow("RID " + reply.getCommentReplyID() + " | USER: " + reply.getParentUser().getUsername()));
+        System.out.println(indent + AnsiColors.toOrange("RID " + reply.getCommentReplyID() + " | USER: " + reply.getParentUser().getUsername()));
         System.out.println(indent + reply.getCommentReplyText());
         System.out.print(indent + AnsiColors.toRed("UP ") + reply.getVotes() + AnsiColors.toBlue(" DOWN "));
         System.out.println("| " + reply.commentReplies.size() + " replies");
