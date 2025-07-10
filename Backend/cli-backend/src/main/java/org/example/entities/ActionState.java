@@ -212,11 +212,11 @@ public class ActionState {
             commentService.addComment(user, post);
         } else if (translatedInput.equalsIgnoreCase("upvote")) {
             postService.votePost(user.getUserID(), post.getPostID(), "upvote");
-            post = postService.expandPost();
+            postService.expandPost(post);
             changeState(State.ON_POST);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
             postService.votePost(user.getUserID(), post.getPostID(), "downvote");
-            post = postService.expandPost();
+            postService.expandPost(post);
             changeState(State.ON_POST);
         } else if (translatedInput.equalsIgnoreCase("select comment")) {
             try {
