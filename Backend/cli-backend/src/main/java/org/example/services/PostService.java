@@ -99,6 +99,17 @@ public class PostService extends AnsiColors {
         throw new IllegalArgumentException(AnsiColors.toRed("Post with ID " + postID + " not found."));
     }
 
+    public void expandPost(Post post) {
+        System.out.println(LINE_SEPARATOR);
+        System.out.println(AnsiColors.toGreen("PID: " + post.getPostID() + " | USER: " + post.getUsername() + "\n"));
+        System.out.println(AnsiColors.addReward(post.title, post.voteCount));
+        System.out.println(post.body + "\n");
+        System.out.print(AnsiColors.toRed("UP ") + post.voteCount + AnsiColors.toBlue(" DOWN "));
+        System.out.println( "| " + post.getCommentsCounter() + " comments");
+        System.out.println(DOUBLE_LINE_SEPARATOR + "\n");
+        post.printComments(0);
+    }
+
     public void votePost(int userID, int postID, String vote) {
         for (Post iter : Post.posts) {
             if (iter.getPostID() == postID) {

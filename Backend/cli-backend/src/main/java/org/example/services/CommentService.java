@@ -46,6 +46,14 @@ public class CommentService extends AnsiColors {
     }
 
 
+    public void printComment(Comment comm) {
+        System.out.println(AnsiColors.toOrange("CID: " + comm.getCommentID() + " | USER: " + comm.getParentUser().getUsername()));
+        System.out.println(comm.getCommentText());
+        System.out.print(AnsiColors.toRed("UP ") + comm.getVoteCount() + AnsiColors.toBlue(" DOWN "));
+        System.out.println("| " + comm.replyList.size() + " replies");
+        System.out.println(LINE_SEPARATOR);
+    }
+
     public Comment selectComment(User user, Post post) {
         int cid;
         while (true) {
@@ -62,11 +70,8 @@ public class CommentService extends AnsiColors {
             if (comm.getCommentID() == cid) {
                 // show comment
                 int indentLevel = 0;
-                System.out.println(AnsiColors.toOrange("CID: " + comm.getCommentID() + " | USER: " + comm.getParentUser().getUsername()));
-                System.out.println(comm.getCommentText());
-                System.out.print(AnsiColors.toRed("UP ") + comm.getVoteCount() + AnsiColors.toBlue(" DOWN "));
-                System.out.println("| " + comm.replyList.size() + " replies");
-                System.out.println(LINE_SEPARATOR);
+
+                printComment(comm);
 
                 for (CommentReply reply : comm.replyList) {
                     printReply(reply, indentLevel + 1);
@@ -159,6 +164,8 @@ public class CommentService extends AnsiColors {
                             }
                         }
                     }
+
+                    System.out.println();
                     break;
                 }
             }

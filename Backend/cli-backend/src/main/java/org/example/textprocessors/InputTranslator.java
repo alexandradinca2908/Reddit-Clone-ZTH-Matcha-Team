@@ -83,8 +83,7 @@ public class InputTranslator {
             case "3" -> "downvote";
             case "4" -> "select comment";
             case "5" -> "return to feed";
-            case "6" -> "logout";
-            case "7" -> "quit";
+            case "6" -> "quit";
             default -> input;
         };
     }
