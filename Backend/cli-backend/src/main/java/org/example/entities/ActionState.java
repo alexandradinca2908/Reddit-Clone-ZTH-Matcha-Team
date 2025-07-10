@@ -1,10 +1,14 @@
 package org.example.entities;
 
+import org.example.loggerobjects.LogLevel;
+import org.example.loggerobjects.LogManager;
+import org.example.loggerobjects.Logger;
 import org.example.services.CommentService;
 import org.example.services.PostService;
 import org.example.services.UserService;
 import org.example.textprocessors.AnsiColors;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import static org.example.textprocessors.InputTranslator.translateInput;
@@ -34,7 +38,7 @@ public class ActionState {
         return actionState;
     }
 
-    public boolean executeAction() {
+    public boolean executeAction() throws IOException {
         switch (currentState) {
             case MAIN_MENU:
                 if (!isLoggedIn) {
@@ -77,7 +81,7 @@ public class ActionState {
         return true;
     }
 
-    private void mainMenuNotLoggedIn() {
+    private void mainMenuNotLoggedIn() throws IOException {
         System.out.println("""
                             1. Login
                             2. Register

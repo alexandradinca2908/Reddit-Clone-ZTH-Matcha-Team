@@ -8,7 +8,6 @@ import org.example.loggerobjects.LogManager;
 import org.example.loggerobjects.Logger;
 
 public class PasswordService {
-    private static LogManager logManager = LogManager.getInstance();
     public static String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -24,7 +23,7 @@ public class PasswordService {
 //            logManager.getLogger("FileLogger1").log(LogLevel.VERBOSE, "Password hashed successfully.");
             return hexString.toString();
 
-        } catch (NoSuchAlgorithmException | IOException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("SHA-256 not available", e);
         }
     }
