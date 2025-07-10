@@ -1,15 +1,11 @@
 package org.example.entities;
 
-import org.example.loggerobjects.LogLevel;
-import org.example.loggerobjects.LogManager;
-import org.example.loggerobjects.Logger;
 import org.example.services.CommentService;
 import org.example.services.PostService;
 import org.example.services.UserService;
 import org.example.textprocessors.AnsiColors;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 import static org.example.textprocessors.InputTranslator.translateInput;
@@ -95,26 +91,26 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
+        String translatedInput = translateInput(option, currentState, isLoggedIn);
 
-        if (sanitizedInput.equalsIgnoreCase("login")) {
+        if (translatedInput.equalsIgnoreCase("login")) {
             user = userService.userLoginCLI();
 
             //  Display login menu only if action was successful
             if (user != null) {
                 isLoggedIn = true;
             }
-        } else if (sanitizedInput.equalsIgnoreCase("register")) {
+        } else if (translatedInput.equalsIgnoreCase("register")) {
             user = userService.userRegisterCLI();
 
             //  Display login menu only if action was successful
             if (user != null) {
                 isLoggedIn = true;
             }
-        } else if (sanitizedInput.equalsIgnoreCase("show feed")) {
+        } else if (translatedInput.equalsIgnoreCase("show feed")) {
             postService.showFeed();
             changeState(State.ON_FEED);
-        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+        } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
         } else {
             unknownCommand();
@@ -131,19 +127,19 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
+        String translatedInput = translateInput(option, currentState, isLoggedIn);
 
-        if (sanitizedInput.equalsIgnoreCase("show feed")) {
+        if (translatedInput.equalsIgnoreCase("show feed")) {
             postService.showFeed();
             changeState(State.ON_FEED);
-        }  else if (sanitizedInput.equalsIgnoreCase("create post")) {
+        }  else if (translatedInput.equalsIgnoreCase("create post")) {
             postService.addPost(user.getUsername());
-        } else if (sanitizedInput.equalsIgnoreCase("logout")) {
+        } else if (translatedInput.equalsIgnoreCase("logout")) {
             changeState(State.LOGOUT);
-        } else if (sanitizedInput.equalsIgnoreCase("delete account")) {
+        } else if (translatedInput.equalsIgnoreCase("delete account")) {
             userService.userDeleteCLI(this.user);
             isLoggedIn = false;
-        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+        } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
         } else {
             unknownCommand();
@@ -158,9 +154,9 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
+        String translatedInput = translateInput(option, currentState, isLoggedIn);
 
-        if (sanitizedInput.equalsIgnoreCase("expand post")) {
+        if (translatedInput.equalsIgnoreCase("expand post")) {
             try {
                 post = postService.expandPost();
                 changeState(State.ON_POST);
@@ -168,10 +164,10 @@ public class ActionState {
                 System.out.println(e.getMessage());
             }
 
-        } else if (sanitizedInput.equalsIgnoreCase("return to menu")) {
+        } else if (translatedInput.equalsIgnoreCase("return to menu")) {
             post = null;
             changeState(State.MAIN_MENU);
-        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+        } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
         } else {
             unknownCommand();
@@ -186,12 +182,12 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
+        String translatedInput = translateInput(option, currentState, isLoggedIn);
 
-        if (sanitizedInput.equalsIgnoreCase("return to feed")) {
+        if (translatedInput.equalsIgnoreCase("return to feed")) {
             postService.showFeed();
             changeState(State.ON_FEED);
-        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+        } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
         } else {
             unknownCommand();
@@ -209,25 +205,25 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
+        String translatedInput = translateInput(option, currentState, isLoggedIn);
 
-        if (sanitizedInput.equalsIgnoreCase("comment")) {
+        if (translatedInput.equalsIgnoreCase("comment")) {
             commentService.addComment(user, post);
-        } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
+        } else if (translatedInput.equalsIgnoreCase("upvote")) {
             postService.votePost(user.getUserID(), post.getPostID(), "upvote");
-        } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
+        } else if (translatedInput.equalsIgnoreCase("downvote")) {
             postService.votePost(user.getUserID(), post.getPostID(), "downvote");
-        } else if (sanitizedInput.equalsIgnoreCase("select comment")) {
+        } else if (translatedInput.equalsIgnoreCase("select comment")) {
             try {
                 comment = commentService.selectComment(user, post);
                 changeState(State.ON_COMMENT);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-        } else if (sanitizedInput.equalsIgnoreCase("return to feed")) {
+        } else if (translatedInput.equalsIgnoreCase("return to feed")) {
             postService.showFeed();
             changeState(State.ON_FEED);
-        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+        } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
         } else {
             unknownCommand();
@@ -246,20 +242,20 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
+        String translatedInput = translateInput(option, currentState, isLoggedIn);
 
-        if (sanitizedInput.equalsIgnoreCase("reply")) {
+        if (translatedInput.equalsIgnoreCase("reply")) {
             commentService.addReply(user, post, comment);
-        } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
+        } else if (translatedInput.equalsIgnoreCase("upvote")) {
             commentService.voteComment(user.getUserID(), post.getPostID(), comment.getCommentID(), "upvote");
-        } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
+        } else if (translatedInput.equalsIgnoreCase("downvote")) {
             commentService.voteComment(user.getUserID(), post.getPostID(),comment.getCommentID(), "downvote");
-        } else if (sanitizedInput.equalsIgnoreCase("select reply")) {
+        } else if (translatedInput.equalsIgnoreCase("select reply")) {
             //  TODO SELECT REPLY
-        } else if (sanitizedInput.equalsIgnoreCase("return to post")) {
+        } else if (translatedInput.equalsIgnoreCase("return to post")) {
             postService.expandPost();
             changeState(State.ON_POST);
-        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+        } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
         } else {
             unknownCommand();
@@ -276,16 +272,16 @@ public class ActionState {
 
         Scanner scan = new Scanner(System.in);
         String option = scan.nextLine();
-        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
+        String translatedInput = translateInput(option, currentState, isLoggedIn);
 
-        if (sanitizedInput.equalsIgnoreCase("upvote")) {
+        if (translatedInput.equalsIgnoreCase("upvote")) {
             //  TODO UPVOTE REPLY
-        } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
+        } else if (translatedInput.equalsIgnoreCase("downvote")) {
             //  TODO DOWNVOTE REPLY
-        } else if (sanitizedInput.equalsIgnoreCase("return to comment")) {
+        } else if (translatedInput.equalsIgnoreCase("return to comment")) {
             //  TODO RETURN TO COMMENT?
             changeState(State.ON_COMMENT);
-        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+        } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
         } else {
             unknownCommand();
@@ -312,6 +308,7 @@ public class ActionState {
 
     private void unknownCommand() {
         System.out.println(AnsiColors.toRed("Unknown command."));
+        System.out.println(AnsiColors.toOrange("Make sure to type the corresponding number or exact command!"));
     }
 
     private void changeState(State state) {

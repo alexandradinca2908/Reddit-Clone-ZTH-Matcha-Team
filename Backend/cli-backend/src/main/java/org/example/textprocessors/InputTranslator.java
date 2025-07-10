@@ -39,7 +39,7 @@ public class InputTranslator {
             case "2" -> "register";
             case "3" -> "show feed";
             case "4" -> "quit";
-            default -> "";
+            default -> input;
         };
     }
 
@@ -51,7 +51,7 @@ public class InputTranslator {
             case "3" -> "logout";
             case "4" -> "delete account";
             case "5" -> "quit";
-            default -> "";
+            default -> input;
         };
     }
 
@@ -61,7 +61,7 @@ public class InputTranslator {
             case "1" -> "expand post";
             case "2" -> "return to menu";
             case "3" -> "quit";
-            default -> "";
+            default -> input;
         };
     }
 
@@ -70,7 +70,7 @@ public class InputTranslator {
         return switch (input) {
             case "1" -> "return to feed";
             case "2" -> "quit";
-            default -> "";
+            default -> input;
         };
     }
 
@@ -85,7 +85,7 @@ public class InputTranslator {
             case "5" -> "return to feed";
             case "6" -> "logout";
             case "7" -> "quit";
-            default -> "";
+            default -> input;
         };
     }
 
@@ -99,7 +99,7 @@ public class InputTranslator {
             case "4" -> "select reply";
             case "5" -> "return to post";
             case "6" -> "quit";
-            default -> "";
+            default -> input;
         };
     }
 
@@ -110,7 +110,7 @@ public class InputTranslator {
             case "2" -> "downvote";
             case "3" -> "return to comment";
             case "4" -> "quit";
-            default -> "";
+            default -> input;
         };
     }
 }

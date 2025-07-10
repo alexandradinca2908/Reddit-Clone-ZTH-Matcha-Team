@@ -11,7 +11,7 @@ public class Main {
 
         boolean isActive = true;
 
-        System.out.println(AnsiColors.toOrange("Welcome to Reddit!\nPlease choose an option:\n"));
+        System.out.println(AnsiColors.toPurple("Welcome to Reddit!\nPlease choose an option:\n"));
 
         while (isActive) {
             isActive = actionState.executeAction();
