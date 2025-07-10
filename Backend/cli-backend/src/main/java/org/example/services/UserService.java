@@ -1,14 +1,18 @@
 package org.example.services;
 import org.example.entities.User;
+import org.example.repositories.UserRepo;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserService {
     private static UserService instance;
-    private static final ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<User> users = new ArrayList<>();
     private static final Scanner sc = new Scanner(System.in);
     private static final PasswordService passwordService = new PasswordService();
+    private static final UserRepo userRepo = new UserRepo();
 
     private UserService() {}
 
@@ -16,16 +20,7 @@ public class UserService {
         if (instance == null) {
             instance = new UserService();
 
-            // Pre-populate with a default user for testing purposes
-            String defaultUsername = "TestUser1";
-            String defaultEmail = "test1@user.com";
-            String defaultPassword = PasswordService.hashPassword("TestUser1!");
-            users.add(new User(defaultUsername, defaultEmail, defaultPassword));
-
-            defaultUsername = "TestUser2";
-            defaultEmail = "test2@user.com";
-            defaultPassword = PasswordService.hashPassword("TestUser2!");
-            users.add(new User(defaultUsername, defaultEmail, defaultPassword));
+            userRepo.load(users);
         }
         return instance;
     }
@@ -38,9 +33,16 @@ public class UserService {
         String email = readEmail();
         String password = readPassword();
 
-        users.add(new User(username, email, password));
-        System.out.println("Registration successful! Welcome, " + username + "!");
-        return users.getLast(); // Return the registered user for instant login
+        try {
+            User newUser = new User(username, email, password);
+            userRepo.save(newUser);
+            System.out.println("Registration successful! Welcome, " + username + "!");
+            return newUser;
+        }
+        catch (SQLException e) {
+            System.out.println("Registration failed: " + e.getMessage());
+            return null;
+        }
     }
 
     public User userLoginCLI() {

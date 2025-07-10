@@ -19,7 +19,6 @@ public class PasswordService {
                 hexString.append(String.format("%02x", b));
             }
 
-            // TODO: Uncomment the line below to enable logging
 //            logManager.getLogger("FileLogger1").log(LogLevel.VERBOSE, "Password hashed successfully.");
             return hexString.toString();
 
