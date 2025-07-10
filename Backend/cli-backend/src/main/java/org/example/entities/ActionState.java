@@ -217,8 +217,12 @@ public class ActionState {
         } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
             postService.votePost(user.getUserID(), post.getPostID(), "downvote");
         } else if (sanitizedInput.equalsIgnoreCase("select comment")) {
-            comment = commentService.selectComment(user, post);
-            changeState(State.ON_COMMENT);
+            try {
+                comment = commentService.selectComment(user, post);
+                changeState(State.ON_COMMENT);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         } else if (sanitizedInput.equalsIgnoreCase("return to feed")) {
             postService.showFeed();
             changeState(State.ON_FEED);

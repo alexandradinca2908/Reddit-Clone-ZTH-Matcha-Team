@@ -57,6 +57,7 @@ public class Comment implements Likeable {
     public void setCommentText(String commentText) {
         this.commentText = commentText;
     }
+
     public int getVoteCount() {
         return voteCount;
     }

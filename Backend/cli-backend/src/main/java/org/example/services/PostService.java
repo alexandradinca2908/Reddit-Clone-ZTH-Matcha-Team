@@ -85,7 +85,7 @@ public class PostService extends AnsiColors {
     }
 
     public void votePost(int userID, int postID, String vote) {
-        for(Post iter : Post.posts) {
+        for (Post iter : Post.posts) {
             if (iter.getPostID() == postID) {
                 if (vote.equalsIgnoreCase("upvote")) {
                     if (iter.votingUserID.containsKey(userID)) { // am votat deja dar nu stiu ce am votat
@@ -106,7 +106,7 @@ public class PostService extends AnsiColors {
                 }
                 else if (vote.equalsIgnoreCase("downvote")) {
                     if (iter.votingUserID.containsKey(userID)) {
-                        if(iter.votingUserID.get(userID).equals(-1)) {
+                        if (iter.votingUserID.get(userID).equals(-1)) {
                             iter.upvote();
                             iter.votingUserID.remove(userID);
                         }
