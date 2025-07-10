@@ -24,6 +24,7 @@ public class ActionState {
     private User user;
     private Post post;
     private Comment comment;
+    private CommentReply commentReply;
 
     private ActionState() {
         this.isLoggedIn = false;
@@ -256,6 +257,7 @@ public class ActionState {
             commentService.voteComment(user.getUserID(), post.getPostID(),comment.getCommentID(), "downvote");
         } else if (sanitizedInput.equalsIgnoreCase("select reply")) {
             //  TODO SELECT REPLY
+            commentReply = commentService.selectReply(user, comment);
         } else if (sanitizedInput.equalsIgnoreCase("return to post")) {
             postService.expandPost();
             changeState(State.ON_POST);

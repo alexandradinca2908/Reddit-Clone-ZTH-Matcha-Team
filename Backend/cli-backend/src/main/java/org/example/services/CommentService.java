@@ -66,6 +66,28 @@ public class CommentService {
         throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + cid + " not found."));
     }
 
+    public CommentReply selectReply(User user, Comment comment) {
+        int crid = -1;
+        while (true) {
+            System.out.print("Please enter the CRID: ");
+            try {
+                crid = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println(AnsiColors.toYellow("Invalid input. Please enter a valid number."));
+            }
+
+            for(CommentReply reply : comment.replyList) {
+                if(reply.getCommentReplyID() == crid) {
+                    return reply;
+                }
+            }
+
+            throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + crid + " not found."));
+        }
+        return null;
+    }
+
     public void voteComment(int userID, int postID, int commentID, String vote) {
         for (Post iter : Post.posts) {
             if (iter.getPostID() == postID) {
@@ -111,5 +133,54 @@ public class CommentService {
             }
         }
 
+    }
+
+    public void voteReply(int userID, int postID, int commentID, int commentReplyID, String vote) {
+        for (Post post : Post.posts) {
+            if (post.getPostID() == postID) {
+                for (Comment comm : post.commentList) {
+                    if (comm.getCommentID() == commentID) {
+                        for(CommentReply reply : comm.replyList) {
+                            if(reply.getCommentReplyID() == commentReplyID) {
+                                if (vote.equalsIgnoreCase("upvote")) {
+                                    if (reply.votingUserID.containsKey(userID)) { // am votat deja dar nu stiu ce am votat
+                                        if (reply.votingUserID.get(userID).equals(1)) { //am votat deja upvote
+                                            reply.downvote();
+                                            reply.votingUserID.remove(userID);
+                                        }
+                                        else {
+                                            reply.upvote();
+                                            reply.upvote();
+                                            reply.votingUserID.put(userID, 1);
+                                        }
+                                    }
+                                    else {
+                                        reply.upvote();
+                                        reply.votingUserID.put(userID, 1);
+                                    }
+                                }
+                                else if (vote.equalsIgnoreCase("downvote")) {
+                                    if (reply.votingUserID.containsKey(userID)) {
+                                        if(reply.votingUserID.get(userID).equals(-1)) {
+                                            reply.upvote();
+                                            reply.votingUserID.remove(userID);
+                                        }
+                                        else {
+                                            reply.downvote();
+                                            reply.downvote();
+                                            reply.votingUserID.put(userID, -1);
+                                        }
+                                    }
+                                    else {
+                                        reply.downvote();
+                                        reply.votingUserID.put(userID, -1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

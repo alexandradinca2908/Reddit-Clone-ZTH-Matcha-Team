@@ -1,6 +1,7 @@
 package org.example.entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CommentReply implements Likeable {
     private static int commentReplyCounter = 0;
@@ -9,6 +10,7 @@ public class CommentReply implements Likeable {
     private final User parentUser;
     private String commentReplyText;
     private int voteCount;
+    public HashMap<Integer, Integer> votingUserID;
     public ArrayList<CommentReply> commentReplies = new ArrayList<CommentReply>();
 
     public CommentReply(Comment parentComment, User parentUser, String commentReplyText) {
