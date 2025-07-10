@@ -72,7 +72,7 @@ public class PostService extends AnsiColors {
                 System.out.println(iter.body + "\n");
                 System.out.print(AnsiColors.toRed("UP ") + iter.voteCount + AnsiColors.toBlue(" DOWN "));
                 System.out.println( "| " + iter.getCommentsCounter() + " comments");
-                System.out.println(DOUBLE_LINE_SEPARATOR);
+                System.out.println(DOUBLE_LINE_SEPARATOR + "\n");
                 iter.printComments(0);
 
                 return iter;

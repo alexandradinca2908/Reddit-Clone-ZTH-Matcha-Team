@@ -209,10 +209,8 @@ public class ActionState {
         if (sanitizedInput.equalsIgnoreCase("comment")) {
             commentService.addComment(user, post);
         } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
-            //  TODO UPVOTE
             postService.votePost(user.getUserID(), post.getPostID(), "upvote");
         } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
-            //  TODO DOWNVOTE
             postService.votePost(user.getUserID(), post.getPostID(), "downvote");
         } else if (sanitizedInput.equalsIgnoreCase("select comment")) {
             comment = commentService.selectComment(user, post);
@@ -244,9 +242,9 @@ public class ActionState {
         if (sanitizedInput.equalsIgnoreCase("reply")) {
             commentService.addReply(user, post, comment);
         } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
-            //  TODO UPVOTE
+            commentService.voteComment(user.getUserID(), post.getPostID(), comment.getCommentID(), "upvote");
         } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
-            //  TODO DOWNVOTE
+            commentService.voteComment(user.getUserID(), post.getPostID(),comment.getCommentID(), "downvote");
         } else if (sanitizedInput.equalsIgnoreCase("return to post")) {
             postService.expandPost();
             changeState(State.ON_POST);

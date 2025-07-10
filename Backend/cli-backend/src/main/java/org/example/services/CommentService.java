@@ -54,4 +54,51 @@ public class CommentService {
         }
         throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + cid + " not found."));
     }
+
+    public void voteComment(int userID, int postID, int commentID, String vote) {
+        for(Post iter : Post.posts) {
+            if(iter.getPostID() == postID) {
+                for(Comment comm : iter.commentList) {
+                    if(comm.getCommentID() == commentID) {
+                        if(vote.equalsIgnoreCase("upvote")) {
+                            if(comm.votingUserID.containsKey(userID)) { // am votat deja dar nu stiu ce am votat
+                                if(comm.votingUserID.get(userID).equals(1)) { //am votat deja upvote
+                                    comm.downvote();
+                                    comm.votingUserID.remove(userID);
+                                }
+                                else {
+                                    comm.upvote();
+                                    comm.upvote();
+                                    comm.votingUserID.put(userID, 1);
+                                }
+                            }
+                            else {
+                                comm.upvote();
+                                comm.votingUserID.put(userID, 1);
+                            }
+                        }
+                        else if(vote.equalsIgnoreCase("downvote")) {
+                            if(comm.votingUserID.containsKey(userID)) {
+                                if(comm.votingUserID.get(userID).equals(-1)) {
+                                    comm.upvote();
+                                    comm.votingUserID.remove(userID);
+                                }
+                                else {
+                                    comm.downvote();
+                                    comm.downvote();
+                                    comm.votingUserID.put(userID, -1);
+                                }
+                            }
+                            else {
+                                comm.downvote();
+                                comm.votingUserID.put(userID, -1);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+    }
 }
