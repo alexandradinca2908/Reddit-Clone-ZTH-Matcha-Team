@@ -48,13 +48,12 @@ Script pt Windows
 
 ✅ PowerShell Script: Build-DockerImage.ps1
 
-<details> <summary><strong>▶️ PowerShell script to generate Dockerfile and build image</strong></summary>
 $imageName = "matcha-app"
 $tag = "v1"
 $dockerfilePath = "Dockerfile"
 $jarFile = "target/matcha-1.0-SNAPSHOT.jar"
 
-@"
+$dockerfileContent = @"
 FROM eclipse-temurin:24-jdk
 
 WORKDIR /app
@@ -62,7 +61,9 @@ WORKDIR /app
 COPY $jarFile app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
-"@ | Set-Content -Path $dockerfilePath -Encoding UTF8
+"@
+
+$dockerfileContent | Set-Content -Path $dockerfilePath -Encoding UTF8
 
 Write-Host "Dockerfile created."
 
@@ -73,7 +74,6 @@ if ($?) {
 } else {
     Write-Host "Docker build failed." -ForegroundColor Red
 }
-</details>
 
 📁 Folder structure before running the script:
 project-root/
