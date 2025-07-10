@@ -285,12 +285,10 @@ public class ActionState {
         if (translatedInput.equalsIgnoreCase("upvote")) {
             //  TODO UPVOTE REPLY
             commentService.voteReply(user.getUserID(), post.getPostID(), comment.getCommentID(), commentReply.getCommentReplyID(), "upvote");
-            commentReply = commentService.selectReply(user, comment);
             changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
             //  TODO DOWNVOTE REPLY
             commentService.voteReply(user.getUserID(), post.getPostID(), comment.getCommentID(), commentReply.getCommentReplyID(), "downvote");
-            commentReply = commentService.selectReply(user, comment);
             changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("return to comment")) {
             //  TODO RETURN TO COMMENT?

@@ -134,16 +134,19 @@ public class CommentService extends AnsiColors {
                                 if (comm.votingUserID.get(userID).equals(1)) { //am votat deja upvote
                                     comm.downvote();
                                     comm.votingUserID.remove(userID);
+                                    System.out.println("Upvote removed.");
                                 }
                                 else {
                                     comm.upvote();
                                     comm.upvote();
                                     comm.votingUserID.put(userID, 1);
+                                    System.out.println("Downvote changed to upvote.");
                                 }
                             }
                             else {
                                 comm.upvote();
                                 comm.votingUserID.put(userID, 1);
+                                System.out.println("Comment upvoted.");
                             }
                         }
                         else if (vote.equalsIgnoreCase("downvote")) {
@@ -151,16 +154,19 @@ public class CommentService extends AnsiColors {
                                 if(comm.votingUserID.get(userID).equals(-1)) {
                                     comm.upvote();
                                     comm.votingUserID.remove(userID);
+                                    System.out.println("Downvote removed.");
                                 }
                                 else {
                                     comm.downvote();
                                     comm.downvote();
                                     comm.votingUserID.put(userID, -1);
+                                    System.out.println("Upvote changed to downvote.");
                                 }
                             }
                             else {
                                 comm.downvote();
                                 comm.votingUserID.put(userID, -1);
+                                System.out.println("Comment downvoted.");
                             }
                         }
                     }
@@ -185,16 +191,19 @@ public class CommentService extends AnsiColors {
                                         if (reply.votingUserID.get(userID).equals(1)) { //am votat deja upvote
                                             reply.downvote();
                                             reply.votingUserID.remove(userID);
+                                            System.out.println("Upvote removed.");
                                         }
                                         else {
                                             reply.upvote();
                                             reply.upvote();
                                             reply.votingUserID.put(userID, 1);
+                                            System.out.println("Downvote changed to upvote.");
                                         }
                                     }
                                     else {
                                         reply.upvote();
                                         reply.votingUserID.put(userID, 1);
+                                        System.out.println("Reply upvoted.");
                                     }
                                 }
                                 else if (vote.equalsIgnoreCase("downvote")) {
@@ -202,16 +211,19 @@ public class CommentService extends AnsiColors {
                                         if(reply.votingUserID.get(userID).equals(-1)) {
                                             reply.upvote();
                                             reply.votingUserID.remove(userID);
+                                            System.out.println("Downvote removed.");
                                         }
                                         else {
                                             reply.downvote();
                                             reply.downvote();
                                             reply.votingUserID.put(userID, -1);
+                                            System.out.println("Upvote changed to downvote.");
                                         }
                                     }
                                     else {
                                         reply.downvote();
                                         reply.votingUserID.put(userID, -1);
+                                        System.out.println("Reply downvoted.");
                                     }
                                 }
                             }
