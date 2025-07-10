@@ -49,7 +49,7 @@ public class PostService extends AnsiColors {
     }
 
     public void showFeed() {
-        System.out.println(AnsiColors.toGreen("=== Showing a total of " + Post.postsCounter + " posts ==="));
+        System.out.println(AnsiColors.toGreen("=== Showing a total of " + Post.posts.size() + " posts ==="));
         System.out.println(LINE_SEPARATOR);
         for (Post iter : Post.posts) {
             System.out.println(AnsiColors.toGreen("PID: " + iter.getPostID() + " | USER: " + iter.getUsername() + "\n"));
@@ -62,7 +62,7 @@ public class PostService extends AnsiColors {
             }
             System.out.println(preview + "\n");
             System.out.print(AnsiColors.toRed("UP ") + iter.voteCount + AnsiColors.toBlue(" DOWN "));
-            System.out.println( "| " + iter.getCommentsCounter() + " comments");
+            System.out.println( "| " + iter.commentList.size()+ " comments");
             System.out.println(LINE_SEPARATOR);
         }
     }
