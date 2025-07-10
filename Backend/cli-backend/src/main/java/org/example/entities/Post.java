@@ -2,6 +2,7 @@ package org.example.entities;
 import org.example.textprocessors.AnsiColors;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Post extends AnsiColors implements Likeable{
@@ -19,6 +20,7 @@ public class Post extends AnsiColors implements Likeable{
     public String title;
     public String body;
     public int voteCount;
+    public HashMap<Integer, Integer> votingUserID; //K = userID , V = -1/+1 -> downvote/upvote
     public ArrayList<Comment> commentList;
 
     public int getPostID() {
@@ -59,6 +61,7 @@ public class Post extends AnsiColors implements Likeable{
         this.commentsCounter = 0;
         this.ownershipName = username;
         this.commentList = new ArrayList<>();
+        this.votingUserID = new HashMap<>();
         postID = postsCounter++;
     }
 
