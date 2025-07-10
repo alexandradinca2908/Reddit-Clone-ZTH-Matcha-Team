@@ -9,6 +9,7 @@ import org.example.services.UserService;
 import org.example.textprocessors.AnsiColors;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import static org.example.textprocessors.InputTranslator.translateInput;
@@ -85,7 +86,7 @@ public class ActionState {
         return true;
     }
 
-    private void mainMenuNotLoggedIn() throws IOException {
+    private void mainMenuNotLoggedIn() {
         System.out.println("""
                             1. Login
                             2. Register

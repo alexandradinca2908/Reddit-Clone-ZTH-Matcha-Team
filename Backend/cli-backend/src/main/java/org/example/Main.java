@@ -4,6 +4,7 @@ import org.example.entities.ActionState;
 import org.example.textprocessors.AnsiColors;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
