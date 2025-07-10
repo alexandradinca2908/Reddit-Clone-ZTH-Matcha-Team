@@ -67,4 +67,7 @@ public class Comment implements Likeable {
         replyList.add(commentReply);
     }
 
+    public void setCommentID(int commentId) {
+        this.commentID = commentId;
+    }
 }

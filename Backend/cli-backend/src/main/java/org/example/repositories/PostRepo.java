@@ -50,10 +50,6 @@ public class PostRepo {
         }
     }
 
-    /**
-     * Loads all posts from the database.
-     * @return A List of Post objects.
-     */
     public void load(ArrayList<Post> posts) {
         String sql = "SELECT post_id, username, title, description FROM post";
 
@@ -77,17 +73,12 @@ public class PostRepo {
         }
     }
 
-    /**
-     * Deletes a post from the database by its ID.
-     * @param postId The ID of the post to delete.
-     * @throws SQLException if a database error occurs.
-     */
-    public void delete(int postId) throws SQLException {
-        String sql = "DELETE FROM post WHERE post_id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, postId);
-            pstmt.executeUpdate();
+    public Post findById(int postId) {
+        for (Post post : Post.posts) {
+            if (post.getPostID() == postId) {
+                return post;
+            }
         }
+        return null;
     }
 }
