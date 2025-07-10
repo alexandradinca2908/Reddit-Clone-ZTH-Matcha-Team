@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.example.dbconnection.DatabaseConnection;
+import org.example.services.UserService;
 
 public class UserRepo {
 
@@ -49,5 +50,18 @@ public class UserRepo {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public User findByUsername(String username) {
+        if (username == null || username.isEmpty()) {
+            return null;
+        }
+
+        for (User user : UserService.users) {
+            if (username.equals(user.getUsername())) {
+                return user;
+            }
+        }
+        return null;
     }
 }

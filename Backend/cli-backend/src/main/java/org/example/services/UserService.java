@@ -9,10 +9,10 @@ import java.util.Scanner;
 
 public class UserService {
     private static UserService instance;
-    private static ArrayList<User> users = new ArrayList<>();
+    public static ArrayList<User> users = new ArrayList<>();
     private static final Scanner sc = new Scanner(System.in);
     private static final PasswordService passwordService = new PasswordService();
-    private static final UserRepo userRepo = new UserRepo();
+    public static final UserRepo userRepo = new UserRepo();
 
     private UserService() {}
 

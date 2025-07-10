@@ -1,4 +1,5 @@
 package org.example.entities;
+import org.example.repositories.CommentRepo;
 import org.example.textprocessors.AnsiColors;
 
 import java.util.ArrayList;
@@ -6,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Post extends AnsiColors implements Likeable{
+    private static final CommentRepo commentRepo = CommentRepo.getInstance();
     public static int postsCounter = 0;
     public static ArrayList<Post> posts = new ArrayList<>();
     int commentsCounter;
@@ -32,6 +34,7 @@ public class Post extends AnsiColors implements Likeable{
     public void addComment(User parentUser, String commentText) {
         Comment comment = new Comment(this, parentUser, commentText);
         this.commentList.add(comment);
+        commentRepo.save(comment);
         commentsCounter++;
     }
 
