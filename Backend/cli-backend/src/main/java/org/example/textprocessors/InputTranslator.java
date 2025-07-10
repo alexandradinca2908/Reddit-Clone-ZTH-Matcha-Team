@@ -24,6 +24,9 @@ public class InputTranslator {
 
             case ON_COMMENT:
                 return translateOnCommentInput(input);
+
+            case ON_REPLY:
+                return translateOnReplyInput(input);
         }
 
         return input;
@@ -87,13 +90,26 @@ public class InputTranslator {
     }
 
     static String translateOnCommentInput(String input) {
-        //  1. Reply, 2. Upvote, 3. Downvote, 4. Return to post, 5. Quit
+        //  1. Reply, 2. Upvote, 3. Downvote
+        //  4. Select reply, 5. Return to post, 6. Quit
         return switch (input) {
             case "1" -> "reply";
             case "2" -> "upvote";
             case "3" -> "downvote";
-            case "4" -> "return to post";
-            case "5" -> "quit";
+            case "4" -> "select reply";
+            case "5" -> "return to post";
+            case "6" -> "quit";
+            default -> "";
+        };
+    }
+
+    static String translateOnReplyInput(String input) {
+        //  1. Upvote, 2. Downvote, 3. Return to comment, 4. Quit
+        return switch (input) {
+            case "1" -> "upvote";
+            case "2" -> "downvote";
+            case "3" -> "return to comment";
+            case "4" -> "quit";
             default -> "";
         };
     }
