@@ -6,7 +6,9 @@
       <sourceFolder url="file://$MODULE_DIR$/Backend/cli-backend/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/out/production/Matcha/main/java" isTestSource="false" />
     </content>
+    <content url="jar://$USER_HOME$/Downloads/postgresql-42.7.3.jar!/" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="postgresql-42.7.3" level="project" />
   </component>
 </module>

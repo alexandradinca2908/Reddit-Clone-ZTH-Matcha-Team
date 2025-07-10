@@ -68,10 +68,29 @@ public class CommentService extends AnsiColors {
                 System.out.println("| " + comm.replyList.size() + " replies");
                 System.out.println(LINE_SEPARATOR);
 
+                for (CommentReply reply : comm.replyList) {
+                    printReply(reply, indentLevel + 1);
+                }
+
                 return comm;
             }
         }
         throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + cid + " not found."));
+    }
+
+    public void printReply(CommentReply reply, int indentLevel) {
+        String indent = "    ".repeat(indentLevel);
+
+        System.out.println(indent + AnsiColors.toOrange("RID " + reply.getCommentReplyID() + " | USER: " + reply.getParentUser().getUsername()));
+        System.out.println(AnsiColors.addReward(reply.getCommentReplyText(), reply.getVotes()));
+        System.out.print(indent + AnsiColors.toRed("UP ") + reply.getVotes() + AnsiColors.toBlue(" DOWN "));
+        System.out.println("| " + reply.commentReplies.size() + " replies");
+        System.out.println(indent + LINE_SEPARATOR);
+
+        // daca o sa avem nested replies
+        for (CommentReply nested : reply.getCommentReplies()) {
+            printReply(nested, indentLevel + 1);
+        }
     }
 
     public CommentReply selectReply(User user, Comment comment) {

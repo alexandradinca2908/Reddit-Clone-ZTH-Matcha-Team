@@ -63,7 +63,7 @@ public class Post extends AnsiColors implements Likeable{
 
         for (Comment comment : commentList) {
             System.out.println(indent + AnsiColors.toOrange("CID: " + comment.getCommentID() + " | USER: " + comment.getParentUser().getUsername()));
-            System.out.println(indent + comment.getCommentText());
+            System.out.println(AnsiColors.addReward(comment.getCommentText(), comment.getVotes()));
             System.out.print(indent + AnsiColors.toRed("UP ") + comment.getVoteCount() + AnsiColors.toBlue(" DOWN "));
             System.out.println("| " + comment.replyList.size() + " replies");
             System.out.println(indent + LINE_SEPARATOR);
@@ -78,7 +78,7 @@ public class Post extends AnsiColors implements Likeable{
         String indent = "    ".repeat(indentLevel);
 
         System.out.println(indent + AnsiColors.toOrange("RID " + reply.getCommentReplyID() + " | USER: " + reply.getParentUser().getUsername()));
-        System.out.println(indent + reply.getCommentReplyText());
+        System.out.println(AnsiColors.addReward(reply.getCommentReplyText(), reply.getVotes()));
         System.out.print(indent + AnsiColors.toRed("UP ") + reply.getVotes() + AnsiColors.toBlue(" DOWN "));
         System.out.println("| " + reply.commentReplies.size() + " replies");
         System.out.println(indent + LINE_SEPARATOR);
