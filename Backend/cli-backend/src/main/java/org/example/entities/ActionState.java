@@ -66,6 +66,10 @@ public class ActionState {
                 onComment();
                 break;
 
+            case ON_REPLY:
+                onReply();
+                break;
+
             case LOGOUT:
                 logout();
                 break;
@@ -214,7 +218,6 @@ public class ActionState {
             postService.votePost(user.getUserID(), post.getPostID(), "downvote");
         } else if (sanitizedInput.equalsIgnoreCase("select comment")) {
             comment = commentService.selectComment(user, post);
-            //commentService.addReply(user, post, comment);
             changeState(State.ON_COMMENT);
         } else if (sanitizedInput.equalsIgnoreCase("return to feed")) {
             postService.showFeed();
@@ -226,12 +229,13 @@ public class ActionState {
         }
     }
 
-    private void onComment() {
+    private void onComment() throws IOException {
         //  This state can only be accessed if the user is logged in
         System.out.println("""
                         1. Reply
                         2. Upvote
                         3. Downvote
+                        4. Select reply
                         4. Return to post
                         5. Quit""");
 
@@ -245,9 +249,37 @@ public class ActionState {
             commentService.voteComment(user.getUserID(), post.getPostID(), comment.getCommentID(), "upvote");
         } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
             commentService.voteComment(user.getUserID(), post.getPostID(),comment.getCommentID(), "downvote");
+        } else if (sanitizedInput.equalsIgnoreCase("select reply")) {
+            //  TODO SELECT REPLY
         } else if (sanitizedInput.equalsIgnoreCase("return to post")) {
             postService.expandPost();
             changeState(State.ON_POST);
+        } else if (sanitizedInput.equalsIgnoreCase("quit")) {
+            changeState(State.QUIT);
+        } else {
+            unknownCommand();
+        }
+    }
+
+    private void onReply() {
+        //  This state can only be accessed if the user is logged in
+        System.out.println("""
+                        1. Upvote
+                        2. Downvote
+                        3. Return to comment
+                        4. Quit""");
+
+        Scanner scan = new Scanner(System.in);
+        String option = scan.nextLine();
+        String sanitizedInput = translateInput(option, currentState, isLoggedIn);
+
+        if (sanitizedInput.equalsIgnoreCase("upvote")) {
+            //  TODO UPVOTE REPLY
+        } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
+            //  TODO DOWNVOTE REPLY
+        } else if (sanitizedInput.equalsIgnoreCase("return to comment")) {
+            //  TODO RETURN TO COMMENT?
+            changeState(State.ON_COMMENT);
         } else if (sanitizedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
         } else {
