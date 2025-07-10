@@ -12,7 +12,7 @@ import static org.example.textprocessors.InputTranslator.translateInput;
 
 public class ActionState {
     private final static UserService userService = UserService.getInstance();
-    private final static PostService postService = new PostService();
+    private final static PostService postService = PostService.getInstance();
     private final static CommentService commentService = new CommentService();
     private static ActionState actionState;
     private boolean isLoggedIn;
