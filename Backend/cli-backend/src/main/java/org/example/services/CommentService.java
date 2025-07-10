@@ -46,11 +46,19 @@ public class CommentService {
     }
 
     public Comment selectComment(User user, Post post) {
-        System.out.println("Please enter the CID: ");
-        String cid = sc.nextLine();
+        int cid;
+        while (true) {
+            System.out.print("Please enter the CID: ");
+            try {
+                cid = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println(AnsiColors.toYellow("Invalid input. Please enter a valid number."));
+            }
+        }
 
         for (Comment comm: post.commentList) {
-            if (comm.getCommentID() == Integer.parseInt(cid)) {
+            if (comm.getCommentID() == cid) {
                 return comm;
             }
         }
