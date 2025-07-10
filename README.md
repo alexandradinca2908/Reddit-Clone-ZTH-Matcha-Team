@@ -48,6 +48,7 @@ Script pt Windows
 
 ✅ PowerShell Script: Build-DockerImage.ps1
 
+<details> <summary><strong>▶️ PowerShell script to generate Dockerfile and build image</strong></summary>
 $imageName = "matcha-app"
 $tag = "v1"
 $dockerfilePath = "Dockerfile"
@@ -72,6 +73,7 @@ if ($?) {
 } else {
     Write-Host "Docker build failed." -ForegroundColor Red
 }
+</details>
 
 📁 Folder structure before running the script:
 project-root/
