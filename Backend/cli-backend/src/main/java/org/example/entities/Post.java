@@ -17,7 +17,7 @@ public class Post extends AnsiColors implements Likeable{
     public String body;
     public int voteCount;
     public HashMap<Integer, Integer> votingUserID; //K = userID , V = -1/+1 -> downvote/upvote
-    public ArrayList<Comment> commentList;
+    public static ArrayList<Comment> commentList;
 
     public int getPostID() {
         return postID;
@@ -33,7 +33,7 @@ public class Post extends AnsiColors implements Likeable{
 
     public void addComment(User parentUser, String commentText) {
         Comment comment = new Comment(this, parentUser, commentText);
-        this.commentList.add(comment);
+        commentList.add(comment);
         commentRepo.save(comment);
         commentsCounter++;
     }
