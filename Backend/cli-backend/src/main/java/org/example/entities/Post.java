@@ -69,14 +69,12 @@ public class Post extends AnsiColors implements Likeable{
         String indent = "    ".repeat(indentLevel); // 4 spaces per level
 
         for (Comment comment : commentList) {
-            // Print the main comment
             System.out.println(indent + AnsiColors.toOrange("CID: " + comment.getCommentID() + " | USER: " + comment.getParentUser().getUsername()));
             System.out.println(indent + comment.getCommentText());
             System.out.print(indent + AnsiColors.toRed("UP ") + comment.getVoteCount() + AnsiColors.toBlue(" DOWN "));
             System.out.println("| " + comment.replyList.size() + " replies");
             System.out.println(indent + LINE_SEPARATOR);
 
-            // Now print replies with increased indent
             for (CommentReply reply : comment.replyList) {
                 printReply(reply, indentLevel + 1);
             }
