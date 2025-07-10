@@ -284,6 +284,7 @@ public class ActionState {
             commentService.voteReply(user.getUserID(), post.getPostID(), comment.getCommentID(), commentReply.getCommentReplyID(), "downvote");;
         } else if (translatedInput.equalsIgnoreCase("return to comment")) {
             //  TODO RETURN TO COMMENT?
+            comment = commentService.selectComment(user, post);
             changeState(State.ON_COMMENT);
         } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
