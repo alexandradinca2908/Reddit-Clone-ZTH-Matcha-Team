@@ -18,6 +18,7 @@ public class CommentReply implements Likeable {
         this.parentUser = parentUser;
         this.commentReplyText = commentReplyText;
         this.voteCount = 0;
+        this.votingUserID = new HashMap<>();
         commentReplyID = commentReplyCounter++;
     }
 

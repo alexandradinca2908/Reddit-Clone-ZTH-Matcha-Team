@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class PostService extends AnsiColors {
     private static PostService instance;
-    private static final PostRepo postRepo = PostRepo.getInstance();
+    public static final PostRepo postRepo = PostRepo.getInstance();
     Scanner sc = new Scanner(System.in);
 
     private PostService() {}

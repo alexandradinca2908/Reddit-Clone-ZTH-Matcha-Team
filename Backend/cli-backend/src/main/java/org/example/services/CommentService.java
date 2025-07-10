@@ -94,25 +94,29 @@ public class CommentService extends AnsiColors {
     }
 
     public CommentReply selectReply(User user, Comment comment) {
-        int crid = -1;
+        int rid;
         while (true) {
-            System.out.print("Please enter the CRID: ");
+            System.out.print("Please enter the RID: ");
             try {
-                crid = Integer.parseInt(sc.nextLine());
+                rid = Integer.parseInt(sc.nextLine());
                 break;
             } catch (NumberFormatException e) {
                 System.out.println(AnsiColors.toYellow("Invalid input. Please enter a valid number."));
             }
+        }
 
             for(CommentReply reply : comment.replyList) {
-                if(reply.getCommentReplyID() == crid) {
+                if(reply.getCommentReplyID() == rid) {
+                    //show reply
+                    System.out.println(AnsiColors.toOrange("RID: " + reply.getCommentReplyID()+ " | USER: " + reply.getParentUser().getUsername()));
+                    System.out.println(reply.getCommentReplyText());
+                    System.out.print(AnsiColors.toRed("UP ") + reply.getVotes() + AnsiColors.toBlue(" DOWN \n"));
+                    System.out.println(LINE_SEPARATOR);
                     return reply;
                 }
             }
 
-            throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + crid + " not found."));
-        }
-        return null;
+            throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + rid + " not found."));
     }
 
     public void voteComment(int userID, int postID, int commentID, String vote) {

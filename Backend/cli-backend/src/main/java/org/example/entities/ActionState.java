@@ -20,6 +20,7 @@ public class ActionState {
     private User user;
     private Post post;
     private Comment comment;
+    private CommentReply commentReply;
 
     private ActionState() {
         this.isLoggedIn = false;
@@ -194,7 +195,7 @@ public class ActionState {
         }
     }
 
-    private void onPostLoggedIn() {
+    private void onPostLoggedIn() throws IOException {
         System.out.println("""
                         1. Comment
                         2. Upvote
@@ -211,8 +212,12 @@ public class ActionState {
             commentService.addComment(user, post);
         } else if (translatedInput.equalsIgnoreCase("upvote")) {
             postService.votePost(user.getUserID(), post.getPostID(), "upvote");
+            post = postService.expandPost();
+            changeState(State.ON_POST);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
             postService.votePost(user.getUserID(), post.getPostID(), "downvote");
+            post = postService.expandPost();
+            changeState(State.ON_POST);
         } else if (translatedInput.equalsIgnoreCase("select comment")) {
             try {
                 comment = commentService.selectComment(user, post);
@@ -248,10 +253,15 @@ public class ActionState {
             commentService.addReply(user, post, comment);
         } else if (translatedInput.equalsIgnoreCase("upvote")) {
             commentService.voteComment(user.getUserID(), post.getPostID(), comment.getCommentID(), "upvote");
+            comment = commentService.selectComment(user, post);
+            changeState(State.ON_COMMENT);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
             commentService.voteComment(user.getUserID(), post.getPostID(),comment.getCommentID(), "downvote");
+            comment = commentService.selectComment(user, post);
+            changeState(State.ON_COMMENT);
         } else if (translatedInput.equalsIgnoreCase("select reply")) {
-            //  TODO SELECT REPLY
+            commentReply = commentService.selectReply(user, comment);
+            changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("return to post")) {
             postService.expandPost();
             changeState(State.ON_POST);
@@ -276,10 +286,17 @@ public class ActionState {
 
         if (translatedInput.equalsIgnoreCase("upvote")) {
             //  TODO UPVOTE REPLY
+            commentService.voteReply(user.getUserID(), post.getPostID(), comment.getCommentID(), commentReply.getCommentReplyID(), "upvote");
+            commentReply = commentService.selectReply(user, comment);
+            changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
             //  TODO DOWNVOTE REPLY
+            commentService.voteReply(user.getUserID(), post.getPostID(), comment.getCommentID(), commentReply.getCommentReplyID(), "downvote");
+            commentReply = commentService.selectReply(user, comment);
+            changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("return to comment")) {
             //  TODO RETURN TO COMMENT?
+            comment = commentService.selectComment(user, post);
             changeState(State.ON_COMMENT);
         } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
