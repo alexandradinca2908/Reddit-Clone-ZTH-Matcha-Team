@@ -241,8 +241,10 @@ public class ActionState {
             commentService.addReply(user, post, comment);
         } else if (sanitizedInput.equalsIgnoreCase("upvote")) {
             //  TODO UPVOTE
+            commentService.voteComment(user.getUserID(), post.getPostID(), comment.getCommentID(), "upvote");
         } else if (sanitizedInput.equalsIgnoreCase("downvote")) {
             //  TODO DOWNVOTE
+            commentService.voteComment(user.getUserID(), post.getPostID(),comment.getCommentID(), "downvote");
         } else if (sanitizedInput.equalsIgnoreCase("return to post")) {
             postService.expandPost();
             changeState(State.ON_POST);
