@@ -283,16 +283,13 @@ public class ActionState {
         String translatedInput = translateInput(option, currentState, isLoggedIn);
 
         if (translatedInput.equalsIgnoreCase("upvote")) {
-            //  TODO UPVOTE REPLY
             commentService.voteReply(user.getUserID(), post.getPostID(), comment.getCommentID(), commentReply.getCommentReplyID(), "upvote");
             changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
-            //  TODO DOWNVOTE REPLY
             commentService.voteReply(user.getUserID(), post.getPostID(), comment.getCommentID(), commentReply.getCommentReplyID(), "downvote");
             changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("return to comment")) {
-            //  TODO RETURN TO COMMENT?
-            commentService.printComment(comment);
+            commentService.printComment(comment, CommentService.COMMENT_INDENT);
             changeState(State.ON_COMMENT);
         } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);

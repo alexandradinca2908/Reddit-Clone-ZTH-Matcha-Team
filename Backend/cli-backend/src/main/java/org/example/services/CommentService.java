@@ -13,6 +13,7 @@ public class CommentService extends AnsiColors {
     Scanner sc = new Scanner(System.in);
     private Post post;
     private User user;
+    public static final int COMMENT_INDENT = 0;
 
     public void addComment(User user, Post post) {
         System.out.println(AnsiColors.toGreen("Please enter a comment: "));
@@ -46,12 +47,16 @@ public class CommentService extends AnsiColors {
     }
 
 
-    public void printComment(Comment comm) {
+    public void printComment(Comment comm, int indentLevel) {
         System.out.println(AnsiColors.toOrange("CID: " + comm.getCommentID() + " | USER: " + comm.getParentUser().getUsername()));
         System.out.println(comm.getCommentText());
         System.out.print(AnsiColors.toRed("UP ") + comm.getVoteCount() + AnsiColors.toBlue(" DOWN "));
         System.out.println("| " + comm.replyList.size() + " replies");
         System.out.println(LINE_SEPARATOR);
+
+        for (CommentReply reply : comm.replyList) {
+            printReply(reply, indentLevel + 1);
+        }
     }
 
     public Comment selectComment(User user, Post post) {
@@ -71,11 +76,7 @@ public class CommentService extends AnsiColors {
                 // show comment
                 int indentLevel = 0;
 
-                printComment(comm);
-
-                for (CommentReply reply : comm.replyList) {
-                    printReply(reply, indentLevel + 1);
-                }
+                printComment(comm, COMMENT_INDENT);
 
                 return comm;
             }
