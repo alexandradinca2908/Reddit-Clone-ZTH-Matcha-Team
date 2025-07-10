@@ -53,6 +53,7 @@ $tag = "v1"
 $dockerfilePath = "Dockerfile"
 $jarFile = "target/matcha-1.0-SNAPSHOT.jar"
 
+@"
 FROM eclipse-temurin:24-jdk
 
 WORKDIR /app
@@ -63,6 +64,7 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 "@ | Set-Content -Path $dockerfilePath -Encoding UTF8
 
 Write-Host "Dockerfile created."
+
 docker build -t "${imageName}:${tag}" .
 
 if ($?) {
