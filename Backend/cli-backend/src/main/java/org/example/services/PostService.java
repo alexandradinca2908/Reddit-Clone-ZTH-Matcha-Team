@@ -58,10 +58,18 @@ public class PostService extends AnsiColors {
     }
 
     public Post expandPost() throws IOException {
-        Logger mainLogger = LogManager.getInstance().getLogger("MainLogger");
-
         System.out.println(AnsiColors.toGreen("Please enter PID: "));
-        int postID = Integer.parseInt(sc.nextLine());
+
+        int postID;
+        while (true) {
+            System.out.print("Enter a post ID (number): ");
+            try {
+                postID = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println(AnsiColors.toYellow("Invalid input. Please enter a valid number."));
+            }
+        }
 
         for (Post iter : Post.posts) {
             if  (iter.getPostID() == postID) {
@@ -74,18 +82,15 @@ public class PostService extends AnsiColors {
                 System.out.println(DOUBLE_LINE_SEPARATOR + "\n");
                 iter.printComments(0);
 
-                mainLogger.log(LogLevel.VERBOSE, "Expand post successful");
-
                 return iter;
             }
         }
 
-        mainLogger.log(LogLevel.ERROR, "Post not found to expand.");
         throw new IllegalArgumentException(AnsiColors.toRed("Post with ID " + postID + " not found."));
     }
 
     public void votePost(int userID, int postID, String vote) {
-        for(Post iter : Post.posts) {
+        for (Post iter : Post.posts) {
             if (iter.getPostID() == postID) {
                 if (vote.equalsIgnoreCase("upvote")) {
                     if (iter.votingUserID.containsKey(userID)) { // am votat deja dar nu stiu ce am votat
@@ -106,7 +111,7 @@ public class PostService extends AnsiColors {
                 }
                 else if (vote.equalsIgnoreCase("downvote")) {
                     if (iter.votingUserID.containsKey(userID)) {
-                        if(iter.votingUserID.get(userID).equals(-1)) {
+                        if (iter.votingUserID.get(userID).equals(-1)) {
                             iter.upvote();
                             iter.votingUserID.remove(userID);
                         }

@@ -3,6 +3,8 @@ import org.example.entities.CommentReply;
 import org.example.entities.Post;
 import org.example.entities.User;
 import org.example.entities.Comment;
+import org.example.loggerobjects.LogManager;
+import org.example.loggerobjects.Logger;
 import org.example.textprocessors.AnsiColors;
 
 import java.util.Scanner;
@@ -19,12 +21,12 @@ public class CommentService extends AnsiColors {
         for (Post iter : Post.posts) {
             if (iter.getPostID() == post.getPostID()) {
                 iter.addComment(user, commentText);
-                System.out.println(AnsiColors.toGreen("Successfully added comment!"));
+                System.out.println(AnsiColors.toGreen("Comment added successfully."));
                 return;
             }
         }
 
-        System.out.println(AnsiColors.toRed("Error: Post not found."));
+        System.out.println(AnsiColors.toRed("Something went wrong while adding a comment!"));
     }
 
     public void addReply(User user, Post post, Comment comment) {
@@ -40,15 +42,24 @@ public class CommentService extends AnsiColors {
             }
         }
 
-        System.out.println(AnsiColors.toRed("Comment not found in this post."));
+        System.out.println(AnsiColors.toRed("Something went wrong while adding a reply!"));
     }
 
 
     public Comment selectComment(User user, Post post) {
-        System.out.println("Please enter the CID: ");
-        String cid = sc.nextLine();
+        int cid;
+        while (true) {
+            System.out.print("Please enter the CID: ");
+            try {
+                cid = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println(AnsiColors.toYellow("Invalid input. Please enter a valid number."));
+            }
+        }
+
         for (Comment comm: post.commentList) {
-            if (comm.getCommentID() == Integer.parseInt(cid)) {
+            if (comm.getCommentID() == cid) {
                 // show comment
                 int indentLevel = 0;
                 System.out.println(AnsiColors.toOrange("CID: " + comm.getCommentID() + " | USER: " + comm.getParentUser().getUsername()));
@@ -64,13 +75,13 @@ public class CommentService extends AnsiColors {
     }
 
     public void voteComment(int userID, int postID, int commentID, String vote) {
-        for(Post iter : Post.posts) {
-            if(iter.getPostID() == postID) {
-                for(Comment comm : iter.commentList) {
-                    if(comm.getCommentID() == commentID) {
-                        if(vote.equalsIgnoreCase("upvote")) {
-                            if(comm.votingUserID.containsKey(userID)) { // am votat deja dar nu stiu ce am votat
-                                if(comm.votingUserID.get(userID).equals(1)) { //am votat deja upvote
+        for (Post iter : Post.posts) {
+            if (iter.getPostID() == postID) {
+                for (Comment comm : iter.commentList) {
+                    if (comm.getCommentID() == commentID) {
+                        if (vote.equalsIgnoreCase("upvote")) {
+                            if (comm.votingUserID.containsKey(userID)) { // am votat deja dar nu stiu ce am votat
+                                if (comm.votingUserID.get(userID).equals(1)) { //am votat deja upvote
                                     comm.downvote();
                                     comm.votingUserID.remove(userID);
                                 }
@@ -85,8 +96,8 @@ public class CommentService extends AnsiColors {
                                 comm.votingUserID.put(userID, 1);
                             }
                         }
-                        else if(vote.equalsIgnoreCase("downvote")) {
-                            if(comm.votingUserID.containsKey(userID)) {
+                        else if (vote.equalsIgnoreCase("downvote")) {
+                            if (comm.votingUserID.containsKey(userID)) {
                                 if(comm.votingUserID.get(userID).equals(-1)) {
                                     comm.upvote();
                                     comm.votingUserID.remove(userID);
