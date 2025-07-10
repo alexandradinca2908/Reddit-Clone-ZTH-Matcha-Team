@@ -69,7 +69,7 @@ public class CommentRepo {
 
                     comment.setCommentID(commentId);
 
-                    Post.commentList.add(comment);
+                    parentPost.commentList.add(comment);
                 } else {
                     System.err.println("Warning: Could not load comment " + commentId +
                             " because its parent post or user could not be found.");
