@@ -1,4 +1,5 @@
 package org.example.services;
+import org.example.entities.User;
 import org.example.loggerobjects.Logger;
 import org.example.repositories.PostRepo;
 import org.example.textprocessors.AnsiColors;
@@ -115,46 +116,40 @@ public class PostService extends AnsiColors {
         post.printComments(0);
     }
 
-    public void votePost(int userID, int postID, String vote) {
-        for (Post iter : Post.posts) {
-            if (iter.getPostID() == postID) {
-                if (vote.equalsIgnoreCase("upvote")) {
-                    if (iter.votingUserID.containsKey(userID)) { // am votat deja dar nu stiu ce am votat
-                        if (iter.votingUserID.get(userID).equals(1)) { //am votat deja upvote
-                            iter.downvote();
-                            iter.votingUserID.remove(userID);
-                        }
-                        else {
-                            iter.upvote();
-                            iter.upvote();
-                            iter.votingUserID.put(userID, 1);
-                        }
-                    }
-                    else {
-                        iter.upvote();
-                        iter.votingUserID.put(userID, 1);
-                    }
+    public void votePost(User user, Post post, boolean vote) {
+        if(vote) {
+            if(post.votingUserID.containsKey(user.getUserID())) {
+                if(post.votingUserID.get(user.getUserID()).equals(1)) {
+                    post.downvote();
+                    post.votingUserID.remove(user.getUserID());
                 }
-                else if (vote.equalsIgnoreCase("downvote")) {
-                    if (iter.votingUserID.containsKey(userID)) {
-                        if (iter.votingUserID.get(userID).equals(-1)) {
-                            iter.upvote();
-                            iter.votingUserID.remove(userID);
-                        }
-                        else {
-                            iter.downvote();
-                            iter.downvote();
-                            iter.votingUserID.put(userID, -1);
-                        }
-                    }
-                    else {
-                        iter.downvote();
-                        iter.votingUserID.put(userID, -1);
-                    }
+                else {
+                    post.upvote();
+                    post.upvote();
+                    post.votingUserID.put(user.getUserID(), 1);
                 }
-                break;
+            }
+            else {
+                post.upvote();
+                post.votingUserID.put(user.getUserID(), 1);
             }
         }
-
+        else {
+            if(post.votingUserID.containsKey(user.getUserID())) {
+                if(post.votingUserID.get(user.getUserID()).equals(-1)) {
+                    post.upvote();
+                    post.votingUserID.remove(user.getUserID());
+                }
+                else {
+                    post.downvote();
+                    post.downvote();
+                    post.votingUserID.put(user.getUserID(), -1);
+                }
+            }
+            else {
+                post.downvote();
+                post.votingUserID.put(user.getUserID(), -1);
+            }
+        }
     }
 }

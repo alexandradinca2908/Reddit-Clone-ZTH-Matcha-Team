@@ -211,10 +211,10 @@ public class ActionState {
         if (translatedInput.equalsIgnoreCase("comment")) {
             commentService.addComment(user, post);
         } else if (translatedInput.equalsIgnoreCase("upvote")) {
-            postService.votePost(user.getUserID(), post.getPostID(), "upvote");
+            postService.votePost(user, post, true);
             postService.expandPost(post);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
-            postService.votePost(user.getUserID(), post.getPostID(), "downvote");
+            postService.votePost(user, post, false);
             postService.expandPost(post);
         } else if (translatedInput.equalsIgnoreCase("select comment")) {
             try {
@@ -250,10 +250,10 @@ public class ActionState {
         if (translatedInput.equalsIgnoreCase("reply")) {
             commentService.addReply(user, post, comment);
         } else if (translatedInput.equalsIgnoreCase("upvote")) {
-            commentService.voteComment(user.getUserID(), post.getPostID(), comment.getCommentID(), "upvote");
+            commentService.voteComment(user, comment, true);
             changeState(State.ON_COMMENT);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
-            commentService.voteComment(user.getUserID(), post.getPostID(),comment.getCommentID(), "downvote");
+            commentService.voteComment(user, comment, false);
             changeState(State.ON_COMMENT);
         } else if (translatedInput.equalsIgnoreCase("select reply")) {
             commentReply = commentService.selectReply(user, comment);
@@ -281,10 +281,10 @@ public class ActionState {
         String translatedInput = translateInput(option, currentState, isLoggedIn);
 
         if (translatedInput.equalsIgnoreCase("upvote")) {
-            commentService.voteReply(user.getUserID(), post.getPostID(), comment.getCommentID(), commentReply.getCommentReplyID(), "upvote");
+            commentService.voteReply(user, commentReply, true);
             changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
-            commentService.voteReply(user.getUserID(), post.getPostID(), comment.getCommentID(), commentReply.getCommentReplyID(), "downvote");
+            commentService.voteReply(user, commentReply, false);
             changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("return to comment")) {
             commentService.printComment(comment, CommentService.COMMENT_INDENT);
