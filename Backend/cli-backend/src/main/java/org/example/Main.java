@@ -13,6 +13,10 @@ public class Main {
         ActionState actionState = ActionState.getInstance();
         commentRepo.load();
 
+        // myLogger1 = new FileLogger("errors.txt");
+        // myLogger2 = new FileLogger("info.txt");
+        // LogManager.getInstance().RegisterLogger(myLogger1);
+        // LogManager.getInstance().RegisterLogger(myLogger2);
         boolean isActive = true;
 
         System.out.println(AnsiColors.toPurple("Welcome to Reddit!\nPlease choose an option:\n"));

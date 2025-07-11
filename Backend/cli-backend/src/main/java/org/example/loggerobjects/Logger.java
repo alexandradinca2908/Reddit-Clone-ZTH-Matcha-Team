@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public abstract class Logger {
-    private String name;
-    private DateTimeFormatter dateTimeFormatter;
-
+public class Logger {
+   // private String name;
+   // private DateTimeFormatter dateTimeFormatter;
+/*
     public Logger(String name, String dateTimeFormat) {
         this.name = name;
         this.dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);
@@ -17,11 +17,13 @@ public abstract class Logger {
         return name;
     }
 
-    String formatDate() {
-        return LocalDateTime.now().format(dateTimeFormatter);
+*/
+    static String formatDate() {
+        return LocalDateTime.now().toString();
     }
 
-    public void log(LogLevel level, String message) throws IOException {
+    public static void log(LogLevel level, String message) throws IOException {
+        // LogManager.getInstance().log(level,message);
         switch (level) {
             case VERBOSE:
                 verbose(message);
@@ -49,35 +51,35 @@ public abstract class Logger {
         }
     }
 
-    void verbose(String message) throws IOException {
+    public static void verbose(String message)  {
         String composedText = formatDate() + " [VERBOSE] " + message;
         write(composedText);
     }
 
-    void debug(String message) throws IOException {
+    public static void debug(String message) {
         String composedText = formatDate() + " [DEBUG] " + message;
         write(composedText);
     }
 
-    void info(String message) throws IOException {
+    public static void info(String message)  {
         String composedText = formatDate() + " [INFO] "  + message;
         write(composedText);
     }
 
-    void warn(String message) throws IOException {
+    public static void warn(String message)  {
         String composedText = formatDate() + " [WARN] "  + message;
         write(composedText);
     }
 
-    void error(String message) throws IOException {
+    public static void error(String message)  {
         String composedText = formatDate() + " [ERROR] "  + message;
         write(composedText);
     }
 
-    void fatal(String message) throws IOException {
+    public static void fatal(String message)  {
         String composedText = formatDate() + " [FATAL] "  + message;
         write(composedText);
     }
 
-    abstract void write(String message) throws IOException;
+    public static void write(String message) {}
 }

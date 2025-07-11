@@ -33,7 +33,7 @@ public class CommentService extends AnsiColors {
     public void addReply(User user, Post post, Comment comment) {
         System.out.println(AnsiColors.toGreen("Please enter a reply: "));
         String replyText = sc.nextLine();
-
+        Logger.fatal("Adding reply!");
         for (Comment comm : post.commentList) {
             if (comm.getCommentID() == comment.getCommentID()) {
                 CommentReply reply = new CommentReply(comm, user, replyText);

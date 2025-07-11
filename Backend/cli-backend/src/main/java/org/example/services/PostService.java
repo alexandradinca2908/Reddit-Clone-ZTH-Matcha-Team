@@ -1,4 +1,5 @@
 package org.example.services;
+import org.example.loggerobjects.Logger;
 import org.example.repositories.PostRepo;
 import org.example.textprocessors.AnsiColors;
 import org.example.entities.Post;
@@ -38,6 +39,7 @@ public class PostService extends AnsiColors {
 
         Post post = new Post(title, body, username);
 
+        Logger.fatal("Great Success!");
         Post.posts.add(post);
         System.out.println(AnsiColors.toGreen("Post added successfully!"));
 
