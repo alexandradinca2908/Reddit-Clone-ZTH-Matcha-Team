@@ -2,10 +2,8 @@ package org.example.services;
 import org.example.entities.User;
 import org.example.loggerobjects.LogLevel;
 import org.example.loggerobjects.Logger;
-import org.example.loggerobjects.LoggerType;
 import org.example.repositories.UserRepo;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -93,6 +91,7 @@ public class UserService {
                 "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{%d,}$",
                 uiService.getMinPasswordLength()
         );
+
         while (!password.matches(passwordRegex)) {
             uiService.invalid("password");
             uiService.pleaseEnter("password");
@@ -157,17 +156,17 @@ public class UserService {
     }
 
     // Only for debugging purposes
-    public void showAllUsers() {
-        System.out.println("Registered Users:");
-        for (User user : users) {
-            System.out.println(
-                    "User ID: " + user.getUserID() +
-                    ", Username: " + user.getUsername() +
-                    ", Email: " + user.getEmail() +
-                    ", Password: " + user.getPassword()
-            );
-        }
-    }
+//    public void showAllUsers() {
+//        System.out.println("Registered Users:");
+//        for (User user : users) {
+//            System.out.println(
+//                    "User ID: " + user.getUserID() +
+//                    ", Username: " + user.getUsername() +
+//                    ", Email: " + user.getEmail() +
+//                    ", Password: " + user.getPassword()
+//            );
+//        }
+//    }
 
     public void userDeleteCLI(User user) {
         uiService.areYouSure("delete account");
