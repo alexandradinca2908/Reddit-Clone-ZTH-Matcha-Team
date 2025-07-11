@@ -16,6 +16,7 @@ public class UserService {
     private static final Scanner sc = new Scanner(System.in);
     private static final PasswordService passwordService = new PasswordService();
     public static final UserRepo userRepo = new UserRepo();
+    private static final UIService uiService = UIService.getInstance();
 
     private UserService() {}
 
@@ -29,8 +30,7 @@ public class UserService {
     }
 
     public User userRegisterCLI() {
-        System.out.println("Welcome to Register Page\n");
-        Scanner sc = new Scanner(System.in);
+        uiService.welcome("Register");
 
         String username = readUsername();
         String email = readEmail();
@@ -39,33 +39,43 @@ public class UserService {
         try {
             User newUser = new User(username, email, password);
             userRepo.save(newUser);
-            System.out.println("Registration successful! Welcome, " + username + "!");
+            uiService.registration(true, username);
             return newUser;
         }
         catch (SQLException e) {
-            System.out.println("Registration failed: " + e.getMessage());
+            uiService.registration(false, username);
             return null;
         }
     }
 
     public User userLoginCLI() {
-        System.out.println("Welcome to Login Page\n");
-        System.out.println("Please enter your username:");
-        String username = sc.nextLine();
+        uiService.welcome("Login");
 
-        System.out.println("Please enter your password:");
-        String password = sc.nextLine();
+        String username;
+        String password;
 
-        for (User user : users) {
-            if (user.getUsername().equals(username) &&
-                passwordService.checkPassword(password, user.getPassword())) {
+        do {
+            uiService.pleaseEnter("username");
+            username = sc.nextLine();
 
-                System.out.println("Login successful! Welcome back, " + username + "!");
-                Logger.log(LogLevel.INFO, "User \"" + username + "\" successfully logged in.");
+            uiService.pleaseEnter("password");
+            password = sc.nextLine();
 
-                return user;
+            for (User user : users) {
+                if (user.getUsername().equals(username) &&
+                        passwordService.checkPassword(password, user.getPassword())) {
+                    uiService.login(true, username);
+                    return user;
+                }
             }
-        }
+
+            uiService.login(false, username);
+            String response = sc.nextLine();
+
+            if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yes"))
+                break;
+
+        } while (true);
 
         System.out.println("Invalid username or password. Do you want to try again? (y/n)");
         String response = sc.nextLine();
@@ -80,30 +90,34 @@ public class UserService {
     }
 
     private String readPassword() {
-        System.out.println("Password must be at least 8 characters long " +
-                "and contain a mix of upper and lower case letters, numbers, and special characters.");
-        System.out.println("Please enter your password:");
+        uiService.instructions("password");
+
+        uiService.pleaseEnter("password");
         String password = sc.nextLine();
 
-        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$";
-        while (!password.matches(passwordRegex)
-    ) {
-            System.out.println("Invalid password format. Please try again.");
+        String passwordRegex = String.format(
+                "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{%d,}$",
+                uiService.getMinPasswordLength()
+        );
+        while (!password.matches(passwordRegex)) {
+            uiService.invalid("password");
+            uiService.pleaseEnter("password");
             password = sc.nextLine();
         }
 
         password = PasswordService.hashPassword(password);
+        uiService.accepted("password", null);
         return password;
     }
 
     private String readEmail() {
-        System.out.println("Please enter your email:");
+        uiService.pleaseEnter("email");
         String email = sc.nextLine();
 
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 
-        if (!email.matches(emailRegex)) {
-            System.out.println("Invalid email format. Please try again.");
+        while (email == null || !email.matches(emailRegex)) {
+            uiService.invalid("email");
             email = sc.nextLine();
         }
 
@@ -111,26 +125,32 @@ public class UserService {
     }
 
     private String readUsername() {
-        System.out.println("Please enter your username:");
+        uiService.instructions("username");
 
-        String username = sc.nextLine();
+        while (true) {
+            uiService.pleaseEnter("username");
+            String username = sc.nextLine();
 
-        // Validate username format
-        while (!username.matches("^[A-Za-z0-9_]{3,20}$")) {
-            System.out.println("Invalid username format. Please use only letters, numbers, and underscores.");
-            System.out.println("Username must be between 3 and 20 characters long.");
-            System.out.println("Please try again:");
-            username = sc.nextLine();
+            // Validate username format
+            while (!username.matches(String.format(
+                    "^[A-Za-z0-9_]{%d,%d}$",
+                    uiService.getMinUsernameLength(),
+                    uiService.getMaxUsernameLength()
+            ))) {
+                uiService.invalid("username");
+                username = sc.nextLine();
+            }
+
+            // At this point, username is valid but not unique
+
+            // Check if username already exists
+            if (userAlreadyExists(username)) {
+                uiService.invalid("username exists");
+            } else {
+                uiService.accepted("username", username);
+                return username;
+            }
         }
-
-        // Check if username already exists
-        while (userAlreadyExists(username)) {
-            System.out.println("username already exists. Please try a different one.");
-            username = sc.nextLine();
-        }
-
-        System.out.println("username accepted: " + username);
-        return username;
     }
 
     private boolean userAlreadyExists(String username) {
@@ -142,19 +162,35 @@ public class UserService {
         return false;
     }
 
+    // Only for debugging purposes
     public void showAllUsers() {
         System.out.println("Registered Users:");
         for (User user : users) {
-            System.out.println("User ID: " + user.getUserID() + ", Username: " + user.getUsername() + ", Email: " + user.getEmail() +
-                    ", Password: " + user.getPassword());
+            System.out.println(
+                    "User ID: " + user.getUserID() +
+                    ", Username: " + user.getUsername() +
+                    ", Email: " + user.getEmail() +
+                    ", Password: " + user.getPassword()
+            );
         }
     }
 
     public void userDeleteCLI(User user) {
-        if (users.remove(user)) {
-            System.out.println("User " + user.getUsername() + " deleted successfully.");
+        uiService.areYouSure("delete account");
+        String ans = sc.nextLine();
+
+        if (!ans.equalsIgnoreCase("y") && !ans.equalsIgnoreCase("yes")) {
+            uiService.failed("account deletion cancelled", null);
+            return;
+        }
+
+        uiService.pleaseEnter("password");
+        String password = sc.nextLine();
+        if (passwordService.checkPassword(password, user.getPassword())) {
+            uiService.accepted("account deletion", user.getUsername());
+            // TODO: Implement the actual deletion logic
         } else {
-            System.out.println("User not found.");
+            uiService.failed("account deletion failed", user.getUsername());
         }
     }
 }
