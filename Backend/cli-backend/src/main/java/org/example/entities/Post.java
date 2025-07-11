@@ -8,9 +8,7 @@ import java.util.List;
 
 public class Post extends AnsiColors implements Likeable{
     private static final CommentRepo commentRepo = CommentRepo.getInstance();
-    public static int postsCounter = 0;
     public static ArrayList<Post> posts = new ArrayList<>();
-    int commentsCounter;
     int postID;
     String username;
     public String title;
@@ -28,14 +26,13 @@ public class Post extends AnsiColors implements Likeable{
     }
 
     public int getCommentsCounter() {
-        return commentsCounter;
+        return commentList.size();
     }
 
     public void addComment(User parentUser, String commentText) {
         Comment comment = new Comment(this, parentUser, commentText);
         commentList.add(comment);
         commentRepo.save(comment);
-        commentsCounter++;
     }
 
     @Override
@@ -55,7 +52,6 @@ public class Post extends AnsiColors implements Likeable{
         this.title = title;
         this.body = body;
         this.voteCount = 0;
-        this.commentsCounter = 0;
         this.username = username;
         this.commentList = new ArrayList<>();
         this.votingUserID = new HashMap<>();

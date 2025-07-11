@@ -297,8 +297,7 @@ public class ActionState {
     }
 
     private void logout() {
-        isLoggedIn  = false;
-        user = null;
+        cleanUpData();
         System.out.println("You have been logged out.");
 
         changeState(State.MAIN_MENU);
@@ -306,12 +305,19 @@ public class ActionState {
 
     private void quit() {
         if (isLoggedIn) {
-            isLoggedIn  = false;
-            user = null;
+            cleanUpData();
             System.out.println("You have been automatically logged out.");
         }
 
         System.out.println("See you soon!");
+    }
+
+    private void cleanUpData() {
+        isLoggedIn  = false;
+        user = null;
+        post = null;
+        comment = null;
+        commentReply = null;
     }
 
     private void unknownCommand() {
