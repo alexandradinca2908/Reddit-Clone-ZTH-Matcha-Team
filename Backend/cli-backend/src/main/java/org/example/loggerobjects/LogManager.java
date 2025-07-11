@@ -15,56 +15,35 @@ import java.util.ArrayList;
 
 public class LogManager {
     public static LogManager logManager;
-    private ArrayList<Logger> loggers;
+    private ArrayList<Loggable> loggers;
     private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final LoggerType DEFAULT_LOGGER_TYPE = LoggerType.FILE;
     private static final String DEFAULT_FILEPATH = "logging.log";
 
-    private LogManager() throws IOException {
+    private LogManager() {
         loggers = new ArrayList<>();
-        addLogger("MainLogger", DEFAULT_DATE_FORMAT, DEFAULT_FILEPATH, DEFAULT_LOGGER_TYPE);
     }
 
-    public static LogManager getInstance() throws IOException {
+    public static LogManager getInstance() {
         if (logManager == null)
             logManager = new LogManager();
 
         return logManager;
     }
 
-    public void addLogger(String name, String dateTimeFormat, String filename, LoggerType type) throws IOException {
-        //  Don't add duplicate loggers
-        if (findLogger(name)) {
-            return;
-        }
-
-        Logger logger = switch (type) {
-            case FILE -> new FileLogger(name, dateTimeFormat, filename);
-            case CONSOLE -> new ConsoleLogger(name, dateTimeFormat);
-        };
-
+    public void registerLogger(Loggable logger) {
         loggers.add(logger);
     }
 
-    public Logger getLogger(String name) throws IOException {
-        for (Logger logger : loggers) {
-            if (logger.getName().equals(name)) {
-                return logger;
-            }
+    public void registerMultipleLoggers(Loggable... loggers) {
+        for (Loggable logger : loggers) {
+            registerLogger(logger);
         }
-
-        //  Logger doesn't exist; create new one
-        addLogger(name, DEFAULT_DATE_FORMAT, "logging.log", DEFAULT_LOGGER_TYPE);
-        return loggers.getLast();
     }
 
-    public boolean findLogger(String name) throws IOException {
-        for (Logger logger : loggers) {
-            if (logger.getName().equals(name)) {
-                return true;
-            }
+    public void log(LogLevel level, String message) {
+        for (Loggable logger : loggers) {
+            logger.log(level, message);
         }
-
-        return false;
     }
 }

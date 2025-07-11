@@ -33,7 +33,7 @@ public class CommentService extends AnsiColors {
     public void addReply(User user, Post post, Comment comment) {
         System.out.println(AnsiColors.toGreen("Please enter a reply: "));
         String replyText = sc.nextLine();
-
+        Logger.fatal("Adding reply!");
         for (Comment comm : post.commentList) {
             if (comm.getCommentID() == comment.getCommentID()) {
                 CommentReply reply = new CommentReply(comm, user, replyText);
@@ -125,112 +125,76 @@ public class CommentService extends AnsiColors {
             throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + rid + " not found."));
     }
 
-    public void voteComment(int userID, int postID, int commentID, String vote) {
-        for (Post iter : Post.posts) {
-            if (iter.getPostID() == postID) {
-                for (Comment comm : iter.commentList) {
-                    if (comm.getCommentID() == commentID) {
-                        if (vote.equalsIgnoreCase("upvote")) {
-                            if (comm.votingUserID.containsKey(userID)) { // am votat deja dar nu stiu ce am votat
-                                if (comm.votingUserID.get(userID).equals(1)) { //am votat deja upvote
-                                    comm.downvote();
-                                    comm.votingUserID.remove(userID);
-                                    System.out.println("Upvote removed.");
-                                }
-                                else {
-                                    comm.upvote();
-                                    comm.upvote();
-                                    comm.votingUserID.put(userID, 1);
-                                    System.out.println("Downvote changed to upvote.");
-                                }
-                            }
-                            else {
-                                comm.upvote();
-                                comm.votingUserID.put(userID, 1);
-                                System.out.println("Comment upvoted.");
-                            }
-                        }
-                        else if (vote.equalsIgnoreCase("downvote")) {
-                            if (comm.votingUserID.containsKey(userID)) {
-                                if(comm.votingUserID.get(userID).equals(-1)) {
-                                    comm.upvote();
-                                    comm.votingUserID.remove(userID);
-                                    System.out.println("Downvote removed.");
-                                }
-                                else {
-                                    comm.downvote();
-                                    comm.downvote();
-                                    comm.votingUserID.put(userID, -1);
-                                    System.out.println("Upvote changed to downvote.");
-                                }
-                            }
-                            else {
-                                comm.downvote();
-                                comm.votingUserID.put(userID, -1);
-                                System.out.println("Comment downvoted.");
-                            }
-                        }
-                    }
-
-                    System.out.println();
-                    break;
+    public void voteComment(User user, Comment comment, boolean vote) {
+        if(vote) {
+            if(comment.votingUserID.containsKey(user.getUserID())) {
+                if(comment.votingUserID.get(user.getUserID()).equals(1)) {
+                    comment.downvote();
+                    comment.votingUserID.remove(user.getUserID());
+                }
+                else {
+                    comment.upvote();
+                    comment.upvote();
+                    comment.votingUserID.put(user.getUserID(), 1);
                 }
             }
+            else {
+                comment.upvote();
+                comment.votingUserID.put(user.getUserID(), 1);
+            }
         }
-
+        else {
+            if(comment.votingUserID.containsKey(user.getUserID())) {
+                if(comment.votingUserID.get(user.getUserID()).equals(-1)) {
+                    comment.upvote();
+                    comment.votingUserID.remove(user.getUserID());
+                }
+                else {
+                    comment.downvote();
+                    comment.downvote();
+                    comment.votingUserID.put(user.getUserID(), -1);
+                }
+            }
+            else {
+                comment.downvote();
+                comment.votingUserID.put(user.getUserID(), -1);
+            }
+        }
     }
 
-    public void voteReply(int userID, int postID, int commentID, int commentReplyID, String vote) {
-        for (Post post : Post.posts) {
-            if (post.getPostID() == postID) {
-                for (Comment comm : post.commentList) {
-                    if (comm.getCommentID() == commentID) {
-                        for(CommentReply reply : comm.replyList) {
-                            if(reply.getCommentReplyID() == commentReplyID) {
-                                if (vote.equalsIgnoreCase("upvote")) {
-                                    if (reply.votingUserID.containsKey(userID)) { // am votat deja dar nu stiu ce am votat
-                                        if (reply.votingUserID.get(userID).equals(1)) { //am votat deja upvote
-                                            reply.downvote();
-                                            reply.votingUserID.remove(userID);
-                                            System.out.println("Upvote removed.");
-                                        }
-                                        else {
-                                            reply.upvote();
-                                            reply.upvote();
-                                            reply.votingUserID.put(userID, 1);
-                                            System.out.println("Downvote changed to upvote.");
-                                        }
-                                    }
-                                    else {
-                                        reply.upvote();
-                                        reply.votingUserID.put(userID, 1);
-                                        System.out.println("Reply upvoted.");
-                                    }
-                                }
-                                else if (vote.equalsIgnoreCase("downvote")) {
-                                    if (reply.votingUserID.containsKey(userID)) {
-                                        if(reply.votingUserID.get(userID).equals(-1)) {
-                                            reply.upvote();
-                                            reply.votingUserID.remove(userID);
-                                            System.out.println("Downvote removed.");
-                                        }
-                                        else {
-                                            reply.downvote();
-                                            reply.downvote();
-                                            reply.votingUserID.put(userID, -1);
-                                            System.out.println("Upvote changed to downvote.");
-                                        }
-                                    }
-                                    else {
-                                        reply.downvote();
-                                        reply.votingUserID.put(userID, -1);
-                                        System.out.println("Reply downvoted.");
-                                    }
-                                }
-                            }
-                        }
-                    }
+    public void voteReply(User user, CommentReply reply, boolean vote) {
+        if(vote) {
+            if(reply.votingUserID.containsKey(user.getUserID())) {
+                if(reply.votingUserID.get(user.getUserID()).equals(1)) {
+                    reply.downvote();
+                    reply.votingUserID.remove(user.getUserID());
                 }
+                else {
+                    reply.upvote();
+                    reply.upvote();
+                    reply.votingUserID.put(user.getUserID(), 1);
+                }
+            }
+            else {
+                reply.upvote();
+                reply.votingUserID.put(user.getUserID(), 1);
+            }
+        }
+        else {
+            if(reply.votingUserID.containsKey(user.getUserID())) {
+                if(reply.votingUserID.get(user.getUserID()).equals(-1)) {
+                    reply.upvote();
+                    reply.votingUserID.remove(user.getUserID());
+                }
+                else {
+                    reply.downvote();
+                    reply.downvote();
+                    reply.votingUserID.put(user.getUserID(), -1);
+                }
+            }
+            else {
+                reply.downvote();
+                reply.votingUserID.put(user.getUserID(), -1);
             }
         }
     }

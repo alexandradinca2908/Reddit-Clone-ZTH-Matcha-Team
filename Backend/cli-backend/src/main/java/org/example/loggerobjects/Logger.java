@@ -1,83 +1,39 @@
 package org.example.loggerobjects;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-public abstract class Logger {
-    private String name;
-    private DateTimeFormatter dateTimeFormatter;
+public class Logger {
 
-    public Logger(String name, String dateTimeFormat) {
-        this.name = name;
-        this.dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);
+    static String formatDate() {
+        return LocalDateTime.now().toString();
     }
 
-    public String getName() {
-        return name;
+    public static void log(LogLevel level, String message) {
+        String composedText = formatDate() + " [" + level.toString() + "] " + message;
+        LogManager.getInstance().log(level, composedText);
     }
 
-    String formatDate() {
-        return LocalDateTime.now().format(dateTimeFormatter);
+    public static void verbose(String message)  {
+        log(LogLevel.VERBOSE, message);
     }
 
-    public void log(LogLevel level, String message) throws IOException {
-        switch (level) {
-            case VERBOSE:
-                verbose(message);
-                break;
-
-            case DEBUG:
-                debug(message);
-                break;
-
-            case INFO:
-                info(message);
-                break;
-
-            case WARN:
-                warn(message);
-                break;
-
-            case ERROR:
-                error(message);
-                break;
-
-            case FATAL:
-                fatal(message);
-                break;
-        }
+    public static void debug(String message) {
+        log(LogLevel.DEBUG, message);
     }
 
-    void verbose(String message) throws IOException {
-        String composedText = formatDate() + " [VERBOSE] " + message;
-        write(composedText);
+    public static void info(String message)  {
+        log(LogLevel.INFO, message);
     }
 
-    void debug(String message) throws IOException {
-        String composedText = formatDate() + " [DEBUG] " + message;
-        write(composedText);
+    public static void warn(String message)  {
+        log(LogLevel.WARN, message);
     }
 
-    void info(String message) throws IOException {
-        String composedText = formatDate() + " [INFO] "  + message;
-        write(composedText);
+    public static void error(String message)  {
+        log(LogLevel.ERROR, message);
     }
 
-    void warn(String message) throws IOException {
-        String composedText = formatDate() + " [WARN] "  + message;
-        write(composedText);
+    public static void fatal(String message)  {
+        log(LogLevel.FATAL, message);
     }
-
-    void error(String message) throws IOException {
-        String composedText = formatDate() + " [ERROR] "  + message;
-        write(composedText);
-    }
-
-    void fatal(String message) throws IOException {
-        String composedText = formatDate() + " [FATAL] "  + message;
-        write(composedText);
-    }
-
-    abstract void write(String message) throws IOException;
 }
