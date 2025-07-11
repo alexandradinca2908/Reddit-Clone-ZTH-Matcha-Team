@@ -2,10 +2,8 @@ package org.example.services;
 import org.example.entities.User;
 import org.example.loggerobjects.LogLevel;
 import org.example.loggerobjects.Logger;
-import org.example.loggerobjects.LoggerType;
 import org.example.repositories.UserRepo;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
