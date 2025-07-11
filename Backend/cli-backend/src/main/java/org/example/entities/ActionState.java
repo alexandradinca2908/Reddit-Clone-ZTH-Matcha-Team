@@ -159,7 +159,8 @@ public class ActionState {
 
         if (translatedInput.equalsIgnoreCase("expand post")) {
             try {
-                post = postService.expandPost();
+                post = postService.getPost(postService.getPostIDUser());
+                postService.showPost(true, post);
                 changeState(State.ON_POST);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -212,11 +213,11 @@ public class ActionState {
             commentService.addComment(user, post);
         } else if (translatedInput.equalsIgnoreCase("upvote")) {
             postService.votePost(user.getUserID(), post.getPostID(), "upvote");
-            postService.expandPost(post);
+            postService.showPost(true, post);
             changeState(State.ON_POST);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
             postService.votePost(user.getUserID(), post.getPostID(), "downvote");
-            postService.expandPost(post);
+            postService.showPost(true, post);
             changeState(State.ON_POST);
         } else if (translatedInput.equalsIgnoreCase("select comment")) {
             try {
@@ -261,7 +262,7 @@ public class ActionState {
             commentReply = commentService.selectReply(user, comment);
             changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("return to post")) {
-            postService.expandPost(post);
+            postService.showPost(true, post);
             changeState(State.ON_POST);
         } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
