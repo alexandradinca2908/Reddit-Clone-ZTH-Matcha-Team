@@ -1,5 +1,8 @@
 package org.example.services;
 import org.example.entities.User;
+import org.example.loggerobjects.LogLevel;
+import org.example.loggerobjects.Logger;
+import org.example.loggerobjects.LoggerType;
 import org.example.repositories.UserRepo;
 
 import java.sql.Connection;
@@ -56,15 +59,21 @@ public class UserService {
         for (User user : users) {
             if (user.getUsername().equals(username) &&
                 passwordService.checkPassword(password, user.getPassword())) {
+
                 System.out.println("Login successful! Welcome back, " + username + "!");
+                Logger.log(LogLevel.INFO, "User \"" + username + "\" successfully logged in.");
+
                 return user;
             }
         }
+
         System.out.println("Invalid username or password. Do you want to try again? (y/n)");
         String response = sc.nextLine();
         if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yes")) {
+            Logger.log(LogLevel.VERBOSE, "User tries to login again.");
             return userLoginCLI();
         } else {
+            Logger.log(LogLevel.ERROR, "Login didn't work for " + username + ".");
             System.out.println("Login cancelled.");
         }
         return null;
