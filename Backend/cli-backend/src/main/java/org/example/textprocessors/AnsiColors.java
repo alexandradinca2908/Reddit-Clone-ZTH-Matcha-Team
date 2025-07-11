@@ -4,7 +4,9 @@ public class AnsiColors {
     public static final int MAX_TEXT_LENGTH = 20;
     public static final int MIN_REWARD_VOTES = 10;
     public static final String LINE_SEPARATOR = "----------------------";
+    public static final String SMALL_LINE_SEPARATOR = "-----";
     public static final String DOUBLE_LINE_SEPARATOR = "======================";
+    public static final String POST_COUNT_HEADER_FORMAT = "=== Showing a total of %d posts ===";
     public static final String REWARD = AnsiColors.toOrange("c[_] ");
 
     public static final String RESET = "\u001B[0m";

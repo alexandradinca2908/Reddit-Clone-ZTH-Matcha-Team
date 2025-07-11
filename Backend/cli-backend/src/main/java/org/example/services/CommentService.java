@@ -48,7 +48,7 @@ public class CommentService extends AnsiColors {
 
 
     public void printComment(Comment comm, int indentLevel) {
-        System.out.println(AnsiColors.toOrange("CID: " + comm.getCommentID() + " | USER: " + comm.getParentUser().getUsername()));
+        System.out.println(AnsiColors.toOrange("ID: " + comm.getCommentID() + " | USER: " + comm.getParentUser().getUsername()));
         System.out.println(comm.getCommentText());
         System.out.print(AnsiColors.toRed("UP ") + comm.getVoteCount() + AnsiColors.toBlue(" DOWN "));
         System.out.println("| " + comm.replyList.size() + " replies");
@@ -62,7 +62,7 @@ public class CommentService extends AnsiColors {
     public Comment selectComment(User user, Post post) {
         int cid;
         while (true) {
-            System.out.print("Please enter the CID: ");
+            System.out.print("Please enter the CommentID: ");
             try {
                 cid = Integer.parseInt(sc.nextLine());
                 break;
@@ -87,7 +87,7 @@ public class CommentService extends AnsiColors {
     public void printReply(CommentReply reply, int indentLevel) {
         String indent = "    ".repeat(indentLevel);
 
-        System.out.println(indent + AnsiColors.toOrange("RID " + reply.getCommentReplyID() + " | USER: " + reply.getParentUser().getUsername()));
+        System.out.println(indent + AnsiColors.toOrange("ID " + reply.getCommentReplyID() + " | USER: " + reply.getParentUser().getUsername()));
         System.out.println(AnsiColors.addReward(reply.getCommentReplyText(), reply.getVotes()));
         System.out.print(indent + AnsiColors.toRed("UP ") + reply.getVotes() + AnsiColors.toBlue(" DOWN "));
         System.out.println("| " + reply.commentReplies.size() + " replies");
@@ -102,7 +102,7 @@ public class CommentService extends AnsiColors {
     public CommentReply selectReply(User user, Comment comment) {
         int rid;
         while (true) {
-            System.out.print("Please enter the RID: ");
+            System.out.print("Please enter the ReplyID: ");
             try {
                 rid = Integer.parseInt(sc.nextLine());
                 break;
@@ -114,7 +114,7 @@ public class CommentService extends AnsiColors {
             for(CommentReply reply : comment.replyList) {
                 if(reply.getCommentReplyID() == rid) {
                     //show reply
-                    System.out.println(AnsiColors.toOrange("RID: " + reply.getCommentReplyID()+ " | USER: " + reply.getParentUser().getUsername()));
+                    System.out.println(AnsiColors.toOrange("ID: " + reply.getCommentReplyID()+ " | USER: " + reply.getParentUser().getUsername()));
                     System.out.println(reply.getCommentReplyText());
                     System.out.print(AnsiColors.toRed("UP ") + reply.getVotes() + AnsiColors.toBlue(" DOWN \n"));
                     System.out.println(LINE_SEPARATOR);

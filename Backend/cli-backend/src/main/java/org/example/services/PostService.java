@@ -49,11 +49,13 @@ public class PostService extends AnsiColors {
     }
 
     public void showFeed() {
-        System.out.println(AnsiColors.toGreen("=== Showing a total of " + Post.posts.size() + " posts ==="));
+        String headerText = String.format(AnsiColors.POST_COUNT_HEADER_FORMAT, Post.posts.size());
+        System.out.println(AnsiColors.toGreen(headerText));
         System.out.println(LINE_SEPARATOR);
         for (Post iter : Post.posts) {
-            System.out.println(AnsiColors.toGreen("PID: " + iter.getPostID() + " | USER: " + iter.getUsername() + "\n"));
+            System.out.println(AnsiColors.toGreen("ID: " + iter.getPostID() + " | USER: " + iter.getUsername() + "\n"));
             System.out.println(AnsiColors.addReward(iter.title, iter.voteCount));
+            System.out.println(SMALL_LINE_SEPARATOR);
             String preview;
             if (iter.body.length() > MAX_TEXT_LENGTH) {
                 preview = iter.body.substring(0, MAX_TEXT_LENGTH) + "...";
@@ -68,24 +70,25 @@ public class PostService extends AnsiColors {
     }
 
     public Post expandPost() throws IOException {
-        System.out.println(AnsiColors.toGreen("Please enter PID: "));
+        System.out.println(AnsiColors.toGreen("Please enter PostID: "));
 
         int postID;
         while (true) {
-            System.out.print("Enter a post ID (number): ");
+            System.out.print("Enter a PostID: ");
             try {
                 postID = Integer.parseInt(sc.nextLine());
                 break;
             } catch (NumberFormatException e) {
-                System.out.println(AnsiColors.toYellow("Invalid input. Please enter a valid number."));
+                System.out.println(AnsiColors.toRed("Invalid input. Please enter a valid number."));
             }
         }
 
         for (Post iter : Post.posts) {
             if  (iter.getPostID() == postID) {
                 System.out.println(LINE_SEPARATOR);
-                System.out.println(AnsiColors.toGreen("PID: " + iter.getPostID() + " | USER: " + iter.getUsername() + "\n"));
+                System.out.println(AnsiColors.toGreen("ID: " + iter.getPostID() + " | USER: " + iter.getUsername() + "\n"));
                 System.out.println(AnsiColors.addReward(iter.title, iter.voteCount));
+                System.out.println(SMALL_LINE_SEPARATOR);
                 System.out.println(iter.body + "\n");
                 System.out.print(AnsiColors.toRed("UP ") + iter.voteCount + AnsiColors.toBlue(" DOWN "));
                 System.out.println( "| " + iter.getCommentsCounter() + " comments");
@@ -101,7 +104,7 @@ public class PostService extends AnsiColors {
 
     public void expandPost(Post post) {
         System.out.println(LINE_SEPARATOR);
-        System.out.println(AnsiColors.toGreen("PID: " + post.getPostID() + " | USER: " + post.getUsername() + "\n"));
+        System.out.println(AnsiColors.toGreen("ID: " + post.getPostID() + " | USER: " + post.getUsername() + "\n"));
         System.out.println(AnsiColors.addReward(post.title, post.voteCount));
         System.out.println(post.body + "\n");
         System.out.print(AnsiColors.toRed("UP ") + post.voteCount + AnsiColors.toBlue(" DOWN "));
