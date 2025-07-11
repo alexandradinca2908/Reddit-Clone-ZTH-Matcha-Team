@@ -38,6 +38,7 @@ public class UIService {
     private static final String DELETE_ACCOUNT_CONFIRMATION = "Are you sure you want to delete your account? (y/n)";
     private static final String ACCOUNT_DELETION_CANCELLED = "Account deletion cancelled.";
     private static final String ACCOUNT_DELETION_SUCCESS = "Account with username: %s was deleted successfully.";
+    private static final String ACCOUNT_DELETION_FAILED = "Failed to delete account: ";
 
     private UIService() {}
 
@@ -134,8 +135,9 @@ public class UIService {
     public void failed(String what, String str) {
         if (what.equalsIgnoreCase("account deletion cancelled")) {
             System.out.println(ACCOUNT_DELETION_CANCELLED);
-        } else if (what.equalsIgnoreCase("account deletion failed")) {}
-            System.out.println("Failed to delete account: " + str);
+        } else if (what.equalsIgnoreCase("account deletion failed")) {
+            System.out.println(ACCOUNT_DELETION_SUCCESS + str);
+        }
     }
 
     public void areYouSure(String what) {

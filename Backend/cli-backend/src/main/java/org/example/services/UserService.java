@@ -72,20 +72,14 @@ public class UserService {
             uiService.login(false, username);
             String response = sc.nextLine();
 
-            if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yes"))
+            if (!response.equalsIgnoreCase("y") && !response.equalsIgnoreCase("yes")) {
+                Logger.log(LogLevel.VERBOSE, "User tries to login again.");
                 break;
+            }
 
         } while (true);
 
-        System.out.println("Invalid username or password. Do you want to try again? (y/n)");
-        String response = sc.nextLine();
-        if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yes")) {
-            Logger.log(LogLevel.VERBOSE, "User tries to login again.");
-            return userLoginCLI();
-        } else {
-            Logger.log(LogLevel.ERROR, "Login didn't work for " + username + ".");
-            System.out.println("Login cancelled.");
-        }
+        Logger.log(LogLevel.ERROR, "Login didn't work for " + username + ".");
         return null;
     }
 
