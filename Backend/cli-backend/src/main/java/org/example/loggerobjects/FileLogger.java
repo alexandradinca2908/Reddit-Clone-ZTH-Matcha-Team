@@ -7,13 +7,14 @@ public class FileLogger implements Loggable {
     FileWriter fileWriter;
     LogLevel level;
 
-    public FileLogger(String filename) {
+    public FileLogger(LogLevel logLevel, String filename) {
         try {
             this.fileWriter = new FileWriter(filename);
         } catch (IOException e) {
             System.out.println("Error opening file: " + filename);
         }
 
+        this.level = logLevel;
     }
 
     public void log(LogLevel level, String message) {
@@ -26,7 +27,7 @@ public class FileLogger implements Loggable {
             fileWriter.write(message + "\n");
             fileWriter.flush();
         } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 }

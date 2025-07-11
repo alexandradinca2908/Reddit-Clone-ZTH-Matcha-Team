@@ -35,6 +35,12 @@ public class LogManager {
         loggers.add(logger);
     }
 
+    public void registerMultipleLoggers(Loggable... loggers) {
+        for (Loggable logger : loggers) {
+            registerLogger(logger);
+        }
+    }
+
     public void log(LogLevel level, String message) {
         for (Loggable logger : loggers) {
             logger.log(level, message);
