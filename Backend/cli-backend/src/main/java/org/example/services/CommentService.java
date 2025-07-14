@@ -1,9 +1,7 @@
 package org.example.services;
-import org.example.entities.CommentReply;
 import org.example.entities.Post;
 import org.example.entities.User;
 import org.example.entities.Comment;
-import org.example.loggerobjects.LogManager;
 import org.example.loggerobjects.Logger;
 import org.example.textprocessors.AnsiColors;
 
@@ -36,7 +34,7 @@ public class CommentService extends AnsiColors {
         Logger.fatal("Adding reply!");
         for (Comment comm : post.commentList) {
             if (comm.getCommentID() == comment.getCommentID()) {
-                CommentReply reply = new CommentReply(comm, user, replyText);
+                Comment reply = new Comment(comm, user, replyText);
                 comm.replyList.add(reply);
                 System.out.println(AnsiColors.toGreen("Reply added successfully."));
                 return;
@@ -54,7 +52,7 @@ public class CommentService extends AnsiColors {
         System.out.println("| " + comm.replyList.size() + " replies");
         System.out.println(LINE_SEPARATOR);
 
-        for (CommentReply reply : comm.replyList) {
+        for (Comment reply : comm.replyList) {
             printReply(reply, indentLevel + 1);
         }
     }
@@ -84,22 +82,22 @@ public class CommentService extends AnsiColors {
         throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + cid + " not found."));
     }
 
-    public void printReply(CommentReply reply, int indentLevel) {
+    public void printReply(Comment reply, int indentLevel) {
         String indent = "    ".repeat(indentLevel);
 
-        System.out.println(indent + AnsiColors.toOrange("ID " + reply.getCommentReplyID() + " | USER: " + reply.getParentUser().getUsername()));
-        System.out.println(AnsiColors.addReward(reply.getCommentReplyText(), reply.getVotes()));
+        System.out.println(indent + AnsiColors.toOrange("ID: " + reply.getCommentID() + " | USER: " + reply.getParentUser().getUsername()));
+        System.out.println(indent + AnsiColors.addReward(reply.getCommentText(), reply.getVotes()));
         System.out.print(indent + AnsiColors.toRed("UP ") + reply.getVotes() + AnsiColors.toBlue(" DOWN "));
-        System.out.println("| " + reply.commentReplies.size() + " replies");
+        System.out.println("| " + reply.replyList.size() + " replies");
         System.out.println(indent + LINE_SEPARATOR);
 
         // daca o sa avem nested replies
-        for (CommentReply nested : reply.getCommentReplies()) {
+        for (Comment nested : reply.replyList) {
             printReply(nested, indentLevel + 1);
         }
     }
 
-    public CommentReply selectReply(User user, Comment comment) {
+    public Comment selectReply(User user, Comment comment) {
         int rid;
         while (true) {
             System.out.print("Please enter the ReplyID: ");
@@ -111,11 +109,11 @@ public class CommentService extends AnsiColors {
             }
         }
 
-            for(CommentReply reply : comment.replyList) {
-                if(reply.getCommentReplyID() == rid) {
+            for(Comment reply : comment.replyList) {
+                if(reply.getCommentID() == rid) {
                     //show reply
-                    System.out.println(AnsiColors.toOrange("ID: " + reply.getCommentReplyID()+ " | USER: " + reply.getParentUser().getUsername()));
-                    System.out.println(reply.getCommentReplyText());
+                    System.out.println(AnsiColors.toOrange("ID: " + reply.getCommentID()+ " | USER: " + reply.getParentUser().getUsername()));
+                    System.out.println(reply.getCommentText());
                     System.out.print(AnsiColors.toRed("UP ") + reply.getVotes() + AnsiColors.toBlue(" DOWN \n"));
                     System.out.println(LINE_SEPARATOR);
                     return reply;
@@ -162,7 +160,7 @@ public class CommentService extends AnsiColors {
         }
     }
 
-    public void voteReply(User user, CommentReply reply, boolean vote) {
+    public void voteReply(User user, Comment reply, boolean vote) {
         if(vote) {
             if(reply.votingUserID.containsKey(user.getUserID())) {
                 if(reply.votingUserID.get(user.getUserID()).equals(1)) {

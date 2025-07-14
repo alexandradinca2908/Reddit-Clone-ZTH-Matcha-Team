@@ -20,7 +20,7 @@ public class ActionState {
     private User user;
     private Post post;
     private Comment comment;
-    private CommentReply commentReply;
+    private Comment commentReply;
 
     private ActionState() {
         this.isLoggedIn = false;

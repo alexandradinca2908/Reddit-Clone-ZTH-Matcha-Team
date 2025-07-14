@@ -9,12 +9,25 @@ public class Comment implements Likeable {
     private String commentText;
     private final Post parentPost;
     private final User parentUser;
+    private Comment parentComment;
     private int voteCount;
     public HashMap<Integer, Integer> votingUserID;
-    public ArrayList<CommentReply> replyList;
+    public ArrayList<Comment> replyList;
 
     public Comment(Post parentPost, User parentUser, String commentText) {
         this.parentPost = parentPost;
+        this.parentComment = null;
+        this.parentUser = parentUser;
+        this.commentText = commentText;
+        this.replyList = new ArrayList<>();
+        this.voteCount = 0;
+        this.votingUserID = new HashMap<>();
+        this.commentID = commentCounter++;
+    }
+
+    public Comment(Comment parentComment, User parentUser, String commentText) {
+        this.parentPost = null;
+        this.parentComment = parentComment;
         this.parentUser = parentUser;
         this.commentText = commentText;
         this.replyList = new ArrayList<>();
@@ -63,7 +76,7 @@ public class Comment implements Likeable {
     }
 
     public void addComentReply(String commentReplyText, User replyParentUser) {
-        CommentReply commentReply = new CommentReply(this, replyParentUser, commentReplyText);
+        Comment commentReply = new Comment(this, replyParentUser, commentReplyText);
         replyList.add(commentReply);
     }
 
