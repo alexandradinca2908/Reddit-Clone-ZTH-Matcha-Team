@@ -4,6 +4,7 @@ import org.example.dbconnection.DatabaseConnection;
 import org.example.entities.Comment;
 import org.example.entities.Post;
 import org.example.entities.User;
+import org.example.loggerobjects.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class CommentRepo {
         }
     }
     public void load() {
-        String sql = "SELECT comment_id, post_id, username, text FROM comment";
+        String sql = "SELECT commentID, postID, username, text FROM comment";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -71,7 +72,7 @@ public class CommentRepo {
 
                     parentPost.commentList.add(comment);
                 } else {
-                    System.err.println("Warning: Could not load comment " + commentId +
+                    Logger.warn("Warning: Could not load comment " + commentId +
                             " because its parent post or user could not be found.");
                 }
             }

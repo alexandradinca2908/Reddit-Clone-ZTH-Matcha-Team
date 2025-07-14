@@ -181,7 +181,8 @@ public class UserService {
         String password = sc.nextLine();
         if (passwordService.checkPassword(password, user.getPassword())) {
             uiService.accepted("account deletion", user.getUsername());
-            // TODO: Implement the actual deletion logic
+            userRepo.deleteUser(user.getUsername());
+            users.remove(user);
         } else {
             uiService.failed("account deletion failed", user.getUsername());
         }

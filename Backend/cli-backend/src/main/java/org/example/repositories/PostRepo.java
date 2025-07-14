@@ -51,7 +51,7 @@ public class PostRepo {
     }
 
     public void load(ArrayList<Post> posts) {
-        String sql = "SELECT post_id, username, title, description FROM post";
+        String sql = "SELECT postID, username, title, description FROM post";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
