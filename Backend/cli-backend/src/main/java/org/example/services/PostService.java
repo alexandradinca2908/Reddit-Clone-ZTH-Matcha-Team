@@ -42,10 +42,6 @@ public class PostService {
         System.out.println(AnsiColors.toGreen("Post added successfully!"));
     }
 
-    public void deletePost(int postID) {
-        Post.posts.removeIf(iter -> iter.getPostID() == postID);
-    }
-
     public int getPostIDUser() {
         int postID;
         System.out.println(AnsiColors.toGreen("Please enter PostID: "));
@@ -67,39 +63,36 @@ public class PostService {
     }
 
     public void votePost(User user, Post post, boolean vote) {
-        if(vote) {
-            if(post.votingUserID.containsKey(user.getUserID())) {
-                if(post.votingUserID.get(user.getUserID()).equals(1)) {
+        if (vote) {
+            if (post.votingUserID.containsKey(user.getUserID())) {
+                if (post.votingUserID.get(user.getUserID()).equals(1)) {
                     post.downvote();
                     post.votingUserID.remove(user.getUserID());
-                }
-                else {
+                } else {
                     post.upvote();
                     post.upvote();
                     post.votingUserID.put(user.getUserID(), 1);
                 }
-            }
-            else {
+            } else {
                 post.upvote();
                 post.votingUserID.put(user.getUserID(), 1);
             }
-        }
-        else {
-            if(post.votingUserID.containsKey(user.getUserID())) {
-                if(post.votingUserID.get(user.getUserID()).equals(-1)) {
+        } else {
+            if (post.votingUserID.containsKey(user.getUserID())) {
+                if (post.votingUserID.get(user.getUserID()).equals(-1)) {
                     post.upvote();
                     post.votingUserID.remove(user.getUserID());
-                }
-                else {
+                } else {
                     post.downvote();
                     post.downvote();
                     post.votingUserID.put(user.getUserID(), -1);
                 }
-            }
-            else {
+            } else {
                 post.downvote();
                 post.votingUserID.put(user.getUserID(), -1);
             }
         }
     }
+
+
 }

@@ -10,6 +10,11 @@ import java.util.Scanner;
 
 public class UIPost {
     private static UIPost instance;
+    private static final String PROMPT_TITLE = AnsiColors.toGreen("Please enter title: ");
+    private static final String PROMPT_DESCRIPTION = AnsiColors.toGreen("Please enter description: ");
+    private static final String ERROR_TITLE_TOO_SHORT = AnsiColors.toRed("Title must be at least %d characters long.");
+    private static final String ERROR_DESCRIPTION_EMPTY = AnsiColors.toRed("Description can not be empty!");
+
 
     public UIPost() {}
     public static UIPost getInstance() {
@@ -46,7 +51,7 @@ public class UIPost {
         System.out.print(AnsiColors.toRed("UP ") + post.getVotes() + AnsiColors.toBlue(" DOWN "));
         System.out.println( "| " + post.getCommentsCounter() + " comments");
         if (isExpanded) {
-            System.out.println(AnsiColors.DOUBLE_LINE_SEPARATOR + "\n");
+            System.out.println(AnsiColors.DOUBLE_LINE_SEPARATOR);
             this.printPostComments(post);
         } else {
             System.out.println(AnsiColors.LINE_SEPARATOR);
@@ -62,7 +67,7 @@ public class UIPost {
     private void printCommentAndReplies(Comment comment, int indentLevel) {
         String indent = "    ".repeat(indentLevel);
 
-        System.out.println(indent + AnsiColors.toOrange("ID: " + comment.getCommentID() + " | USER: " + comment.getParentUser().getUsername()));
+        System.out.println(indent + AnsiColors.toOrange("ID: %d | USER: %s" + comment.getCommentID() + " | USER: " + comment.getParentUser().getUsername()));
         System.out.println(indent + AnsiColors.addReward(comment.getCommentText(), comment.getVotes()));
         System.out.print(indent + AnsiColors.toRed("UP ") + comment.getVoteCount() + AnsiColors.toBlue(" DOWN "));
         System.out.println("| " + comment.replyList.size() + " replies");
@@ -77,18 +82,18 @@ public class UIPost {
         Scanner sc = new Scanner(System.in);
         Map<String, String> postData = new HashMap<>();
 
-        System.out.println(AnsiColors.toGreen("Please enter title: "));
+        System.out.println(PROMPT_TITLE);
         String title = sc.nextLine();
         while (title.length() < AnsiColors.MAX_TEXT_LENGTH) {
-            System.out.println(AnsiColors.toRed("Title must be at least " + AnsiColors.MAX_TEXT_LENGTH + " characters long."));
+            System.out.printf((ERROR_TITLE_TOO_SHORT) + "%n", AnsiColors.MAX_TEXT_LENGTH);
             title = sc.nextLine();
         }
         postData.put("title", title);
 
-        System.out.println(AnsiColors.toGreen("Please enter description: "));
+        System.out.println(PROMPT_DESCRIPTION);
         String body = sc.nextLine();
         while (body.isEmpty()) {
-            System.out.println(AnsiColors.toRed("Description can not be empty!"));
+            System.out.println(ERROR_DESCRIPTION_EMPTY);
             body = sc.nextLine();
         }
         postData.put("body", body);
