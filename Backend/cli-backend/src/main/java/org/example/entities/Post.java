@@ -60,38 +60,5 @@ public class Post implements Likeable {
         commentList.add(comment);
         commentRepo.save(comment);
     }
-
-    // move in ViewPost
-    public void printPostComments(int indentLevel) {
-        String indent = "    ".repeat(indentLevel); // 4 spaces per level
-
-        for (Comment comment : commentList) {
-            System.out.println(indent + AnsiColors.toOrange("ID: " + comment.getCommentID() + " | USER: " + comment.getParentUser().getUsername()));
-            System.out.println(AnsiColors.addReward(comment.getCommentText(), comment.getVotes()));
-            System.out.print(indent + AnsiColors.toRed("UP ") + comment.getVoteCount() + AnsiColors.toBlue(" DOWN "));
-            System.out.println("| " + comment.replyList.size() + " replies");
-            System.out.println(indent + AnsiColors.LINE_SEPARATOR);
-
-            for (Comment reply : comment.replyList) {
-                printReply(reply, indentLevel + 1);
-            }
-        }
-    }
-
-    // move in ViewComments
-    public void printReply(Comment reply, int indentLevel) {
-        String indent = "    ".repeat(indentLevel);
-
-        System.out.println(indent + AnsiColors.toOrange("ID: " + reply.getCommentID() + " | USER: " + reply.getParentUser().getUsername()));
-        System.out.println(indent + AnsiColors.addReward(reply.getCommentText(), reply.getVotes()));
-        System.out.print(indent + AnsiColors.toRed("UP ") + reply.getVotes() + AnsiColors.toBlue(" DOWN "));
-        System.out.println("| " + reply.replyList.size() + " replies");
-        System.out.println(indent + AnsiColors.LINE_SEPARATOR);
-
-        // daca o sa avem nested replies
-        for (Comment nested : reply.replyList) {
-            printReply(nested, indentLevel + 1);
-        }
-    }
 }
 

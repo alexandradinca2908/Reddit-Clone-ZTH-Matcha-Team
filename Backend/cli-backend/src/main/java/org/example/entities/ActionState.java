@@ -2,6 +2,7 @@ package org.example.entities;
 
 import org.example.services.CommentService;
 import org.example.services.PostService;
+import org.example.services.UIPost;
 import org.example.services.UserService;
 import org.example.textprocessors.AnsiColors;
 
@@ -21,6 +22,7 @@ public class ActionState {
     private Post post;
     private Comment comment;
     private Comment commentReply;
+    private UIPost UIPost = new UIPost();
 
     private ActionState() {
         this.isLoggedIn = false;
@@ -109,7 +111,7 @@ public class ActionState {
                 isLoggedIn = true;
             }
         } else if (translatedInput.equalsIgnoreCase("show feed")) {
-            postService.showFeed();
+            UIPost.showFeed();
             changeState(State.ON_FEED);
         } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
@@ -131,7 +133,7 @@ public class ActionState {
         String translatedInput = translateInput(option, currentState, isLoggedIn);
 
         if (translatedInput.equalsIgnoreCase("show feed")) {
-            postService.showFeed();
+            UIPost.showFeed();
             changeState(State.ON_FEED);
         }  else if (translatedInput.equalsIgnoreCase("create post")) {
             postService.addPost(user.getUsername());
@@ -160,7 +162,7 @@ public class ActionState {
         if (translatedInput.equalsIgnoreCase("expand post")) {
             try {
                 post = postService.getPost(postService.getPostIDUser());
-                postService.showPost(true, post);
+                UIPost.showPost(true, post);
                 changeState(State.ON_POST);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -187,7 +189,7 @@ public class ActionState {
         String translatedInput = translateInput(option, currentState, isLoggedIn);
 
         if (translatedInput.equalsIgnoreCase("return to feed")) {
-            postService.showFeed();
+            UIPost.showFeed();
             changeState(State.ON_FEED);
         } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
@@ -213,10 +215,10 @@ public class ActionState {
             commentService.addComment(user, post);
         } else if (translatedInput.equalsIgnoreCase("upvote")) {
             postService.votePost(user, post, true);
-            postService.showPost(true, post);
+            UIPost.showPost(true, post);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
             postService.votePost(user, post, false);
-            postService.showPost(true, post);
+            UIPost.showPost(true, post);
         } else if (translatedInput.equalsIgnoreCase("select comment")) {
             try {
                 comment = commentService.selectComment(user, post);
@@ -225,7 +227,7 @@ public class ActionState {
                 System.out.println(e.getMessage());
             }
         } else if (translatedInput.equalsIgnoreCase("return to feed")) {
-            postService.showFeed();
+            UIPost.showFeed();
             changeState(State.ON_FEED);
         } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
@@ -260,7 +262,7 @@ public class ActionState {
             commentReply = commentService.selectReply(user, comment);
             changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("return to post")) {
-            postService.showPost(true, post);
+            UIPost.showPost(true, post);
             changeState(State.ON_POST);
         } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);

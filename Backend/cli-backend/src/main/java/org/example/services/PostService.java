@@ -4,8 +4,9 @@ import org.example.loggerobjects.Logger;
 import org.example.repositories.PostRepo;
 import org.example.textprocessors.AnsiColors;
 import org.example.entities.Post;
+import org.example.services.UIPost;
 
-import java.io.IOException;
+import java.util.Map;
 import java.util.Scanner;
 
 public class PostService {
@@ -24,41 +25,25 @@ public class PostService {
         return instance;
     }
 
-    public void addPost(String username) {
-        System.out.println(AnsiColors.toGreen("Please enter title: "));
-        String title = sc.nextLine();
-        while (title.length() < AnsiColors.MAX_TEXT_LENGTH) {
-            System.out.println(AnsiColors.toRed("Title must be at least " +  AnsiColors.MAX_TEXT_LENGTH + " characters long."));
-            title = sc.nextLine();
-        }
-        System.out.println(AnsiColors.toGreen("Please enter description: "));
-        String body = sc.nextLine();
-        while (body.isEmpty()) {
-            System.out.println(AnsiColors.toRed("Description can not be empty!"));
-            body = sc.nextLine();
-        }
-
+    public void createPost(String title, String body, String username) {
         Post post = new Post(title, body, username);
-
-        Logger.fatal("Great Success!");
         Post.posts.add(post);
-        System.out.println(AnsiColors.toGreen("Post added successfully!"));
-
-        postRepo.save(post);
+        Logger.info("Post created successfully by user: " + username);
     }
 
-    // move in ViewPort
+    public void addPost(String username) {
+        Map<String, String> postData = UIPost.getPostDetailsFromUser();
+
+        String title = postData.get("title");
+        String body = postData.get("body");
+
+        createPost(title, body, username);
+
+        System.out.println(AnsiColors.toGreen("Post added successfully!"));
+    }
+
     public void deletePost(int postID) {
         Post.posts.removeIf(iter -> iter.getPostID() == postID);
-    }
-
-    public void showFeed() {
-        String headerText = String.format(AnsiColors.POST_COUNT_HEADER_FORMAT, Post.posts.size());
-        System.out.println(AnsiColors.toGreen(headerText));
-        System.out.println(AnsiColors.LINE_SEPARATOR);
-        for (Post iter : Post.posts) {
-            this.showPost(false, iter);
-        }
     }
 
     public int getPostIDUser() {
@@ -79,32 +64,6 @@ public class PostService {
 
     public Post getPost(int postID) {
         return postRepo.findById(postID);
-    }
-
-    // move in ViewPost
-    public void showPost(boolean isExpanded, Post post) {
-        if  (post == null) {
-            System.out.println(AnsiColors.toRed("Post is null!"));
-            return;
-        }
-        System.out.println(AnsiColors.toGreen("ID: " + post.getPostID() + " | USER: " + post.getUsername() + "\n"));
-        System.out.println(AnsiColors.highlight(AnsiColors.addReward(post.getTitle(), post.getVotes())));
-        if (!isExpanded) {
-            if (post.getBody().length() > AnsiColors.MAX_TEXT_LENGTH) {
-                System.out.println(post.getBody().substring(0, AnsiColors.MAX_TEXT_LENGTH) + "...\n");
-            }
-        } else {
-            System.out.println(post.getBody());
-            System.out.println();
-        }
-        System.out.print(AnsiColors.toRed("UP ") + post.getVotes() + AnsiColors.toBlue(" DOWN "));
-        System.out.println( "| " + post.getCommentsCounter() + " comments");
-        if (isExpanded) {
-            System.out.println(AnsiColors.DOUBLE_LINE_SEPARATOR + "\n");
-            post.printPostComments(0);
-        } else {
-            System.out.println(AnsiColors.LINE_SEPARATOR);
-        }
     }
 
     public void votePost(User user, Post post, boolean vote) {
