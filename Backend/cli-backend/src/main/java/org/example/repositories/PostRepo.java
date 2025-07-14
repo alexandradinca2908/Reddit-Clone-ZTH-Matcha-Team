@@ -46,7 +46,7 @@ public class PostRepo {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -60,10 +60,10 @@ public class PostRepo {
             while (rs.next()) {
                 Post post = new Post(
                         rs.getString("title"),
-                        rs.getString("description"), // 'description' is the column name in the DB
+                        rs.getString("description"),
                         rs.getString("username")
                 );
-                post.setPostId(rs.getInt("post_id"));
+                post.setPostId(rs.getInt("postID"));
                 posts.add(post);
             }
         } catch (SQLException e) {
