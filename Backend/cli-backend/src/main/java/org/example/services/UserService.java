@@ -3,6 +3,7 @@ import org.example.entities.User;
 import org.example.loggerobjects.LogLevel;
 import org.example.loggerobjects.Logger;
 import org.example.repositories.UserRepo;
+import org.example.userinterface.UIService;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

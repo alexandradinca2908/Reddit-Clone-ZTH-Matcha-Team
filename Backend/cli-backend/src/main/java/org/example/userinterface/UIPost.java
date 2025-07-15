@@ -1,8 +1,9 @@
-package org.example.services;
+package org.example.userinterface;
 
 import org.example.entities.Comment;
 import org.example.entities.Post;
 import org.example.textprocessors.AnsiColors;
+import org.example.textprocessors.TextSymbols;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,8 @@ import java.util.Scanner;
 
 public class UIPost {
     private static UIPost instance;
+    public static final String POST_COUNT_HEADER_FORMAT = "=== Showing a total of %d posts ===";
+    public static final int MAX_TEXT_LENGTH = 20;;
     private static final String PROMPT_TITLE = AnsiColors.toGreen("Please enter title: ");
     private static final String PROMPT_DESCRIPTION = AnsiColors.toGreen("Please enter description: ");
     private static final String ERROR_TITLE_TOO_SHORT = AnsiColors.toRed("Title must be at least %d characters long.");
@@ -25,9 +28,9 @@ public class UIPost {
     }
 
     public void showFeed() {
-        String headerText = String.format(AnsiColors.POST_COUNT_HEADER_FORMAT, Post.posts.size());
+        String headerText = String.format(UIPost.POST_COUNT_HEADER_FORMAT, Post.posts.size());
         System.out.println(AnsiColors.toGreen(headerText));
-        System.out.println(AnsiColors.LINE_SEPARATOR);
+        System.out.println(TextSymbols.LINE_SEPARATOR);
         for (Post iter : Post.posts) {
             this.showPost(false, iter);
         }
@@ -38,11 +41,12 @@ public class UIPost {
             System.out.println(AnsiColors.toRed("Post is null!"));
             return;
         }
+        UIComment uiComment = UIComment.getInstance();
         System.out.println(AnsiColors.toGreen("ID: " + post.getPostID() + " | USER: " + post.getUsername() + "\n"));
         System.out.println(AnsiColors.highlight(AnsiColors.addReward(post.getTitle(), post.getVotes())));
         if (!isExpanded) {
-            if (post.getBody().length() > AnsiColors.MAX_TEXT_LENGTH) {
-                System.out.println(post.getBody().substring(0, AnsiColors.MAX_TEXT_LENGTH) + "...\n");
+            if (post.getBody().length() > UIPost.MAX_TEXT_LENGTH) {
+                System.out.println(post.getBody().substring(0, UIPost.MAX_TEXT_LENGTH) + "...\n");
             }
         } else {
             System.out.println(post.getBody());
@@ -51,30 +55,10 @@ public class UIPost {
         System.out.print(AnsiColors.toRed("UP ") + post.getVotes() + AnsiColors.toBlue(" DOWN "));
         System.out.println( "| " + post.getCommentsCounter() + " comments");
         if (isExpanded) {
-            System.out.println(AnsiColors.DOUBLE_LINE_SEPARATOR);
-            this.printPostComments(post);
+            System.out.println(TextSymbols.DOUBLE_LINE_SEPARATOR);
+            uiComment.showAllCommentsAndReplies(post);
         } else {
-            System.out.println(AnsiColors.LINE_SEPARATOR);
-        }
-    }
-
-    public void printPostComments(Post post) {
-        for (Comment comment : post.commentList) {
-            printCommentAndReplies(comment, 0);
-        }
-    }
-
-    private void printCommentAndReplies(Comment comment, int indentLevel) {
-        String indent = "    ".repeat(indentLevel);
-
-        System.out.println(indent + AnsiColors.toOrange("ID: %d | USER: %s" + comment.getCommentID() + " | USER: " + comment.getParentUser().getUsername()));
-        System.out.println(indent + AnsiColors.addReward(comment.getCommentText(), comment.getVotes()));
-        System.out.print(indent + AnsiColors.toRed("UP ") + comment.getVoteCount() + AnsiColors.toBlue(" DOWN "));
-        System.out.println("| " + comment.replyList.size() + " replies");
-        System.out.println(indent + AnsiColors.LINE_SEPARATOR);
-
-        for (Comment reply : comment.replyList) {
-            printCommentAndReplies(reply, indentLevel + 1);
+            System.out.println(TextSymbols.LINE_SEPARATOR);
         }
     }
 
@@ -84,8 +68,8 @@ public class UIPost {
 
         System.out.println(PROMPT_TITLE);
         String title = sc.nextLine();
-        while (title.length() < AnsiColors.MAX_TEXT_LENGTH) {
-            System.out.printf((ERROR_TITLE_TOO_SHORT) + "%n", AnsiColors.MAX_TEXT_LENGTH);
+        while (title.length() < UIPost.MAX_TEXT_LENGTH) {
+            System.out.printf((ERROR_TITLE_TOO_SHORT) + "%n", UIPost.MAX_TEXT_LENGTH);
             title = sc.nextLine();
         }
         postData.put("title", title);

@@ -1,4 +1,4 @@
-package org.example.services;
+package org.example.userinterface;
 
 
 public class UIService {

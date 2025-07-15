@@ -1,13 +1,7 @@
 package org.example.textprocessors;
 
 public class AnsiColors {
-    public static final int MAX_TEXT_LENGTH = 20;
-    public static final int MIN_REWARD_VOTES = 1;
-    public static final String LINE_SEPARATOR = "----------------------";
-    public static final String DOUBLE_LINE_SEPARATOR = "======================";
-    public static final String POST_COUNT_HEADER_FORMAT = "=== Showing a total of %d posts ===";
-    public static final String REWARD = AnsiColors.toOrange("c[_] ");
-
+    public static final int MIN_REWARD_VOTES = 10;
     public static final String RESET = "\u001B[0m";
     public static final String GREEN = "\u001B[32m";
     public static final String RED = "\u001B[31m";
@@ -41,7 +35,7 @@ public class AnsiColors {
 
     public static String addReward(String string, int score) {
         if (score >= MIN_REWARD_VOTES) {
-            return REWARD.concat(string);
+            return TextSymbols.REWARD.concat(string);
         } else {
             return string;
         }

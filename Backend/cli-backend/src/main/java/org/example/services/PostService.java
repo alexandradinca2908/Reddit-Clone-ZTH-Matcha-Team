@@ -4,7 +4,7 @@ import org.example.loggerobjects.Logger;
 import org.example.repositories.PostRepo;
 import org.example.textprocessors.AnsiColors;
 import org.example.entities.Post;
-import org.example.services.UIPost;
+import org.example.userinterface.UIPost;
 
 import java.util.Map;
 import java.util.Scanner;
