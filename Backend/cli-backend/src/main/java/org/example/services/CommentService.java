@@ -1,16 +1,38 @@
 package org.example.services;
+import org.example.dbconnection.DatabaseConnection;
 import org.example.entities.Post;
 import org.example.entities.User;
 import org.example.entities.Comment;
+import org.example.loggerobjects.LogLevel;
 import org.example.loggerobjects.Logger;
+import org.example.repositories.CommentRepo;
 import org.example.textprocessors.AnsiColors;
 
 import java.util.Scanner;
 
 public class CommentService extends AnsiColors {
+    private static CommentService instance;
+    private static final CommentRepo commentRepo = CommentRepo.getInstance();
+
     Scanner sc = new Scanner(System.in);
     private Post post;
     private User user;
+
+    private CommentService() {}
+
+    public static CommentService getInstance() {
+        if (instance == null) {
+            instance = new CommentService();
+
+            try {
+                commentRepo.loadPostComments();
+            } catch (Exception e) {
+                Logger.error("Failed to load comments from the database: " + e.getMessage());
+                DatabaseConnection.cannotConnect();
+            }
+        }
+        return instance;
+    }
 
     public void addComment(User user, Post post) {
         System.out.println(AnsiColors.toGreen("Please enter a comment: "));

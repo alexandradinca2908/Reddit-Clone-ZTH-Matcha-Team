@@ -14,7 +14,7 @@ import static org.example.textprocessors.InputTranslator.translateInput;
 public class ActionState {
     private final static UserService userService = UserService.getInstance();
     private final static PostService postService = PostService.getInstance();
-    private final static CommentService commentService = new CommentService();
+    private final static CommentService commentService = CommentService.getInstance();
     private static ActionState actionState;
     private boolean isLoggedIn;
     private State currentState;

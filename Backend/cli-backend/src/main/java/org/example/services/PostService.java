@@ -1,11 +1,14 @@
 package org.example.services;
+import org.example.dbconnection.DatabaseConnection;
 import org.example.entities.User;
+import org.example.loggerobjects.LogLevel;
 import org.example.loggerobjects.Logger;
 import org.example.repositories.PostRepo;
 import org.example.textprocessors.AnsiColors;
 import org.example.entities.Post;
 import org.example.userinterface.UIPost;
 
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -20,7 +23,12 @@ public class PostService {
         if (instance == null) {
             instance = new PostService();
 
-            postRepo.load(Post.posts);
+            try {
+                postRepo.load(Post.posts);
+            } catch (SQLException e) {
+                Logger.error("Failed to load posts from the database: " + e.getMessage());
+                DatabaseConnection.cannotConnect();
+            }
         }
         return instance;
     }
@@ -28,6 +36,10 @@ public class PostService {
     public void createPost(String title, String body, String username) {
         Post post = new Post(title, body, username);
         Post.posts.add(post);
+
+        // it handles the case where the post is not saved to the database
+        postRepo.save(post);
+
         Logger.info("Post created successfully by user: " + username);
     }
 
@@ -38,7 +50,6 @@ public class PostService {
         String body = postData.get("body");
 
         createPost(title, body, username);
-
         System.out.println(AnsiColors.toGreen("Post added successfully!"));
     }
 
