@@ -3,7 +3,7 @@ import org.example.entities.User;
 import org.example.loggerobjects.LogLevel;
 import org.example.loggerobjects.Logger;
 import org.example.repositories.UserRepo;
-import org.example.userinterface.UIService;
+import org.example.userinterface.UIUser;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class UserService {
     private static final Scanner sc = new Scanner(System.in);
     private static final PasswordService passwordService = new PasswordService();
     public static final UserRepo userRepo = new UserRepo();
-    private static final UIService uiService = UIService.getInstance();
+    private static final UIUser uiService = UIUser.getInstance();
 
     private UserService() {}
 

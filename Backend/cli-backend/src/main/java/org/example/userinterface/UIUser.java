@@ -1,8 +1,8 @@
 package org.example.userinterface;
 
 
-public class UIService {
-    private static UIService instance;
+public class UIUser {
+    private static UIUser instance;
     private static final String WELCOME_TO_REGISTER = "Welcome to Register Page\n";
     private static final String WELCOME_TO_LOGIN = "Welcome to Login Page\n";
     private static final String WELCOME_TO_USER = "Welcome, ";
@@ -40,11 +40,11 @@ public class UIService {
     private static final String ACCOUNT_DELETION_SUCCESS = "Account with username: %s was deleted successfully.";
     private static final String ACCOUNT_DELETION_FAILED = "Failed to delete account: ";
 
-    private UIService() {}
+    private UIUser() {}
 
-    public static UIService getInstance() {
+    public static UIUser getInstance() {
         if (instance == null) {
-            instance = new UIService();
+            instance = new UIUser();
         }
         return instance;
     }
