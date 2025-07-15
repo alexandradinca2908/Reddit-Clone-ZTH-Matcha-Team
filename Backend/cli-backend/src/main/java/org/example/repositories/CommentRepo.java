@@ -4,6 +4,7 @@ import org.example.dbconnection.DatabaseConnection;
 import org.example.entities.Comment;
 import org.example.entities.Post;
 import org.example.entities.User;
+import org.example.loggerobjects.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class CommentRepo {
     }
 
     public void save(Comment comment) {
-        String sql = "INSERT INTO comment (post_id, username, text) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO comment (username, postID, text) VALUES (?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -49,15 +50,15 @@ public class CommentRepo {
         }
     }
     public void load() {
-        String sql = "SELECT comment_id, post_id, username, text FROM comment";
+        String sql = "SELECT commentID, username, postID, text FROM comment";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-                int commentId = rs.getInt("comment_id");
-                int postId = rs.getInt("post_id");
+                int commentId = rs.getInt("commentID");
+                int postId = rs.getInt("postID");
                 String username = rs.getString("username");
                 String text = rs.getString("text");
 
@@ -71,7 +72,7 @@ public class CommentRepo {
 
                     parentPost.commentList.add(comment);
                 } else {
-                    System.err.println("Warning: Could not load comment " + commentId +
+                    Logger.warn("Warning: Could not load comment " + commentId +
                             " because its parent post or user could not be found.");
                 }
             }

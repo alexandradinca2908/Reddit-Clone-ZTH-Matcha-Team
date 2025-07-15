@@ -46,12 +46,12 @@ public class PostRepo {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
     }
 
     public void load(ArrayList<Post> posts) {
-        String sql = "SELECT post_id, username, title, description FROM post";
+        String sql = "SELECT postID, username, title, description FROM post";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -60,10 +60,10 @@ public class PostRepo {
             while (rs.next()) {
                 Post post = new Post(
                         rs.getString("title"),
-                        rs.getString("description"), // 'description' is the column name in the DB
+                        rs.getString("description"),
                         rs.getString("username")
                 );
-                post.setPostId(rs.getInt("post_id"));
+                post.setPostId(rs.getInt("postID"));
                 posts.add(post);
             }
         } catch (SQLException e) {

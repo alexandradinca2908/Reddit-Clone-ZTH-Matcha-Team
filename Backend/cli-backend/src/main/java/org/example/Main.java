@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class Main {
     private static final CommentRepo commentRepo = CommentRepo.getInstance();
+    private static boolean databaseConnected = true;
 
     public static void main(String[] args) throws IOException {
         //  Get menu instance
@@ -29,7 +30,7 @@ public class Main {
                 infoLogger, warningLogger, fatalLogger);
         boolean isActive = true;
 
-        //  Load comment repo
+        //  Load database
         commentRepo.load();
 
         //  Start app

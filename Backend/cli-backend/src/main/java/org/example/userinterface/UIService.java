@@ -136,7 +136,7 @@ public class UIService {
         if (what.equalsIgnoreCase("account deletion cancelled")) {
             System.out.println(ACCOUNT_DELETION_CANCELLED);
         } else if (what.equalsIgnoreCase("account deletion failed")) {
-            System.out.println(ACCOUNT_DELETION_SUCCESS + str);
+            System.out.println(ACCOUNT_DELETION_FAILED + str);
         }
     }
 

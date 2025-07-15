@@ -35,6 +35,7 @@ public class UserRepo {
 
     public void load(ArrayList<User> users) {
         String sql = "SELECT username, email, password FROM profile";
+
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
@@ -48,7 +49,7 @@ public class UserRepo {
                 users.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Consider logging instead
         }
     }
 
@@ -63,5 +64,17 @@ public class UserRepo {
             }
         }
         return null;
+    }
+
+    public void deleteUser(String username) {
+        String sql = "DELETE FROM profile WHERE username = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
