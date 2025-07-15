@@ -33,23 +33,23 @@ public class UserRepo {
         }
     }
 
-    public void load(ArrayList<User> users) {
+    public void load(ArrayList<User> users) throws SQLException {
         String sql = "SELECT username, email, password FROM profile";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+        Connection conn = DatabaseConnection.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        if (conn == null) {
+            throw new SQLException("Database connection is null.");
+        }
+        ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()) {
-                User user = new User(
-                        rs.getString("username"),
-                        rs.getString("email"),
-                        rs.getString("password")
-                );
-                users.add(user);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Consider logging instead
+        while (rs.next()) {
+            User user = new User(
+                    rs.getString("username"),
+                    rs.getString("email"),
+                    rs.getString("password")
+            );
+            users.add(user);
         }
     }
 

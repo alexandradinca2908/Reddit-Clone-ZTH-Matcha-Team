@@ -11,17 +11,19 @@ public class DatabaseConnection {
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "Matcha1234!";
     private static final String CONNECTION_STRING = "jdbc:postgresql://" + IP_SERVER + ":5432/" + DB_NAME;
+    private static boolean isConnected = true;
 
-
-    public static Connection getConnection() {
+    public static Connection getConnection() throws SQLException {
         Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        connection = DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
         return connection;
     }
 
+    public static void cannotConnect() {
+        isConnected = false;
+    }
 
+    public static boolean isConnected() {
+        return isConnected;
+    }
 }

@@ -24,7 +24,7 @@ public class CommentRepo {
         return instance;
     }
 
-    public void save(Comment comment) {
+    public void savePostComment(Comment comment) {
         String sql = "INSERT INTO comment (username, postID, text) VALUES (?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -49,8 +49,8 @@ public class CommentRepo {
             throw new RuntimeException(e);
         }
     }
-    public void load() {
-        String sql = "SELECT commentID, username, postID, text FROM comment";
+    public void loadPostComments() throws SQLException {
+        String sql = "SELECT commentID, username, parent_postID, text FROM comment";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -76,10 +76,6 @@ public class CommentRepo {
                             " because its parent post or user could not be found.");
                 }
             }
-
-        } catch (SQLException e) {
-            System.err.println("Error loading comments from database: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

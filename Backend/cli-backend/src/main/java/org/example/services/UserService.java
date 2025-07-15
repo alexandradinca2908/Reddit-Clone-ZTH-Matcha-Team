@@ -1,4 +1,5 @@
 package org.example.services;
+import org.example.dbconnection.DatabaseConnection;
 import org.example.entities.User;
 import org.example.loggerobjects.LogLevel;
 import org.example.loggerobjects.Logger;
@@ -23,7 +24,12 @@ public class UserService {
         if (instance == null) {
             instance = new UserService();
 
-            userRepo.load(users);
+            try {
+                userRepo.load(users);
+            } catch (SQLException e) {
+                Logger.error("Failed to load users from the database: " + e.getMessage());
+                DatabaseConnection.cannotConnect();
+            }
         }
         return instance;
     }
@@ -155,19 +161,6 @@ public class UserService {
         }
         return false;
     }
-
-    // Only for debugging purposes
-//    public void showAllUsers() {
-//        System.out.println("Registered Users:");
-//        for (User user : users) {
-//            System.out.println(
-//                    "User ID: " + user.getUserID() +
-//                    ", Username: " + user.getUsername() +
-//                    ", Email: " + user.getEmail() +
-//                    ", Password: " + user.getPassword()
-//            );
-//        }
-//    }
 
     public void userDeleteCLI(User user) {
         uiService.areYouSure("delete account");
