@@ -78,13 +78,13 @@ public class UserService {
             String response = sc.nextLine();
 
             if (!response.equalsIgnoreCase("y") && !response.equalsIgnoreCase("yes")) {
-                Logger.log(LogLevel.VERBOSE, "User tries to login again.");
+                Logger.verbose("User tries to login again.");
                 break;
             }
 
         } while (true);
 
-        Logger.log(LogLevel.ERROR, "Login didn't work for " + username + ".");
+        Logger.error("Login didn't work for " + username + ".");
         return null;
     }
 

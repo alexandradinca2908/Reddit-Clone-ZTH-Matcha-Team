@@ -8,7 +8,7 @@ public class Logger {
         return LocalDateTime.now().toString();
     }
 
-    public static void log(LogLevel level, String message) {
+    private static void log(LogLevel level, String message) {
         String composedText = formatDate() + " [" + level.toString() + "] " + message;
         LogManager.getInstance().log(level, composedText);
     }
