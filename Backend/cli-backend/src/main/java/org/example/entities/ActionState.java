@@ -7,7 +7,6 @@ import org.example.userinterface.UIPost;
 import org.example.services.UserService;
 import org.example.textprocessors.AnsiColors;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 import static org.example.textprocessors.InputTranslator.translateInput;
@@ -40,7 +39,7 @@ public class ActionState {
         return actionState;
     }
 
-    public boolean executeAction() throws IOException {
+    public boolean executeAction() {
         switch (currentState) {
             case MAIN_MENU:
                 if (!isLoggedIn) {
@@ -200,7 +199,7 @@ public class ActionState {
         }
     }
 
-    private void onPostLoggedIn() throws IOException {
+    private void onPostLoggedIn() {
         System.out.println("""
                         1. Comment
                         2. Upvote
@@ -238,7 +237,7 @@ public class ActionState {
         }
     }
 
-    private void onComment() throws IOException {
+    private void onComment() {
         //  This state can only be accessed if the user is logged in
         System.out.println("""
                         1. Reply
