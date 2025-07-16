@@ -264,8 +264,12 @@ public class ActionState {
             votingService.voteComment(user, comment, false);
             changeState(State.ON_COMMENT);
         } else if (translatedInput.equalsIgnoreCase("select reply")) {
-            commentReply = commentService.selectReply(comment);
-            changeState(State.ON_REPLY);
+            try {
+                commentReply = commentService.selectReply(comment);
+                changeState(State.ON_REPLY);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         } else if (translatedInput.equalsIgnoreCase("return to post")) {
             UIPost.showPost(true, post);
             changeState(State.ON_POST);
