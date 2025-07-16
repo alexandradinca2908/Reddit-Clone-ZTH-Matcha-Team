@@ -2,6 +2,7 @@ package org.example.userinterface;
 
 import org.example.models.Post;
 import org.example.models.Comment;
+import org.example.models.User;
 import org.example.services.PostService;
 import org.example.textprocessors.AnsiColors;
 import org.example.textprocessors.TextSymbols;
@@ -112,7 +113,7 @@ public class UIPost {
         printContentLine(isExpanded, post.getBody());
         printEmptyContentLine();
         printSeparator();
-        printFooter(post.getVotes(), post.getVotes(), post.getCommentsCounter());
+        printFooter(post.getVotes(), post.getVotes(), post.getCommentsCounter(), post.getVotingUserID());
         printBottomBorder(isExpanded);
         if (isExpanded) {
             uiComment.showAllCommentsAndReplies(post);
@@ -223,7 +224,7 @@ public class UIPost {
         }
     }
 
-    private static void printFooter(int upvotes, int downvotes, int comments) {
+    private static void printFooter(int upvotes, int downvotes, int comments, HashMap<String, Integer> votingUserID) {
         String votes = AnsiColors.toRed("UP ") + upvotes + AnsiColors.toBlue(" DOWN");
         String commentsStr = comments + " comments";
         int totalLength = votes.replaceAll("\u001B\\[[;\\d]*m", "").length()

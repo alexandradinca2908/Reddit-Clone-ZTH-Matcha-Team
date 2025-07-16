@@ -13,7 +13,7 @@ public class Post extends Likeable {
     private String title;
     private String body;
     private int voteCount;
-    public HashMap<String, Integer> votingUserID; //K = userID , V = -1/+1 -> downvote/upvote
+    private HashMap<String, Integer> votingUserID; //K = userID , V = -1/+1 -> downvote/upvote
 
 
     public Post(String title, String body, String username) {
@@ -52,6 +52,9 @@ public class Post extends Likeable {
     }
     public String getBody() {
         return body;
+    }
+    public HashMap<String, Integer> getVotingUserID() {
+        return votingUserID;
     }
     public void setPostId(int dbPostID) {
         this.postID = dbPostID;

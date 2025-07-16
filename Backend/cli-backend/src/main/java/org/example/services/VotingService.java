@@ -31,8 +31,8 @@ public class VotingService {
 
     public void votePost(User user, Post post, boolean vote) {
         if (vote) { // Upvote
-            if (post.votingUserID.containsKey(user.getUsername())) { // the user has already voted
-                if (post.votingUserID.get(user.getUsername()).equals(1)) { // cancel the vote
+            if (post.getVotingUserID().containsKey(user.getUsername())) { // the user has already voted
+                if (post.getVotingUserID().get(user.getUsername()).equals(1)) { // cancel the vote
                     post.downvote();
 
                     try {
@@ -42,7 +42,7 @@ public class VotingService {
                         System.out.println("Failed to delete vote from the database.");
                         return;
                     }
-                    post.votingUserID.remove(user.getUsername());
+                    post.getVotingUserID().remove(user.getUsername());
                 } else { // changes from downvote to upvote
                     post.upvote();
                     post.upvote();
@@ -53,7 +53,7 @@ public class VotingService {
                         System.out.println("Failed to update vote in the database.");
                         return;
                     }
-                    post.votingUserID.put(user.getUsername(), 1);
+                    post.getVotingUserID().put(user.getUsername(), 1);
                 }
             } else { // new vote
                 post.upvote();
@@ -64,11 +64,11 @@ public class VotingService {
                     System.out.println("Failed to save vote to the database.");
                     return;
                 }
-                post.votingUserID.put(user.getUsername(), 1);
+                post.getVotingUserID().put(user.getUsername(), 1);
             }
         } else { // Downvote
-            if (post.votingUserID.containsKey(user.getUsername())) {
-                if (post.votingUserID.get(user.getUsername()).equals(-1)) {
+            if (post.getVotingUserID().containsKey(user.getUsername())) {
+                if (post.getVotingUserID().get(user.getUsername()).equals(-1)) {
                     post.upvote();
 
                     try {
@@ -78,7 +78,7 @@ public class VotingService {
                         System.out.println("Failed to delete vote from the database.");
                         return;
                     }
-                    post.votingUserID.remove(user.getUsername());
+                    post.getVotingUserID().remove(user.getUsername());
                 } else {
                     post.downvote();
                     post.downvote();
@@ -90,7 +90,7 @@ public class VotingService {
                         System.out.println("Failed to update vote in the database.");
                         return;
                     }
-                    post.votingUserID.put(user.getUsername(), -1);
+                    post.getVotingUserID().put(user.getUsername(), -1);
                 }
             } else {
                 post.downvote();
@@ -101,7 +101,7 @@ public class VotingService {
                     System.out.println("Failed to save vote to the database.");
                     return;
                 }
-                post.votingUserID.put(user.getUsername(), -1);
+                post.getVotingUserID().put(user.getUsername(), -1);
             }
         }
     }

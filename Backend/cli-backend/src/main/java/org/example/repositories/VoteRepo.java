@@ -69,7 +69,7 @@ public class VoteRepo {
                     else if (voteType == -1)
                         post.downvote();
 
-                    post.votingUserID.put(username, voteType);
+                    post.getVotingUserID().put(username, voteType);
                 } else {
                     Logger.error("User " + username + " not found");
                 }
