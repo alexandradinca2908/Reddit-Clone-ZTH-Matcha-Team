@@ -35,43 +35,6 @@ public class UIPost {
         return instance;
     }
 
-    // deprecated
-    public void showFeed() {
-        String headerText = String.format(UIPost.POST_COUNT_HEADER_FORMAT, PostService.posts.size());
-        System.out.println(AnsiColors.toGreen(headerText));
-        System.out.println(AnsiColors.toGreen(TextSymbols.LINE_SEPARATOR));
-        for (Post iter : PostService.posts) {
-            this.showPost(false, iter);
-        }
-    }
-
-    // deprecated
-    public void showPost(boolean isExpanded, Post post) {
-        if  (post == null) {
-            System.out.println(AnsiColors.toRed("Post is null!"));
-            return;
-        }
-        System.out.println(AnsiColors.toGreen("ID: " + post.getPostID() + " | USER: " + post.getUsername() + "\n"));
-        System.out.println(TextSymbols.addReward(AnsiColors.highlight(post.getTitle()), post.getVotes()));
-        if (!isExpanded) {
-            if (post.getBody().length() > UIPost.MIN_TEXT_LENGTH) {
-                System.out.println(post.getBody().substring(0, UIPost.MIN_TEXT_LENGTH) + "...\n");
-            } else {
-                System.out.println(post.getBody() + "\n");
-            }
-        } else {
-            System.out.println(post.getBody() + "\n");
-        }
-        System.out.print(AnsiColors.toRed("UP ") + post.getVotes() + AnsiColors.toBlue(" DOWN "));
-        System.out.println( "| " + post.getCommentsCounter() + " comments");
-        if (isExpanded) {
-            System.out.println(TextSymbols.DOUBLE_LINE_SEPARATOR);
-            uiComment.showAllCommentsAndReplies(post);
-        } else {
-            System.out.println(TextSymbols.LINE_SEPARATOR);
-        }
-    }
-
     public static Map<String, String> getPostDetailsFromUser() {
         Scanner sc = new Scanner(System.in);
         Map<String, String> postData = new HashMap<>();
@@ -96,15 +59,15 @@ public class UIPost {
         return postData;
     }
 
-    public void printFeed() {
+    public void showFeed() {
         String headerText = String.format(UIPost.POST_COUNT_HEADER_FORMAT, PostService.posts.size());
         System.out.println(AnsiColors.toGreen(headerText));
         for (Post iter : PostService.posts) {
-            this.printPost(false, iter);
+            this.showPost(false, iter);
         }
     }
 
-    public void printPost(boolean isExpanded, Post post) {
+    public void showPost(boolean isExpanded, Post post) {
         printTopBorder();
         printHeader(post.getPostID(), post.getUsername());
         printSeparator();
@@ -172,7 +135,7 @@ public class UIPost {
 
     private static void printTitleLine(String title, int score) {
         System.out.print("║ " + TextSymbols.addReward(title, score));
-        int padding = POST_WIDTH - 4 - TextSymbols.addReward(title, score).length();
+        int padding = POST_WIDTH - 4 - title.length();
         for (int i = 0; i < padding; i++) {
             System.out.print(" ");
         }
