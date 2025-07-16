@@ -214,6 +214,7 @@ public class ActionState {
 
         if (translatedInput.equalsIgnoreCase("comment")) {
             commentService.addComment(user, post);
+            UIPost.showPost(true, post);
         } else if (translatedInput.equalsIgnoreCase("upvote")) {
             postService.votePost(user, post, true);
             UIPost.showPost(true, post);
@@ -238,6 +239,7 @@ public class ActionState {
     }
 
     private void onComment() {
+        UIComment.showAllCommentsAndReplies(post);
         //  This state can only be accessed if the user is logged in
         System.out.println("""
                         1. Reply
@@ -291,7 +293,7 @@ public class ActionState {
             commentService.voteReply(user, commentReply, false);
             changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("return to comment")) {
-            UIComment.showAllComments(user, post);
+            UIComment.showAllCommentsAndReplies(post);
             changeState(State.ON_COMMENT);
         } else if (translatedInput.equalsIgnoreCase("quit")) {
             changeState(State.QUIT);
