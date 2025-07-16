@@ -47,10 +47,11 @@ public class UIPost {
         if (!isExpanded) {
             if (post.getBody().length() > UIPost.MAX_TEXT_LENGTH) {
                 System.out.println(post.getBody().substring(0, UIPost.MAX_TEXT_LENGTH) + "...\n");
+            } else {
+                System.out.println(post.getBody() + "\n");
             }
         } else {
-            System.out.println(post.getBody());
-            System.out.println();
+            System.out.println(post.getBody() + "\n");
         }
         System.out.print(AnsiColors.toRed("UP ") + post.getVotes() + AnsiColors.toBlue(" DOWN "));
         System.out.println( "| " + post.getCommentsCounter() + " comments");
