@@ -23,6 +23,12 @@ public class UIComment {
         }
     }
 
+    public void showAllCommentsAndReplies(Comment comm) {
+        for (Comment comment : comm.getReplyList()) {
+            showComment(comment, 0);
+        }
+    }
+
     private void showComment(Comment comment, int indentLevel) {
         String indent = "    ".repeat(indentLevel);
 

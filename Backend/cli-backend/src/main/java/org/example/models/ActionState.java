@@ -278,6 +278,7 @@ public class ActionState {
 
     private void onReply() {
         //  This state can only be accessed if the user is logged in
+        UIComment.showAllCommentsAndReplies(comment);
         System.out.println("""
                         1. Upvote
                         2. Downvote
