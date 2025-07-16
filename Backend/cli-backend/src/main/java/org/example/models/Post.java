@@ -6,14 +6,15 @@ import java.util.HashMap;
 
 public class Post implements Likeable {
     private static final CommentRepo commentRepo = CommentRepo.getInstance();
-    public static ArrayList<Post> posts = new ArrayList<>();
+    private ArrayList<Comment> commentList;
+
     private int postID;
-    String username;
+    private String username;
     private String title;
     private String body;
     private int voteCount;
     public HashMap<Integer, Integer> votingUserID; //K = userID , V = -1/+1 -> downvote/upvote
-    public ArrayList<Comment> commentList;
+
 
     public Post(String title, String body, String username) {
         this.title = title;
@@ -44,6 +45,7 @@ public class Post implements Likeable {
         return username;
     }
     public int getCommentsCounter() { return commentList.size(); }
+    public ArrayList<Comment> getCommentList() { return commentList; }
     public String getTitle() {
         return title;
     }
@@ -54,10 +56,6 @@ public class Post implements Likeable {
         this.postID = dbPostID;
     }
 
-    public void addComment(User parentUser, String commentText) {
-        Comment comment = new Comment(this, parentUser, commentText);
-        commentList.add(comment);
-        commentRepo.savePostComment(comment);
-    }
+
 }
 
