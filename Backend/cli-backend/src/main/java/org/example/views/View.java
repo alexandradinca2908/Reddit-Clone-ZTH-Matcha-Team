@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class View {
     private ViewID viewID;
-    private ArrayList<MenuOption> menu;
+    private HashMap<MenuOption, Availability> menu;
     private HashMap<ViewID, View> nextViews;
     private final ViewManager viewManager = ViewManager.getInstance();
     private final UIView uiView = UIView.getInstance();
@@ -25,7 +25,7 @@ public class View {
         return menu;
     }
 
-    public void setMenu(ArrayList<MenuOption> menu) {
+    public void setMenu(HashMap<MenuOption, Availability> menu) {
         this.menu = menu;
     }
 
@@ -38,7 +38,7 @@ public class View {
     }
 
     void displayMenu() {
-        uiView.renderMenu(menu);
+        uiView.renderMenu(menu, viewManager.isLoggedIn);
     }
 
     void activateMenuOption() {}
