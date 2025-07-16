@@ -16,6 +16,9 @@ public class ViewManager {
     private final UserService userService = UserService.getInstance();
     private final PostService postService = PostService.getInstance();
     private final CommentService commentService = CommentService.getInstance();
+    private final UIPost uiPost = new UIPost();
+    private final UIComment uiComment = new UIComment();
+
     private static ViewManager viewManager;
     private HashMap<ViewID, View> views;
     private ViewID currentViewID;
@@ -24,8 +27,6 @@ public class ViewManager {
     private Post post;
     private Comment comment;
     private Comment commentReply;
-    private final UIPost UIPost = new UIPost();
-    private final UIComment UIComment = new UIComment();
 
     private ViewManager() {
         this.views = new HashMap<>();
@@ -62,6 +63,14 @@ public class ViewManager {
 
     public CommentService getCommentService() {
         return commentService;
+    }
+
+    public UIPost getUiPost() {
+        return uiPost;
+    }
+
+    public UIComment getUiComment() {
+        return uiComment;
     }
 
     public View getCurrentViewObject() {
@@ -112,7 +121,7 @@ public class ViewManager {
         this.commentReply = commentReply;
     }
 
-    private void switchToNextView(ViewID viewID) {
+    public void switchToNextView(ViewID viewID) {
         View currentViewObject = views.get(currentViewID);
 
         //  Improbable error: manager doesn't have a reference to current view

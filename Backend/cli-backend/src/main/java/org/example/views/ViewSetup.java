@@ -1,8 +1,10 @@
 package org.example.views;
 
-import java.util.ArrayList;
+import org.example.views.commandexecution.*;
+
+import java.awt.*;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ViewSetup {
@@ -13,17 +15,29 @@ public class ViewSetup {
         mainMenu.setViewID(ViewID.MAIN_MENU);
 
         //  Set menu
-        HashMap<MenuOption, Availability> menu = new HashMap<>(Map.of(
-                MenuOption.LOGIN, Availability.LOGGED_OUT,
-                MenuOption.REGISTER, Availability.LOGGED_OUT,
-                MenuOption.SHOW_FEED, Availability.ANYTIME,
-                MenuOption.CREATE_POST, Availability.LOGGED_IN,
-                MenuOption.LOGOUT, Availability.LOGGED_IN,
-                MenuOption.DELETE_ACCOUNT, Availability.LOGGED_IN,
-                MenuOption.QUIT, Availability.ANYTIME
-        ));
+        LinkedHashMap<MenuOption, Availability> menu = new LinkedHashMap<>();
+        menu.put(MenuOption.LOGIN, Availability.LOGGED_OUT);
+        menu.put(MenuOption.REGISTER, Availability.LOGGED_OUT);
+        menu.put(MenuOption.SHOW_FEED, Availability.ANYTIME);
+        menu.put(MenuOption.CREATE_POST, Availability.LOGGED_IN);
+        menu.put(MenuOption.DELETE_ACCOUNT, Availability.LOGGED_IN);
+        menu.put(MenuOption.LOGOUT, Availability.LOGGED_IN);
+        menu.put(MenuOption.QUIT, Availability.ANYTIME);
 
         mainMenu.setMenu(menu);
+
+        //  Set commands
+        HashMap<MenuOption, IMenuCommand> commands = new HashMap<>(Map.of(
+                MenuOption.LOGIN, new LoginCommand(),
+                MenuOption.REGISTER, new RegisterCommand(),
+                MenuOption.SHOW_FEED, new ShowFeedCommand(),
+                MenuOption.CREATE_POST, new CreatePostCommand(),
+                MenuOption.LOGOUT, new LogoutCommand(),
+                MenuOption.DELETE_ACCOUNT, new DeleteAccountCommand(),
+                MenuOption.QUIT, new QuitCommand()
+        ));
+
+        mainMenu.setCommands(commands);
 
         return mainMenu;
     }
@@ -35,13 +49,21 @@ public class ViewSetup {
         onFeed.setViewID(ViewID.ON_FEED);
 
         //  Set menu
-        HashMap<MenuOption, Availability> menu = new HashMap<>(Map.of(
-                MenuOption.EXPAND_POST, Availability.ANYTIME,
+        LinkedHashMap<MenuOption, Availability> menu = new LinkedHashMap<>();
+        menu.put(MenuOption.EXPAND_POST, Availability.ANYTIME);
+        menu.put(MenuOption.RETURN_TO_MENU, Availability.ANYTIME);
+        menu.put(MenuOption.QUIT, Availability.ANYTIME);
+
+        onFeed.setMenu(menu);
+
+        //  Set commands
+        HashMap<MenuOption, IMenuCommand> commands = new HashMap<>(Map.of(
+                MenuOption.EXPAND_POST, new ,
                 MenuOption.RETURN_TO_MENU, Availability.ANYTIME,
                 MenuOption.QUIT, Availability.ANYTIME
         ));
 
-        onFeed.setMenu(menu);
+        onFeed.setCommands(commands);
 
         return onFeed;
     }
@@ -53,7 +75,7 @@ public class ViewSetup {
         onPost.setViewID(ViewID.ON_POST);
 
         //  Set menu
-        HashMap<MenuOption, Availability> menu = new HashMap<>(Map.of(
+        LinkedHashMap<MenuOption, Availability> menu = new LinkedHashMap<>(Map.of(
                 MenuOption.COMMENT, Availability.LOGGED_IN,
                 MenuOption.UPVOTE, Availability.LOGGED_IN,
                 MenuOption.DOWNVOTE, Availability.LOGGED_IN,
@@ -74,7 +96,7 @@ public class ViewSetup {
         onComment.setViewID(ViewID.ON_COMMENT);
 
         //  Set menu
-        HashMap<MenuOption, Availability> menu = new HashMap<>(Map.of(
+        LinkedHashMap<MenuOption, Availability> menu = new LinkedHashMap<>(Map.of(
                 MenuOption.REPLY, Availability.LOGGED_IN,
                 MenuOption.UPVOTE, Availability.LOGGED_IN,
                 MenuOption.DOWNVOTE, Availability.LOGGED_IN,
@@ -95,7 +117,7 @@ public class ViewSetup {
         onReply.setViewID(ViewID.ON_REPLY);
 
         //  Set menu
-        HashMap<MenuOption, Availability> menu = new HashMap<>(Map.of(
+        LinkedHashMap<MenuOption, Availability> menu = new LinkedHashMap<>(Map.of(
                 MenuOption.UPVOTE, Availability.LOGGED_IN,
                 MenuOption.DOWNVOTE, Availability.LOGGED_IN,
                 MenuOption.RETURN_TO_COMMENT, Availability.ANYTIME,

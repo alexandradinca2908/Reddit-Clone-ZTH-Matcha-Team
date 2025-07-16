@@ -75,8 +75,8 @@ public class InputTranslator {
         return switch (input) {
             case "1" -> "show feed";
             case "2" -> "create post";
-            case "3" -> "logout";
-            case "4" -> "delete account";
+            case "3" -> "delete account";
+            case "4" -> "logout";
             case "5" -> "quit";
             default -> input;
         };

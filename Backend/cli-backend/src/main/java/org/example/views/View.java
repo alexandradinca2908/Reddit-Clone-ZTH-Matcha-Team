@@ -7,10 +7,11 @@ import org.example.views.commandexecution.IMenuCommand;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class View {
     private ViewID viewID;
-    private HashMap<MenuOption, Availability> menu;
+    private LinkedHashMap<MenuOption, Availability> menu;
     private HashMap<MenuOption, IMenuCommand> commands;
     private HashMap<ViewID, View> nextViews;
     private final ViewManager viewManager = ViewManager.getInstance();
@@ -24,12 +25,20 @@ public class View {
         this.viewID = viewID;
     }
 
-    protected HashMap<MenuOption, Availability> getMenu() {
+    protected LinkedHashMap<MenuOption, Availability> getMenu() {
         return menu;
     }
 
-    protected void setMenu(HashMap<MenuOption, Availability> menu) {
+    protected void setMenu(LinkedHashMap<MenuOption, Availability> menu) {
         this.menu = menu;
+    }
+
+    public HashMap<MenuOption, IMenuCommand> getCommands() {
+        return commands;
+    }
+
+    public void setCommands(HashMap<MenuOption, IMenuCommand> commands) {
+        this.commands = commands;
     }
 
     protected HashMap<ViewID, View> getNextViews() {

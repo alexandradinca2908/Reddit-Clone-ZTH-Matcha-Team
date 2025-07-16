@@ -4,6 +4,7 @@ import org.example.views.Availability;
 import org.example.views.MenuOption;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class UIView {
     private static UIView instance;
@@ -20,7 +21,7 @@ public class UIView {
         return instance;
     }
 
-    public void renderMenu(HashMap<MenuOption, Availability> menu, boolean isLoggedIn) {
+    public void renderMenu(LinkedHashMap<MenuOption, Availability> menu, boolean isLoggedIn) {
         int counter = 1;
         Availability availability;
 
@@ -30,16 +31,10 @@ public class UIView {
             availability = Availability.LOGGED_OUT;
         }
 
-        //  Render logged in/logged out options
+        //  Render logged in/logged out options and always available options
         for (MenuOption option :  menu.keySet()) {
-            if (menu.get(option) == availability) {
-                System.out.println(counter++ + ". " + option);
-            }
-        }
-
-        //  Render always available options
-        for (MenuOption option :  menu.keySet()) {
-            if (menu.get(option) == Availability.ANYTIME) {
+            if (menu.get(option) == availability ||
+                    menu.get(option) == Availability.ANYTIME) {
                 System.out.println(counter++ + ". " + option);
             }
         }
