@@ -7,6 +7,27 @@ public class InputTranslator {
     public static MenuOption translateInput(String input, ViewID viewID, boolean isLoggedIn) {
         String stringInput = translateInputToString(input, viewID, isLoggedIn);
 
+        return switch (stringInput) {
+            case "login" -> MenuOption.LOGIN;
+            case "register" -> MenuOption.REGISTER;
+            case "show feed" -> MenuOption.SHOW_FEED;
+            case "quit" -> MenuOption.QUIT;
+            case "create post" -> MenuOption.CREATE_POST;
+            case "logout" -> MenuOption.LOGOUT;
+            case "delete_account" -> MenuOption.DELETE_ACCOUNT;
+            case "expand post" -> MenuOption.EXPAND_POST;
+            case "return to menu" -> MenuOption.RETURN_TO_POST;
+            case "comment" -> MenuOption.COMMENT;
+            case "upvote" -> MenuOption.UPVOTE;
+            case "downvote" -> MenuOption.DOWNVOTE;
+            case "select comment" -> MenuOption.SELECT_COMMENT;
+            case "return to feed" -> MenuOption.RETURN_TO_FEED;
+            case "reply" -> MenuOption.REPLY;
+            case "select reply" -> MenuOption.SELECT_REPLY;
+            case "return to post" -> MenuOption.RETURN_TO_POST;
+            case "return to comment" -> MenuOption.RETURN_TO_COMMENT;
+            default -> MenuOption.UNKNOWN_COMMAND;
+        };
     }
 
     private static String translateInputToString(String input, ViewID viewID, boolean isLoggedIn) {

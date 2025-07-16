@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 public class UIView {
     private static UIView instance;
+    private static final String UNKNOWN_COMMAND = "Unknown command";
 
     private UIView() {
     }
@@ -20,7 +21,7 @@ public class UIView {
     }
 
     public void renderMenu(HashMap<MenuOption, Availability> menu, boolean isLoggedIn) {
-        int counter = 0;
+        int counter = 1;
         Availability availability;
 
         if (isLoggedIn) {
@@ -32,15 +33,19 @@ public class UIView {
         //  Render logged in/logged out options
         for (MenuOption option :  menu.keySet()) {
             if (menu.get(option) == availability) {
-                System.out.println(counter++ + " " + option);
+                System.out.println(counter++ + ". " + option);
             }
         }
 
         //  Render always available options
         for (MenuOption option :  menu.keySet()) {
             if (menu.get(option) == Availability.ANYTIME) {
-                System.out.println(counter++ + " " + option);
+                System.out.println(counter++ + ". " + option);
             }
         }
+    }
+
+    public void unknownCommand() {
+        System.out.println(UNKNOWN_COMMAND);
     }
 }

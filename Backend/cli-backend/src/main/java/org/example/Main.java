@@ -6,17 +6,20 @@ import org.example.loggerobjects.LogLevel;
 import org.example.loggerobjects.LogManager;
 import org.example.loggerobjects.Loggable;
 import org.example.textprocessors.AnsiColors;
+import org.example.views.MenuOption;
 import org.example.views.View;
 import org.example.views.ViewID;
 import org.example.views.ViewManager;
 
 import java.util.Scanner;
 
+import static org.example.textprocessors.InputTranslator.translateInput;
+
 public class Main {
     public static void main(String[] args) {
 
         // ===========================================
-//        DatabaseConnection.cannotConnect(); // Comment this line if you want to connect to the database
+        DatabaseConnection.cannotConnect(); // Comment this line if you want to connect to the database
         if (!DatabaseConnection.isConnected()) {
             System.out.println(AnsiColors.toRed("App is not connected to the database!"));
         }
@@ -43,7 +46,7 @@ public class Main {
         boolean isActive = true;
         Scanner scan;
         String option;
-        String translatedInput;
+        MenuOption translatedInput;
 
         while (isActive) {
             //  Get view data
@@ -56,9 +59,9 @@ public class Main {
             //  Take and process user input
             scan = new Scanner(System.in);
             option = scan.nextLine();
-            translatedInput = translateInputToString(option, currentViewID, viewManager.isLoggedIn());
+            translatedInput = translateInput(option, currentViewID, viewManager.isLoggedIn());
 
-
+            isActive = currentViewObject.activateMenuOption(translatedInput);
         }
     }
 }

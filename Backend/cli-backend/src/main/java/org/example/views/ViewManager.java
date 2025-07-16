@@ -13,9 +13,9 @@ import org.example.userinterface.UIPost;
 import java.util.HashMap;
 
 public class ViewManager {
-    private final static UserService userService = UserService.getInstance();
-    private final static PostService postService = PostService.getInstance();
-    private final static CommentService commentService = CommentService.getInstance();
+    private final UserService userService = UserService.getInstance();
+    private final PostService postService = PostService.getInstance();
+    private final CommentService commentService = CommentService.getInstance();
     private static ViewManager viewManager;
     private HashMap<ViewID, View> views;
     private ViewID currentViewID;
@@ -52,6 +52,18 @@ public class ViewManager {
         ViewSetup.linkViews(views);
     }
 
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public PostService getPostService() {
+        return postService;
+    }
+
+    public CommentService getCommentService() {
+        return commentService;
+    }
+
     public View getCurrentViewObject() {
         return views.get(currentViewID);
     }
@@ -64,7 +76,43 @@ public class ViewManager {
         return isLoggedIn;
     }
 
-    void switchToNextView(ViewID viewID) {
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public Comment getComment() {
+        return comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
+
+    public Comment getCommentReply() {
+        return commentReply;
+    }
+
+    public void setCommentReply(Comment commentReply) {
+        this.commentReply = commentReply;
+    }
+
+    private void switchToNextView(ViewID viewID) {
         View currentViewObject = views.get(currentViewID);
 
         //  Improbable error: manager doesn't have a reference to current view
@@ -81,5 +129,13 @@ public class ViewManager {
 
         //  Switch to next view
         currentViewID = viewID;
+    }
+
+    public void cleanUpData() {
+        isLoggedIn  = false;
+        user = null;
+        post = null;
+        comment = null;
+        commentReply = null;
     }
 }

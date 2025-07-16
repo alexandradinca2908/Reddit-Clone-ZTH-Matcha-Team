@@ -10,6 +10,8 @@
 //
 //import java.util.Scanner;
 //
+//import static org.example.textprocessors.InputTranslator.translateInput;
+//
 //public class ActionState {
 //    private final static UserService userService = UserService.getInstance();
 //    private final static PostService postService = PostService.getInstance();
@@ -95,7 +97,7 @@
 //
 //        Scanner scan = new Scanner(System.in);
 //        String option = scan.nextLine();
-//        String translatedInput = translateInputToString(option, currentState, isLoggedIn);
+//        String translatedInput = translateInput(option, currentState, isLoggedIn);
 //
 //        if (translatedInput.equalsIgnoreCase("login")) {
 //            user = userService.userLoginCLI();
@@ -131,7 +133,7 @@
 //
 //        Scanner scan = new Scanner(System.in);
 //        String option = scan.nextLine();
-//        String translatedInput = translateInputToString(option, currentState, isLoggedIn);
+//        String translatedInput = translateInput(option, currentState, isLoggedIn);
 //
 //        if (translatedInput.equalsIgnoreCase("show feed")) {
 //            UIPost.showFeed();
@@ -158,7 +160,7 @@
 //
 //        Scanner scan = new Scanner(System.in);
 //        String option = scan.nextLine();
-//        String translatedInput = translateInputToString(option, currentState, isLoggedIn);
+//        String translatedInput = translateInput(option, currentState, isLoggedIn);
 //
 //        if (translatedInput.equalsIgnoreCase("expand post")) {
 //            try {
@@ -187,7 +189,7 @@
 //
 //        Scanner scan = new Scanner(System.in);
 //        String option = scan.nextLine();
-//        String translatedInput = translateInputToString(option, currentState, isLoggedIn);
+//        String translatedInput = translateInput(option, currentState, isLoggedIn);
 //
 //        if (translatedInput.equalsIgnoreCase("return to feed")) {
 //            UIPost.showFeed();
@@ -210,7 +212,7 @@
 //
 //        Scanner scan = new Scanner(System.in);
 //        String option = scan.nextLine();
-//        String translatedInput = translateInputToString(option, currentState, isLoggedIn);
+//        String translatedInput = translateInput(option, currentState, isLoggedIn);
 //
 //        if (translatedInput.equalsIgnoreCase("comment")) {
 //            commentService.addComment(user, post);
@@ -251,7 +253,7 @@
 //
 //        Scanner scan = new Scanner(System.in);
 //        String option = scan.nextLine();
-//        String translatedInput = translateInputToString(option, currentState, isLoggedIn);
+//        String translatedInput = translateInput(option, currentState, isLoggedIn);
 //
 //        if (translatedInput.equalsIgnoreCase("reply")) {
 //            commentService.addReply(user, comment);
@@ -262,8 +264,12 @@
 //            votingService.voteComment(user, comment, false);
 //            changeState(State.ON_COMMENT);
 //        } else if (translatedInput.equalsIgnoreCase("select reply")) {
-//            commentReply = commentService.selectReply(comment);
-//            changeState(State.ON_REPLY);
+//            try {
+//                commentReply = commentService.selectReply(comment);
+//                changeState(State.ON_REPLY);
+//            } catch (IllegalArgumentException e) {
+//                System.out.println(e.getMessage());
+//            }
 //        } else if (translatedInput.equalsIgnoreCase("return to post")) {
 //            UIPost.showPost(true, post);
 //            changeState(State.ON_POST);
@@ -276,6 +282,7 @@
 //
 //    private void onReply() {
 //        //  This state can only be accessed if the user is logged in
+//        UIComment.showAllCommentsAndReplies(comment);
 //        System.out.println("""
 //                        1. Upvote
 //                        2. Downvote
@@ -284,7 +291,7 @@
 //
 //        Scanner scan = new Scanner(System.in);
 //        String option = scan.nextLine();
-//        String translatedInput = translateInputToString(option, currentState, isLoggedIn);
+//        String translatedInput = translateInput(option, currentState, isLoggedIn);
 //
 //        if (translatedInput.equalsIgnoreCase("upvote")) {
 //            votingService.voteReply(user, commentReply, true);
