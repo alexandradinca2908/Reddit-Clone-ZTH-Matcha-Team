@@ -13,7 +13,7 @@ public class CommentCommand implements IMenuCommand {
         Post post = view.getViewManager().getPost();
 
         view.getViewManager().getCommentService().addComment(user, post);
-        view.getViewManager().getUiPost().showPost(true, post);
+        view.getViewManager().getUiPost().showPost(true, post, user);
 
         return true;
     }

@@ -13,7 +13,7 @@ public class UpvotePostCommand implements IMenuCommand {
         Post post = view.getViewManager().getPost();
 
         view.getViewManager().getVotingService().votePost(user, post, true);
-        view.getViewManager().getUiPost().showPost(true, post);
+        view.getViewManager().getUiPost().showPost(true, post, user);
 
         return true;
     }

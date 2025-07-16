@@ -8,7 +8,6 @@ public class AnsiColors {
     public static final String YELLOW = "\u001B[33m";
     public static final String PURPLE = "\u001B[35m";
     public static final String ORANGE = "\u001B[38;2;255;165;0m";
-    public static final String BLACK_ON_WHITE = "\u001B[30;47m";
 
     public static String toGreen(String string) {
         return  GREEN + string + RESET;
@@ -27,9 +26,6 @@ public class AnsiColors {
     }
     public static String toOrange(String string) {
         return  ORANGE + string + RESET;
-    }
-    public static String highlight(String string) {
-        return   BLACK_ON_WHITE + string + RESET;
     }
 
 

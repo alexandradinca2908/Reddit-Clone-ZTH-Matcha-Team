@@ -1,21 +1,20 @@
 package org.example.userinterface;
 
 import org.example.models.Post;
-import org.example.models.Comment;
 import org.example.models.User;
 import org.example.services.PostService;
 import org.example.textprocessors.AnsiColors;
 import org.example.textprocessors.TextSymbols;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 public class UIPost {
     private static UIPost instance;
     public static final String POST_COUNT_HEADER_FORMAT = "\t\t=== Showing a total of %d posts ===";
-    public static final int MIN_TEXT_LENGTH = 20;
+    public static final int MAX_BODY_PREVIEW = 20;
+    public static final int MIN_TITLE_LENGTH = 10;
     public static final int MAX_TITLE_LENGTH = 40;
     private static final int POST_WIDTH = 50;
     public static final int MIN_REWARD_VOTES = 1;
@@ -41,8 +40,8 @@ public class UIPost {
 
         System.out.println(PROMPT_TITLE);
         String title = sc.nextLine();
-        while (title.length() < UIPost.MIN_TEXT_LENGTH || title.length() > UIPost.MAX_TITLE_LENGTH) {
-            System.out.printf((ERROR_TITLE_TOO_SHORT) + "%n", UIPost.MIN_TEXT_LENGTH);
+        while (title.length() < UIPost.MIN_TITLE_LENGTH || title.length() > UIPost.MAX_TITLE_LENGTH) {
+            System.out.printf((ERROR_TITLE_TOO_SHORT) + "%n", UIPost.MIN_TITLE_LENGTH);
             System.out.printf((ERROR_TITLE_TOO_LONG) + "%n", UIPost.MAX_TITLE_LENGTH);
             title = sc.nextLine();
         }
@@ -59,15 +58,15 @@ public class UIPost {
         return postData;
     }
 
-    public void showFeed() {
+    public void showFeed(User user) {
         String headerText = String.format(UIPost.POST_COUNT_HEADER_FORMAT, PostService.posts.size());
         System.out.println(AnsiColors.toGreen(headerText));
         for (Post iter : PostService.posts) {
-            this.showPost(false, iter);
+            this.showPost(false, iter, user);
         }
     }
 
-    public void showPost(boolean isExpanded, Post post) {
+    public void showPost(boolean isExpanded, Post post, User user) {
         printTopBorder();
         printHeader(post.getPostID(), post.getUsername());
         printSeparator();
@@ -76,10 +75,10 @@ public class UIPost {
         printContentLine(isExpanded, post.getBody());
         printEmptyContentLine();
         printSeparator();
-        printFooter(post.getVotes(), post.getVotes(), post.getCommentsCounter(), post.getVotingUserID());
+        printFooter(post.getVotes(), post.getCommentsCounter(), post.getVotingUserID(), user.getUsername());
         printBottomBorder(isExpanded);
         if (isExpanded) {
-            uiComment.showAllCommentsAndReplies(post);
+            uiComment.showAllCommentsAndReplies(post, user);
         }
     }
 
@@ -134,8 +133,9 @@ public class UIPost {
     }
 
     private static void printTitleLine(String title, int score) {
-        System.out.print("║ " + TextSymbols.addReward(title, score));
-        int padding = POST_WIDTH - 4 - title.length();
+        String finalTitle = TextSymbols.addReward(title, score);
+        System.out.print("║ " + finalTitle);
+        int padding = POST_WIDTH - 4 - finalTitle.replaceAll("\u001B\\[[;\\d]*m", "").length();
         for (int i = 0; i < padding; i++) {
             System.out.print(" ");
         }
@@ -146,8 +146,8 @@ public class UIPost {
     private static void printContentLine(boolean isExpanded, String content) {
         if (!isExpanded) {
             int contentLength;
-            if (content.length() > UIPost.MAX_TITLE_LENGTH) {
-                String substring = content.substring(0, UIPost.MIN_TEXT_LENGTH) + "...";
+            if (content.length() > UIPost.MAX_BODY_PREVIEW) {
+                String substring = content.substring(0, UIPost.MAX_BODY_PREVIEW) + "...";
                 contentLength = substring.length();
                 System.out.print("║ " + substring);
             } else {
@@ -187,8 +187,17 @@ public class UIPost {
         }
     }
 
-    private static void printFooter(int upvotes, int downvotes, int comments, HashMap<String, Integer> votingUserID) {
-        String votes = AnsiColors.toRed("UP ") + upvotes + AnsiColors.toBlue(" DOWN");
+    private static void printFooter(int score, int comments, HashMap<String, Integer> votingUserID, String username) {
+        String votes;
+        if (votingUserID.containsKey(username)) {
+            if (votingUserID.get(username) == 1) {
+                votes = AnsiColors.toRed("UP " + score) + " DOWN";
+            } else {
+                votes = "UP " + AnsiColors.toBlue(score + " DOWN");
+            }
+        } else {
+            votes = "UP " + score + " DOWN";
+        }
         String commentsStr = comments + " comments";
         int totalLength = votes.replaceAll("\u001B\\[[;\\d]*m", "").length()
                 + commentsStr.length();

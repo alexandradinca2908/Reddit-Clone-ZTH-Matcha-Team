@@ -6,7 +6,7 @@ public class TextSymbols {
     public static final String LINE_SEPARATOR = "────────────────────────────────────────────────";
     public static final String DOUBLE_LINE_SEPARATOR = "════════════════════════════════════════════════";
     public static final String HEADER = "ID: %d | USER: %s";
-    public static final String REWARD = AnsiColors.toOrange("c[_] ");
+    public static final String REWARD = AnsiColors.toYellow("c[_] ");
     public static final String LEFT_BORDER = "║ ";
     public static final String LOWER_LEFT_CORNER = "╚";
     public static final String UPPER_LEFT_CORNER = "╔";
