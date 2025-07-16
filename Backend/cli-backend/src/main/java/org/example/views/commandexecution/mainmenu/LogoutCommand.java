@@ -1,6 +1,7 @@
-package org.example.views.commandexecution;
+package org.example.views.commandexecution.mainmenu;
 
 import org.example.views.View;
+import org.example.views.commandexecution.IMenuCommand;
 
 public class LogoutCommand implements IMenuCommand {
     @Override

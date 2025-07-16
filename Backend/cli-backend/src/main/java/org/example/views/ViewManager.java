@@ -7,6 +7,7 @@ import org.example.models.User;
 import org.example.services.CommentService;
 import org.example.services.PostService;
 import org.example.services.UserService;
+import org.example.services.VotingService;
 import org.example.userinterface.UIComment;
 import org.example.userinterface.UIPost;
 
@@ -16,6 +17,7 @@ public class ViewManager {
     private final UserService userService = UserService.getInstance();
     private final PostService postService = PostService.getInstance();
     private final CommentService commentService = CommentService.getInstance();
+    private final VotingService votingService = VotingService.getInstance();
     private final UIPost uiPost = new UIPost();
     private final UIComment uiComment = new UIComment();
 
@@ -63,6 +65,10 @@ public class ViewManager {
 
     public CommentService getCommentService() {
         return commentService;
+    }
+
+    public VotingService getVotingService() {
+        return votingService;
     }
 
     public UIPost getUiPost() {
