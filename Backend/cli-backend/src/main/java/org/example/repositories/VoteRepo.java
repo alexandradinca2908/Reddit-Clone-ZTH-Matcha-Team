@@ -124,4 +124,50 @@ public class VoteRepo {
         }
     }
 
+    public void saveVoteComment(User user, Comment comment, int voteType) throws SQLException {
+        if (!DatabaseConnection.isConnected()) {
+            return;
+        }
+
+        String sql = "INSERT INTO comment_vote (username, commentID, vote_type) VALUES (?, ?, ?)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, user.getUsername());
+            pstmt.setInt(2, comment.getCommentID());
+            pstmt.setInt(3, voteType);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void deleteVotePost(User user, Post post) throws SQLException {
+        if (!DatabaseConnection.isConnected()) {
+            return;
+        }
+
+        String sql = "DELETE FROM post_vote WHERE username = ? AND postID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, user.getUsername());
+            pstmt.setInt(2, post.getPostID());
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void deleteVoteComment(User user, Comment comment) throws SQLException {
+        if (!DatabaseConnection.isConnected()) {
+            return;
+        }
+
+        String sql = "DELETE FROM comment_vote WHERE username = ? AND commentID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, user.getUsername());
+            pstmt.setInt(2, comment.getCommentID());
+            pstmt.executeUpdate();
+        }
+    }
+
 }
