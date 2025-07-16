@@ -8,6 +8,7 @@ public class ReturnToFeedCommand implements IMenuCommand {
     @Override
     public boolean execute(View view) {
         view.getViewManager().getUiPost().showFeed();
+        view.getViewManager().setPost(null);
         view.getViewManager().switchToNextView(ViewID.ON_FEED);
 
         return true;

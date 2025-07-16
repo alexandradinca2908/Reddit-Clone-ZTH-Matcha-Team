@@ -2,10 +2,13 @@ package org.example.views;
 
 import org.example.views.commandexecution.*;
 import org.example.views.commandexecution.mainmenu.*;
-import org.example.views.commandexecution.oncomment.ReplyCommand;
+import org.example.views.commandexecution.oncomment.*;
 import org.example.views.commandexecution.onfeed.ExpandPostCommand;
 import org.example.views.commandexecution.onfeed.ReturnToMenuCommand;
 import org.example.views.commandexecution.onpost.*;
+import org.example.views.commandexecution.onreply.DownvoteReplyCommand;
+import org.example.views.commandexecution.onreply.ReturnToCommentCommand;
+import org.example.views.commandexecution.onreply.UpvoteReplyCommand;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -120,14 +123,17 @@ public class ViewSetup {
 
         onComment.setMenu(menu);
 
+        //  Set commands
         HashMap<MenuOption, IMenuCommand> commands = new HashMap<>(Map.of(
                 MenuOption.REPLY, new ReplyCommand(),
-                MenuOption.UPVOTE, Availability.LOGGED_IN,
-                MenuOption.DOWNVOTE, Availability.LOGGED_IN,
-                MenuOption.SELECT_REPLY, Availability.LOGGED_IN,
-                MenuOption.RETURN_TO_POST, Availability.ANYTIME,
-                MenuOption.QUIT, Availability.ANYTIME
+                MenuOption.UPVOTE, new UpvoteCommentCommand(),
+                MenuOption.DOWNVOTE, new DownvoteCommentCommand(),
+                MenuOption.SELECT_REPLY, new SelectReplyCommand(),
+                MenuOption.RETURN_TO_POST,new ReturnToPostCommand(),
+                MenuOption.QUIT, new QuitCommand()
         ));
+
+        onComment.setCommands(commands);
 
         return onComment;
     }
@@ -139,15 +145,24 @@ public class ViewSetup {
         onReply.setViewID(ViewID.ON_REPLY);
 
         //  Set menu
-        LinkedHashMap<MenuOption, Availability> menu = new LinkedHashMap<>(Map.of(
-                MenuOption.UPVOTE, Availability.LOGGED_IN,
-                MenuOption.DOWNVOTE, Availability.LOGGED_IN,
-                MenuOption.RETURN_TO_COMMENT, Availability.ANYTIME,
-                MenuOption.QUIT, Availability.ANYTIME
-        ));
+        LinkedHashMap<MenuOption, Availability> menu = new LinkedHashMap<>();
+        menu.put(MenuOption.UPVOTE, Availability.LOGGED_IN);
+        menu.put(MenuOption.DOWNVOTE, Availability.LOGGED_IN);
+        menu.put(MenuOption.RETURN_TO_COMMENT, Availability.ANYTIME);
+        menu.put(MenuOption.QUIT, Availability.ANYTIME);
 
         onReply.setMenu(menu);
 
+        //  Set commands
+        HashMap<MenuOption, IMenuCommand> commands = new HashMap<>(Map.of(
+                MenuOption.UPVOTE, new UpvoteReplyCommand(),
+                MenuOption.DOWNVOTE, new DownvoteReplyCommand(),
+                MenuOption.RETURN_TO_COMMENT, new ReturnToCommentCommand(),
+                MenuOption.QUIT, new QuitCommand()
+        ));
+
+        onReply.setCommands(commands);
+        
         return onReply;
     }
 
