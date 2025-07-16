@@ -7,6 +7,7 @@ import org.example.loggerobjects.Logger;
 import org.example.repositories.CommentRepo;
 import org.example.textprocessors.AnsiColors;
 
+import java.sql.SQLException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -24,8 +25,8 @@ public class CommentService extends AnsiColors {
 
             try {
                 commentRepo.loadPostComments();
-//                commentRepo.loadReplyComments();
-            } catch (Exception e) {
+//                commentRepo.loadReplies();
+            } catch (SQLException e) {
                 Logger.error("Failed to load comments from the database: " + e.getMessage());
                 DatabaseConnection.cannotConnect();
             }
@@ -42,7 +43,13 @@ public class CommentService extends AnsiColors {
             if (iter.getPostID() == post.getPostID()) {
                 Comment comment = new Comment(iter, user, commentText);
                 iter.getCommentList().add(comment);
-                commentRepo.savePostComment(comment);
+                try {
+                    commentRepo.savePostComment(comment);
+                } catch (SQLException e) {
+                    Logger.error("Failed to save comment: " + e.getMessage());
+                    System.out.println(AnsiColors.toRed("Failed to save comment to the database."));
+                    return;
+                }
                 System.out.println(AnsiColors.toGreen("Comment added successfully."));
                 return;
             }

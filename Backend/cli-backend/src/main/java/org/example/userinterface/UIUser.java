@@ -28,7 +28,7 @@ public class UIUser {
 
     private static final String INCORRECT_PASSWORD = "Invalid password. Please enter a valid password.";
     private static final String INVALID_EMAIL = "Invalid email format. Please enter a valid email address.";
-    private static final String INVALID_PASSWORD = "Invalid password. Please enter a valid password.";
+    private static final String INVALID_PASSWORD = "Invalid password.";
     private static final String INVALID_USERNAME = "Invalid username format. Please enter a valid username.";
     private static final String USERNAME_ALREADY_EXISTS = "Username already exists. Please choose a different username.";
 
