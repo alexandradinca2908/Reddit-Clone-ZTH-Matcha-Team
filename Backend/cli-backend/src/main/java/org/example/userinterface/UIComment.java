@@ -2,7 +2,6 @@ package org.example.userinterface;
 
 import org.example.models.Comment;
 import org.example.models.Post;
-import org.example.models.User;
 import org.example.textprocessors.AnsiColors;
 import org.example.textprocessors.TextSymbols;
 
@@ -30,7 +29,7 @@ public class UIComment {
         System.out.println(indent + AnsiColors.toOrange(String.format(TextSymbols.HEADER,
                 comment.getCommentID(), comment.getParentUser().getUsername())));
         System.out.println(indent + AnsiColors.addReward(comment.getCommentText(), comment.getVotes()));
-        System.out.print(indent + AnsiColors.toRed("UP ") + comment.getVoteCount() +
+        System.out.print(indent + AnsiColors.toRed("UP ") + comment.getVotes() +
                 AnsiColors.toBlue(" DOWN "));
         System.out.println("| " + comment.replyList.size() + " replies");
         System.out.println(indent + TextSymbols.LINE_SEPARATOR);
@@ -40,4 +39,3 @@ public class UIComment {
         }
     }
 }
-

@@ -9,6 +9,6 @@
     <content url="jar://$USER_HOME$/Downloads/postgresql-42.7.3.jar!/" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="postgresql-42.7.3" level="project" />
+    <orderEntry type="library" name="postgresql-42.7.7" level="project" />
   </component>
 </module>

@@ -3,13 +3,12 @@ package org.example.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Comment implements Likeable {
+public class Comment extends Likeable {
     private static int commentCounter = 0;
     private int commentID;
     private String commentText;
     private final Post parentPost;
     private final User parentUser;
-    private int voteCount;
     public HashMap<Integer, Integer> votingUserID;
     public ArrayList<Comment> replyList;
 
@@ -33,21 +32,6 @@ public class Comment implements Likeable {
         this.commentID = commentCounter++;
     }
 
-    @Override
-    public void upvote() {
-        voteCount++;
-    }
-
-    @Override
-    public void downvote() {
-        voteCount--;
-    }
-
-    @Override
-    public int getVotes() {
-        return voteCount;
-    }
-
     public String getCommentText() {
         return commentText;
     }
@@ -64,17 +48,21 @@ public class Comment implements Likeable {
         return parentUser;
     }
 
+    public ArrayList<Comment> getReplyList() {
+        return replyList;
+    }
+
     public void setCommentText(String commentText) {
         this.commentText = commentText;
     }
 
-    public int getVoteCount() {
+    public int getVotes() {
         return voteCount;
     }
 
-    public void addComentReply(String commentReplyText, User replyParentUser) {
+    public void addReply(String commentReplyText, User replyParentUser) {
         Comment commentReply = new Comment(this, replyParentUser, commentReplyText);
-        replyList.add(commentReply);
+        this.replyList.add(commentReply);
     }
 
     public void setCommentID(int commentId) {
