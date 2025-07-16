@@ -14,8 +14,6 @@ public class CommentService extends AnsiColors {
     private static final CommentRepo commentRepo = CommentRepo.getInstance();
 
     Scanner sc = new Scanner(System.in);
-    private Post post;
-    private User user;
 
     private CommentService() {}
 
@@ -60,7 +58,7 @@ public class CommentService extends AnsiColors {
         System.out.println(AnsiColors.toRed("Something went wrong while adding a reply!"));
     }
 
-    public Comment selectComment(User user, Post post) {
+    public Comment selectComment(Post post) {
         int cid;
         while (true) {
             System.out.print("Please enter the CommentID: ");
@@ -80,7 +78,7 @@ public class CommentService extends AnsiColors {
         throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + cid + " not found."));
     }
 
-    public Comment selectReply(User user, Comment comment) {
+    public Comment selectReply(Comment comment) {
         int rid;
         while (true) {
             System.out.print("Please enter the ReplyID: ");
