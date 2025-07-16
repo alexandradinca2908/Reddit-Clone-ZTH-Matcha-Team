@@ -7,6 +7,7 @@ import org.example.loggerobjects.Logger;
 import org.example.repositories.CommentRepo;
 import org.example.textprocessors.AnsiColors;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class CommentService extends AnsiColors {
@@ -52,10 +53,9 @@ public class CommentService extends AnsiColors {
 
     public void addReply(User user, Comment comment) {
         System.out.println(AnsiColors.toGreen("Please enter a reply: "));
-        String replyText = sc.nextLine();
-        Logger.fatal("Adding reply!");
-        comment.addReply(replyText, user);
-        System.out.println(AnsiColors.toRed("Something went wrong while adding a reply!"));
+            String replyText = sc.nextLine();
+            Logger.fatal("Adding reply!");
+            comment.addReply(replyText, user);
     }
 
     public Comment selectComment(Post post) {
