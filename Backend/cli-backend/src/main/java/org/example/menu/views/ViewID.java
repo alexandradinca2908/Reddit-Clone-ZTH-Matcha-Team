@@ -1,4 +1,4 @@
-package org.example.views;
+package org.example.menu.views;
 
 public enum ViewID {
     MAIN_MENU,

@@ -114,7 +114,7 @@ public class UserService {
         uiService.pleaseEnter("email");
         String email = sc.nextLine();
 
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\\.[A-Za-z]+$";
 
         while (email == null || !email.matches(emailRegex)) {
             uiService.invalid("email");
@@ -180,5 +180,18 @@ public class UserService {
         } else {
             uiService.failed("account deletion failed", user.getUsername());
         }
+    }
+
+    public static User findByUsername(String username) {
+        if (username == null || username.isEmpty()) {
+            return null;
+        }
+
+        for (User user : users) {
+            if (username.equals(user.getUsername())) {
+                return user;
+            }
+        }
+        return null;
     }
 }

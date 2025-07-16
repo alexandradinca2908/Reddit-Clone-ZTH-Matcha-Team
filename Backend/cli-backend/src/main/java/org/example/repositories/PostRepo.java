@@ -11,8 +11,6 @@ import java.util.ArrayList;
 public class PostRepo {
     private static PostRepo instance;
 
-    private PostRepo() {}
-
     public static PostRepo getInstance() {
         if (instance == null) {
             instance = new PostRepo();
@@ -78,14 +76,5 @@ public class PostRepo {
             posts.add(post);
         }
 
-    }
-
-    public Post findById(int postId) {
-        for (Post post : PostService.posts) {
-            if (post.getPostID() == postId) {
-                return post;
-            }
-        }
-        return null;
     }
 }

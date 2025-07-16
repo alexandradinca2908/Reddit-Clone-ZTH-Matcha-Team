@@ -24,8 +24,7 @@ public class CommentService extends AnsiColors {
             instance = new CommentService();
 
             try {
-                commentRepo.loadPostComments();
-//                commentRepo.loadReplies();
+                commentRepo.load();
             } catch (SQLException e) {
                 Logger.error("Failed to load comments from the database: " + e.getMessage());
                 DatabaseConnection.cannotConnect();
@@ -62,8 +61,16 @@ public class CommentService extends AnsiColors {
         System.out.println(AnsiColors.toGreen("Please enter a reply: "));
             String replyText = sc.nextLine();
             Logger.fatal("Adding reply!");
-            comment.addReply(replyText, user);
-            // TO DO - add exception for illegal input
+            Comment commentReply = new Comment(comment, user, replyText);
+            try {
+                commentRepo.saveReply(commentReply);
+            } catch (SQLException e) {
+                Logger.error("Failed to save reply: " + e.getMessage());
+                System.out.println(AnsiColors.toRed("Failed to save reply to the database."));
+                return;
+            }
+            comment.replyList.add(commentReply);
+            // TODO - add exception for illegal input
     }
 
     public Comment selectComment(Post post) {
