@@ -2,6 +2,7 @@ package org.example.models;
 
 import org.example.services.CommentService;
 import org.example.services.PostService;
+import org.example.services.VotingService;
 import org.example.userinterface.UIComment;
 import org.example.userinterface.UIPost;
 import org.example.services.UserService;
@@ -15,6 +16,7 @@ public class ActionState {
     private final static UserService userService = UserService.getInstance();
     private final static PostService postService = PostService.getInstance();
     private final static CommentService commentService = CommentService.getInstance();
+    private final static VotingService votingService = VotingService.getInstance();
     private static ActionState actionState;
     private boolean isLoggedIn;
     private State currentState;
@@ -216,10 +218,10 @@ public class ActionState {
             commentService.addComment(user, post);
             UIPost.showPost(true, post);
         } else if (translatedInput.equalsIgnoreCase("upvote")) {
-            postService.votePost(user, post, true);
+            votingService.votePost(user, post, true);
             UIPost.showPost(true, post);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
-            postService.votePost(user, post, false);
+            votingService.votePost(user, post, false);
             UIPost.showPost(true, post);
         } else if (translatedInput.equalsIgnoreCase("select comment")) {
             try {
@@ -256,10 +258,10 @@ public class ActionState {
         if (translatedInput.equalsIgnoreCase("reply")) {
             commentService.addReply(user, comment);
         } else if (translatedInput.equalsIgnoreCase("upvote")) {
-            commentService.voteComment(user, comment, true);
+            votingService.voteComment(user, comment, true);
             changeState(State.ON_COMMENT);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
-            commentService.voteComment(user, comment, false);
+            votingService.voteComment(user, comment, false);
             changeState(State.ON_COMMENT);
         } else if (translatedInput.equalsIgnoreCase("select reply")) {
             commentReply = commentService.selectReply(comment);
@@ -287,10 +289,10 @@ public class ActionState {
         String translatedInput = translateInput(option, currentState, isLoggedIn);
 
         if (translatedInput.equalsIgnoreCase("upvote")) {
-            commentService.voteReply(user, commentReply, true);
+            votingService.voteReply(user, commentReply, true);
             changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("downvote")) {
-            commentService.voteReply(user, commentReply, false);
+            votingService.voteReply(user, commentReply, false);
             changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("return to comment")) {
             UIComment.showAllCommentsAndReplies(post);
