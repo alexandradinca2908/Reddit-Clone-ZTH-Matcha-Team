@@ -31,7 +31,6 @@ public class ViewManager {
         this.views = new HashMap<>();
         currentViewID = ViewID.MAIN_MENU;
         isLoggedIn = false;
-
     }
 
     public static ViewManager getInstance() {
