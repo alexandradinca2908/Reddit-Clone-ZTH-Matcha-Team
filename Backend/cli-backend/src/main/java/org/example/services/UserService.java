@@ -42,6 +42,7 @@ public class UserService {
 
         try {
             User newUser = new User(username, email, password);
+            users.add(newUser);
             userRepo.save(newUser);
             uiService.registration(true, username);
             return newUser;
