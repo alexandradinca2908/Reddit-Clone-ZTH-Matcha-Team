@@ -1,4 +1,4 @@
-package org.example.entities;
+package org.example.models;
 
 public class User {
     int userID;

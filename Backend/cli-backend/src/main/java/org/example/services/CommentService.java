@@ -1,9 +1,8 @@
 package org.example.services;
 import org.example.dbconnection.DatabaseConnection;
-import org.example.entities.Post;
-import org.example.entities.User;
-import org.example.entities.Comment;
-import org.example.loggerobjects.LogLevel;
+import org.example.models.Post;
+import org.example.models.User;
+import org.example.models.Comment;
 import org.example.loggerobjects.Logger;
 import org.example.repositories.CommentRepo;
 import org.example.textprocessors.AnsiColors;

@@ -1,7 +1,6 @@
 package org.example.services;
 import org.example.dbconnection.DatabaseConnection;
-import org.example.entities.User;
-import org.example.loggerobjects.LogLevel;
+import org.example.models.User;
 import org.example.loggerobjects.Logger;
 import org.example.repositories.UserRepo;
 import org.example.userinterface.UIUser;

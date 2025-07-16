@@ -1,13 +1,12 @@
 package org.example.repositories;
 
 import org.example.dbconnection.DatabaseConnection;
-import org.example.entities.Comment;
-import org.example.entities.Post;
-import org.example.entities.User;
+import org.example.models.Comment;
+import org.example.models.Post;
+import org.example.models.User;
 import org.example.loggerobjects.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 import static org.example.services.PostService.postRepo;
 import static org.example.services.UserService.userRepo;

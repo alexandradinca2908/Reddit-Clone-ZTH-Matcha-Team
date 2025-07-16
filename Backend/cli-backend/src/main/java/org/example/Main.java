@@ -1,13 +1,11 @@
 package org.example;
 
-import org.example.entities.ActionState;
+import org.example.models.ActionState;
 import org.example.loggerobjects.FileLogger;
 import org.example.loggerobjects.LogLevel;
 import org.example.loggerobjects.LogManager;
 import org.example.loggerobjects.Loggable;
 import org.example.textprocessors.AnsiColors;
-
-import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {

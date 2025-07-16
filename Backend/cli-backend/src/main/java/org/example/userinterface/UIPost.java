@@ -1,7 +1,6 @@
 package org.example.userinterface;
 
-import org.example.entities.Comment;
-import org.example.entities.Post;
+import org.example.models.Post;
 import org.example.textprocessors.AnsiColors;
 import org.example.textprocessors.TextSymbols;
 

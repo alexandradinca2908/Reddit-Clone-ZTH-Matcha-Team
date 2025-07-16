@@ -1,8 +1,5 @@
 package org.example.dbconnection;
 
-import org.example.entities.User;
-import org.example.services.PasswordService;
-
 import java.sql.*;
 
 public class DatabaseConnection {

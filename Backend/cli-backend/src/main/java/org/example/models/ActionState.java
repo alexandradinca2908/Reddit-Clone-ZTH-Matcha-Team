@@ -1,4 +1,4 @@
-package org.example.entities;
+package org.example.models;
 
 import org.example.services.CommentService;
 import org.example.services.PostService;

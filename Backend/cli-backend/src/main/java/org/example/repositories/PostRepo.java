@@ -1,12 +1,11 @@
 package org.example.repositories;
 
 import org.example.dbconnection.DatabaseConnection;
-import org.example.entities.Post;
+import org.example.models.Post;
 import org.example.loggerobjects.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PostRepo {
     private static PostRepo instance;
