@@ -19,7 +19,7 @@ public class UIComment {
     }
 
     public void showAllComments(User user, Post post) {
-        for (Comment comm : post.commentList) {
+        for (Comment comm : post.getCommentList()) {
             if (comm.getParentUser().getUserID() == user.getUserID()) {
                 showOneComment(comm, 0);
             }
@@ -48,7 +48,7 @@ public class UIComment {
     }
 
     public void showAllCommentsAndReplies(Post post) {
-        for (Comment comment : post.commentList) {
+        for (Comment comment : post.getCommentList()) {
             showOneCommentAndReplies(comment, 0);
         }
     }
