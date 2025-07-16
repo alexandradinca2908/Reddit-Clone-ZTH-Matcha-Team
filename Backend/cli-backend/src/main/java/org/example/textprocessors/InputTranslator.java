@@ -1,6 +1,6 @@
 package org.example.textprocessors;
 
-import org.example.entities.State;
+import org.example.models.State;
 
 public class InputTranslator {
     public static String translateInput(String input, State currentState, boolean isLoggedIn) {

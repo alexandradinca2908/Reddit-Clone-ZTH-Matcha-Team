@@ -1,13 +1,12 @@
 package org.example.repositories;
 
 import org.example.dbconnection.DatabaseConnection;
-import org.example.entities.Comment;
-import org.example.entities.Post;
-import org.example.entities.User;
+import org.example.models.Comment;
+import org.example.models.Post;
+import org.example.models.User;
 import org.example.loggerobjects.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 import static org.example.services.PostService.postRepo;
 import static org.example.services.UserService.userRepo;
@@ -25,6 +24,10 @@ public class CommentRepo {
     }
 
     public void savePostComment(Comment comment) {
+        if (!DatabaseConnection.isConnected()) {
+            return;
+        }
+
         String sql = "INSERT INTO comment (username, postID, text) VALUES (?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -50,6 +53,9 @@ public class CommentRepo {
         }
     }
     public void loadPostComments() throws SQLException {
+        if (!DatabaseConnection.isConnected()) {
+            return;
+        }
         String sql = "SELECT commentID, username, parent_postID, text FROM comment";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -58,7 +64,7 @@ public class CommentRepo {
 
             while (rs.next()) {
                 int commentId = rs.getInt("commentID");
-                int postId = rs.getInt("postID");
+                int postId = rs.getInt("parent_postID");
                 String username = rs.getString("username");
                 String text = rs.getString("text");
 
@@ -78,4 +84,34 @@ public class CommentRepo {
             }
         }
     }
+
+//    public void loadReplyComments() throws SQLException {
+//        String sql = "SELECT commentID, username, parent_commentID, text FROM comment";
+//
+//        try (Connection conn = DatabaseConnection.getConnection();
+//             PreparedStatement pstmt = conn.prepareStatement(sql);
+//             ResultSet rs = pstmt.executeQuery()) {
+//
+//            while (rs.next()) {
+//                int commentId = rs.getInt("commentID");
+//                int parent_commentId = rs.getInt("postID");
+//                String username = rs.getString("username");
+//                String text = rs.getString("text");
+//
+////                Post parentPost = postRepo.findById();
+//                User parentUser = userRepo.findByUsername(username);
+//
+//                if (parentPost != null && parentUser != null) {
+//                    Comment comment = new Comment(parentPost, parentUser, text);
+//
+//                    comment.setCommentID(commentId);
+//
+//                    parentPost.commentList.add(comment);
+//                } else {
+//                    Logger.warn("Warning: Could not load comment " + commentId +
+//                            " because its parent post or user could not be found.");
+//                }
+//            }
+//        }
+//    }
 }

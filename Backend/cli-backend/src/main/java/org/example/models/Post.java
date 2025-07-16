@@ -1,6 +1,5 @@
-package org.example.entities;
+package org.example.models;
 import org.example.repositories.CommentRepo;
-import org.example.textprocessors.AnsiColors;
 
 import java.util.ArrayList;
 import java.util.HashMap;

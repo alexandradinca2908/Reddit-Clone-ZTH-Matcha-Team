@@ -1,12 +1,11 @@
 package org.example.repositories;
-import org.example.entities.User;
+import org.example.models.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.example.dbconnection.DatabaseConnection;
 import org.example.services.UserService;
@@ -22,6 +21,10 @@ public class UserRepo {
     }
 
     public void save(User user) throws SQLException {
+        if (!DatabaseConnection.isConnected()) {
+            return;
+        }
+
         String sql = "INSERT INTO profile (username, email, password) VALUES (?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -34,6 +37,9 @@ public class UserRepo {
     }
 
     public void load(ArrayList<User> users) throws SQLException {
+        if (!DatabaseConnection.isConnected()) {
+            return;
+        }
         String sql = "SELECT username, email, password FROM profile";
 
         Connection conn = DatabaseConnection.getConnection();
@@ -67,6 +73,10 @@ public class UserRepo {
     }
 
     public void deleteUser(String username) {
+        if (!DatabaseConnection.isConnected()) {
+            return;
+        }
+
         String sql = "DELETE FROM profile WHERE username = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

@@ -1,8 +1,8 @@
 package org.example.userinterface;
 
-import org.example.entities.Comment;
-import org.example.entities.Post;
-import org.example.entities.User;
+import org.example.models.Comment;
+import org.example.models.Post;
+import org.example.models.User;
 import org.example.textprocessors.AnsiColors;
 import org.example.textprocessors.TextSymbols;
 
