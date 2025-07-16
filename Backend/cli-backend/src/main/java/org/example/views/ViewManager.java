@@ -52,6 +52,18 @@ public class ViewManager {
         ViewSetup.linkViews(views);
     }
 
+    public View getCurrentViewObject() {
+        return views.get(currentViewID);
+    }
+
+    public ViewID getCurrentViewID() {
+        return currentViewID;
+    }
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
     void switchToNextView(ViewID viewID) {
         View currentViewObject = views.get(currentViewID);
 

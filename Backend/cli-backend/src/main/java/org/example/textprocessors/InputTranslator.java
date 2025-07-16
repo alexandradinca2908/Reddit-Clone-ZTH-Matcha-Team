@@ -1,10 +1,16 @@
 package org.example.textprocessors;
 
-import org.example.models.State;
+import org.example.views.MenuOption;
+import org.example.views.ViewID;
 
 public class InputTranslator {
-    public static String translateInput(String input, State currentState, boolean isLoggedIn) {
-        switch (currentState) {
+    public static MenuOption translateInput(String input, ViewID viewID, boolean isLoggedIn) {
+        String stringInput = translateInputToString(input, viewID, isLoggedIn);
+
+    }
+
+    private static String translateInputToString(String input, ViewID viewID, boolean isLoggedIn) {
+        switch (viewID) {
             case MAIN_MENU:
                 if (!isLoggedIn) {
                     return translateMenuInputNotLoggedIn(input);
@@ -32,7 +38,7 @@ public class InputTranslator {
         return input;
     }
 
-    static String translateMenuInputNotLoggedIn(String input) {
+    private static String translateMenuInputNotLoggedIn(String input) {
         // 1. Login, 2. Register, 3. Logout, 4. Quit
         return switch (input) {
             case "1" -> "login";
@@ -43,7 +49,7 @@ public class InputTranslator {
         };
     }
 
-    static String translateMenuInputLoggedIn(String input) {
+    private static String translateMenuInputLoggedIn(String input) {
         //  1. Show feed, 2. Create post, 3. Logout, 4. Delete Account, 5. Quit
         return switch (input) {
             case "1" -> "show feed";
@@ -55,7 +61,7 @@ public class InputTranslator {
         };
     }
 
-    static String translateOnFeedInput(String input) {
+    private static String translateOnFeedInput(String input) {
         //  1. Expand post, 2. Return to menu, 3. Quit
         return switch (input) {
             case "1" -> "expand post";
@@ -65,7 +71,7 @@ public class InputTranslator {
         };
     }
 
-    static String translateOnPostInputNotLoggedIn(String input) {
+    private static String translateOnPostInputNotLoggedIn(String input) {
         //  1. Return to feed, 2. Quit
         return switch (input) {
             case "1" -> "return to feed";
@@ -74,7 +80,7 @@ public class InputTranslator {
         };
     }
 
-    static String translatePostInputLoggedIn(String input) {
+    private static String translatePostInputLoggedIn(String input) {
         //  1. Comment, 2. Upvote, 3. Downvote, 4. Select comment
         //  5. Return to feed, 6. Logout, 7. Quit
         return switch (input) {
@@ -88,7 +94,7 @@ public class InputTranslator {
         };
     }
 
-    static String translateOnCommentInput(String input) {
+    private static String translateOnCommentInput(String input) {
         //  1. Reply, 2. Upvote, 3. Downvote
         //  4. Select reply, 5. Return to post, 6. Quit
         return switch (input) {
@@ -102,7 +108,7 @@ public class InputTranslator {
         };
     }
 
-    static String translateOnReplyInput(String input) {
+    private static String translateOnReplyInput(String input) {
         //  1. Upvote, 2. Downvote, 3. Return to comment, 4. Quit
         return switch (input) {
             case "1" -> "upvote";

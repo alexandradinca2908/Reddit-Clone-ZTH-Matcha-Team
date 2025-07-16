@@ -1,12 +1,16 @@
 package org.example;
 
 import org.example.dbconnection.DatabaseConnection;
-import org.example.models.ActionState;
 import org.example.loggerobjects.FileLogger;
 import org.example.loggerobjects.LogLevel;
 import org.example.loggerobjects.LogManager;
 import org.example.loggerobjects.Loggable;
 import org.example.textprocessors.AnsiColors;
+import org.example.views.View;
+import org.example.views.ViewID;
+import org.example.views.ViewManager;
+
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,7 +23,7 @@ public class Main {
         // ===========================================
 
         //  Get menu instance
-        ActionState actionState = ActionState.getInstance();
+        ViewManager viewManager = ViewManager.getInstance();
 
         //  Instantiate loggers
         Loggable verboseLogger = new FileLogger(LogLevel.VERBOSE, "verbose.log");
@@ -31,13 +35,30 @@ public class Main {
 
         LogManager.getInstance().registerMultipleLoggers(verboseLogger, debugLogger, errorLogger,
                 infoLogger, warningLogger, fatalLogger);
-        boolean isActive = true;
 
         //  Start app
         System.out.println(AnsiColors.toPurple("Welcome to Reddit!\nPlease choose an option:"));
 
+        //  Initialize necessary variables for the app
+        boolean isActive = true;
+        Scanner scan;
+        String option;
+        String translatedInput;
+
         while (isActive) {
-            isActive = actionState.executeAction();
+            //  Get view data
+            View currentViewObject = viewManager.getCurrentViewObject();
+            ViewID currentViewID = viewManager.getCurrentViewID();
+
+            //  Display menu
+            currentViewObject.displayMenu();
+
+            //  Take and process user input
+            scan = new Scanner(System.in);
+            option = scan.nextLine();
+            translatedInput = translateInputToString(option, currentViewID, viewManager.isLoggedIn());
+
+
         }
     }
 }

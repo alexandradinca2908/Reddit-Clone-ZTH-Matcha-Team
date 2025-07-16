@@ -21,7 +21,7 @@ public class View {
         this.viewID = viewID;
     }
 
-    public ArrayList<MenuOption> getMenu() {
+    public HashMap<MenuOption, Availability> getMenu() {
         return menu;
     }
 
@@ -37,7 +37,7 @@ public class View {
         this.nextViews = nextViews;
     }
 
-    void displayMenu() {
+    public void displayMenu() {
         uiView.renderMenu(menu, viewManager.isLoggedIn);
     }
 

@@ -18,7 +18,8 @@ public enum MenuOption {
     REPLY,
     SELECT_REPLY,
     RETURN_TO_POST,
-    RETURN_TO_COMMENT;
+    RETURN_TO_COMMENT,
+    UNKNOWN_COMMAND;
 
     @Override
     public String toString() {
