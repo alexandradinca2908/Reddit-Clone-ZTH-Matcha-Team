@@ -4,14 +4,13 @@ import org.example.repositories.CommentRepo;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Post implements Likeable {
+public class Post extends Likeable {
     private static final CommentRepo commentRepo = CommentRepo.getInstance();
     public static ArrayList<Post> posts = new ArrayList<>();
     private int postID;
     String username;
     private String title;
     private String body;
-    private int voteCount;
     public HashMap<Integer, Integer> votingUserID; //K = userID , V = -1/+1 -> downvote/upvote
     public ArrayList<Comment> commentList;
 
@@ -24,32 +23,24 @@ public class Post implements Likeable {
         this.votingUserID = new HashMap<>();
     }
 
-    @Override
-    public void upvote() {
-        voteCount++;
-    }
-    @Override
-    public void downvote() {
-        voteCount--;
-    }
-    @Override
-    public int getVotes() {
-        return voteCount;
-    }
-
     public int getPostID() {
         return postID;
     }
+
     public String getUsername() {
         return username;
     }
+
     public int getCommentsCounter() { return commentList.size(); }
+
     public String getTitle() {
         return title;
     }
+
     public String getBody() {
         return body;
     }
+
     public void setPostId(int dbPostID) {
         this.postID = dbPostID;
     }

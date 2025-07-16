@@ -3,16 +3,15 @@ package org.example.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Comment implements Likeable {
+public class Comment extends Likeable {
     private static int commentCounter = 0;
     private int commentID;
     private String commentText;
     private final Post parentPost;
     private final User parentUser;
     private Comment parentComment;
-    private int voteCount;
     public HashMap<Integer, Integer> votingUserID;
-    public ArrayList<Comment> replyList;
+    private ArrayList<Comment> replyList;
 
     public Comment(Post parentPost, User parentUser, String commentText) {
         this.parentPost = parentPost;
@@ -36,21 +35,6 @@ public class Comment implements Likeable {
         this.commentID = commentCounter++;
     }
 
-    @Override
-    public void upvote() {
-        voteCount++;
-    }
-
-    @Override
-    public void downvote() {
-        voteCount--;
-    }
-
-    @Override
-    public int getVotes() {
-        return voteCount;
-    }
-
     public String getCommentText() {
         return commentText;
     }
@@ -67,17 +51,21 @@ public class Comment implements Likeable {
         return parentUser;
     }
 
+    public Comment getParentComment() {
+        return parentComment;
+    }
+
+    public ArrayList<Comment> getReplyList() {
+        return replyList;
+    }
+
     public void setCommentText(String commentText) {
         this.commentText = commentText;
     }
 
-    public int getVoteCount() {
-        return voteCount;
-    }
-
-    public void addComentReply(String commentReplyText, User replyParentUser) {
-        Comment commentReply = new Comment(this, replyParentUser, commentReplyText);
-        replyList.add(commentReply);
+    public void addReply(String replyText, User replyParentUser) {
+        Comment commentReply = new Comment(this, replyParentUser, replyText);
+        this.replyList.add(commentReply);
     }
 
     public void setCommentID(int commentId) {

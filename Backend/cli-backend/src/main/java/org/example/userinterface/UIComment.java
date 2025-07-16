@@ -29,11 +29,11 @@ public class UIComment {
     public void showOneComment(Comment comm, int indentLevel) {
         System.out.println(AnsiColors.toOrange("ID: " + comm.getCommentID() + " | USER: " + comm.getParentUser().getUsername()));
         System.out.println(comm.getCommentText());
-        System.out.print(AnsiColors.toRed("UP ") + comm.getVoteCount() + AnsiColors.toBlue(" DOWN "));
-        System.out.println("| " + comm.replyList.size() + " replies");
+        System.out.print(AnsiColors.toRed("UP ") + comm.getVotes() + AnsiColors.toBlue(" DOWN "));
+        System.out.println("| " + comm.getReplyList().size() + " replies");
         System.out.println(TextSymbols.LINE_SEPARATOR);
 
-        for (Comment reply : comm.replyList) {
+        for (Comment reply : comm.getReplyList()) {
             showOneReply(reply, indentLevel + 1);
         }
     }
@@ -43,7 +43,7 @@ public class UIComment {
         System.out.println(indent + AnsiColors.toOrange("ID: " + reply.getCommentID() + " | USER: " + reply.getParentUser().getUsername()));
         System.out.println(indent + AnsiColors.addReward(reply.getCommentText(), reply.getVotes()));
         System.out.print(indent + AnsiColors.toRed("UP ") + reply.getVotes() + AnsiColors.toBlue(" DOWN "));
-        System.out.println("| " + reply.replyList.size() + " replies");
+        System.out.println("| " + reply.getReplyList().size() + " replies");
         System.out.println(indent + TextSymbols.LINE_SEPARATOR);
     }
 
@@ -59,12 +59,12 @@ public class UIComment {
         System.out.println(indent + AnsiColors.toOrange(String.format(TextSymbols.HEADER,
                 comment.getCommentID(), comment.getParentUser().getUsername())));
         System.out.println(indent + AnsiColors.addReward(comment.getCommentText(), comment.getVotes()));
-        System.out.print(indent + AnsiColors.toRed("UP ") + comment.getVoteCount() + AnsiColors.toBlue(" DOWN "));
-        System.out.println("| " + comment.replyList.size() + " replies");
+        System.out.print(indent + AnsiColors.toRed("UP ") + comment.getVotes() + AnsiColors.toBlue(" DOWN "));
+        System.out.println("| " + comment.getReplyList().size() + " replies");
 
         System.out.println(indent + TextSymbols.LINE_SEPARATOR);
 
-        for (Comment reply : comment.replyList) {
+        for (Comment reply : comment.getReplyList()) {
             showOneCommentAndReplies(reply, indentLevel + 1);
         }
     }

@@ -48,18 +48,11 @@ public class CommentService extends AnsiColors {
         System.out.println(AnsiColors.toRed("Something went wrong while adding a comment!"));
     }
 
-    public void addReply(User user, Post post, Comment comment) {
+    public void addReply(User user, Comment comment) {
         System.out.println(AnsiColors.toGreen("Please enter a reply: "));
         String replyText = sc.nextLine();
         Logger.fatal("Adding reply!");
-        for (Comment comm : post.commentList) {
-            if (comm.getCommentID() == comment.getCommentID()) {
-                Comment reply = new Comment(comm, user, replyText);
-                comm.replyList.add(reply);
-                System.out.println(AnsiColors.toGreen("Reply added successfully."));
-                return;
-            }
-        }
+        comment.addReply(replyText, user);
 
         System.out.println(AnsiColors.toRed("Something went wrong while adding a reply!"));
     }
@@ -96,7 +89,7 @@ public class CommentService extends AnsiColors {
             }
         }
 
-            for(Comment reply : comment.replyList) {
+            for(Comment reply : comment.getReplyList()) {
                 if(reply.getCommentID() == rid) {
                     return reply;
                 }

@@ -252,7 +252,7 @@ public class ActionState {
         String translatedInput = translateInput(option, currentState, isLoggedIn);
 
         if (translatedInput.equalsIgnoreCase("reply")) {
-            commentService.addReply(user, post, comment);
+            commentService.addReply(user, comment);
         } else if (translatedInput.equalsIgnoreCase("upvote")) {
             commentService.voteComment(user, comment, true);
             changeState(State.ON_COMMENT);
