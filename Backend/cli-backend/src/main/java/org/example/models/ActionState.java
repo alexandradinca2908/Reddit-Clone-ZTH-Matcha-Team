@@ -222,7 +222,7 @@ public class ActionState {
             UIPost.showPost(true, post);
         } else if (translatedInput.equalsIgnoreCase("select comment")) {
             try {
-                comment = commentService.selectComment(user, post);
+                comment = commentService.selectComment(post);
                 changeState(State.ON_COMMENT);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -260,7 +260,7 @@ public class ActionState {
             commentService.voteComment(user, comment, false);
             changeState(State.ON_COMMENT);
         } else if (translatedInput.equalsIgnoreCase("select reply")) {
-            commentReply = commentService.selectReply(user, comment);
+            commentReply = commentService.selectReply(comment);
             changeState(State.ON_REPLY);
         } else if (translatedInput.equalsIgnoreCase("return to post")) {
             UIPost.showPost(true, post);
