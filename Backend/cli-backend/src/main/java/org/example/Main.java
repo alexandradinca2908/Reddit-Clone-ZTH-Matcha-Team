@@ -6,10 +6,10 @@ import org.example.loggerobjects.LogLevel;
 import org.example.loggerobjects.LogManager;
 import org.example.loggerobjects.Loggable;
 import org.example.textprocessors.AnsiColors;
-import org.example.views.MenuOption;
-import org.example.views.View;
-import org.example.views.ViewID;
-import org.example.views.ViewManager;
+import org.example.menu.MenuOption;
+import org.example.menu.views.View;
+import org.example.menu.views.ViewID;
+import org.example.menu.views.ViewManager;
 
 import java.util.Scanner;
 

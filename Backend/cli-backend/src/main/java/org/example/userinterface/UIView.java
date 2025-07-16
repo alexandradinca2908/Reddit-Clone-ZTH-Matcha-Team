@@ -1,9 +1,8 @@
 package org.example.userinterface;
 
-import org.example.views.Availability;
-import org.example.views.MenuOption;
+import org.example.menu.Availability;
+import org.example.menu.MenuOption;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class UIView {

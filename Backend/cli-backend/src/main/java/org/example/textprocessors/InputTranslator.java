@@ -1,7 +1,7 @@
 package org.example.textprocessors;
 
-import org.example.views.MenuOption;
-import org.example.views.ViewID;
+import org.example.menu.MenuOption;
+import org.example.menu.views.ViewID;
 
 public class InputTranslator {
     public static MenuOption translateInput(String input, ViewID viewID, boolean isLoggedIn) {
@@ -16,7 +16,7 @@ public class InputTranslator {
             case "logout" -> MenuOption.LOGOUT;
             case "delete_account" -> MenuOption.DELETE_ACCOUNT;
             case "expand post" -> MenuOption.EXPAND_POST;
-            case "return to menu" -> MenuOption.RETURN_TO_POST;
+            case "return to menu" -> MenuOption.RETURN_TO_MENU;
             case "comment" -> MenuOption.COMMENT;
             case "upvote" -> MenuOption.UPVOTE;
             case "downvote" -> MenuOption.DOWNVOTE;
