@@ -25,10 +25,12 @@ public class CommentService extends AnsiColors {
 
             try {
                 commentRepo.loadPostComments();
+//                commentRepo.loadReplyComments();
             } catch (Exception e) {
                 Logger.error("Failed to load comments from the database: " + e.getMessage());
                 DatabaseConnection.cannotConnect();
             }
+
         }
         return instance;
     }

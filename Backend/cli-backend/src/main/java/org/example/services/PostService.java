@@ -28,6 +28,7 @@ public class PostService {
                 Logger.error("Failed to load posts from the database: " + e.getMessage());
                 DatabaseConnection.cannotConnect();
             }
+
         }
         return instance;
     }
