@@ -3,6 +3,7 @@ package org.example.views;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ViewSetup {
     protected static View initMainMenu() {
@@ -12,14 +13,14 @@ public class ViewSetup {
         mainMenu.setViewID(ViewID.MAIN_MENU);
 
         //  Set menu
-        ArrayList<MenuOption> menu = new ArrayList<>(List.of(
-                MenuOption.LOGIN,
-                MenuOption.REGISTER,
-                MenuOption.SHOW_FEED,
-                MenuOption.CREATE_POST,
-                MenuOption.LOGOUT,
-                MenuOption.DELETE_ACCOUNT,
-                MenuOption.QUIT
+        HashMap<MenuOption, Availability> menu = new HashMap<>(Map.of(
+                MenuOption.LOGIN, Availability.LOGGED_OUT,
+                MenuOption.REGISTER, Availability.LOGGED_OUT,
+                MenuOption.SHOW_FEED, Availability.ANYTIME,
+                MenuOption.CREATE_POST, Availability.LOGGED_IN,
+                MenuOption.LOGOUT, Availability.LOGGED_IN,
+                MenuOption.DELETE_ACCOUNT, Availability.LOGGED_IN,
+                MenuOption.QUIT, Availability.ANYTIME
         ));
 
         mainMenu.setMenu(menu);
@@ -34,10 +35,10 @@ public class ViewSetup {
         onFeed.setViewID(ViewID.ON_FEED);
 
         //  Set menu
-        ArrayList<MenuOption> menu = new ArrayList<>(List.of(
-                MenuOption.EXPAND_POST,
-                MenuOption.RETURN_TO_MENU,
-                MenuOption.QUIT
+        HashMap<MenuOption, Availability> menu = new HashMap<>(Map.of(
+                MenuOption.EXPAND_POST, Availability.ANYTIME,
+                MenuOption.RETURN_TO_MENU, Availability.ANYTIME,
+                MenuOption.QUIT, Availability.ANYTIME
         ));
 
         onFeed.setMenu(menu);
@@ -52,13 +53,13 @@ public class ViewSetup {
         onPost.setViewID(ViewID.ON_POST);
 
         //  Set menu
-        ArrayList<MenuOption> menu = new ArrayList<>(List.of(
-                MenuOption.COMMENT,
-                MenuOption.UPVOTE,
-                MenuOption.DOWNVOTE,
-                MenuOption.SELECT_COMMENT,
-                MenuOption.RETURN_TO_FEED,
-                MenuOption.QUIT
+        HashMap<MenuOption, Availability> menu = new HashMap<>(Map.of(
+                MenuOption.COMMENT, Availability.LOGGED_IN,
+                MenuOption.UPVOTE, Availability.LOGGED_IN,
+                MenuOption.DOWNVOTE, Availability.LOGGED_IN,
+                MenuOption.SELECT_COMMENT, Availability.LOGGED_IN,
+                MenuOption.RETURN_TO_FEED, Availability.ANYTIME,
+                MenuOption.QUIT, Availability.ANYTIME
         ));
 
         onPost.setMenu(menu);
@@ -73,13 +74,13 @@ public class ViewSetup {
         onComment.setViewID(ViewID.ON_COMMENT);
 
         //  Set menu
-        ArrayList<MenuOption> menu = new ArrayList<>(List.of(
-                MenuOption.REPLY,
-                MenuOption.UPVOTE,
-                MenuOption.DOWNVOTE,
-                MenuOption.SELECT_REPLY,
-                MenuOption.RETURN_TO_POST,
-                MenuOption.QUIT
+        HashMap<MenuOption, Availability> menu = new HashMap<>(Map.of(
+                MenuOption.REPLY, Availability.LOGGED_IN,
+                MenuOption.UPVOTE, Availability.LOGGED_IN,
+                MenuOption.DOWNVOTE, Availability.LOGGED_IN,
+                MenuOption.SELECT_REPLY, Availability.LOGGED_IN,
+                MenuOption.RETURN_TO_POST, Availability.ANYTIME,
+                MenuOption.QUIT, Availability.ANYTIME
         ));
 
         onComment.setMenu(menu);
@@ -94,11 +95,11 @@ public class ViewSetup {
         onReply.setViewID(ViewID.ON_REPLY);
 
         //  Set menu
-        ArrayList<MenuOption> menu = new ArrayList<>(List.of(
-                MenuOption.UPVOTE,
-                MenuOption.DOWNVOTE,
-                MenuOption.RETURN_TO_COMMENT,
-                MenuOption.QUIT
+        HashMap<MenuOption, Availability> menu = new HashMap<>(Map.of(
+                MenuOption.UPVOTE, Availability.LOGGED_IN,
+                MenuOption.DOWNVOTE, Availability.LOGGED_IN,
+                MenuOption.RETURN_TO_COMMENT, Availability.ANYTIME,
+                MenuOption.QUIT, Availability.ANYTIME
         ));
 
         onReply.setMenu(menu);

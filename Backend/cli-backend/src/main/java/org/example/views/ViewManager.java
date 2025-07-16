@@ -19,7 +19,7 @@ public class ViewManager {
     private static ViewManager viewManager;
     private HashMap<ViewID, View> views;
     private ViewID currentViewID;
-    private boolean isLoggedIn;
+    protected boolean isLoggedIn;
     private User user;
     private Post post;
     private Comment comment;

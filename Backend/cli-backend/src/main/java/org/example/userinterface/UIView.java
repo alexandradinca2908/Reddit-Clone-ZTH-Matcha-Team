@@ -1,11 +1,8 @@
 package org.example.userinterface;
 
+import org.example.views.Availability;
 import org.example.views.MenuOption;
-import org.example.views.View;
-import org.example.views.ViewID;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UIView {
@@ -22,11 +19,28 @@ public class UIView {
         return instance;
     }
 
-    public void renderMenu(ArrayList<MenuOption> menu) {
+    public void renderMenu(HashMap<MenuOption, Availability> menu, boolean isLoggedIn) {
         int counter = 0;
+        Availability availability;
 
-        for (MenuOption option : menu) {
-            System.out.println(counter++ + " " + option);
+        if (isLoggedIn) {
+            availability = Availability.LOGGED_IN;
+        } else {
+            availability = Availability.LOGGED_OUT;
+        }
+
+        //  Render logged in/logged out options
+        for (MenuOption option :  menu.keySet()) {
+            if (menu.get(option) == availability) {
+                System.out.println(counter++ + " " + option);
+            }
+        }
+
+        //  Render always available options
+        for (MenuOption option :  menu.keySet()) {
+            if (menu.get(option) == Availability.ANYTIME) {
+                System.out.println(counter++ + " " + option);
+            }
         }
     }
 }
