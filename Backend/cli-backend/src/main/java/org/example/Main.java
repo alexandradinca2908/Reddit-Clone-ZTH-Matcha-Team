@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) {
 
         // ===========================================
-        DatabaseConnection.cannotConnect(); // Comment this line if you want to connect to the database
+        // DatabaseConnection.cannotConnect(); // Comment this line if you want to connect to the database
         if (!DatabaseConnection.isConnected()) {
             System.out.println(AnsiColors.toRed("App is not connected to the database!"));
         }
