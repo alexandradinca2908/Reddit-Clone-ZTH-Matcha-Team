@@ -79,13 +79,4 @@ public class PostRepo {
         }
 
     }
-
-    public Post findById(int postId) {
-        for (Post post : PostService.posts) {
-            if (post.getPostID() == postId) {
-                return post;
-            }
-        }
-        return null;
-    }
 }

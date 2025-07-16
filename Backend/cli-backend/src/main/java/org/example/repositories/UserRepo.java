@@ -59,19 +59,6 @@ public class UserRepo {
         }
     }
 
-    public User findByUsername(String username) {
-        if (username == null || username.isEmpty()) {
-            return null;
-        }
-
-        for (User user : UserService.users) {
-            if (username.equals(user.getUsername())) {
-                return user;
-            }
-        }
-        return null;
-    }
-
     public void deleteUser(String username) {
         if (!DatabaseConnection.isConnected()) {
             return;

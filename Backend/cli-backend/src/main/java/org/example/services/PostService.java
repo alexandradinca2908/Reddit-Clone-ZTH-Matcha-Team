@@ -71,8 +71,17 @@ public class PostService {
         return postID;
     }
 
-    public Post getPost(int postID) {
-        return postRepo.findById(postID);
+    public static Post getPost(int postID) {
+        return findById(postID);
+    }
+
+    public static Post findById(int postId) {
+        for (Post post : PostService.posts) {
+            if (post.getPostID() == postId) {
+                return post;
+            }
+        }
+        return null;
     }
 
 }

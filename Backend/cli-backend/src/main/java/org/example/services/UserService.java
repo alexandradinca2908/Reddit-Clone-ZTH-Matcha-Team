@@ -181,4 +181,17 @@ public class UserService {
             uiService.failed("account deletion failed", user.getUsername());
         }
     }
+
+    public static User findByUsername(String username) {
+        if (username == null || username.isEmpty()) {
+            return null;
+        }
+
+        for (User user : users) {
+            if (username.equals(user.getUsername())) {
+                return user;
+            }
+        }
+        return null;
+    }
 }
