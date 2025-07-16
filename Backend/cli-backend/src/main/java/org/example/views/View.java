@@ -21,7 +21,7 @@ public class View {
         this.viewID = viewID;
     }
 
-    public ArrayList<MenuOption> getMenu() {
+    public HashMap<MenuOption, Availability> getMenu() {
         return menu;
     }
 
