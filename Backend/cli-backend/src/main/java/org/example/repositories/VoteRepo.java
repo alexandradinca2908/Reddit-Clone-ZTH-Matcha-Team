@@ -170,4 +170,36 @@ public class VoteRepo {
         }
     }
 
+    public void updateVotePost(User user, Post post, int voteType) throws SQLException {
+        if (!DatabaseConnection.isConnected()) {
+            return;
+        }
+
+        String sql = "UPDATE post_vote SET vote_type = ? WHERE username = ? AND postID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, voteType);
+            pstmt.setString(2, user.getUsername());
+            pstmt.setInt(3, post.getPostID());
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void updateVoteComment(User user, Comment comment, int voteType) throws SQLException {
+        if (!DatabaseConnection.isConnected()) {
+            return;
+        }
+
+        String sql = "UPDATE comment_vote SET vote_type = ? WHERE username = ? AND postID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, voteType);
+            pstmt.setString(2, user.getUsername());
+            pstmt.setInt(3, comment.getCommentID());
+            pstmt.executeUpdate();
+        }
+    }
+
 }

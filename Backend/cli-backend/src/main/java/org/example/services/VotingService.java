@@ -46,6 +46,13 @@ public class VotingService {
                 } else { // changes from downvote to upvote
                     post.upvote();
                     post.upvote();
+                    try {
+                        voteRepo.updateVotePost(user, post, 1);
+                    } catch (SQLException e) {
+                        Logger.error("Could not update vote post: " + e.getMessage());
+                        System.out.println("Failed to update vote in the database.");
+                        return;
+                    }
                     post.votingUserID.put(user.getUsername(), 1);
                 }
             } else { // new vote
@@ -75,6 +82,14 @@ public class VotingService {
                 } else {
                     post.downvote();
                     post.downvote();
+
+                    try {
+                        voteRepo.updateVotePost(user, post, -1);
+                    } catch (SQLException e) {
+                        Logger.error("Could not update vote post: " + e.getMessage());
+                        System.out.println("Failed to update vote in the database.");
+                        return;
+                    }
                     post.votingUserID.put(user.getUsername(), -1);
                 }
             } else {
@@ -109,6 +124,14 @@ public class VotingService {
                 else {
                     comment.upvote();
                     comment.upvote();
+
+                    try {
+                        voteRepo.updateVoteComment(user, comment, 1);
+                    } catch (SQLException e) {
+                        Logger.error("Could not update vote post: " + e.getMessage());
+                        System.out.println("Failed to update vote in the database.");
+                        return;
+                    }
                     comment.votingUserID.put(user.getUsername(), 1);
                 }
             }
@@ -142,6 +165,14 @@ public class VotingService {
                 else {
                     comment.downvote();
                     comment.downvote();
+
+                    try {
+                        voteRepo.updateVoteComment(user, comment, -1);
+                    } catch (SQLException e) {
+                        Logger.error("Could not update vote post: " + e.getMessage());
+                        System.out.println("Failed to update vote in the database.");
+                        return;
+                    }
                     comment.votingUserID.put(user.getUsername(), -1);
                 }
             }
@@ -178,6 +209,14 @@ public class VotingService {
                 else {
                     reply.upvote();
                     reply.upvote();
+
+                    try {
+                        voteRepo.updateVoteComment(user, reply, 1);
+                    } catch (SQLException e) {
+                        Logger.error("Could not update vote post: " + e.getMessage());
+                        System.out.println("Failed to update vote in the database.");
+                        return;
+                    }
                     reply.votingUserID.put(user.getUsername(), 1);
                 }
             }
@@ -211,6 +250,14 @@ public class VotingService {
                 else {
                     reply.downvote();
                     reply.downvote();
+
+                    try {
+                        voteRepo.updateVoteComment(user, reply, -1);
+                    } catch (SQLException e) {
+                        Logger.error("Could not update vote post: " + e.getMessage());
+                        System.out.println("Failed to update vote in the database.");
+                        return;
+                    }
                     reply.votingUserID.put(user.getUsername(), -1);
                 }
             }
