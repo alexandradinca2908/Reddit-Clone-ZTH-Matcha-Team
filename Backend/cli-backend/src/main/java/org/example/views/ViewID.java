@@ -5,7 +5,5 @@ public enum ViewID {
     ON_FEED,
     ON_POST,
     ON_COMMENT,
-    ON_REPLY,
-    LOGOUT,
-    QUIT
+    ON_REPLY
 }
