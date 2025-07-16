@@ -13,7 +13,7 @@ public class Post extends Likeable {
     private String title;
     private String body;
     private int voteCount;
-    public HashMap<Integer, Integer> votingUserID; //K = userID , V = -1/+1 -> downvote/upvote
+    public HashMap<String, Integer> votingUserID; //K = userID , V = -1/+1 -> downvote/upvote
 
 
     public Post(String title, String body, String username) {

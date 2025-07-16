@@ -1,6 +1,5 @@
 package org.example.repositories;
 
-import jdk.jshell.spi.ExecutionControl;
 import org.example.dbconnection.DatabaseConnection;
 import org.example.models.Comment;
 import org.example.models.Post;
@@ -11,12 +10,8 @@ import org.example.services.UserService;
 
 import java.sql.*;
 
-import static org.example.services.PostService.postRepo;
-
 public class CommentRepo {
     private static CommentRepo instance;
-
-    private CommentRepo() {}
 
     public static CommentRepo getInstance() {
         if (instance == null) {

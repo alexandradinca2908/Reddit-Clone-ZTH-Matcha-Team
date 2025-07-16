@@ -1,8 +1,6 @@
 package org.example.models;
 
 public class User {
-    int userID;
-    static int userCounter = 0;
     String userName;
     String email;
     String password;
@@ -11,15 +9,10 @@ public class User {
         this.userName = userName;
         this.email = email;
         this.password = password;
-        this.userID = userCounter++;
     }
 
     public String getUsername() {
         return userName;
-    }
-
-    public int getUserID() {
-        return userID;
     }
 
     public String getEmail() {
@@ -32,10 +25,6 @@ public class User {
 
     public void setUsername(String userName) {
         this.userName = userName;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     public void setEmail(String email) {

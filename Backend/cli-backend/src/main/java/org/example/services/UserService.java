@@ -114,7 +114,7 @@ public class UserService {
         uiService.pleaseEnter("email");
         String email = sc.nextLine();
 
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\\.[A-Za-z]+$";
 
         while (email == null || !email.matches(emailRegex)) {
             uiService.invalid("email");

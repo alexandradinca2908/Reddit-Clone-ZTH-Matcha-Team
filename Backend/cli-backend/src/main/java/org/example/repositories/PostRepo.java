@@ -11,8 +11,6 @@ import java.util.ArrayList;
 public class PostRepo {
     private static PostRepo instance;
 
-    private PostRepo() {}
-
     public static PostRepo getInstance() {
         if (instance == null) {
             instance = new PostRepo();

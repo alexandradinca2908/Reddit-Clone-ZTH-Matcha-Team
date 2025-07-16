@@ -12,7 +12,7 @@ public class Comment extends Likeable {
     private final Post parentPost;
     private final Comment parentComment;
     private final User parentUser;
-    public HashMap<Integer, Integer> votingUserID;
+    public HashMap<String, Integer> votingUserID;
     public ArrayList<Comment> replyList;
 
     public Comment(Post parentPost, User parentUser, String commentText) {
