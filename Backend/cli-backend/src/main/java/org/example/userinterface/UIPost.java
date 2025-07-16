@@ -2,6 +2,7 @@ package org.example.userinterface;
 
 import org.example.entities.Comment;
 import org.example.entities.Post;
+import org.example.services.PostService;
 import org.example.textprocessors.AnsiColors;
 import org.example.textprocessors.TextSymbols;
 
@@ -28,10 +29,10 @@ public class UIPost {
     }
 
     public void showFeed() {
-        String headerText = String.format(UIPost.POST_COUNT_HEADER_FORMAT, Post.posts.size());
+        String headerText = String.format(UIPost.POST_COUNT_HEADER_FORMAT, PostService.posts.size());
         System.out.println(AnsiColors.toGreen(headerText));
         System.out.println(TextSymbols.LINE_SEPARATOR);
-        for (Post iter : Post.posts) {
+        for (Post iter : PostService.posts) {
             this.showPost(false, iter);
         }
     }
@@ -43,7 +44,7 @@ public class UIPost {
         }
         UIComment uiComment = UIComment.getInstance();
         System.out.println(AnsiColors.toGreen("ID: " + post.getPostID() + " | USER: " + post.getUsername() + "\n"));
-        System.out.println(AnsiColors.highlight(AnsiColors.addReward(post.getTitle(), post.getVotes())));
+        System.out.println(AnsiColors.addReward(AnsiColors.highlight(post.getTitle()), post.getVotes()));
         if (!isExpanded) {
             if (post.getBody().length() > UIPost.MAX_TEXT_LENGTH) {
                 System.out.println(post.getBody().substring(0, UIPost.MAX_TEXT_LENGTH) + "...\n");

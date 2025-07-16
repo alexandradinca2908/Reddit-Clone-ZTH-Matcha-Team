@@ -38,9 +38,11 @@ public class CommentService extends AnsiColors {
         System.out.println(AnsiColors.toGreen("Please enter a comment: "));
         String commentText = sc.nextLine();
 
-        for (Post iter : Post.posts) {
+        for (Post iter : PostService.posts) {
             if (iter.getPostID() == post.getPostID()) {
-                iter.addComment(user, commentText);
+                Comment comment = new Comment(iter, user, commentText);
+                iter.getCommentList().add(comment);
+                commentRepo.savePostComment(comment);
                 System.out.println(AnsiColors.toGreen("Comment added successfully."));
                 return;
             }
@@ -53,7 +55,7 @@ public class CommentService extends AnsiColors {
         System.out.println(AnsiColors.toGreen("Please enter a reply: "));
         String replyText = sc.nextLine();
         Logger.fatal("Adding reply!");
-        for (Comment comm : post.commentList) {
+        for (Comment comm : post.getCommentList()) {
             if (comm.getCommentID() == comment.getCommentID()) {
                 Comment reply = new Comment(comm, user, replyText);
                 comm.replyList.add(reply);
@@ -77,7 +79,7 @@ public class CommentService extends AnsiColors {
             }
         }
 
-        for (Comment comm: post.commentList) {
+        for (Comment comm: post.getCommentList()) {
             if (comm.getCommentID() == cid) {
                 return comm;
             }

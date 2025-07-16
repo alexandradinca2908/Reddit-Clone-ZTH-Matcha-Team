@@ -9,12 +9,14 @@ import org.example.entities.Post;
 import org.example.userinterface.UIPost;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
 public class PostService {
     private static PostService instance;
     public static final PostRepo postRepo = PostRepo.getInstance();
+    public static ArrayList<Post> posts = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
 
     private PostService() {}
@@ -24,7 +26,7 @@ public class PostService {
             instance = new PostService();
 
             try {
-                postRepo.load(Post.posts);
+                postRepo.load(posts);
             } catch (SQLException e) {
                 Logger.error("Failed to load posts from the database: " + e.getMessage());
                 DatabaseConnection.cannotConnect();
@@ -35,7 +37,7 @@ public class PostService {
 
     public void createPost(String title, String body, String username) {
         Post post = new Post(title, body, username);
-        Post.posts.add(post);
+        posts.add(post);
 
         // it handles the case where the post is not saved to the database
         postRepo.save(post);

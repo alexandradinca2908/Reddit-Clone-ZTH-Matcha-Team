@@ -3,6 +3,7 @@ package org.example.repositories;
 import org.example.dbconnection.DatabaseConnection;
 import org.example.entities.Post;
 import org.example.loggerobjects.Logger;
+import org.example.services.PostService;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class PostRepo {
     }
 
     public Post findById(int postId) {
-        for (Post post : Post.posts) {
+        for (Post post : PostService.posts) {
             if (post.getPostID() == postId) {
                 return post;
             }
