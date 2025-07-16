@@ -56,6 +56,7 @@ public class CommentService extends AnsiColors {
             String replyText = sc.nextLine();
             Logger.fatal("Adding reply!");
             comment.addReply(replyText, user);
+            // TO DO - add exception for illegal input
     }
 
     public Comment selectComment(Post post) {
