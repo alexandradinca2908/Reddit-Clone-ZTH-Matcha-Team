@@ -22,8 +22,8 @@ public class ActionState {
     private Post post;
     private Comment comment;
     private Comment commentReply;
-    private UIPost UIPost = new UIPost();
-    private UIComment UIComment = new UIComment();
+    private final UIPost UIPost = new UIPost();
+    private final UIComment UIComment = new UIComment();
 
     private ActionState() {
         this.isLoggedIn = false;
