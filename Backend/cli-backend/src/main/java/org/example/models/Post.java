@@ -4,7 +4,7 @@ import org.example.repositories.CommentRepo;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Post implements Likeable {
+public class Post extends Likeable {
     private static final CommentRepo commentRepo = CommentRepo.getInstance();
     private ArrayList<Comment> commentList;
 

@@ -100,7 +100,7 @@ public class UserService {
         );
 
         while (!password.matches(passwordRegex)) {
-            uiService.invalid("password");
+            uiService.invalid("invalid password");
             uiService.pleaseEnter("password");
             password = sc.nextLine();
         }

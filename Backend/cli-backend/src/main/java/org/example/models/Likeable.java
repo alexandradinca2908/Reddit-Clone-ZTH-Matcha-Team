@@ -1,7 +1,17 @@
 package org.example.models;
 
-public interface Likeable {
-    void upvote();
-    void downvote();
-    int getVotes();
+public abstract class Likeable {
+    protected int voteCount;
+
+    public void upvote() {
+        voteCount++;
+    }
+
+    public void downvote() {
+        voteCount--;
+    }
+
+    public int getVotes() {
+        return voteCount;
+    }
 }

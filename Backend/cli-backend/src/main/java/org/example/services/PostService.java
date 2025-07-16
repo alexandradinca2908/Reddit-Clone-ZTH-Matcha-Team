@@ -75,37 +75,4 @@ public class PostService {
         return postRepo.findById(postID);
     }
 
-    public void votePost(User user, Post post, boolean vote) {
-        if (vote) {
-            if (post.votingUserID.containsKey(user.getUserID())) {
-                if (post.votingUserID.get(user.getUserID()).equals(1)) {
-                    post.downvote();
-                    post.votingUserID.remove(user.getUserID());
-                } else {
-                    post.upvote();
-                    post.upvote();
-                    post.votingUserID.put(user.getUserID(), 1);
-                }
-            } else {
-                post.upvote();
-                post.votingUserID.put(user.getUserID(), 1);
-            }
-        } else {
-            if (post.votingUserID.containsKey(user.getUserID())) {
-                if (post.votingUserID.get(user.getUserID()).equals(-1)) {
-                    post.upvote();
-                    post.votingUserID.remove(user.getUserID());
-                } else {
-                    post.downvote();
-                    post.downvote();
-                    post.votingUserID.put(user.getUserID(), -1);
-                }
-            } else {
-                post.downvote();
-                post.votingUserID.put(user.getUserID(), -1);
-            }
-        }
-    }
-
-
 }
