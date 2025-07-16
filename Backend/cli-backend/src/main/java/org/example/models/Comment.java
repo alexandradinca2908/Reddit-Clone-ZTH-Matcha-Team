@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Comment extends Likeable {
-    private static int commentCounter = 0;
+    private static int commentCounter = 1;
     private int commentID;
     private String commentText;
     private final Post parentPost;

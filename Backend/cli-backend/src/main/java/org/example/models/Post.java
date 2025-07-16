@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public class Post extends Likeable {
     private static final CommentRepo commentRepo = CommentRepo.getInstance();
+    private static int postCounter = 1;
     private ArrayList<Comment> commentList;
-
     private int postID;
     private String username;
     private String title;
@@ -21,6 +21,7 @@ public class Post extends Likeable {
         this.body = body;
         this.voteCount = 0;
         this.username = username;
+        this.postID = postCounter++;
         this.commentList = new ArrayList<>();
         this.votingUserID = new HashMap<>();
     }
