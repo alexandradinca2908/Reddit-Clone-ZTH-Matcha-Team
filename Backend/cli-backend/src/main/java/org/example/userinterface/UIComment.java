@@ -24,14 +24,20 @@ public class UIComment {
         } else {
             System.out.println(AnsiColors.toGreen("\t=== Showing all comments and replies ==="));
             System.out.println(TextSymbols.UPPER_LEFT_CORNER + TextSymbols.LINE_SEPARATOR);
+            String username;
+            if (user == null) {
+                username = "";
+            } else {
+                username = user.getUsername();
+            }
             for (Comment comment : post.getCommentList()) {
-                showComment(user.getUsername(), comment, 0);
+                showComment(username, comment, 0);
             }
         }
 
     }
 
-    private void showComment(String username, Comment comment, int indentLevel) {
+    public void showComment(String username, Comment comment, int indentLevel) {
         String indent = "    ".repeat(indentLevel);
 
         System.out.println(indent + TextSymbols.LEFT_BORDER + AnsiColors.toOrange(String.format(TextSymbols.HEADER,
