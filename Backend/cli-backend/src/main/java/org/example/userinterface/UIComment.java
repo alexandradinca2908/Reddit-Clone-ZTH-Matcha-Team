@@ -34,7 +34,6 @@ public class UIComment {
                 showComment(username, comment, 0);
             }
         }
-
     }
 
     public void showComment(String username, Comment comment, int indentLevel) {

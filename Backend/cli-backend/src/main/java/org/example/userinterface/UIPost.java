@@ -61,7 +61,9 @@ public class UIPost {
     public void showFeed(User user) {
         String headerText = String.format(UIPost.POST_COUNT_HEADER_FORMAT, PostService.posts.size());
         System.out.println(AnsiColors.toGreen(headerText));
-        for (Post iter : PostService.posts) {
+        int postCount = PostService.posts.size();
+        for (int i = postCount - 1; i >= 0; i--) {
+            Post iter = PostService.posts.get(i);
             this.showPost(false, iter, user);
         }
     }
