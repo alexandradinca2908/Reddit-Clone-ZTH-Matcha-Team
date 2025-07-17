@@ -12,8 +12,11 @@ public class DeleteAccountCommand implements IMenuCommand {
         ViewManager viewManager = view.getViewManager();
 
         User user = viewManager.getUser();
-        viewManager.getUserService().userDeleteCLI(user);
-        viewManager.setLoggedIn(false);
+        boolean isDeleted = viewManager.getUserService().userDeleteCLI(user);
+
+        if (isDeleted) {
+            viewManager.setLoggedIn(false);
+        }
 
         return true;
     }

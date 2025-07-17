@@ -162,13 +162,13 @@ public class UserService {
         return false;
     }
 
-    public void userDeleteCLI(User user) {
+    public boolean userDeleteCLI(User user) {
         uiService.areYouSure("delete account");
         String ans = sc.nextLine();
 
         if (!ans.equalsIgnoreCase("y") && !ans.equalsIgnoreCase("yes")) {
             uiService.failed("account deletion cancelled", null);
-            return;
+            return false;
         }
 
         uiService.pleaseEnter("password");
@@ -182,7 +182,10 @@ public class UserService {
 
         } else {
             uiService.failed("account deletion failed", user.getUsername());
+            return false;
         }
+
+        return true;
     }
 
     public static User findByUsername(String username) {
