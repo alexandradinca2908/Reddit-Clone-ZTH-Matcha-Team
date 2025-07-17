@@ -67,6 +67,12 @@ public class UIPost {
     }
 
     public void showPost(boolean isExpanded, Post post, User user) {
+        String username;
+        if (user == null) {
+            username = "";
+        } else {
+            username = user.getUsername();
+        }
         printTopBorder();
         printHeader(post.getPostID(), post.getUsername());
         printSeparator();
@@ -75,7 +81,7 @@ public class UIPost {
         printContentLine(isExpanded, post.getBody());
         printEmptyContentLine();
         printSeparator();
-        printFooter(post.getVotes(), post.getCommentsCounter(), post.getVotingUserID(), user.getUsername());
+        printFooter(post.getVotes(), post.getCommentsCounter(), post.getVotingUserID(), username);
         printBottomBorder(isExpanded);
         if (isExpanded) {
             uiComment.showAllCommentsAndReplies(post, user);
