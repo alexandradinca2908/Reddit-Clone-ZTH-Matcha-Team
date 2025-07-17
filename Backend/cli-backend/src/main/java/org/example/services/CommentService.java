@@ -8,7 +8,6 @@ import org.example.repositories.CommentRepo;
 import org.example.textprocessors.AnsiColors;
 
 import java.sql.SQLException;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class CommentService extends AnsiColors {
@@ -53,24 +52,23 @@ public class CommentService extends AnsiColors {
                 return;
             }
         }
-
         System.out.println(AnsiColors.toRed("Something went wrong while adding a comment!"));
     }
 
     public void addReply(User user, Comment comment) {
         System.out.println(AnsiColors.toGreen("Please enter a reply: "));
-            String replyText = sc.nextLine();
-            Logger.fatal("Adding reply!");
-            Comment commentReply = new Comment(comment, user, replyText);
-            try {
-                commentRepo.saveReply(commentReply);
-            } catch (SQLException e) {
-                Logger.error("Failed to save reply: " + e.getMessage());
-                System.out.println(AnsiColors.toRed("Failed to save reply to the database."));
-                return;
-            }
-            comment.replyList.add(commentReply);
-            // TODO - add exception for illegal input
+        String replyText = sc.nextLine();
+        Logger.info("Adding reply!");
+        Comment commentReply = new Comment(comment, user, replyText);
+        try {
+            commentRepo.saveReply(commentReply);
+        } catch (SQLException e) {
+            Logger.error("Failed to save reply: " + e.getMessage());
+            System.out.println(AnsiColors.toRed("Failed to save reply to the database."));
+            return;
+        }
+        comment.replyList.add(commentReply);
+        // TODO - add exception for illegal input
     }
 
     public Comment selectComment(Post post) {
@@ -90,7 +88,7 @@ public class CommentService extends AnsiColors {
                 return comm;
             }
         }
-        throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + cid + " not found."));
+        throw new IllegalArgumentException(AnsiColors.toRed(String.format("Comment with ID %d not found", cid)));
     }
 
     public Comment selectReply(Comment comment) {

@@ -99,7 +99,7 @@ public class UIPost {
     private static void printBottomBorder(boolean isExpanded) {
         System.out.print("╚");
         for (int i = 0; i < POST_WIDTH - 2; i++) {
-            System.out.print("─");
+            System.out.print("═");
         }
 
         if (isExpanded) {
