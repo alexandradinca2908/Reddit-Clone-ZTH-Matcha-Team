@@ -56,10 +56,9 @@ public class PostService {
 
     public int getPostIDUser() {
         int postID;
-        System.out.println(AnsiColors.toGreen("Please enter PostID: "));
 
         while (true) {
-            System.out.print("Enter a PostID: ");
+            System.out.print(AnsiColors.toGreen("Please enter a PostID: "));
             try {
                 postID = Integer.parseInt(sc.nextLine());
                 break;
