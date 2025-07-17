@@ -66,11 +66,17 @@ public class PostRepo {
         PreparedStatement pstmt = conn.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
 
+
+
         while (rs.next()) {
+            String username = rs.getString("username");
+            if (username == null) {
+                username = "[deleted user]";
+            }
             Post post = new Post(
                     rs.getString("title"),
                     rs.getString("description"),
-                    rs.getString("username")
+                    username
             );
             post.setPostId(rs.getInt("postID"));
             posts.add(post);

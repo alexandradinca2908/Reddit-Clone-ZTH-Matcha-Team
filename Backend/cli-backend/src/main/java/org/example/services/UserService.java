@@ -1,5 +1,6 @@
 package org.example.services;
 import org.example.dbconnection.DatabaseConnection;
+import org.example.models.Post;
 import org.example.models.User;
 import org.example.loggerobjects.Logger;
 import org.example.repositories.UserRepo;
@@ -179,7 +180,11 @@ public class UserService {
             users.remove(user);
             // For every post and comment, you might want to handle deletion logic here
             Logger.info("User " + user.getUsername() + " has been deleted.");
-
+            for (Post post : PostService.posts) {
+                if (post.getUsername().equals(user.getUsername())) {
+                    post.setUsername("[deleted_user]");
+                }
+            }
         } else {
             uiService.failed("account deletion failed", user.getUsername());
             return false;

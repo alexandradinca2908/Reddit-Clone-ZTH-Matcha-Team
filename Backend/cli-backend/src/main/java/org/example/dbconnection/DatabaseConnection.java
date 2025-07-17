@@ -11,9 +11,7 @@ public class DatabaseConnection {
     private static boolean isConnected = true;
 
     public static Connection getConnection() throws SQLException {
-        Connection connection = null;
-        connection = DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
-        return connection;
+        return DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
     }
 
     public static void cannotConnect() {
