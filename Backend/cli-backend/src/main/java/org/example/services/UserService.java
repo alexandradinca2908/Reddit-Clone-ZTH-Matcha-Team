@@ -1,5 +1,6 @@
 package org.example.services;
 import org.example.dbconnection.DatabaseConnection;
+import org.example.models.Comment;
 import org.example.models.Post;
 import org.example.models.User;
 import org.example.loggerobjects.Logger;
@@ -183,6 +184,16 @@ public class UserService {
             for (Post post : PostService.posts) {
                 if (post.getUsername().equals(user.getUsername())) {
                     post.setUsername("[deleted_user]");
+                }
+                for (Comment comment : post.getCommentList()) {
+                    if (comment.getParentPost().getUsername().equals(user.getUsername())) {
+                        comment.getParentPost().setUsername("[deleted_user]");
+                    }
+                    for (Comment reply : comment.getReplyList()) {
+                        if (reply.getParentUser().getUsername().equals(user.getUsername())) {
+                            reply.getParentUser().setUsername("[deleted_user]");
+                        }
+                    }
                 }
             }
         } else {
