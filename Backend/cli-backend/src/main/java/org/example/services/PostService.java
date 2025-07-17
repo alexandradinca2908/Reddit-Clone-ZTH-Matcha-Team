@@ -71,7 +71,13 @@ public class PostService {
     }
 
     public static Post getPost(int postID) {
-        return findById(postID);
+        Post post = findById(postID);
+
+        if (post == null) {
+            throw new IllegalArgumentException(AnsiColors.toRed(String.format("Post with ID %d not found.", postID)));
+        }
+
+        return post;
     }
 
     public static Post findById(int postId) {

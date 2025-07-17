@@ -14,13 +14,18 @@ public class ExpandPostCommand implements IMenuCommand {
         ViewManager viewManager = view.getViewManager();
         User user = view.getViewManager().getUser();
 
-        PostService postService = viewManager.getPostService();
-        Post post = postService.getPost(postService.getPostIDUser());
+        try {
+            PostService postService = viewManager.getPostService();
+            Post post = PostService.getPost(postService.getPostIDUser());
 
-        viewManager.setPost(post);
-        viewManager.getUiPost().showPost(true, post, user);
+            viewManager.setPost(post);
+            viewManager.getUiPost().showPost(true, post, user);
 
-        viewManager.switchToNextView(ViewID.ON_POST);
+            viewManager.switchToNextView(ViewID.ON_POST);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
 
         return true;
     }
