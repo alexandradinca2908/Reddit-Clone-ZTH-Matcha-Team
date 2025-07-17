@@ -40,7 +40,7 @@ public class Main {
                 infoLogger, warningLogger, fatalLogger);
 
         //  Start app
-        System.out.println(AnsiColors.toPurple("Welcome to Reddit!\nPlease choose an option:"));
+        System.out.println(AnsiColors.toPurple("Welcome to Matcha Reddit!\nPlease choose an option:"));
 
         //  Initialize necessary variables for the app
         boolean isActive = true;
