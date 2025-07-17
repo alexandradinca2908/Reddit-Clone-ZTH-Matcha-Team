@@ -14,7 +14,7 @@ public class InputTranslator {
             case "quit" -> MenuOption.QUIT;
             case "create post" -> MenuOption.CREATE_POST;
             case "logout" -> MenuOption.LOGOUT;
-            case "delete_account" -> MenuOption.DELETE_ACCOUNT;
+            case "delete account" -> MenuOption.DELETE_ACCOUNT;
             case "expand post" -> MenuOption.EXPAND_POST;
             case "return to menu" -> MenuOption.RETURN_TO_MENU;
             case "comment" -> MenuOption.COMMENT;

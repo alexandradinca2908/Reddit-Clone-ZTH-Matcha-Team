@@ -17,10 +17,6 @@ public class View {
     private final ViewManager viewManager = ViewManager.getInstance();
     private final UIView uiView = UIView.getInstance();
 
-    protected ViewID getViewID() {
-        return viewID;
-    }
-
     protected void setViewID(ViewID viewID) {
         this.viewID = viewID;
     }
