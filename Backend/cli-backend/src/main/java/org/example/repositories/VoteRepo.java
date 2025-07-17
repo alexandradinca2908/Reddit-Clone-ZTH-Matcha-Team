@@ -191,7 +191,7 @@ public class VoteRepo {
             return;
         }
 
-        String sql = "UPDATE comment_vote SET vote_type = ? WHERE username = ? AND postID = ?";
+        String sql = "UPDATE comment_vote SET vote_type = ? WHERE username = ? AND commentID = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
