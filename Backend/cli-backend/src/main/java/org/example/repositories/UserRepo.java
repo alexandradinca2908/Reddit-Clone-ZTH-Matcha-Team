@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.example.dbconnection.DatabaseConnection;
 import org.example.services.UserService;
@@ -25,14 +26,21 @@ public class UserRepo {
             return;
         }
 
-        String sql = "INSERT INTO profile (username, email, password) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO profile (username, email, password, photo_path) VALUES (?, ?, ?, ?)";
+
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getEmail());
             pstmt.setString(3, user.getPassword());
-            pstmt.executeUpdate();
+            pstmt.setString(4, user.getPhotoPath()); // Can be null
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    user.setUUID((UUID) rs.getObject("profile_id"));
+                }
+            }
         }
     }
 
@@ -40,38 +48,50 @@ public class UserRepo {
         if (!DatabaseConnection.isConnected()) {
             return;
         }
-        String sql = "SELECT username, email, password FROM profile";
+        String sql = """
+            SELECT profile_id, username, email, password, photo_path, is_deleted, created_at
+            FROM profile WHERE is_deleted = FALSE ORDER BY created_at DESC
+        """;
 
-        Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        if (conn == null) {
-            throw new SQLException("Database connection is null.");
-        }
-        ResultSet rs = pstmt.executeQuery();
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
 
-        while (rs.next()) {
-            User user = new User(
-                    rs.getString("username"),
-                    rs.getString("email"),
-                    rs.getString("password")
-            );
-            users.add(user);
+            if (conn == null) {
+                throw new SQLException("Database connection is null.");
+            }
+
+            while (rs.next()) {
+                User user = new User(
+                        (UUID) rs.getObject("profile_id"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("photo_path"),
+                        rs.getBoolean("is_deleted"),
+                        rs.getTimestamp("created_at").toLocalDateTime()
+                );
+                users.add(user);
+            }
         }
     }
 
-    public void deleteUser(String username) {
+    public void deleteUser(UUID profileId) throws SQLException {
         if (!DatabaseConnection.isConnected()) {
             return;
         }
 
-        String sql = "DELETE FROM profile WHERE username = ?";
+        String sql = "UPDATE profile SET is_deleted = TRUE WHERE profile_id = ?";
+
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, username);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            pstmt.setObject(1, profileId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("User not found");
+            }
         }
     }
 }

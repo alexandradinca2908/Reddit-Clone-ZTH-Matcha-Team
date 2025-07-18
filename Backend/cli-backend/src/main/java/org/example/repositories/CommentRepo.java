@@ -31,7 +31,7 @@ public class CommentRepo {
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             pstmt.setString(1, comment.getParentUser().getUsername());
-            pstmt.setInt(2, comment.getParentPost().getPostID());
+            pstmt.setObject(2, comment.getParentPost().getPostID(), java.sql.Types.OTHER);
             pstmt.setString(3, comment.getCommentText());
 
             int affectedRows = pstmt.executeUpdate();

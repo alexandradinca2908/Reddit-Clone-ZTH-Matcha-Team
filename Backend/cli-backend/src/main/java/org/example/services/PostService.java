@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class PostService {
     private static PostService instance;
@@ -39,7 +40,7 @@ public class PostService {
         posts.add(post);
 
         // it handles the case where the post is not saved to the database
-        postRepo.save(post);
+//        postRepo.save(post);
 
         Logger.info("Post created successfully by user: " + username);
     }
@@ -79,7 +80,7 @@ public class PostService {
         return post;
     }
 
-    public static Post findById(int postId) {
+    public static Post findById(UUID postId) {
         for (Post post : PostService.posts) {
             if (post.getPostID() == postId) {
                 return post;
