@@ -56,7 +56,7 @@ public class CommentService extends AnsiColors {
                 return;
             }
         }
-        uiComment.wentWRong("comment");
+        uiComment.wentWrong("comment");
     }
 
     public void addReply(User user, Comment comment) {

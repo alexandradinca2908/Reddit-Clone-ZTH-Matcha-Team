@@ -1,5 +1,5 @@
 package org.example.loggerobjects;
 
-public interface Loggable {
+public interface ILoggable {
     void log(LogLevel level, String message);
 }

@@ -1,0 +1,8 @@
+2025-07-18T12:25:01.243275900 [ERROR] Failed to save comment: ERROR: insert or update on table "comment" violates foreign key constraint "comment_username_fkey"
+  Detail: Key (username)=(mihai) is not present in table "profile".
+2025-07-18T12:26:49.287231900 [ERROR] Failed to save reply: ERROR: insert or update on table "comment" violates foreign key constraint "comment_username_fkey"
+  Detail: Key (username)=(mihai) is not present in table "profile".
+2025-07-18T12:27:04.981598400 [ERROR] Failed to save reply: ERROR: insert or update on table "comment" violates foreign key constraint "comment_username_fkey"
+  Detail: Key (username)=(mihai) is not present in table "profile".
+2025-07-18T12:28:01.123107100 [ERROR] Failed to save reply: ERROR: insert or update on table "comment" violates foreign key constraint "comment_username_fkey"
+  Detail: Key (username)=(mihai) is not present in table "profile".

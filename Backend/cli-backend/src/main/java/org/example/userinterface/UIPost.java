@@ -20,13 +20,16 @@ public class UIPost {
     public static final int MIN_REWARD_VOTES = 3;
     private static final String PROMPT_TITLE = AnsiColors.toGreen("Please enter title: ");
     private static final String PROMPT_DESCRIPTION = AnsiColors.toGreen("Please enter description: ");
-    private static final String ERROR_TITLE_TOO_LONG = AnsiColors.toRed("Title must be at most %d characters long.");
-    private static final String ERROR_TITLE_TOO_SHORT = AnsiColors.toRed("Title must be at least %d characters long.");
+    private static final String ERROR_TITLE_TOO_LONG =
+            AnsiColors.toRed("Title must be at most %d characters long.");
+    private static final String ERROR_TITLE_TOO_SHORT =
+            AnsiColors.toRed("Title must be at least %d characters long.");
     private static final String ERROR_DESCRIPTION_EMPTY = AnsiColors.toRed("Description can not be empty!");
 
     UIComment uiComment = UIComment.getInstance();
 
     public UIPost() {}
+
     public static UIPost getInstance() {
         if (instance == null) {
             instance = new UIPost();
@@ -150,7 +153,6 @@ public class UIPost {
         System.out.println(" ║");
     }
 
-
     private static void printContentLine(boolean isExpanded, String content) {
         if (!isExpanded) {
             int contentLength;
@@ -217,8 +219,4 @@ public class UIPost {
         }
         System.out.println(commentsStr + " ║");
     }
-
-
-
-
 }
