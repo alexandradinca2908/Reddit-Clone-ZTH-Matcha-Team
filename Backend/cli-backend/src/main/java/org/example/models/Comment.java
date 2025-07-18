@@ -57,19 +57,6 @@ public class Comment extends Likeable {
         return replyList;
     }
 
-    public void setCommentText(String commentText) {
-        this.commentText = commentText;
-    }
-
-    public int getVotes() {
-        return voteCount;
-    }
-
-    public void addReply(String commentReplyText, User replyParentUser) {
-        Comment commentReply = new Comment(this, replyParentUser, commentReplyText);
-        this.replyList.add(commentReply);
-    }
-
     public void addReply(Comment reply) {
         this.replyList.add(reply);
     }

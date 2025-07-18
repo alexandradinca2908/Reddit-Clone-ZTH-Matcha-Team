@@ -1,4 +1,5 @@
 package org.example.services;
+
 import org.example.dbconnection.DatabaseConnection;
 import org.example.models.Post;
 import org.example.models.User;
@@ -6,6 +7,7 @@ import org.example.models.Comment;
 import org.example.loggerobjects.Logger;
 import org.example.repositories.CommentRepo;
 import org.example.textprocessors.AnsiColors;
+import org.example.userinterface.UIComment;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -13,10 +15,12 @@ import java.util.Scanner;
 public class CommentService extends AnsiColors {
     private static CommentService instance;
     private static final CommentRepo commentRepo = CommentRepo.getInstance();
+    private static final UIComment uiComment = UIComment.getInstance();
 
     Scanner sc = new Scanner(System.in);
 
-    private CommentService() {}
+    private CommentService() {
+    }
 
     public static CommentService getInstance() {
         if (instance == null) {
@@ -34,7 +38,7 @@ public class CommentService extends AnsiColors {
     }
 
     public void addComment(User user, Post post) {
-        System.out.println(AnsiColors.toGreen("Please enter a comment: "));
+        uiComment.pleaseEnter("comment");
         String commentText = sc.nextLine();
 
         for (Post iter : PostService.posts) {
@@ -48,15 +52,15 @@ public class CommentService extends AnsiColors {
                     System.out.println(AnsiColors.toRed("Failed to save comment to the database."));
                     return;
                 }
-                System.out.println(AnsiColors.toGreen("Comment added successfully."));
+                uiComment.addedSuccessfully("comment");
                 return;
             }
         }
-        System.out.println(AnsiColors.toRed("Something went wrong while adding a comment!"));
+        uiComment.wentWRong("comment");
     }
 
     public void addReply(User user, Comment comment) {
-        System.out.println(AnsiColors.toGreen("Please enter a reply: "));
+        uiComment.pleaseEnter("reply");
         String replyText = sc.nextLine();
         Logger.info("Adding reply!");
         Comment commentReply = new Comment(comment, user, replyText);
@@ -68,6 +72,7 @@ public class CommentService extends AnsiColors {
             return;
         }
         comment.replyList.add(commentReply);
+        uiComment.addedSuccessfully("reply");
         // TODO - add exception for illegal input
     }
 
@@ -83,7 +88,7 @@ public class CommentService extends AnsiColors {
             }
         }
 
-        for (Comment comm: post.getCommentList()) {
+        for (Comment comm : post.getCommentList()) {
             if (comm.getCommentID() == cid) {
                 return comm;
             }
@@ -103,13 +108,13 @@ public class CommentService extends AnsiColors {
             }
         }
 
-            for(Comment reply : comment.replyList) {
-                if(reply.getCommentID() == rid) {
-                    return reply;
-                }
+        for (Comment reply : comment.replyList) {
+            if (reply.getCommentID() == rid) {
+                return reply;
             }
+        }
 
-            throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + rid + " not found."));
+        throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + rid + " not found."));
     }
 
 }
