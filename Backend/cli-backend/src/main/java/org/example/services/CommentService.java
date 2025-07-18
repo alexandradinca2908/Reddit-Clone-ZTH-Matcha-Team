@@ -1,4 +1,5 @@
 package org.example.services;
+
 import org.example.dbconnection.DatabaseConnection;
 import org.example.models.Post;
 import org.example.models.User;
@@ -16,7 +17,8 @@ public class CommentService extends AnsiColors {
 
     Scanner sc = new Scanner(System.in);
 
-    private CommentService() {}
+    private CommentService() {
+    }
 
     public static CommentService getInstance() {
         if (instance == null) {
@@ -83,7 +85,7 @@ public class CommentService extends AnsiColors {
             }
         }
 
-        for (Comment comm: post.getCommentList()) {
+        for (Comment comm : post.getCommentList()) {
             if (comm.getCommentID() == cid) {
                 return comm;
             }
@@ -103,13 +105,13 @@ public class CommentService extends AnsiColors {
             }
         }
 
-            for(Comment reply : comment.replyList) {
-                if(reply.getCommentID() == rid) {
-                    return reply;
-                }
+        for (Comment reply : comment.replyList) {
+            if (reply.getCommentID() == rid) {
+                return reply;
             }
+        }
 
-            throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + rid + " not found."));
+        throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + rid + " not found."));
     }
 
 }
