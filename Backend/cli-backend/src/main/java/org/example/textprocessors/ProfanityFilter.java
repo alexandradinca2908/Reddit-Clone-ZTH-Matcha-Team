@@ -26,7 +26,6 @@ public class ProfanityFilter {
     }
 
     static void initBannedWords() throws FileNotFoundException {
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
         Scanner sc = new Scanner(file);
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
