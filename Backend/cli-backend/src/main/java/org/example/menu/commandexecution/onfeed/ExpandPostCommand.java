@@ -16,7 +16,7 @@ public class ExpandPostCommand implements IMenuCommand {
 
         try {
             PostService postService = viewManager.getPostService();
-            Post post = PostService.getPost(postService.getPostIDUser());
+            Post post = postService.getPost(postService.getPostIDUser());
 
             viewManager.setPost(post);
             viewManager.getUiPost().showPost(true, post, user);

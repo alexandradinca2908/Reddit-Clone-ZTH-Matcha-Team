@@ -69,7 +69,7 @@ public class PostService {
         return postID;
     }
 
-    public static Post getPost(int postID) {
+    public Post getPost(int postID) {
         Post post = findById(postID);
 
         if (post == null) {
@@ -79,7 +79,7 @@ public class PostService {
         return post;
     }
 
-    public static Post findById(int postId) {
+    public Post findById(int postId) {
         for (Post post : PostService.posts) {
             if (post.getPostID() == postId) {
                 return post;

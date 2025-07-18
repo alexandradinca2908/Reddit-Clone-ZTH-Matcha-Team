@@ -108,7 +108,7 @@ public class UserService {
             password = sc.nextLine();
         }
 
-        password = PasswordService.hashPassword(password);
+        password = passwordService.hashPassword(password);
         uiUser.accepted("password", null);
         return password;
     }
@@ -205,7 +205,7 @@ public class UserService {
         return true;
     }
 
-    public static User findByUsername(String username) {
+    public User findByUsername(String username) {
         if (username == null || username.isEmpty()) {
             return null;
         }
