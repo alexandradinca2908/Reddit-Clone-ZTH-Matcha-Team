@@ -1,17 +1,6 @@
 package org.example.loggerobjects;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-/**
- * LogManager handles all loggers; comes by default with MainLogger
- *
- * How to use main logger:
- *      Logger mainLogger = LogManager.getInstance().getLogger("MainLogger");
- *      mainLogger.log(LogLevel, message");
- *
- * You can add any other type of logger in order to change the date format, output type etc.
- */
 
 public class LogManager {
     public static LogManager logManager;

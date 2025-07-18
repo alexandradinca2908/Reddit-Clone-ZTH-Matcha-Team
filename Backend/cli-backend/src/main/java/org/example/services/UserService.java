@@ -72,6 +72,7 @@ public class UserService {
                 if (user.getUsername().equals(username) &&
                         passwordService.checkPassword(password, user.getPassword())) {
                     uiService.login(true, username);
+                    Logger.info("Login successful for user: " + username);
                     return user;
                 }
             }
@@ -80,10 +81,10 @@ public class UserService {
             String response = sc.nextLine();
 
             if (!response.equalsIgnoreCase("y") && !response.equalsIgnoreCase("yes")) {
-                Logger.verbose("User tries to login again.");
                 break;
             }
 
+            Logger.verbose("User tries to login again.");
         } while (true);
 
         Logger.error("Login didn't work for " + username + ".");
