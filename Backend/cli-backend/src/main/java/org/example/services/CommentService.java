@@ -43,7 +43,7 @@ public class CommentService extends AnsiColors {
 
         for (Post iter : PostService.posts) {
             if (iter.getPostID() == post.getPostID()) {
-                Comment comment = new Comment(iter, user, commentText);
+                Comment comment = new Comment(iter, user.getUsername(), commentText);
                 iter.getCommentList().add(comment);
                 try {
                     commentRepo.savePostComment(comment);
@@ -63,7 +63,7 @@ public class CommentService extends AnsiColors {
         uiComment.pleaseEnter("reply");
         String replyText = sc.nextLine();
         Logger.info("Adding reply!");
-        Comment commentReply = new Comment(comment, user, replyText);
+        Comment commentReply = new Comment(comment, user.getUsername(), replyText);
         try {
             commentRepo.saveReply(commentReply);
         } catch (SQLException e) {
@@ -89,7 +89,7 @@ public class CommentService extends AnsiColors {
         }
 
         for (Comment comm : post.getCommentList()) {
-            if (comm.getCommentID() == cid) {
+            if (comm.getDisplayIndex() == cid) {
                 return comm;
             }
         }
@@ -109,7 +109,7 @@ public class CommentService extends AnsiColors {
         }
 
         for (Comment reply : comment.replyList) {
-            if (reply.getCommentID() == rid) {
+            if (reply.getDisplayIndex() == rid) {
                 return reply;
             }
         }

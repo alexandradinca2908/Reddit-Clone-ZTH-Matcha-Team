@@ -55,19 +55,19 @@ public class PostService {
         System.out.println(AnsiColors.toGreen("Post added successfully!"));
     }
 
-    public int getPostIDUser() {
-        int postID;
-
+    public Post getPostByDisplayIndex() {
+        int displayIndex;
         while (true) {
-            System.out.print(AnsiColors.toGreen("Please enter a PostID: "));
+            System.out.print(AnsiColors.toGreen("Please enter the Post Index: "));
             try {
-                postID = Integer.parseInt(sc.nextLine());
+                displayIndex = Integer.parseInt(sc.nextLine());
                 break;
             } catch (NumberFormatException e) {
                 System.out.println(AnsiColors.toRed("Invalid input. Please enter a valid number."));
             }
         }
-        return postID;
+
+        return posts.get(displayIndex);
     }
 
     public static Post getPost(UUID postID) {

@@ -31,7 +31,7 @@ public class CommentRepo {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setString(1, comment.getParentUser().getUsername());
+            pstmt.setString(1, comment.getUsername());
             pstmt.setObject(2, comment.getParentPost().getPostID(), java.sql.Types.OTHER);
             pstmt.setString(3, comment.getCommentText());
 
@@ -40,7 +40,7 @@ public class CommentRepo {
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        comment.setCommentID(generatedKeys.getInt(1));
+                        comment.setCommentID(generatedKeys.getObject(1, UUID.class));
                     } else {
                         throw new SQLException("Creating comment failed, no ID obtained.");
                     }
@@ -59,8 +59,8 @@ public class CommentRepo {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setString(1, comment.getParentUser().getUsername());
-            pstmt.setInt(2, comment.getParentComment().getCommentID());
+            pstmt.setString(1, comment.getUsername());
+            pstmt.setInt(2, comment.getParentComment().getDisplayIndex());
             pstmt.setString(3, comment.getCommentText());
 
             int affectedRows = pstmt.executeUpdate();
@@ -68,7 +68,7 @@ public class CommentRepo {
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        comment.setCommentID(generatedKeys.getInt(1));
+                        comment.setCommentID(generatedKeys.getObject(1, UUID.class));
                     } else {
                         throw new SQLException("Creating comment failed, no ID obtained.");
                     }
@@ -83,11 +83,11 @@ public class CommentRepo {
         }
 
         String sql = """
-        SELECT c.comment_id, c.parent_post_id, c.parent_comment_id, c.text, pr.username
-        FROM comment c
-        LEFT JOIN profile pr ON c.profile_id = pr.profile_id
-        WHERE c.is_deleted = FALSE
-    """;
+            SELECT c.comment_id, c.parent_post_id, c.parent_comment_id, c.text, pr.username
+            FROM comment c
+            LEFT JOIN profile pr ON c.profile_id = pr.profile_id
+            WHERE c.is_deleted = FALSE
+        """;
 
         try (
                 Connection conn = DatabaseConnection.getConnection();
@@ -101,18 +101,14 @@ public class CommentRepo {
                 String text = rs.getString("text");
 
                 String username = rs.getString("username");
-                User user = UserService.findByUsername(username);
-                if (user == null) {
-                    user = new User("[deleted user]", "", "");
-                }
 
-                Comment comment = new Comment(null, user, text); // Will attach parent later
-                comment.setCommentID(commentId);
+
 
                 if (parentPostId != null) {
                     Post post = PostService.findById(parentPostId);
                     if (post != null) {
-                        comment.setParentPost(post);
+                        Comment comment = new Comment(post, username, text);
+                        comment.setCommentID(commentId);
                         post.getCommentList().add(comment);
                     } else {
                         Logger.warn("Post not found for comment " + commentId);
@@ -120,7 +116,8 @@ public class CommentRepo {
                 } else if (parentCommentId != null) {
                     Comment parentComment = Comment.findById(parentCommentId);
                     if (parentComment != null) {
-                        comment.setParentComment(parentComment);
+                        Comment comment = new Comment(parentComment, username, text);
+                        comment.setCommentID(commentId);
                         parentComment.addReply(comment);
                     } else {
                         Logger.warn("Parent comment not found for reply " + commentId);

@@ -48,7 +48,7 @@ public class UIComment {
         String indent = "    ".repeat(indentLevel);
 
         System.out.println(indent + TextSymbols.LEFT_BORDER + AnsiColors.toOrange(String.format(TextSymbols.HEADER,
-                comment.getCommentID(), comment.getParentUser().getUsername())));
+                comment.getCommentID(), comment.getUsername())));
         System.out.println(indent + TextSymbols.LEFT_BORDER + TextSymbols.addReward(
                 comment.getCommentText(), comment.getVotes()));
 

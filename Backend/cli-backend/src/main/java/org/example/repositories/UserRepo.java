@@ -57,7 +57,7 @@ public class UserRepo {
             return;
         }
 
-        String sql = "INSERT INTO profile (username, email, password, photo_path) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO profile (username, email, password, photo_path) VALUES (?, ?, ?, ?) RETURNING profile_id";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

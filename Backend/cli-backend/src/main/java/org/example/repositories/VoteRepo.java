@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 /*
 
@@ -89,7 +90,7 @@ public class VoteRepo {
 
             while (rs.next()) {
                 String username = rs.getString("username");
-                int commentID = rs.getInt("commentID");
+                UUID commentID = rs.getObject("commentID", UUID.class);
                 int voteType = rs.getInt("vote_type");
 
                 User user = UserService.findByUsername(username);
@@ -124,21 +125,21 @@ public class VoteRepo {
 //        }
 //    }
 
-    public void saveVoteComment(User user, Comment comment, int voteType) throws SQLException {
-        if (!DatabaseConnection.isConnected()) {
-            return;
-        }
-
-        String sql = "INSERT INTO comment_vote (username, commentID, vote_type) VALUES (?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, user.getUsername());
-            pstmt.setInt(2, comment.getCommentID());
-            pstmt.setInt(3, voteType);
-            pstmt.executeUpdate();
-        }
-    }
+//    public void saveVoteComment(User user, Comment comment, int voteType) throws SQLException {
+//        if (!DatabaseConnection.isConnected()) {
+//            return;
+//        }
+//
+//        String sql = "INSERT INTO comment_vote (username, commentID, vote_type) VALUES (?, ?, ?)";
+//        try (Connection conn = DatabaseConnection.getConnection();
+//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//
+//            pstmt.setString(1, user.getUsername());
+//            pstmt.setInt(2, comment.getCommentID());
+//            pstmt.setInt(3, voteType);
+//            pstmt.executeUpdate();
+//        }
+//    }
 
 //    public void deleteVotePost(User user, Post post) throws SQLException {
 //        if (!DatabaseConnection.isConnected()) {
@@ -155,20 +156,20 @@ public class VoteRepo {
 //        }
 //    }
 
-    public void deleteVoteComment(User user, Comment comment) throws SQLException {
-        if (!DatabaseConnection.isConnected()) {
-            return;
-        }
-
-        String sql = "DELETE FROM comment_vote WHERE username = ? AND commentID = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, user.getUsername());
-            pstmt.setInt(2, comment.getCommentID());
-            pstmt.executeUpdate();
-        }
-    }
+//    public void deleteVoteComment(User user, Comment comment) throws SQLException {
+//        if (!DatabaseConnection.isConnected()) {
+//            return;
+//        }
+//
+//        String sql = "DELETE FROM comment_vote WHERE username = ? AND commentID = ?";
+//        try (Connection conn = DatabaseConnection.getConnection();
+//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//
+//            pstmt.setString(1, user.getUsername());
+//            pstmt.setInt(2, comment.getCommentID());
+//            pstmt.executeUpdate();
+//        }
+//    }
 
 //    public void updateVotePost(User user, Post post, int voteType) throws SQLException {
 //        if (!DatabaseConnection.isConnected()) {
@@ -186,20 +187,20 @@ public class VoteRepo {
 //        }
 //    }
 
-    public void updateVoteComment(User user, Comment comment, int voteType) throws SQLException {
-        if (!DatabaseConnection.isConnected()) {
-            return;
-        }
-
-        String sql = "UPDATE comment_vote SET vote_type = ? WHERE username = ? AND commentID = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, voteType);
-            pstmt.setString(2, user.getUsername());
-            pstmt.setInt(3, comment.getCommentID());
-            pstmt.executeUpdate();
-        }
-    }
+//    public void updateVoteComment(User user, Comment comment, int voteType) throws SQLException {
+//        if (!DatabaseConnection.isConnected()) {
+//            return;
+//        }
+//
+//        String sql = "UPDATE comment_vote SET vote_type = ? WHERE username = ? AND commentID = ?";
+//        try (Connection conn = DatabaseConnection.getConnection();
+//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//
+//            pstmt.setInt(1, voteType);
+//            pstmt.setString(2, user.getUsername());
+//            pstmt.setInt(3, comment.getCommentID());
+//            pstmt.executeUpdate();
+//        }
+//    }
 
 }

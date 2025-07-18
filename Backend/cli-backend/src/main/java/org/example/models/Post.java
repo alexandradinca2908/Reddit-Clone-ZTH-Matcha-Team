@@ -9,7 +9,7 @@ import java.util.UUID;
 public class Post extends Likeable {
     private static final PostRepo userRepo = PostRepo.getInstance();
     private static int postCounter = 0;
-    private int displayIndex = ++postCounter;
+    private int displayIndex;
     private ArrayList<Comment> commentList;
     private UUID postID;
     private String username;
@@ -26,6 +26,7 @@ public class Post extends Likeable {
         this.postID = null;
         this.commentList = new ArrayList<>();
         this.votingUserID = new HashMap<>();
+        this.displayIndex = ++postCounter;
     }
 
     @Override
@@ -63,6 +64,15 @@ public class Post extends Likeable {
     public String getUsername() {
         return username;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getDisplayIndex() {
+        return displayIndex;
+    }
+
 
 }
 

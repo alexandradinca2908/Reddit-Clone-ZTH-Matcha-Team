@@ -76,7 +76,7 @@ public class UIPost {
             username = user.getUsername();
         }
         printTopBorder();
-        printHeader(post.getPostID(), post.getUsername());
+        printHeader(post.getDisplayIndex(), post.getUsername());
         printSeparator();
         printTitleLine(post.getTitle(), post.getVotes());
         printSeparator();

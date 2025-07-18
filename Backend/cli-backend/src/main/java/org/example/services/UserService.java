@@ -190,8 +190,8 @@ public class UserService {
                         comment.getParentPost().setUsername("[deleted_user]");
                     }
                     for (Comment reply : comment.getReplyList()) {
-                        if (reply.getParentUser().getUsername().equals(user.getUsername())) {
-                            reply.getParentUser().setUsername("[deleted_user]");
+                        if (reply.getUsername().equals(user.getUsername())) {
+                            reply.setUsername("[deleted_user]");
                         }
                     }
                 }
