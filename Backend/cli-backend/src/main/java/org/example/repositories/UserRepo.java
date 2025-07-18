@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.example.dbconnection.DatabaseConnection;
-import org.example.services.UserService;
 
 public class UserRepo {
 
@@ -19,6 +18,38 @@ public class UserRepo {
             instance = new UserRepo();
         }
         return instance;
+    }
+
+    public void load(ArrayList<User> users) throws SQLException {
+        if (!DatabaseConnection.isConnected()) {
+            return;
+        }
+        String sql = """
+            SELECT profile_id, username, email, password, photo_path, is_deleted, created_at
+            FROM profile WHERE is_deleted = FALSE ORDER BY created_at DESC
+        """;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            if (conn == null) {
+                throw new SQLException("Database connection is null.");
+            }
+
+            while (rs.next()) {
+                User user = new User(
+                        (UUID) rs.getObject("profile_id"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("photo_path"),
+                        rs.getBoolean("is_deleted"),
+                        rs.getTimestamp("created_at").toLocalDateTime()
+                );
+                users.add(user);
+            }
+        }
     }
 
     public void save(User user) throws SQLException {
@@ -44,54 +75,22 @@ public class UserRepo {
         }
     }
 
-    public void load(ArrayList<User> users) throws SQLException {
-        if (!DatabaseConnection.isConnected()) {
-            return;
-        }
-        String sql = """
-            SELECT profile_id, username, email, password, photo_path, is_deleted, created_at
-            FROM profile WHERE is_deleted = FALSE ORDER BY created_at DESC
-        """;
-
-        try (Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery()) {
-
-            if (conn == null) {
-                throw new SQLException("Database connection is null.");
-            }
-
-            while (rs.next()) {
-                User user = new User(
-                        (UUID) rs.getObject("profile_id"),
-                        rs.getString("username"),
-                        rs.getString("email"),
-                        rs.getString("password"),
-                        rs.getString("photo_path"),
-                        rs.getBoolean("is_deleted"),
-                        rs.getTimestamp("created_at").toLocalDateTime()
-                );
-                users.add(user);
-            }
-        }
-    }
-
-    public void deleteUser(UUID profileId) throws SQLException {
-        if (!DatabaseConnection.isConnected()) {
-            return;
-        }
-
-        String sql = "UPDATE profile SET is_deleted = TRUE WHERE profile_id = ?";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setObject(1, profileId);
-
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected == 0) {
-                throw new SQLException("User not found");
-            }
-        }
-    }
+//    public void deleteUser(UUID profileId) throws SQLException {
+//        if (!DatabaseConnection.isConnected()) {
+//            return;
+//        }
+//
+//        String sql = "UPDATE profile SET is_deleted = TRUE WHERE profile_id = ?";
+//
+//        try (Connection conn = DatabaseConnection.getConnection();
+//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//
+//            pstmt.setObject(1, profileId);
+//
+//            int rowsAffected = pstmt.executeUpdate();
+//            if (rowsAffected == 0) {
+//                throw new SQLException("User not found");
+//            }
+//        }
+//    }
 }

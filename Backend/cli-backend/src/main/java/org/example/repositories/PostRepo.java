@@ -3,6 +3,7 @@ package org.example.repositories;
 import org.example.dbconnection.DatabaseConnection;
 import org.example.models.Post;
 import org.example.loggerobjects.Logger;
+import org.example.models.User;
 import org.example.services.PostService;
 
 import java.sql.*;
@@ -17,6 +18,40 @@ public class PostRepo {
             instance = new PostRepo();
         }
         return instance;
+    }
+
+    public void load(ArrayList<Post> posts) throws SQLException {
+        if (!DatabaseConnection.isConnected()) {
+            return;
+        }
+
+        String sql = """
+            SELECT p.post_id, p.title, p.description, pr.username
+            FROM post p
+            LEFT JOIN profile pr ON p.profile_id = pr.profile_id
+            WHERE p.is_deleted = FALSE
+        """;
+
+        try (
+            Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()
+        ) {
+            while (rs.next()) {
+                String username = rs.getString("username");
+                if (username == null) {
+                    username = "[deleted user]";
+                }
+
+                UUID postId = rs.getObject("post_id", java.util.UUID.class);
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+
+                Post post = new Post(title, description, username);
+                post.setPostId(postId); // Make sure Post class uses UUID for postId
+                posts.add(post);
+            }
+        }
     }
 
 //    public void save(Post post) {
@@ -56,37 +91,5 @@ public class PostRepo {
 //
 //    }
 
-    public void load(ArrayList<Post> posts) throws SQLException {
-        if (!DatabaseConnection.isConnected()) {
-            return;
-        }
 
-        String sql = """
-           SELECT p.post_id, p.title, p.description, pr.username
-           FROM post p
-           LEFT JOIN profile pr ON p.profile_id = pr.profile_id
-           WHERE p.is_deleted = FALSE
-        """;
-        try (
-                Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                ResultSet rs = pstmt.executeQuery()
-        ) {
-            while (rs.next()) {
-                String username = rs.getString("username");
-                if (username == null) {
-                    username = "[deleted user]";
-                }
-
-                UUID postId = rs.getObject("post_id", java.util.UUID.class);
-                String title = rs.getString("title");
-                String description = rs.getString("description");
-
-                Post post = new Post(title, description, username);
-                post.setPostId(postId); // Make sure Post class uses UUID for postId
-                posts.add(post);
-            }
-        }
-
-    }
 }

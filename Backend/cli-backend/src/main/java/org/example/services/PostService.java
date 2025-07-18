@@ -70,7 +70,7 @@ public class PostService {
         return postID;
     }
 
-    public static Post getPost(int postID) {
+    public static Post getPost(UUID postID) {
         Post post = findById(postID);
 
         if (post == null) {

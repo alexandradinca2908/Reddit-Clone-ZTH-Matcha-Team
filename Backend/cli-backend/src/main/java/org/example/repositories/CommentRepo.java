@@ -9,6 +9,7 @@ import org.example.services.PostService;
 import org.example.services.UserService;
 
 import java.sql.*;
+import java.util.UUID;
 
 public class CommentRepo {
     private static CommentRepo instance;
@@ -80,51 +81,55 @@ public class CommentRepo {
         if (!DatabaseConnection.isConnected()) {
             return;
         }
-        String sql = "SELECT commentID, username, parent_postID, parent_commentID, text FROM comment";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+        String sql = """
+        SELECT c.comment_id, c.parent_post_id, c.parent_comment_id, c.text, pr.username
+        FROM comment c
+        LEFT JOIN profile pr ON c.profile_id = pr.profile_id
+        WHERE c.is_deleted = FALSE
+    """;
 
+        try (
+                Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                ResultSet rs = pstmt.executeQuery()
+        ) {
             while (rs.next()) {
-                int commentId = rs.getInt("commentID");
-                int parent_postId = rs.getInt("parent_postID");
-                if (rs.wasNull()) {
-                    parent_postId = -1;
-                }
-                int parent_commentId = rs.getInt("parent_commentID");
-                if (rs.wasNull()) {
-                    parent_commentId = -1;
-                }
-                String username = rs.getString("username");
+                UUID commentId = rs.getObject("comment_id", UUID.class);
+                UUID parentPostId = rs.getObject("parent_post_id", UUID.class);
+                UUID parentCommentId = rs.getObject("parent_comment_id", UUID.class);
                 String text = rs.getString("text");
 
-                User parentUser = UserService.findByUsername(username);
-                if (parentUser == null) {
-                    parentUser = new User("[deleted user]", "", "");
+                String username = rs.getString("username");
+                User user = UserService.findByUsername(username);
+                if (user == null) {
+                    user = new User("[deleted user]", "", "");
                 }
 
-                if (parent_postId != -1) {
-                    Post parentPost = PostService.findById(parent_postId);
+                Comment comment = new Comment(null, user, text); // Will attach parent later
+                comment.setCommentID(commentId);
 
-                    Comment comment = new Comment(parentPost, parentUser, text);
-                    comment.setCommentID(commentId);
-
-                    parentPost.getCommentList().add(comment);
-                }
-                else if (commentId != -1) {
-                    Comment parentComment = Comment.findById(parent_commentId);
-                    Comment reply = new Comment(parentComment, parentUser, text);
-
-                    reply.setCommentID(commentId);
-                    parentComment.addReply(reply);
-                }
-                else {
-                    Logger.warn("Warning: Could not load comment " + commentId +
-                            " because its parent post or user could not be found.");
-                    throw new UnsupportedOperationException("Implement loading comments wihout parentUser");
+                if (parentPostId != null) {
+                    Post post = PostService.findById(parentPostId);
+                    if (post != null) {
+                        comment.setParentPost(post);
+                        post.getCommentList().add(comment);
+                    } else {
+                        Logger.warn("Post not found for comment " + commentId);
+                    }
+                } else if (parentCommentId != null) {
+                    Comment parentComment = Comment.findById(parentCommentId);
+                    if (parentComment != null) {
+                        comment.setParentComment(parentComment);
+                        parentComment.addReply(comment);
+                    } else {
+                        Logger.warn("Parent comment not found for reply " + commentId);
+                    }
+                } else {
+                    Logger.warn("Orphan comment found (no parent): " + commentId);
                 }
             }
         }
     }
+
 }
