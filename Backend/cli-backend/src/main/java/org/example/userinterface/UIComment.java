@@ -13,11 +13,10 @@ public class UIComment {
     public static final String PLEASE_ENTER_REPLY = "Please enter your reply:";
     public static final String COMMENT_ADDED_SUCCESSFULLY = "Comment added Successfully!";
     public static final String REPLY_ADDED_SUCCESSFULLY = "Reply added Successfully!";
-    public static final String CANT_ADD_COMMENT = "Something went wrong while adding yout comment!";
-    public static final String CANT_ADD_REPLY = "Something went wrong while adding yout reply!";
+    public static final String CANT_ADD_COMMENT = "Something went wrong while adding your comment!";
+    public static final String CANT_ADD_REPLY = "Something went wrong while adding your reply!";
 
-    public UIComment() {
-    }
+    public UIComment() {}
 
     public static UIComment getInstance() {
         if (instance == null) {
@@ -39,7 +38,7 @@ public class UIComment {
                 username = user.getUsername();
             }
             for (Comment comment : post.getCommentList()) {
-                showComment(username, comment, 0);
+                showComment(username, comment, COMMENT_INDENT);
             }
         }
     }
@@ -87,7 +86,7 @@ public class UIComment {
         }
     }
 
-    public void wentWRong(String what) {
+    public void wentWrong(String what) {
         if(what.equalsIgnoreCase("comment")) {
             System.out.println(CANT_ADD_COMMENT);
         } else if (what.equalsIgnoreCase("reply")) {
