@@ -12,7 +12,6 @@ public class SelectCommentCommand implements IMenuCommand {
     @Override
     public boolean execute(View view) {
         ViewManager viewManager = view.getViewManager();
-        Post post = viewManager.getPost();
         User user = viewManager.getUser();
 
         try {
