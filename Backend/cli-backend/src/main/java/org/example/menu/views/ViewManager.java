@@ -28,7 +28,6 @@ public class ViewManager {
     private User user;
     private Post post;
     private Comment comment;
-    private Comment commentReply;
 
     private ViewManager() {
         this.views = new HashMap<>();
@@ -50,7 +49,6 @@ public class ViewManager {
         views.put(ViewID.ON_FEED, ViewSetup.initOnFeed());
         views.put(ViewID.ON_POST, ViewSetup.initOnPost());
         views.put(ViewID.ON_COMMENT, ViewSetup.initOnComment());
-        views.put(ViewID.ON_REPLY, ViewSetup.initOnReply());
 
         ViewSetup.linkViews(views);
     }
@@ -119,14 +117,6 @@ public class ViewManager {
         this.comment = comment;
     }
 
-    public Comment getCommentReply() {
-        return commentReply;
-    }
-
-    public void setCommentReply(Comment commentReply) {
-        this.commentReply = commentReply;
-    }
-
     public void switchToNextView(ViewID viewID) {
         View currentViewObject = views.get(currentViewID);
 
@@ -151,6 +141,5 @@ public class ViewManager {
         user = null;
         post = null;
         comment = null;
-        commentReply = null;
     }
 }

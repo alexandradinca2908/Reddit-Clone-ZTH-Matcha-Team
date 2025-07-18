@@ -9,12 +9,12 @@ import java.util.TreeSet;
 public class ProfanityFilter {
     private static ProfanityFilter instance;
     private static final File file = new File("..\\textprocessors\\en_banned.txt");
-    private static  String remplacementChar;
+    private static  String replacementChar;
     private static TreeSet<String> bannedWords;
 
     public ProfanityFilter() {
         bannedWords = new TreeSet<>();
-        remplacementChar = "*";
+        replacementChar = "*";
 
     }
 
@@ -40,7 +40,7 @@ public class ProfanityFilter {
         for (String word : wordList) {
             if(bannedWords.contains(word)){
                 int wordLength = word.length();
-                cleanText.append(remplacementChar.repeat(wordLength));
+                cleanText.append(replacementChar.repeat(wordLength));
             } else {
                 cleanText.append(word);
             }
