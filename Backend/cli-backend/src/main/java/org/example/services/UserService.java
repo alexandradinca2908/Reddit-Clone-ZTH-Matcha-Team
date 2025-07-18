@@ -17,7 +17,7 @@ public class UserService {
     private static final Scanner sc = new Scanner(System.in);
     private static final PasswordService passwordService = new PasswordService();
     public static final UserRepo userRepo = new UserRepo();
-    private static final UIUser uiService = UIUser.getInstance();
+    private static final UIUser uiUser = UIUser.getInstance();
 
     private UserService() {}
 
@@ -36,7 +36,7 @@ public class UserService {
     }
 
     public User userRegisterCLI() {
-        uiService.welcome("Register");
+        uiUser.welcome("Register");
 
         String username = readUsername();
         String email = readEmail();
@@ -46,44 +46,45 @@ public class UserService {
             User newUser = new User(username, email, password);
             users.add(newUser);
             userRepo.save(newUser);
-            uiService.registration(true, username);
+            uiUser.registration(true, username);
             return newUser;
         }
         catch (SQLException e) {
-            uiService.registration(false, username);
+            uiUser.registration(false, username);
             return null;
         }
     }
 
     public User userLoginCLI() {
-        uiService.welcome("Login");
+        uiUser.welcome("Login");
 
         String username;
         String password;
 
         do {
-            uiService.pleaseEnter("username");
+            uiUser.pleaseEnter("username");
             username = sc.nextLine();
 
-            uiService.pleaseEnter("password");
+            uiUser.pleaseEnter("password");
             password = sc.nextLine();
 
             for (User user : users) {
                 if (user.getUsername().equals(username) &&
                         passwordService.checkPassword(password, user.getPassword())) {
-                    uiService.login(true, username);
+                    uiUser.login(true, username);
+                    Logger.info("Login successful for user: " + username);
                     return user;
                 }
             }
 
-            uiService.login(false, username);
+            uiUser.login(false, username);
             String response = sc.nextLine();
 
             if (!response.equalsIgnoreCase("y") && !response.equalsIgnoreCase("yes")) {
-                Logger.verbose("User tries to login again.");
                 break;
             }
 
+            Logger.verbose("User tries to login again.");
         } while (true);
 
         Logger.error("Login didn't work for " + username + ".");
@@ -91,35 +92,35 @@ public class UserService {
     }
 
     private String readPassword() {
-        uiService.instructions("password");
+        uiUser.instructions("password");
 
-        uiService.pleaseEnter("password");
+        uiUser.pleaseEnter("password");
         String password = sc.nextLine();
 
         String passwordRegex = String.format(
                 "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{%d,}$",
-                uiService.getMinPasswordLength()
+                uiUser.getMinPasswordLength()
         );
 
         while (!password.matches(passwordRegex)) {
-            uiService.invalid("invalid password");
-            uiService.pleaseEnter("password");
+            uiUser.invalid("invalid password");
+            uiUser.pleaseEnter("password");
             password = sc.nextLine();
         }
 
         password = PasswordService.hashPassword(password);
-        uiService.accepted("password", null);
+        uiUser.accepted("password", null);
         return password;
     }
 
     private String readEmail() {
-        uiService.pleaseEnter("email");
+        uiUser.pleaseEnter("email");
         String email = sc.nextLine();
 
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\\.[A-Za-z]+$";
 
         while (email == null || !email.matches(emailRegex)) {
-            uiService.invalid("email");
+            uiUser.invalid("email");
             email = sc.nextLine();
         }
 
@@ -127,19 +128,19 @@ public class UserService {
     }
 
     private String readUsername() {
-        uiService.instructions("username");
+        uiUser.instructions("username");
 
         while (true) {
-            uiService.pleaseEnter("username");
+            uiUser.pleaseEnter("username");
             String username = sc.nextLine();
 
             // Validate username format
             while (!username.matches(String.format(
                     "^[A-Za-z0-9_]{%d,%d}$",
-                    uiService.getMinUsernameLength(),
-                    uiService.getMaxUsernameLength()
+                    uiUser.getMinUsernameLength(),
+                    uiUser.getMaxUsernameLength()
             ))) {
-                uiService.invalid("username");
+                uiUser.invalid("username");
                 username = sc.nextLine();
             }
 
@@ -147,9 +148,9 @@ public class UserService {
 
             // Check if username already exists
             if (userAlreadyExists(username)) {
-                uiService.invalid("username exists");
+                uiUser.invalid("username exists");
             } else {
-                uiService.accepted("username", username);
+                uiUser.accepted("username", username);
                 return username;
             }
         }
@@ -165,18 +166,18 @@ public class UserService {
     }
 
     public boolean userDeleteCLI(User user) {
-        uiService.areYouSure("delete account");
+        uiUser.areYouSure("delete account");
         String ans = sc.nextLine();
 
         if (!ans.equalsIgnoreCase("y") && !ans.equalsIgnoreCase("yes")) {
-            uiService.failed("account deletion cancelled", null);
+            uiUser.failed("account deletion cancelled", null);
             return false;
         }
 
-        uiService.pleaseEnter("password");
+        uiUser.pleaseEnter("password");
         String password = sc.nextLine();
         if (passwordService.checkPassword(password, user.getPassword())) {
-            uiService.accepted("account deletion", user.getUsername());
+            uiUser.accepted("account deletion", user.getUsername());
             userRepo.deleteUser(user.getUsername());
             users.remove(user);
             // For every post and comment, you might want to handle deletion logic here
@@ -197,7 +198,7 @@ public class UserService {
                 }
             }
         } else {
-            uiService.failed("account deletion failed", user.getUsername());
+            uiUser.failed("account deletion failed", user.getUsername());
             return false;
         }
 

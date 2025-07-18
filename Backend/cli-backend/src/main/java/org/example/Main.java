@@ -1,10 +1,7 @@
 package org.example;
 
 import org.example.dbconnection.DatabaseConnection;
-import org.example.loggerobjects.FileLogger;
-import org.example.loggerobjects.LogLevel;
-import org.example.loggerobjects.LogManager;
-import org.example.loggerobjects.Loggable;
+import org.example.loggerobjects.*;
 import org.example.textprocessors.AnsiColors;
 import org.example.menu.MenuOption;
 import org.example.menu.views.View;
@@ -28,16 +25,8 @@ public class Main {
         //  Get menu instance
         ViewManager viewManager = ViewManager.getInstance();
 
-        //  Instantiate loggers
-        Loggable verboseLogger = new FileLogger(LogLevel.VERBOSE, "verbose.log");
-        Loggable debugLogger = new FileLogger(LogLevel.DEBUG, "debug.log");
-        Loggable errorLogger = new FileLogger(LogLevel.ERROR, "errors.log");
-        Loggable infoLogger = new FileLogger(LogLevel.INFO, "info.log");
-        Loggable warningLogger = new FileLogger(LogLevel.WARN,"warnings.log");
-        Loggable fatalLogger = new FileLogger(LogLevel.FATAL, "fatal.log");
-
-        LogManager.getInstance().registerMultipleLoggers(verboseLogger, debugLogger, errorLogger,
-                infoLogger, warningLogger, fatalLogger);
+        //  Initialize logging system
+        LogManager.getInstance().initLoggers();
 
         //  Start app
         System.out.println(AnsiColors.toPurple("Welcome to Matcha Reddit!\nPlease choose an option:"));
