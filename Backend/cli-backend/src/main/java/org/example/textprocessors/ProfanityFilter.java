@@ -8,7 +8,7 @@ import java.util.TreeSet;
 
 public class ProfanityFilter {
     private static ProfanityFilter instance;
-    private static final File file = new File("D:\\Cognyte\\Matcha\\Backend\\cli-backend\\src\\main\\java\\org\\example\\textprocessors\\enbanned.txt");
+    private static final File file = new File("..\\textprocessors\\en_banned.txt");
     private static  String remplacementChar;
     private static TreeSet<String> bannedWords;
 
