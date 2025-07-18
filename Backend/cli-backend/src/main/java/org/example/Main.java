@@ -8,14 +8,6 @@ import org.example.menu.views.View;
 import org.example.menu.views.ViewID;
 import org.example.menu.views.ViewManager;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import static org.example.textprocessors.InputTranslator.translateInput;
