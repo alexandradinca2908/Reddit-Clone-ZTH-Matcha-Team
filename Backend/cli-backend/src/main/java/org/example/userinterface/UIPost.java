@@ -4,14 +4,17 @@ import org.example.models.Post;
 import org.example.models.User;
 import org.example.services.PostService;
 import org.example.textprocessors.AnsiColors;
+import org.example.textprocessors.ProfanityFilter;
 import org.example.textprocessors.TextSymbols;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class UIPost {
     private static UIPost instance;
+    private static final ProfanityFilter profanityFilter = ProfanityFilter.getInstance();
     public static final String POST_COUNT_HEADER_FORMAT = "\t\t=== Showing a total of %d posts ===";
     public static final int MAX_BODY_PREVIEW = 20;
     public static final int MIN_TITLE_LENGTH = 10;
@@ -43,6 +46,12 @@ public class UIPost {
 
         System.out.println(PROMPT_TITLE);
         String title = sc.nextLine();
+        try{
+            title = profanityFilter.filter(title);
+        } catch (FileNotFoundException e) {
+            System.out.println("Config file could not be found.");
+        }
+
         while (title.length() < UIPost.MIN_TITLE_LENGTH || title.length() > UIPost.MAX_TITLE_LENGTH) {
             System.out.printf((ERROR_TITLE_TOO_SHORT) + "%n", UIPost.MIN_TITLE_LENGTH);
             System.out.printf((ERROR_TITLE_TOO_LONG) + "%n", UIPost.MAX_TITLE_LENGTH);
@@ -52,6 +61,11 @@ public class UIPost {
 
         System.out.println(PROMPT_DESCRIPTION);
         String body = sc.nextLine();
+        try{
+            body = profanityFilter.filter(body);
+        } catch (FileNotFoundException e) {
+            System.out.println("Config file could not be found.");
+        }
         while (body.isEmpty()) {
             System.out.println(ERROR_DESCRIPTION_EMPTY);
             body = sc.nextLine();
