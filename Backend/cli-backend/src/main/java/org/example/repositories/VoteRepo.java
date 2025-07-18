@@ -61,8 +61,8 @@ public class VoteRepo {
                 int postID = rs.getInt("postID");
                 int voteType = rs.getInt("vote_type");
 
-                User user = UserService.findByUsername(username);
-                Post post = PostService.findById(postID);
+                User user = UserService.getInstance().findByUsername(username);
+                Post post = PostService.getInstance().findById(postID);
                 if (user != null && post != null) {
                     if (voteType == 1)
                         post.upvote();
@@ -92,7 +92,7 @@ public class VoteRepo {
                 int commentID = rs.getInt("commentID");
                 int voteType = rs.getInt("vote_type");
 
-                User user = UserService.findByUsername(username);
+                User user = UserService.getInstance().findByUsername(username);
                 Comment comment = Comment.findById(commentID);
                 if (user != null && comment != null) {
                     if (voteType == 1)

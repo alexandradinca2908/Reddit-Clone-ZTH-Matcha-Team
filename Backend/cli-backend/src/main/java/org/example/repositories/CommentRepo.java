@@ -99,13 +99,13 @@ public class CommentRepo {
                 String username = rs.getString("username");
                 String text = rs.getString("text");
 
-                User parentUser = UserService.findByUsername(username);
+                User parentUser = UserService.getInstance().findByUsername(username);
                 if (parentUser == null) {
                     parentUser = new User("[deleted user]", "", "");
                 }
 
                 if (parent_postId != -1) {
-                    Post parentPost = PostService.findById(parent_postId);
+                    Post parentPost = PostService.getInstance().findById(parent_postId);
 
                     Comment comment = new Comment(parentPost, parentUser, text);
                     comment.setCommentID(commentId);
