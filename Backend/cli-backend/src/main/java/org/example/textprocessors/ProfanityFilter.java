@@ -8,13 +8,13 @@ import java.util.TreeSet;
 
 public class ProfanityFilter {
     private static ProfanityFilter instance;
-    private static final File file = new File("D:\\Cognyte\\Matcha\\Backend\\cli-backend\\src\\main\\java\\org\\example\\textprocessors\\enbanned.txt");
-    private static  String remplacementChar;
+    private static final File file = new File("en_banned.txt");
+    private static  String replacementChar;
     private static TreeSet<String> bannedWords;
 
     public ProfanityFilter() {
         bannedWords = new TreeSet<>();
-        remplacementChar = "*";
+        replacementChar = "*";
 
     }
 
@@ -26,6 +26,7 @@ public class ProfanityFilter {
     }
 
     static void initBannedWords() throws FileNotFoundException {
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
         Scanner sc = new Scanner(file);
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
@@ -40,7 +41,7 @@ public class ProfanityFilter {
         for (String word : wordList) {
             if(bannedWords.contains(word)){
                 int wordLength = word.length();
-                cleanText.append(remplacementChar.repeat(wordLength));
+                cleanText.append(replacementChar.repeat(wordLength));
             } else {
                 cleanText.append(word);
             }
