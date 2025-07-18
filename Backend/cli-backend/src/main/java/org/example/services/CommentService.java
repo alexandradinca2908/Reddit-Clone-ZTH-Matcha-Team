@@ -7,13 +7,16 @@ import org.example.models.Comment;
 import org.example.loggerobjects.Logger;
 import org.example.repositories.CommentRepo;
 import org.example.textprocessors.AnsiColors;
+import org.example.textprocessors.ProfanityFilter;
 import org.example.userinterface.UIComment;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class CommentService extends AnsiColors {
     private static CommentService instance;
+    private static final ProfanityFilter profanityFilter = ProfanityFilter.getInstance();
     private static final CommentRepo commentRepo = CommentRepo.getInstance();
     private static final UIComment uiComment = UIComment.getInstance();
 
@@ -40,6 +43,12 @@ public class CommentService extends AnsiColors {
     public void addComment(User user, Post post) {
         uiComment.pleaseEnter("comment");
         String commentText = sc.nextLine();
+        try{
+            commentText = profanityFilter.filter(commentText);
+        } catch (FileNotFoundException e) {
+            System.out.println("Config file could not be found.");
+        }
+
 
         for (Post iter : PostService.posts) {
             if (iter.getPostID() == post.getPostID()) {
@@ -62,6 +71,11 @@ public class CommentService extends AnsiColors {
     public void addReply(User user, Comment comment) {
         uiComment.pleaseEnter("reply");
         String replyText = sc.nextLine();
+        try{
+            replyText = profanityFilter.filter(replyText);
+        } catch (FileNotFoundException e) {
+            System.out.println("Config file could not be found.");
+        }
         Logger.info("Adding reply!");
         Comment commentReply = new Comment(comment, user, replyText);
         try {
