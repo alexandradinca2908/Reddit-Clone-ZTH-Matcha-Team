@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class LogManager {
     public static LogManager logManager;
-    private ArrayList<Loggable> loggers;
+    private ArrayList<ILoggable> loggers;
     private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final LoggerType DEFAULT_LOGGER_TYPE = LoggerType.FILE;
     private static final String DEFAULT_FILEPATH = "logging.log";
@@ -51,28 +51,28 @@ public class LogManager {
         }
 
         //  Instantiate loggers
-        Loggable verboseLogger = new FileLogger(LogLevel.VERBOSE, timestamp + "\\verbose.log");
-        Loggable debugLogger = new FileLogger(LogLevel.DEBUG, timestamp + "\\debug.log");
-        Loggable infoLogger = new FileLogger(LogLevel.INFO, timestamp + "\\info.log");
-        Loggable warningLogger = new FileLogger(LogLevel.WARN,timestamp + "\\warnings.log");
-        Loggable errorLogger = new FileLogger(LogLevel.ERROR, timestamp + "\\errors.log");
-        Loggable fatalLogger = new FileLogger(LogLevel.FATAL, timestamp + "\\fatal.log");
+        ILoggable verboseLogger = new FileLogger(LogLevel.VERBOSE, timestamp + "\\verbose.log");
+        ILoggable debugLogger = new FileLogger(LogLevel.DEBUG, timestamp + "\\debug.log");
+        ILoggable infoLogger = new FileLogger(LogLevel.INFO, timestamp + "\\info.log");
+        ILoggable warningLogger = new FileLogger(LogLevel.WARN,timestamp + "\\warnings.log");
+        ILoggable errorLogger = new FileLogger(LogLevel.ERROR, timestamp + "\\errors.log");
+        ILoggable fatalLogger = new FileLogger(LogLevel.FATAL, timestamp + "\\fatal.log");
         LogManager.getInstance().registerMultipleLoggers(verboseLogger, debugLogger, errorLogger,
                 infoLogger, warningLogger, fatalLogger);
     }
 
-    public void registerLogger(Loggable logger) {
+    public void registerLogger(ILoggable logger) {
         loggers.add(logger);
     }
 
-    public void registerMultipleLoggers(Loggable... loggers) {
-        for (Loggable logger : loggers) {
+    public void registerMultipleLoggers(ILoggable... loggers) {
+        for (ILoggable logger : loggers) {
             registerLogger(logger);
         }
     }
 
     public void log(LogLevel level, String message) {
-        for (Loggable logger : loggers) {
+        for (ILoggable logger : loggers) {
             logger.log(level, message);
         }
     }

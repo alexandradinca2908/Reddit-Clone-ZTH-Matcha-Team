@@ -2,8 +2,6 @@ package org.example.loggerobjects;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Logger class used for logging app info
@@ -12,7 +10,7 @@ import java.util.List;
  *      Logger.fatal("message");
  *      etc.
  */
-public class FileLogger implements Loggable {
+public class FileLogger implements ILoggable {
     FileWriter fileWriter;
     LogLevel level;
 

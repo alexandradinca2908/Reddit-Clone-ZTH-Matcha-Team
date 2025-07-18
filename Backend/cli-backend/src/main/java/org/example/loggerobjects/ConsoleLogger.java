@@ -1,6 +1,6 @@
 package org.example.loggerobjects;
 
-public class ConsoleLogger implements Loggable {
+public class ConsoleLogger implements ILoggable {
     LogLevel level;
 
     public ConsoleLogger(LogLevel logLevel) {
@@ -8,9 +8,17 @@ public class ConsoleLogger implements Loggable {
     }
 
     public void log(LogLevel level, String message) {
-        //  Only log the logger's assigned level
-        if (this.level != level) {
-            return;
+        //  Logger can only log the levels that come after it
+        for (LogLevel logLevel : LogLevel.values()) {
+            //  Current logger comes first or is on the same level
+            if (logLevel == this.level) {
+                break;
+            }
+
+            //  Current logger comes after -> can't log
+            if (logLevel == level) {
+                return;
+            }
         }
 
         System.out.println(message);
