@@ -13,10 +13,6 @@ import java.util.ArrayList;
 public class LogManager {
     public static LogManager logManager;
     private ArrayList<ILoggable> loggers;
-    private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    private static final LoggerType DEFAULT_LOGGER_TYPE = LoggerType.FILE;
-    private static final String DEFAULT_FILEPATH = "logging.log";
-
     private LogManager() {
         loggers = new ArrayList<>();
     }
