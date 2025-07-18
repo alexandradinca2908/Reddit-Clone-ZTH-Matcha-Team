@@ -9,16 +9,13 @@ public enum MenuOption {
     LOGOUT,
     DELETE_ACCOUNT,
     EXPAND_POST,
-    RETURN_TO_MENU,
     COMMENT,
     UPVOTE,
     DOWNVOTE,
     SELECT_COMMENT,
-    RETURN_TO_FEED,
+    BACK,
     REPLY,
     SELECT_REPLY,
-    RETURN_TO_POST,
-    RETURN_TO_COMMENT,
     UNKNOWN_COMMAND;
 
     @Override
