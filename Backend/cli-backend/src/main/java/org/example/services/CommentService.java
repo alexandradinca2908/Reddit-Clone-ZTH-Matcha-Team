@@ -19,8 +19,7 @@ public class CommentService extends AnsiColors {
 
     Scanner sc = new Scanner(System.in);
 
-    private CommentService() {
-    }
+    private CommentService() {}
 
     public static CommentService getInstance() {
         if (instance == null) {

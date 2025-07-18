@@ -35,6 +35,8 @@ CREATE TABLE comment_vote (
 public class VoteRepo {
     private static VoteRepo instance;
 
+    private VoteRepo() {}
+
     public static VoteRepo getInstance() {
         if (instance == null) {
             instance = new VoteRepo();

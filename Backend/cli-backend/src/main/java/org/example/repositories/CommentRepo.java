@@ -14,6 +14,8 @@ import java.util.UUID;
 public class CommentRepo {
     private static CommentRepo instance;
 
+    private CommentRepo() {}
+
     public static CommentRepo getInstance() {
         if (instance == null) {
             instance = new CommentRepo();

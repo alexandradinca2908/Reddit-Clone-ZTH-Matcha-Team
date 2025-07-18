@@ -1,6 +1,7 @@
 package org.example.models;
 import org.example.repositories.CommentRepo;
 import org.example.repositories.PostRepo;
+import org.example.services.UserService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,21 +13,30 @@ public class Post extends Likeable {
     private int displayIndex;
     private ArrayList<Comment> commentList;
     private UUID postID;
-    private String username;
+    private User parentUser;
     private String title;
     private String body;
     private int voteCount;
     private HashMap<String, Integer> votingUserID; //K = userID , V = -1/+1 -> downvote/upvote
 
-    public Post(String title, String body, String username) {
-        this.title = title;
-        this.body = body;
-        this.voteCount = 0;
-        this.username = username;
-        this.postID = null;
+    {
+        displayIndex = ++postCounter;
         this.commentList = new ArrayList<>();
         this.votingUserID = new HashMap<>();
-        this.displayIndex = ++postCounter;
+        this.postID = null;
+        this.voteCount = 0;
+    }
+
+    public Post(String title, String body, User parentUser) {
+        this.title = title;
+        this.body = body;
+        this.parentUser = parentUser;
+    }
+
+    public Post(String title, String body, UUID userID) {
+        this.title = title;
+        this.body = body;
+        this.parentUser = UserService.getInstance().findById(userID);
     }
 
     @Override
@@ -62,17 +72,12 @@ public class Post extends Likeable {
     }
 
     public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+        return parentUser.getUsername();
     }
 
     public int getDisplayIndex() {
         return displayIndex;
     }
-
 
 }
 

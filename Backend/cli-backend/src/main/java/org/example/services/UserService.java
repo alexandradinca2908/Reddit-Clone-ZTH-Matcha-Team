@@ -8,15 +8,14 @@ import org.example.repositories.UserRepo;
 import org.example.userinterface.UIUser;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class UserService {
     private static UserService instance;
-    public static ArrayList<User> users = new ArrayList<>();
+    public static Map<UUID, User> users = new HashMap<>();
     private static final Scanner sc = new Scanner(System.in);
-    private static final PasswordService passwordService = new PasswordService();
-    public static final UserRepo userRepo = new UserRepo();
+    private static final PasswordService passwordService = PasswordService.getInstance();
+    public static final UserRepo userRepo = UserRepo.getInstance();
     private static final UIUser uiService = UIUser.getInstance();
 
     private UserService() {}
@@ -123,6 +122,8 @@ public class UserService {
             email = sc.nextLine();
         }
 
+        // TODO: Validate email uniqueness
+
         return email;
     }
 
@@ -181,21 +182,21 @@ public class UserService {
             users.remove(user);
             // For every post and comment, you might want to handle deletion logic here
             Logger.info("User " + user.getUsername() + " has been deleted.");
-            for (Post post : PostService.posts) {
-                if (post.getUsername().equals(user.getUsername())) {
-                    post.setUsername("[deleted_user]");
-                }
-                for (Comment comment : post.getCommentList()) {
-                    if (comment.getParentPost().getUsername().equals(user.getUsername())) {
-                        comment.getParentPost().setUsername("[deleted_user]");
-                    }
-                    for (Comment reply : comment.getReplyList()) {
-                        if (reply.getUsername().equals(user.getUsername())) {
-                            reply.setUsername("[deleted_user]");
-                        }
-                    }
-                }
-            }
+//            for (Post post : PostService.posts) {
+//                if (post.getUsername().equals(user.getUsername())) {
+//                    post.setUsername("[deleted_user]");
+//                }
+//                for (Comment comment : post.getCommentList()) {
+//                    if (comment.getParentPost().getUsername().equals(user.getUsername())) {
+//                        comment.getParentPost().setUsername("[deleted_user]");
+//                    }
+//                    for (Comment reply : comment.getReplyList()) {
+//                        if (reply.getUsername().equals(user.getUsername())) {
+//                            reply.setUsername("[deleted_user]");
+//                        }
+//                    }
+//                }
+//            }
         } else {
             uiService.failed("account deletion failed", user.getUsername());
             return false;
@@ -204,7 +205,7 @@ public class UserService {
         return true;
     }
 
-    public static User findByUsername(String username) {
+    public User findByUsername(String username) {
         if (username == null || username.isEmpty()) {
             return null;
         }
@@ -214,6 +215,11 @@ public class UserService {
                 return user;
             }
         }
+        return null;
+    }
+
+    public User findById(UUID id) {
+
         return null;
     }
 }

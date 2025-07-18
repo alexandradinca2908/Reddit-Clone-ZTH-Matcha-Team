@@ -73,6 +73,10 @@ public class User {
         isDeleted = deleted;
     }
 
+    public UUID getProfileId() {
+        return profileId;
+    }
+
     public void setUUID(UUID uuid) {
         this.profileId = uuid;
     }

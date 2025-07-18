@@ -19,8 +19,6 @@ public class PostService {
     public static ArrayList<Post> posts = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
 
-    private PostService() {}
-
     public static PostService getInstance() {
         if (instance == null) {
             instance = new PostService();

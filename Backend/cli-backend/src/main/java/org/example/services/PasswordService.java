@@ -3,6 +3,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class PasswordService {
+    private static PasswordService instance;
+
+    private PasswordService() {}
+
+    public static PasswordService getInstance() {
+        if (instance == null) {
+            instance = new PasswordService();
+        }
+        return instance;
+    }
+
     public static String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

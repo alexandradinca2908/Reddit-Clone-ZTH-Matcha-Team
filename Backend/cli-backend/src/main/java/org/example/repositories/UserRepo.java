@@ -6,13 +6,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.example.dbconnection.DatabaseConnection;
 
 public class UserRepo {
-
     private static UserRepo instance;
+
+    private UserRepo() {}
+
     public static UserRepo getInstance() {
         if (instance == null) {
             instance = new UserRepo();
@@ -20,7 +24,7 @@ public class UserRepo {
         return instance;
     }
 
-    public void load(ArrayList<User> users) throws SQLException {
+    public void load(Map<UUID, User> users) throws SQLException {
         if (!DatabaseConnection.isConnected()) {
             return;
         }
@@ -47,7 +51,7 @@ public class UserRepo {
                         rs.getBoolean("is_deleted"),
                         rs.getTimestamp("created_at").toLocalDateTime()
                 );
-                users.add(user);
+                users.put(user.getProfileId(), user);
             }
         }
     }
