@@ -33,36 +33,8 @@ public class Main {
         //  Get menu instance
         ViewManager viewManager = ViewManager.getInstance();
 
-        //  Create logging directory (if it doesn't exist already)
-        try {
-            Files.createDirectories(Paths.get("logging"));
-        } catch (IOException e) {
-            System.out.println(AnsiColors.toRed("Failed to create directory!"));
-            return;
-        }
-
-        //  Create current logger directory
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy_HH-mm-ss");
-        String timestamp = ".\\logging\\" + dtf.format(LocalDateTime.now());
-
-        Path logDir = Paths.get(timestamp);
-
-        try {
-            Files.createDirectories(logDir);
-        } catch (IOException e) {
-            System.out.println(AnsiColors.toRed("Failed to create directory!"));
-            return;
-        }
-
-        //  Instantiate loggers
-        Loggable verboseLogger = new FileLogger(LogLevel.VERBOSE, timestamp + "\\verbose.log");
-        Loggable debugLogger = new FileLogger(LogLevel.DEBUG, timestamp + "\\debug.log");
-        Loggable infoLogger = new FileLogger(LogLevel.INFO, timestamp + "\\info.log");
-        Loggable warningLogger = new FileLogger(LogLevel.WARN,timestamp + "\\warnings.log");
-        Loggable errorLogger = new FileLogger(LogLevel.ERROR, timestamp + "\\errors.log");
-        Loggable fatalLogger = new FileLogger(LogLevel.FATAL, timestamp + "\\fatal.log");
-        LogManager.getInstance().registerMultipleLoggers(verboseLogger, debugLogger, errorLogger,
-                infoLogger, warningLogger, fatalLogger);
+        //  Initialize logging system
+        LogManager.getInstance().initLoggers();
 
         //  Start app
         System.out.println(AnsiColors.toPurple("Welcome to Reddit!\nPlease choose an option:"));
