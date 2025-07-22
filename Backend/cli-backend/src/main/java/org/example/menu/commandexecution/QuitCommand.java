@@ -8,10 +8,10 @@ public class QuitCommand implements IMenuCommand {
     public boolean execute(View view) {
         if (view.getViewManager().isLoggedIn()) {
             view.getViewManager().cleanUpData();
-            System.out.println("You have been automatically logged out.");
+            view.getViewManager().getUiView().printLogoutMessageForQuit();
         }
 
-        System.out.println("See you soon!");
+        view.getViewManager().getUiView().printGoodbyeMessage();
 
         return false;
     }

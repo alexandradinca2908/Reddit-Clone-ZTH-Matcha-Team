@@ -19,7 +19,7 @@ public class SelectReplyCommand implements IMenuCommand {
             viewManager.getUiComment().showAllCommentsAndReplies(post, viewManager.getUser());
 
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            view.getViewManager().getUiView().printInvalidInputError(e.getMessage());
         }
 
         return true;

@@ -23,9 +23,8 @@ public class ExpandPostCommand implements IMenuCommand {
 
             viewManager.switchToNextView(ViewID.ON_POST);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            view.getViewManager().getUiView().printInvalidInputError(e.getMessage());
         }
-
 
         return true;
     }

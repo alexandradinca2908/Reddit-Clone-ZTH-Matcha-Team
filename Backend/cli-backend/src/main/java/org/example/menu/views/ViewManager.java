@@ -10,6 +10,7 @@ import org.example.services.UserService;
 import org.example.services.VotingService;
 import org.example.userinterface.UIComment;
 import org.example.userinterface.UIPost;
+import org.example.userinterface.UIView;
 
 import java.util.HashMap;
 
@@ -20,6 +21,7 @@ public class ViewManager {
     private final VotingService votingService = VotingService.getInstance();
     private final UIPost uiPost = new UIPost();
     private final UIComment uiComment = new UIComment();
+    private final UIView uiView = new UIView();
 
     private static ViewManager viewManager;
     private HashMap<ViewID, View> views;
@@ -75,6 +77,10 @@ public class ViewManager {
 
     public UIComment getUiComment() {
         return uiComment;
+    }
+
+    public UIView getUiView() {
+        return uiView;
     }
 
     public View getCurrentViewObject() {
