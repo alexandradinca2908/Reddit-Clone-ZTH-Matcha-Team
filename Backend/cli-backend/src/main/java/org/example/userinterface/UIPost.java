@@ -107,7 +107,7 @@ public class UIPost {
         }
     }
 
-    private static void printTopBorder() {
+    private void printTopBorder() {
         System.out.print("╔");
         for (int i = 0; i < POST_WIDTH - 2; i++) {
             System.out.print("═");
@@ -115,7 +115,7 @@ public class UIPost {
         System.out.println("╗");
     }
 
-    private static void printBottomBorder(boolean isExpanded) {
+    private void printBottomBorder(boolean isExpanded) {
         System.out.print("╚");
         for (int i = 0; i < POST_WIDTH - 2; i++) {
             System.out.print("═");
@@ -128,7 +128,7 @@ public class UIPost {
         }
     }
 
-    private static void printSeparator() {
+    private void printSeparator() {
         System.out.print("╠");
         for (int i = 0; i < POST_WIDTH - 2; i++) {
             System.out.print("─");
@@ -136,7 +136,7 @@ public class UIPost {
         System.out.println("╣");
     }
 
-    private static void printHeader(int postId, String user) {
+    private void printHeader(int postId, String user) {
         String postLabel = "ID: " + postId;
         String userLabel = "USER: " + user;
         int totalLength = postLabel.length() + userLabel.length();
@@ -149,7 +149,7 @@ public class UIPost {
         System.out.println(AnsiColors.toGreen(userLabel)+ " ║");
     }
 
-    private static void printEmptyContentLine() {
+    private void printEmptyContentLine() {
         System.out.print("║ ");
         for (int i = 0; i < POST_WIDTH - 3; i++) {
             System.out.print(" ");
@@ -157,7 +157,7 @@ public class UIPost {
         System.out.println("║");
     }
 
-    private static void printTitleLine(String title, int score) {
+    private void printTitleLine(String title, int score) {
         String finalTitle = TextSymbols.addReward(title, score);
         System.out.print("║ " + finalTitle);
         int padding = POST_WIDTH - 4 - finalTitle.replaceAll("\u001B\\[[;\\d]*m", "").length();
@@ -167,7 +167,7 @@ public class UIPost {
         System.out.println(" ║");
     }
 
-    private static void printContentLine(boolean isExpanded, String content) {
+    private void printContentLine(boolean isExpanded, String content) {
         if (!isExpanded) {
             int contentLength;
             if (content.length() > UIPost.MAX_BODY_PREVIEW) {
@@ -211,7 +211,7 @@ public class UIPost {
         }
     }
 
-    private static void printFooter(int score, int comments, HashMap<String, Integer> votingUserID, String username) {
+    private void printFooter(int score, int comments, HashMap<String, Integer> votingUserID, String username) {
         String votes;
         if (votingUserID.containsKey(username)) {
             if (votingUserID.get(username) == 1) {
