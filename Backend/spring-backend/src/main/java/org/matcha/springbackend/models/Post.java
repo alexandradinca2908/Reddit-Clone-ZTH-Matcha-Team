@@ -1,20 +1,17 @@
-package org.example.models;
-import org.example.repositories.CommentRepo;
+package org.matcha.springbackend.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Post extends Likeable {
-    private static final CommentRepo commentRepo = CommentRepo.getInstance();
-    private static int postCounter = 1;
-    private ArrayList<Comment> commentList;
-    private int postID;
-    private String username;
-    private String title;
-    private String body;
-    private int voteCount;
-    private HashMap<String, Integer> votingUserID; //K = userID , V = -1/+1 -> downvote/upvote
-
+    static int postCounter = 1;
+    ArrayList<Comment> commentList;
+    int postID;
+    String username;
+    String title;
+    String body;
+    int voteCount;
+    HashMap<String, Integer> votingUserID;
 
     public Post(String title, String body, String username) {
         this.title = title;
@@ -63,4 +60,3 @@ public class Post extends Likeable {
         this.postID = dbPostID;
     }
 }
-

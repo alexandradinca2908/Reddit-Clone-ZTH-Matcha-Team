@@ -25,7 +25,7 @@ public class View {
         this.viewID = viewID;
     }
 
-    protected LinkedHashMap<MenuOption, Availability> getMenu() {
+    public LinkedHashMap<MenuOption, Availability> getMenu() {
         return menu;
     }
 
