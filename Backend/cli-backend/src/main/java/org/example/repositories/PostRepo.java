@@ -4,12 +4,14 @@ import org.example.dbconnection.DatabaseConnection;
 import org.example.models.Post;
 import org.example.loggerobjects.Logger;
 import org.example.services.PostService;
+import org.example.userinterface.UIView;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class PostRepo {
     private static PostRepo instance;
+    private static UIView uiView = UIView.getInstance();
 
     public static PostRepo getInstance() {
         if (instance == null) {
@@ -49,7 +51,7 @@ public class PostRepo {
             }
         } catch (SQLException e) {
             Logger.error("Failed to save post to the database: " + e.getMessage());
-            System.out.println("\nPlease restart the application");
+            uiView.printRestartAppMessage();
             DatabaseConnection.cannotConnect();
         }
 

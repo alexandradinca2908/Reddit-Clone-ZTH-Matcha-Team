@@ -11,6 +11,7 @@ public class UIView {
     private static final String SIMPLE_LOGOUT = "You have been logged out.";
     private static final String LOGOUT_AFTER_QUIT = "You have been automatically logged out.";
     private static final String GOODBYE_MESSAGE = "See you soon!";
+    private static final String RESTART_APP = "\nPlease restart the application";
 
     public UIView() {
     }
@@ -60,5 +61,9 @@ public class UIView {
 
     public void printInvalidInputError(String message) {
         System.out.println(message);
+    }
+
+    public void printRestartAppMessage() {
+        System.out.println(RESTART_APP);
     }
 }

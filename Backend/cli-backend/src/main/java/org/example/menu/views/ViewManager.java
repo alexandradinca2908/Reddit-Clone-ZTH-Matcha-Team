@@ -19,9 +19,9 @@ public class ViewManager {
     private final PostService postService = PostService.getInstance();
     private final CommentService commentService = CommentService.getInstance();
     private final VotingService votingService = VotingService.getInstance();
-    private final UIPost uiPost = new UIPost();
-    private final UIComment uiComment = new UIComment();
-    private final UIView uiView = new UIView();
+    private final UIPost uiPost = UIPost.getInstance();
+    private final UIComment uiComment = UIComment.getInstance();
+    private final UIView uiView = UIView.getInstance();
 
     private static ViewManager viewManager;
     private HashMap<ViewID, View> views;

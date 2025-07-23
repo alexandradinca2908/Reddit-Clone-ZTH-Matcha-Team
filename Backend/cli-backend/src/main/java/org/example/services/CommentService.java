@@ -46,7 +46,7 @@ public class CommentService extends AnsiColors {
         try{
             commentText = profanityFilter.filter(commentText);
         } catch (FileNotFoundException e) {
-            System.out.println("Config file could not be found.");
+           uiComment.configNotFount();
         }
 
 
@@ -58,7 +58,7 @@ public class CommentService extends AnsiColors {
                     commentRepo.savePostComment(comment);
                 } catch (SQLException e) {
                     Logger.error("Failed to save comment: " + e.getMessage());
-                    System.out.println(AnsiColors.toRed("Failed to save comment to the database."));
+                    uiComment.cantSaveComment();
                     return;
                 }
                 uiComment.addedSuccessfully("comment");
@@ -74,7 +74,7 @@ public class CommentService extends AnsiColors {
         try{
             replyText = profanityFilter.filter(replyText);
         } catch (FileNotFoundException e) {
-            System.out.println("Config file could not be found.");
+            uiComment.configNotFount();
         }
         Logger.info("Adding reply!");
         Comment commentReply = new Comment(comment, user, replyText);
@@ -82,7 +82,7 @@ public class CommentService extends AnsiColors {
             commentRepo.saveReply(commentReply);
         } catch (SQLException e) {
             Logger.error("Failed to save reply: " + e.getMessage());
-            System.out.println(AnsiColors.toRed("Failed to save reply to the database."));
+            uiComment.cantSaveComment();
             return;
         }
         comment.replyList.add(commentReply);
@@ -93,12 +93,12 @@ public class CommentService extends AnsiColors {
     public Comment selectComment(Post post) {
         int cid;
         while (true) {
-            System.out.print("Please enter the CommentID: ");
+            uiComment.pleaseEnter("commentID");
             try {
                 cid = Integer.parseInt(sc.nextLine());
                 break;
             } catch (NumberFormatException e) {
-                System.out.println(AnsiColors.toYellow("Invalid input. Please enter a valid number."));
+                uiComment.invalidInput();
             }
         }
 
@@ -107,18 +107,19 @@ public class CommentService extends AnsiColors {
                 return comm;
             }
         }
+
         throw new IllegalArgumentException(AnsiColors.toRed(String.format("Comment with ID %d not found", cid)));
     }
 
     public Comment selectReply(Comment comment) {
         int rid;
         while (true) {
-            System.out.print("Please enter the ReplyID: ");
+            uiComment.pleaseEnter("replyID");
             try {
                 rid = Integer.parseInt(sc.nextLine());
                 break;
             } catch (NumberFormatException e) {
-                System.out.println(AnsiColors.toYellow("Invalid input. Please enter a valid number."));
+                uiComment.invalidInput();
             }
         }
 
@@ -130,5 +131,4 @@ public class CommentService extends AnsiColors {
 
         throw new IllegalArgumentException(AnsiColors.toRed("Comment with ID " + rid + " not found."));
     }
-
 }

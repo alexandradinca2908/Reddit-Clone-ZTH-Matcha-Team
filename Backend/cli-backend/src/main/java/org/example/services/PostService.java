@@ -1,6 +1,5 @@
 package org.example.services;
 import org.example.dbconnection.DatabaseConnection;
-import org.example.models.User;
 import org.example.loggerobjects.Logger;
 import org.example.repositories.PostRepo;
 import org.example.textprocessors.AnsiColors;
