@@ -8,8 +8,11 @@ import java.util.LinkedHashMap;
 public class UIView {
     private static UIView instance;
     private static final String UNKNOWN_COMMAND = "Unknown command";
+    private static final String SIMPLE_LOGOUT = "You have been logged out.";
+    private static final String LOGOUT_AFTER_QUIT = "You have been automatically logged out.";
+    private static final String GOODBYE_MESSAGE = "See you soon!";
 
-    private UIView() {
+    public UIView() {
     }
 
     public static UIView getInstance() {
@@ -41,5 +44,21 @@ public class UIView {
 
     public void unknownCommand() {
         System.out.println(UNKNOWN_COMMAND);
+    }
+
+    public void printLogoutMessage() {
+        System.out.println(SIMPLE_LOGOUT);
+    }
+
+    public void printLogoutMessageForQuit() {
+        System.out.println(LOGOUT_AFTER_QUIT);
+    }
+
+    public void printGoodbyeMessage() {
+        System.out.println(GOODBYE_MESSAGE);
+    }
+
+    public void printInvalidInputError(String message) {
+        System.out.println(message);
     }
 }

@@ -5,18 +5,22 @@ import org.example.loggerobjects.Logger;
 import org.example.models.Comment;
 import org.example.models.Post;
 import org.example.models.User;
+import org.example.repositories.CommentRepo;
 import org.example.repositories.VoteRepo;
+import org.example.userinterface.UIPost;
+import org.example.userinterface.UIVote;
 
 import java.sql.SQLException;
 
 public class VotingService {
     private static VotingService instance;
     private static final VoteRepo voteRepo = VoteRepo.getInstance();
+    private static final UIVote uiVote = UIVote.getInstance();
 
-    public VotingService() {}
+    private VotingService() {}
 
     public static VotingService getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new VotingService();
 
             try {
@@ -39,7 +43,7 @@ public class VotingService {
                         voteRepo.deleteVotePost(user, post);
                     } catch (SQLException e) {
                         Logger.error("Could not delete vote post: " + e.getMessage());
-                        System.out.println("Failed to delete vote from the database.");
+                        uiVote.printVoteError("delete");
                         return;
                     }
                     post.getVotingUserID().remove(user.getUsername());
@@ -50,7 +54,7 @@ public class VotingService {
                         voteRepo.updateVotePost(user, post, 1);
                     } catch (SQLException e) {
                         Logger.error("Could not update vote post: " + e.getMessage());
-                        System.out.println("Failed to update vote in the database.");
+                        uiVote.printVoteError("update");
                         return;
                     }
                     post.getVotingUserID().put(user.getUsername(), 1);
@@ -61,7 +65,7 @@ public class VotingService {
                     voteRepo.saveVotePost(user, post, 1); // save the vote in the database
                 } catch (SQLException e) {
                     Logger.error("Could not save vote post: " + e.getMessage());
-                    System.out.println("Failed to save vote to the database.");
+                    uiVote.printVoteError("save");
                     return;
                 }
                 post.getVotingUserID().put(user.getUsername(), 1);
@@ -75,7 +79,7 @@ public class VotingService {
                         voteRepo.deleteVotePost(user, post);
                     } catch (SQLException e) {
                         Logger.error("Could not delete vote post: " + e.getMessage());
-                        System.out.println("Failed to delete vote from the database.");
+                        uiVote.printVoteError("delete");
                         return;
                     }
                     post.getVotingUserID().remove(user.getUsername());
@@ -87,7 +91,7 @@ public class VotingService {
                         voteRepo.updateVotePost(user, post, -1);
                     } catch (SQLException e) {
                         Logger.error("Could not update vote post: " + e.getMessage());
-                        System.out.println("Failed to update vote in the database.");
+                        uiVote.printVoteError("update");
                         return;
                     }
                     post.getVotingUserID().put(user.getUsername(), -1);
@@ -98,7 +102,7 @@ public class VotingService {
                     voteRepo.saveVotePost(user, post, -1); // save the vote in the database
                 } catch (SQLException e) {
                     Logger.error("Could not save vote post: " + e.getMessage());
-                    System.out.println("Failed to save vote to the database.");
+                    uiVote.printVoteError("save");
                     return;
                 }
                 post.getVotingUserID().put(user.getUsername(), -1);
@@ -107,21 +111,20 @@ public class VotingService {
     }
 
     public void voteComment(User user, Comment comment, boolean vote) {
-        if(vote) {
-            if(comment.votingUserID.containsKey(user.getUsername())) {
-                if(comment.votingUserID.get(user.getUsername()).equals(1)) {
+        if (vote) {
+            if (comment.votingUserID.containsKey(user.getUsername())) {
+                if (comment.votingUserID.get(user.getUsername()).equals(1)) {
                     comment.downvote();
 
                     try {
                         voteRepo.deleteVoteComment(user, comment); // delete the vote from the database
                     } catch (SQLException e) {
                         Logger.error("Could not delete vote comment: " + e.getMessage());
-                        System.out.println("Failed to delete vote from the database.");
+                        uiVote.printVoteError("delete");
                         return;
                     }
                     comment.votingUserID.remove(user.getUsername());
-                }
-                else {
+                } else {
                     comment.upvote();
                     comment.upvote();
 
@@ -129,40 +132,37 @@ public class VotingService {
                         voteRepo.updateVoteComment(user, comment, 1);
                     } catch (SQLException e) {
                         Logger.error("Could not update vote post: " + e.getMessage());
-                        System.out.println("Failed to update vote in the database.");
+                        uiVote.printVoteError("update");
                         return;
                     }
                     comment.votingUserID.put(user.getUsername(), 1);
                 }
-            }
-            else {
+            } else {
                 comment.upvote();
 
                 try {
                     voteRepo.saveVoteComment(user, comment, 1); // save the vote in the database
                 } catch (SQLException e) {
                     Logger.error("Could not save vote comment: " + e.getMessage());
-                    System.out.println("Failed to save vote to the database.");
+                    uiVote.printVoteError("save");
                     return;
                 }
                 comment.votingUserID.put(user.getUsername(), 1);
             }
-        }
-        else {
-            if(comment.votingUserID.containsKey(user.getUsername())) {
-                if(comment.votingUserID.get(user.getUsername()).equals(-1)) {
+        } else {
+            if (comment.votingUserID.containsKey(user.getUsername())) {
+                if (comment.votingUserID.get(user.getUsername()).equals(-1)) {
                     comment.upvote();
 
                     try {
                         voteRepo.deleteVoteComment(user, comment); // delete the vote from the database
                     } catch (SQLException e) {
                         Logger.error("Could not delete vote comment: " + e.getMessage());
-                        System.out.println("Failed to delete vote from the database.");
+                        uiVote.printVoteError("delete");
                         return;
                     }
                     comment.votingUserID.remove(user.getUsername());
-                }
-                else {
+                } else {
                     comment.downvote();
                     comment.downvote();
 
@@ -170,108 +170,22 @@ public class VotingService {
                         voteRepo.updateVoteComment(user, comment, -1);
                     } catch (SQLException e) {
                         Logger.error("Could not update vote post: " + e.getMessage());
-                        System.out.println("Failed to update vote in the database.");
+                        uiVote.printVoteError("update");
                         return;
                     }
                     comment.votingUserID.put(user.getUsername(), -1);
                 }
-            }
-            else {
+            } else {
                 comment.downvote();
 
                 try {
                     voteRepo.saveVoteComment(user, comment, -1); // save the vote in the database
                 } catch (SQLException e) {
                     Logger.error("Could not save vote comment: " + e.getMessage());
-                    System.out.println("Failed to save vote to the database.");
+                    uiVote.printVoteError("save");
                     return;
                 }
                 comment.votingUserID.put(user.getUsername(), -1);
-            }
-        }
-    }
-
-    public void voteReply(User user, Comment reply, boolean vote) {
-        if(vote) {
-            if(reply.votingUserID.containsKey(user.getUsername())) {
-                if(reply.votingUserID.get(user.getUsername()).equals(1)) {
-                    reply.downvote();
-
-                    try {
-                        voteRepo.deleteVoteComment(user, reply); // delete the vote from the database
-                    } catch (SQLException e) {
-                        Logger.error("Could not delete vote reply: " + e.getMessage());
-                        System.out.println("Failed to delete vote from the database.");
-                        return;
-                    }
-                    reply.votingUserID.remove(user.getUsername());
-                }
-                else {
-                    reply.upvote();
-                    reply.upvote();
-
-                    try {
-                        voteRepo.updateVoteComment(user, reply, 1);
-                    } catch (SQLException e) {
-                        Logger.error("Could not update vote post: " + e.getMessage());
-                        System.out.println("Failed to update vote in the database.");
-                        return;
-                    }
-                    reply.votingUserID.put(user.getUsername(), 1);
-                }
-            }
-            else {
-                reply.upvote();
-
-                try {
-                    voteRepo.saveVoteComment(user, reply, 1); // save the vote in the database
-                } catch (SQLException e) {
-                    Logger.error("Could not save vote reply: " + e.getMessage());
-                    System.out.println("Failed to save vote to the database.");
-                    return;
-                }
-                reply.votingUserID.put(user.getUsername(), 1);
-            }
-        }
-        else {
-            if(reply.votingUserID.containsKey(user.getUsername())) {
-                if(reply.votingUserID.get(user.getUsername()).equals(-1)) {
-                    reply.upvote();
-
-                    try {
-                        voteRepo.deleteVoteComment(user, reply); // delete the vote from the database
-                    } catch (SQLException e) {
-                        Logger.error("Could not delete vote reply: " + e.getMessage());
-                        System.out.println("Failed to delete vote from the database.");
-                        return;
-                    }
-                    reply.votingUserID.remove(user.getUsername());
-                }
-                else {
-                    reply.downvote();
-                    reply.downvote();
-
-                    try {
-                        voteRepo.updateVoteComment(user, reply, -1);
-                    } catch (SQLException e) {
-                        Logger.error("Could not update vote post: " + e.getMessage());
-                        System.out.println("Failed to update vote in the database.");
-                        return;
-                    }
-                    reply.votingUserID.put(user.getUsername(), -1);
-                }
-            }
-            else {
-                reply.downvote();
-
-                try {
-                    voteRepo.saveVoteComment(user, reply, -1); // save the vote in the database
-                } catch (SQLException e) {
-                    Logger.error("Could not save vote reply: " + e.getMessage());
-                    System.out.println("Failed to save vote to the database.");
-                    return;
-                }
-                reply.votingUserID.put(user.getUsername(), -1);
             }
         }
     }

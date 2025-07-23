@@ -21,7 +21,7 @@ public class SelectCommentCommand implements IMenuCommand {
 
             viewManager.switchToNextView(ViewID.ON_COMMENT);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            view.getViewManager().getUiView().printInvalidInputError(e.getMessage());
         }
 
         return true;
