@@ -1,0 +1,12 @@
+### ADD A USER
+POST http://localhost:8080/users/add
+Content-Type: application/json
+
+{
+  "username": "alexandra",
+  "email": "alexandradi2003@yahoo.com",
+  "password": "abcD*2020"
+}
+
+### GET USER BY USERNAME
+GET http://localhost:8080/users/alexandra

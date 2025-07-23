@@ -3,7 +3,7 @@ package org.matcha.springbackend.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Comment() extends Likeable {
+public class Comment extends Likeable {
     private static int commentCounter = 1;
     private int commentID;
     private String commentText;
