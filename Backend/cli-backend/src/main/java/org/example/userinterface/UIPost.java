@@ -28,6 +28,9 @@ public class UIPost {
     private static final String ERROR_TITLE_TOO_SHORT =
             AnsiColors.toRed("Title must be at least %d characters long.");
     private static final String ERROR_DESCRIPTION_EMPTY = AnsiColors.toRed("Description can not be empty!");
+    private static final String POST_ADDED_SUCCESSFULLY = AnsiColors.toGreen("Post added successfully!");
+    private static final String PLEASE_ENTER_POST_ID = AnsiColors.toGreen("Please enter a PostID: ");
+    private static final String INVALID_INPUT = AnsiColors.toYellow("Invalid input. Please enter a valid number.");
 
     UIComment uiComment = UIComment.getInstance();
 
@@ -232,5 +235,17 @@ public class UIPost {
             System.out.print(" ");
         }
         System.out.println(commentsStr + " ║");
+    }
+
+    public void postAddedSuccessfully() {
+        System.out.println(POST_ADDED_SUCCESSFULLY);
+    }
+
+    public void pleaseEnterPostId() {
+        System.out.println(PLEASE_ENTER_POST_ID);
+    }
+
+    public void invalidInput() {
+        System.out.println(INVALID_INPUT);
     }
 }

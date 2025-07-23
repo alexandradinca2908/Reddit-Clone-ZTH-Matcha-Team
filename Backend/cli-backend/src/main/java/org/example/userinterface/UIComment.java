@@ -17,8 +17,8 @@ public class UIComment {
     private static final String CANT_ADD_REPLY = "Something went wrong while adding your reply!";
     private static final String CONFIG_NOT_FOUND = "Config file could not be found.";
     private static final String CANT_SAVE_COMMENT_DB = AnsiColors.toRed("Failed to save comment to the database.");
-    private static final String PLEASE_ENTER_COMMENT_ID = "Please enter the CommentID:";
-    private static final String PLEASE_ENTER_REPLY_ID = "Please enter the ReplyID:";
+    private static final String PLEASE_ENTER_COMMENT_ID = "Please enter the CommentID: ";
+    private static final String PLEASE_ENTER_REPLY_ID = "Please enter the ReplyID: ";
     private static final String INVALID_INPUT = AnsiColors.toYellow("Invalid input. Please enter a valid number.");
 
     private UIComment() {}
@@ -86,11 +86,11 @@ public class UIComment {
                 break;
 
             case "commentID":
-                System.out.println(PLEASE_ENTER_COMMENT_ID);
+                System.out.print(PLEASE_ENTER_COMMENT_ID);
                 break;
 
             case "replyID":
-                System.out.println(PLEASE_ENTER_REPLY_ID);
+                System.out.print(PLEASE_ENTER_REPLY_ID);
 
             default:
                 break;

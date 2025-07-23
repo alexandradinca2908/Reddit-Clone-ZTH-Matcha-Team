@@ -15,6 +15,8 @@ public class PostService {
     private static PostService instance;
     public static final PostRepo postRepo = PostRepo.getInstance();
     public static ArrayList<Post> posts = new ArrayList<>();
+    private static final UIPost uiPost = UIPost.getInstance();
+
     Scanner sc = new Scanner(System.in);
 
     private PostService() {}
@@ -50,21 +52,23 @@ public class PostService {
         String body = postData.get("body");
 
         createPost(title, body, username);
-        System.out.println(AnsiColors.toGreen("Post added successfully!"));
+        uiPost.postAddedSuccessfully();
     }
 
     public int getPostIDUser() {
         int postID;
 
         while (true) {
-            System.out.print(AnsiColors.toGreen("Please enter a PostID: "));
+            uiPost.pleaseEnterPostId();
+
             try {
                 postID = Integer.parseInt(sc.nextLine());
                 break;
             } catch (NumberFormatException e) {
-                System.out.println(AnsiColors.toRed("Invalid input. Please enter a valid number."));
+                uiPost.invalidInput();
             }
         }
+
         return postID;
     }
 
