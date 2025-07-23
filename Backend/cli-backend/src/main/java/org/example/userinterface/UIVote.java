@@ -1,14 +1,6 @@
 package org.example.userinterface;
 
-import org.example.dbconnection.DatabaseConnection;
-import org.example.loggerobjects.Logger;
-import org.example.models.Comment;
-import org.example.models.Post;
-import org.example.models.User;
-import org.example.services.VotingService;
 import org.example.textprocessors.AnsiColors;
-
-import java.sql.SQLException;
 
 public class UIVote {
     private static UIVote instance;
