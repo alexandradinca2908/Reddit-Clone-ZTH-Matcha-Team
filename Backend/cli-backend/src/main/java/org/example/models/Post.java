@@ -1,24 +1,28 @@
 package org.example.models;
 import org.example.repositories.CommentRepo;
+import org.example.repositories.ImageRepo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Post extends Likeable {
     private static final CommentRepo commentRepo = CommentRepo.getInstance();
+    private static final ImageRepo imageRepo = ImageRepo.getInstance();
     private static int postCounter = 1;
-    private ArrayList<Comment> commentList;
     private int postID;
     private String username;
     private String title;
     private String body;
+    private String imageURL;
     private int voteCount;
+    private ArrayList<Comment> commentList;
     private HashMap<String, Integer> votingUserID; //K = userID , V = -1/+1 -> downvote/upvote
 
 
     public Post(String title, String body, String username) {
         this.title = title;
         this.body = body;
+        this.imageURL = "No image";
         this.voteCount = 0;
         this.username = username;
         this.postID = postCounter++;
