@@ -1,16 +1,4 @@
-package org.example.entities;
-
-/*
-CREATE TABLE account (
-    account_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    username TEXT UNIQUE NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL,
-    photo_path TEXT,
-    is_deleted BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
-);
- */
+package org.matcha.springbackend.entities;
 
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
@@ -21,8 +9,8 @@ import java.util.UUID;
 public class AccountEntity {
 
     @Id
+    @Column(name = "account_id", nullable = false, updatable = false)
     @GeneratedValue
-    @Column(name = "account_id", columnDefinition = "UUID")
     private UUID accountId;
 
     @Column(name = "username", unique = true, nullable = false)
@@ -37,13 +25,14 @@ public class AccountEntity {
     @Column(name = "photo_path")
     private String photoPath;
 
-    @Column(name = "is_deleted")
+    @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted = false;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ")
+    @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
-    public AccountEntity() {}
-
-    // Getteri și setteri (poți genera automat în IDE)
+    @PrePersist
+    protected void onCreate() {
+        createdAt = OffsetDateTime.now();
+    }
 }

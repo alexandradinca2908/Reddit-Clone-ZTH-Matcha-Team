@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+
+        <!-- Conexiune DB PostgreSQL -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/dbname</property>
+        <property name="hibernate.connection.username">utilizator</property>
+        <property name="hibernate.connection.password">parola</property>
+
+        <!-- Dialect PostgreSQL -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <!-- Setări utile -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <!-- creează sau actualizează tabelele automat -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Entități -->
+        <mapping class="org.example.entities.AccountEntity"/>
+
+    </session-factory>
+</hibernate-configuration>
