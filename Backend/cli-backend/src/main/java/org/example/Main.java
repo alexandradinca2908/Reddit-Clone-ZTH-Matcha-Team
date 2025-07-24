@@ -1,12 +1,17 @@
 package org.example;
 
 import org.example.dbconnection.DatabaseConnection;
-import org.example.loggerobjects.*;
-import org.example.textprocessors.AnsiColors;
+import org.example.loggerobjects.LogManager;
 import org.example.menu.MenuOption;
 import org.example.menu.views.View;
 import org.example.menu.views.ViewID;
 import org.example.menu.views.ViewManager;
+import org.example.textprocessors.AnsiColors;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 import java.util.Scanner;
 
@@ -15,42 +20,46 @@ import static org.example.textprocessors.InputTranslator.translateInput;
 public class Main {
     public static void main(String[] args) {
 
-        // ===========================================
-//        DatabaseConnection.cannotConnect(); // Comment this line if you want to connect to the database
-        if (!DatabaseConnection.isConnected()) {
-            System.out.println(AnsiColors.toRed("App is not connected to the database!"));
-        }
-        // ===========================================
+        // Initialize Hibernate SessionFactory (singleton in real apps)
+        Configuration config = new Configuration().configure();
+        try (SessionFactory sessionFactory = config.buildSessionFactory()) {
 
-        //  Get menu instance
-        ViewManager viewManager = ViewManager.getInstance();
+            // Test DB connection (opțional, în funcție de implementarea ta)
+            if (!DatabaseConnection.isConnected()) {
+                System.out.println(AnsiColors.toRed("App is not connected to the database!"));
+            }
 
-        //  Initialize logging system
-        LogManager.getInstance().initLoggers();
+            // Initialize logging system
+            LogManager.getInstance().initLoggers();
 
-        //  Start app
-        System.out.println(AnsiColors.toPurple("Welcome to Matcha Reddit!\nPlease choose an option:"));
+            // Get ViewManager instance
+            ViewManager viewManager = ViewManager.getInstance();
 
-        //  Initialize necessary variables for the app
-        boolean isActive = true;
-        Scanner scan;
-        String option;
-        MenuOption translatedInput;
+            System.out.println(AnsiColors.toPurple("Welcome to Matcha Reddit!\nPlease choose an option:"));
 
-        while (isActive) {
-            //  Get view data
-            View currentViewObject = viewManager.getCurrentViewObject();
-            ViewID currentViewID = viewManager.getCurrentViewID();
+            try (Scanner scanner = new Scanner(System.in)) {
+                boolean isActive = true;
 
-            //  Display menu
-            currentViewObject.displayMenu();
+                while (isActive) {
+                    // Get current view and its ID
+                    View currentView = viewManager.getCurrentViewObject();
+                    ViewID currentViewID = viewManager.getCurrentViewID();
 
-            //  Take and process user input
-            scan = new Scanner(System.in);
-            option = scan.nextLine();
-            translatedInput = translateInput(option, currentViewID, viewManager.isLoggedIn());
+                    // Display menu for the current view
+                    currentView.displayMenu();
 
-            isActive = currentViewObject.activateMenuOption(translatedInput);
+                    // Read and translate user input
+                    String input = scanner.nextLine();
+                    MenuOption menuOption = translateInput(input, currentViewID, viewManager.isLoggedIn());
+
+                    // Activate the chosen menu option
+                    isActive = currentView.activateMenuOption(menuOption);
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println(AnsiColors.toRed("Error initializing the application: " + e.getMessage()));
+            e.printStackTrace();
         }
     }
 }
