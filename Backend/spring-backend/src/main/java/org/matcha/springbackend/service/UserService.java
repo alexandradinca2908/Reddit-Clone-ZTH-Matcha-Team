@@ -4,10 +4,11 @@ import org.matcha.springbackend.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
-    public ArrayList<User> users;
+    private List<User> users;
     private final PasswordService passwordService;
 
     public UserService(PasswordService passwordService) {
