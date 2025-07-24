@@ -12,7 +12,7 @@ public class DownvotePostCommand implements IMenuCommand {
         User user = view.getViewManager().getUser();
         Post post = view.getViewManager().getPost();
 
-        view.getViewManager().getVotingService().votePost(user, post, false);
+        view.getViewManager().getVotingApi().votePost(user, post, false);
         view.getViewManager().getUiPost().showPost(true, post, user);
 
         return true;

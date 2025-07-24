@@ -13,7 +13,7 @@ public class DownvoteCommentCommand implements IMenuCommand {
         Comment comment = view.getViewManager().getComment();
         Post post = view.getViewManager().getPost();
 
-        view.getViewManager().getVotingService().voteComment(user, comment, false);
+        view.getViewManager().getVotingApi().voteComment(user, comment, false);
         view.getViewManager().getUiComment().showAllCommentsAndReplies(post, user);
 
         return true;

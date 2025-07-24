@@ -12,7 +12,7 @@ import org.example.userinterface.UIView;
 import java.util.HashMap;
 
 public class ViewManager {
-    public static final String BACKEND_API_URL = "http://172.31.30.245:8080";
+    public static final String BACKEND_API_URL = "http://13.48.209.206:8080";
     private final ApiManager apiManager = ApiManager.getInstance(BACKEND_API_URL);
     private final UIPost uiPost = UIPost.getInstance();
     private final UIComment uiComment = UIComment.getInstance();

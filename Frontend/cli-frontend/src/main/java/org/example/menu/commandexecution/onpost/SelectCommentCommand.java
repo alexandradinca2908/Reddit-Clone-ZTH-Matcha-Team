@@ -14,7 +14,7 @@ public class SelectCommentCommand implements IMenuCommand {
         User user = viewManager.getUser();
 
         try {
-            Comment comment = viewManager.getCommentService().selectComment(viewManager.getPost());
+            Comment comment = viewManager.getCommentApi().selectComment(viewManager.getPost());
             viewManager.setComment(comment);
             viewManager.getUiComment().showComment(user.getUsername(), comment, 0);
 

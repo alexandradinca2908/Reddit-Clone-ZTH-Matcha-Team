@@ -8,7 +8,6 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PostApiClient extends BaseApiClient {
@@ -18,7 +17,7 @@ public class PostApiClient extends BaseApiClient {
         super(baseUrl);
     }
 
-    public List<Post> getPosts() {
+    public void getPosts() {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseUrl + "/posts"))
                 .GET()
@@ -28,21 +27,25 @@ public class PostApiClient extends BaseApiClient {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
                 java.lang.reflect.Type postListType = new TypeToken<List<Post>>() {}.getType();
-                return gson.fromJson(response.body(), postListType);
+                List<Post> fetchedPosts = gson.fromJson(response.body(), postListType);
+                if (fetchedPosts != null) {
+                    posts.clear();
+                    posts.addAll(fetchedPosts);
+                }
             } else {
                 System.err.println("Failed to fetch posts. Status code: " + response.statusCode());
-                return Collections.emptyList();
             }
         } catch (IOException | InterruptedException e) {
             System.err.println("Get posts request failed: " + e.getMessage());
-            return Collections.emptyList();
         }
     }
 
     public Post getPost() {
-        Post post = new Post("", "", "");
-        return post;
+        // TODO
+        return null;
     }
 
-
+    public void addPost(String username) {
+        //TODO
+    }
 }

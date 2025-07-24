@@ -10,7 +10,7 @@ public class LoginCommand implements IMenuCommand {
     public boolean execute(View view) {
         ViewManager viewManager = view.getViewManager();
 
-        User user = viewManager.getUserService().userLoginCLI();
+        User user = viewManager.getUserApi().userLoginCLI();
 
         //  Display login menu only if action was successful
         if (user != null) {

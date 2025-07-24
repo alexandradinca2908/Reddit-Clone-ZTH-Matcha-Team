@@ -13,7 +13,7 @@ public class UpvoteCommentCommand implements IMenuCommand {
         Comment comment = view.getViewManager().getComment();
         Post post = view.getViewManager().getPost();
 
-        view.getViewManager().getVotingService().voteComment(user, comment, true);
+        view.getViewManager().getVotingApi().voteComment(user, comment, true);
         view.getViewManager().getUiComment().showAllCommentsAndReplies(post, user);
 
         return true;

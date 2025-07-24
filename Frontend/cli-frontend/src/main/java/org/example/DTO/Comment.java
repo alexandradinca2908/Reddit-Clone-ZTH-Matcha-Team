@@ -1,14 +1,11 @@
 package org.example.DTO;
 
-
-import org.example.api.PostApiClient;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Comment extends Likeable {
     private static int commentCounter = 1;
-    private int commentID;
+    private final int commentID;
     private String commentText;
     private final Post parentPost;
     private final Comment parentComment;
@@ -46,10 +43,6 @@ public class Comment extends Likeable {
         return commentID;
     }
 
-    public Post getParentPost() {
-        return parentPost;
-    }
-
     public User getParentUser() {
         return parentUser;
     }
@@ -58,31 +51,8 @@ public class Comment extends Likeable {
         return replyList;
     }
 
-    public void addReply(Comment reply) {
-        this.replyList.add(reply);
-    }
-
-    public void setCommentID(int commentId) {
-        this.commentID = commentId;
-    }
-
     public Comment getParentComment() {
         return this.parentComment;
     }
 
-    public static Comment findById(int id) {
-        for (Post post : PostApiClient.posts) {
-            for (Comment comment : post.getCommentList()) {
-                if (comment.getCommentID() == id) {
-                    return comment;
-                }
-                for (Comment reply : comment.getReplyList()) {
-                    if (reply.getCommentID() == id) {
-                        return reply;
-                    }
-                }
-            }
-        }
-        return null;
-    }
 }

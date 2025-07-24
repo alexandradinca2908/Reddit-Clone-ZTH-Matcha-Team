@@ -8,7 +8,7 @@ public class CreatePostCommand implements IMenuCommand {
     @Override
     public boolean execute(View view) {
         User user = view.getViewManager().getUser();
-        view.getViewManager().getPostService().addPost(user.getUsername());
+        view.getViewManager().getPostApi().addPost(user.getUsername());
 
         return true;
     }

@@ -14,16 +14,4 @@ public class User {
     public String getUsername() {
         return userName;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setUsername(String userName) {
-        this.userName = userName;
-    }
 }

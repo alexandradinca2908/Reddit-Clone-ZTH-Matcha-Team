@@ -14,7 +14,7 @@ public class SelectReplyCommand implements IMenuCommand {
         Post post = viewManager.getPost();
 
         try {
-            Comment reply = viewManager.getCommentService().selectReply(currentComment);
+            Comment reply = viewManager.getCommentApi().selectReply(currentComment);
             viewManager.setComment(reply);
             viewManager.getUiComment().showAllCommentsAndReplies(post, viewManager.getUser());
 
