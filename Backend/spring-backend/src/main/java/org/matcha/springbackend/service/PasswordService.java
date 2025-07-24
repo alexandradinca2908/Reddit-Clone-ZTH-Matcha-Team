@@ -1,4 +1,4 @@
-package org.matcha.springbackend.services;
+package org.matcha.springbackend.service;
 
 import org.springframework.stereotype.Service;
 

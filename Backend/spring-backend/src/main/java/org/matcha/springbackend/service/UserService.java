@@ -1,6 +1,6 @@
-package org.matcha.springbackend.services;
+package org.matcha.springbackend.service;
 
-import org.matcha.springbackend.models.User;
+import org.matcha.springbackend.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

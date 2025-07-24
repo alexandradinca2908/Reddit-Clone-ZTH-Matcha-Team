@@ -1,4 +1,4 @@
-package org.matcha.springbackend.models;
+package org.matcha.springbackend.model;
 
 public abstract class Likeable {
     protected int voteCount;

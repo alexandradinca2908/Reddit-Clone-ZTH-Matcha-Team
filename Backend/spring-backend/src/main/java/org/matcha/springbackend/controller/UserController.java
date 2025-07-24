@@ -1,8 +1,7 @@
-package org.matcha.springbackend.controllers;
+package org.matcha.springbackend.controller;
 
-import org.matcha.springbackend.models.User;
-import org.matcha.springbackend.services.UserService;
-import org.springframework.stereotype.Controller;
+import org.matcha.springbackend.model.User;
+import org.matcha.springbackend.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

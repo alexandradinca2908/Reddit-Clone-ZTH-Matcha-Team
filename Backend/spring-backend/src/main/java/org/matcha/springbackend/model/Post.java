@@ -1,4 +1,4 @@
-package org.matcha.springbackend.models;
+package org.matcha.springbackend.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
