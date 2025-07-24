@@ -9,14 +9,14 @@ public class Comment extends Likeable {
     private String commentText;
     private final Post parentPost;
     private final Comment parentComment;
-    private final User parentUser;
+    private final Account parentAccount;
     public HashMap<String, Integer> votingUserID;
     public ArrayList<Comment> replyList;
 
-    public Comment(Post parentPost, User parentUser, String commentText) {
+    public Comment(Post parentPost, Account parentAccount, String commentText) {
         this.parentPost = parentPost;
         this.parentComment = null;
-        this.parentUser = parentUser;
+        this.parentAccount = parentAccount;
         this.commentText = commentText;
         this.replyList = new ArrayList<>();
         this.voteCount = 0;
@@ -24,10 +24,10 @@ public class Comment extends Likeable {
         this.commentID = commentCounter++;
     }
 
-    public Comment(Comment parentComment, User parentUser, String commentText) {
+    public Comment(Comment parentComment, Account parentAccount, String commentText) {
         this.parentPost = null;
         this.parentComment = parentComment;
-        this.parentUser = parentUser;
+        this.parentAccount = parentAccount;
         this.commentText = commentText;
         this.replyList = new ArrayList<>();
         this.voteCount = 0;

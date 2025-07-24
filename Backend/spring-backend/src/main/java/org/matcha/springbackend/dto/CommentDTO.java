@@ -1,6 +1,5 @@
 package org.matcha.springbackend.dto;
 
-import java.time.Instant;
 import java.util.List;
 
 public record CommentDTO(
@@ -13,8 +12,8 @@ public record CommentDTO(
         Integer downvotes,
         Integer score,
         String userVote,
-        Instant createdAt,
-        Instant updatedAt,
+        String createdAt,
+        String updatedAt,
         List<CommentDTO> replies
 ) {
 }

@@ -35,28 +35,4 @@ public class Post extends Likeable {
     public int getVotes() {
         return voteCount;
     }
-
-    public int getPostID() {
-        return postID;
-    }
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public int getCommentsCounter() { return commentList.size(); }
-    public ArrayList<Comment> getCommentList() { return commentList; }
-    public String getTitle() {
-        return title;
-    }
-    public String getBody() {
-        return body;
-    }
-    public HashMap<String, Integer> getVotingUserID() {
-        return votingUserID;
-    }
-    public void setPostId(int dbPostID) {
-        this.postID = dbPostID;
-    }
 }

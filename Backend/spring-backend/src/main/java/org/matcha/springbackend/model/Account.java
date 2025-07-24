@@ -1,11 +1,11 @@
 package org.matcha.springbackend.model;
 
-public class User {
+public class Account {
     String username;
     String email;
     String password;
 
-    public User(String userName, String email, String password) {
+    public Account(String userName, String email, String password) {
         this.username = userName;
         this.email = email;
         this.password = password;
@@ -21,9 +21,5 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
-
-    public void setUsername(String userName) {
-        this.username = userName;
     }
 }

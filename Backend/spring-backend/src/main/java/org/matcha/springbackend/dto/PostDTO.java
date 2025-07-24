@@ -1,7 +1,5 @@
 package org.matcha.springbackend.dto;
 
-import java.time.Instant;
-
 public record PostDTO(
         String id,
         String title,
@@ -13,7 +11,7 @@ public record PostDTO(
         Integer score,
         Integer commentCount,
         String userVote,
-        Instant createdAt,
-        Instant updatedAt
+        String createdAt,
+        String updatedAt
 ) {
 }
