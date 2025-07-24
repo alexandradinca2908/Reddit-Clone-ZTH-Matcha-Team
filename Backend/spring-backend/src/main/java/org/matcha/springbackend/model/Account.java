@@ -1,6 +1,7 @@
 package org.matcha.springbackend.model;
 
 public class Account {
+    //  TODO - delete all and rewrite
     String username;
     String email;
     String password;
