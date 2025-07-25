@@ -38,9 +38,6 @@ public class PostController {
 
     @GetMapping("")
     public ResponseEntity<DataResponse<List<PostDTO>>> getPosts() {
-        //  TODO - retrieve from DB in post array (located in postService)
-        //  TODO - just delete this if not necessary
-
         //  Map Post to PostDTO
         List<PostDTO> postDTOs = postService.getPosts().stream()
                 .map(postMapper::modelToDTO)

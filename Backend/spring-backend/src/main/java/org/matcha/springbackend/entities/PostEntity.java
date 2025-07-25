@@ -24,8 +24,8 @@ public class PostEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "content")
+    private String content;
 
     @Column(name = "photo_path")
     private String photoPath;
@@ -38,6 +38,7 @@ public class PostEntity {
 
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
+
 
     public PostEntity() {}
 
@@ -89,12 +90,12 @@ public class PostEntity {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getContent() {
+        return content;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getPhotoPath() {
