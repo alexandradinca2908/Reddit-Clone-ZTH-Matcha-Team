@@ -12,9 +12,10 @@ public class Post extends Likeable {
     private String photoPath;
     private boolean isDeleted;
     private OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
 
     public Post(UUID postID, Account account, Subreddit subreddit, String title,
-                String content, String photoPath, boolean isDeleted, OffsetDateTime createdAt) {
+                String content, String photoPath, boolean isDeleted, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.postID = postID;
         this.account = account;
         this.subreddit = subreddit;
@@ -23,6 +24,7 @@ public class Post extends Likeable {
         this.photoPath = photoPath;
         this.isDeleted = isDeleted;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public UUID getPostID() {
@@ -55,5 +57,9 @@ public class Post extends Likeable {
 
     public OffsetDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }
