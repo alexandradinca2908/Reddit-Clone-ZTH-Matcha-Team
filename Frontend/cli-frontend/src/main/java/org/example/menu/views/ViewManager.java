@@ -5,6 +5,7 @@ import org.example.loggerobjects.Logger;
 import org.example.models.Comment;
 import org.example.models.Post;
 import org.example.models.User;
+import org.example.textprocessors.AnsiColors;
 import org.example.userinterface.UIComment;
 import org.example.userinterface.UIPost;
 import org.example.userinterface.UIView;
@@ -12,7 +13,8 @@ import org.example.userinterface.UIView;
 import java.util.HashMap;
 
 public class ViewManager {
-    public static final String BACKEND_API_URL = "http://13.48.209.206:8080";
+    public static final String BACKEND_API_URL = "http://13.48.209.206:8080";  //to be moved soon
+    private static final String ACCOUNTS_DISABLED = "Accounts have been disabled!Logging in as TEST USER";
     private final ApiManager apiManager = ApiManager.getInstance(BACKEND_API_URL);
     private final UIPost uiPost = UIPost.getInstance();
     private final UIComment uiComment = UIComment.getInstance();
@@ -137,10 +139,27 @@ public class ViewManager {
         currentViewID = viewID;
     }
 
+    public void disableAccounts(boolean disable) {
+        UIView.accountsDisabled = disable;
+        if (disable) {
+            System.out.println(AnsiColors.toBlue(ACCOUNTS_DISABLED));
+            User dummyuser = new User("TEST_USER_MATCHA", "12345678aA!", "test@gmail.com");
+            this.setUser(dummyuser);
+            this.setLoggedIn(true);
+        }
+    }
+
     public void cleanUpData() {
-        isLoggedIn  = false;
-        user = null;
-        post = null;
-        comment = null;
+        if (UIView.accountsDisabled) {
+            post = null;
+            comment = null;
+        } else {
+            isLoggedIn  = false;
+            user = null;
+            post = null;
+            comment = null;
+        }
+
+
     }
 }
