@@ -7,49 +7,59 @@ public class Post extends Likeable {
     private static int postCounter = 1;
     private ArrayList<Comment> commentList;
     private int postID;
-    private String username;
+    private String UUID;
+    private String authorName;
     private String title;
-    private String body;
-    private int voteCount;
+    private String content;
+    private int score;
     private HashMap<String, Integer> votingUserID; //K = userID , V = -1/+1 -> downvote/upvote
 
 
-    public Post(String title, String body, String username) {
+    public Post(String UUID, String title, String content, String username) {
+        this.UUID = UUID;
         this.title = title;
-        this.body = body;
-        this.voteCount = 0;
-        this.username = username;
+        this.content = content;
+        this.score = 0;
+        this.authorName = username;
         this.postID = postCounter++;
         this.commentList = new ArrayList<>();
         this.votingUserID = new HashMap<>();
     }
 
+
     @Override
     public void upvote() {
-        voteCount++;
+        score++;
     }
     @Override
     public void downvote() {
-        voteCount--;
+        score--;
     }
     @Override
     public int getVotes() {
-        return voteCount;
+        return score;
     }
 
+    public String getUUID() {
+        return UUID;
+    }
+
+    public int getScore() {
+        return score;
+    }
     public int getPostID() {
         return postID;
     }
-    public String getUsername() {
-        return username;
+    public String getAuthorName() {
+        return authorName;
     }
     public int getCommentsCounter() { return commentList.size(); }
     public ArrayList<Comment> getCommentList() { return commentList; }
     public String getTitle() {
         return title;
     }
-    public String getBody() {
-        return body;
+    public String getContent() {
+        return content;
     }
     public HashMap<String, Integer> getVotingUserID() {
         return votingUserID;

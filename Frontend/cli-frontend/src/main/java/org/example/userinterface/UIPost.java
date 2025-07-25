@@ -96,11 +96,11 @@ public class UIPost {
             username = user.getUsername();
         }
         printTopBorder();
-        printHeader(post.getPostID(), post.getUsername());
+        printHeader(post.getPostID(), post.getAuthorName());
         printSeparator();
         printTitleLine(post.getTitle(), post.getVotes());
         printSeparator();
-        printContentLine(isExpanded, post.getBody());
+        printContentLine(isExpanded, post.getContent());
         printEmptyContentLine();
         printSeparator();
         printFooter(post.getVotes(), post.getCommentsCounter(), post.getVotingUserID(), username);
