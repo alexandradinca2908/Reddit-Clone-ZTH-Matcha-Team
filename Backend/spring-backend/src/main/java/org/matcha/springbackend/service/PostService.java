@@ -7,7 +7,11 @@ import java.util.List;
 
 @Service
 public class PostService {
-    private List<Post> posts;
+    private final List<Post> posts;
+
+    public PostService(List<Post> posts) {
+        this.posts = posts;
+    }
 
     public List<Post> getPosts() {
         return posts;

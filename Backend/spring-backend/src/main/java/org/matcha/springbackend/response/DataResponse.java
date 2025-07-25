@@ -8,4 +8,12 @@ public class DataResponse<T> {
         this.success = success;
         this.data = data;
     }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public T getData() {
+        return data;
+    }
 }

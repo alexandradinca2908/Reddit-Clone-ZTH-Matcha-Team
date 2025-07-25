@@ -1,5 +1,6 @@
 package org.matcha.springbackend.model;
 
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public class Subreddit {
@@ -11,11 +12,11 @@ public class Subreddit {
     private Integer memberCount;
     private Integer postCount;
     private String iconUrl;
-    private String createdAt;
+    private OffsetDateTime createdAt;
 
     public Subreddit(UUID id, Account account, String displayName,
                      String description, boolean isDeleted, Integer memberCount,
-                     Integer postCount, String iconUrl, String createdAt) {
+                     Integer postCount, String iconUrl, OffsetDateTime createdAt) {
         this.id = id;
         this.account = account;
         this.displayName = displayName;
@@ -59,7 +60,7 @@ public class Subreddit {
         return iconUrl;
     }
 
-    public String getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 }

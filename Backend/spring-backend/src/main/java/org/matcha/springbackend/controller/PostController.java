@@ -1,6 +1,7 @@
 package org.matcha.springbackend.controller;
 
 import org.matcha.springbackend.dto.PostDTO;
+import org.matcha.springbackend.dto.PostRequestBodyDTO;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
@@ -10,7 +11,7 @@ import org.matcha.springbackend.service.AccountService;
 import org.matcha.springbackend.service.PostService;
 import org.matcha.springbackend.service.SubredditService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -34,7 +35,7 @@ public class PostController {
         this.subredditService = subredditService;
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<DataResponse<List<PostDTO>>> getPosts() {
         //  TODO - retrieve from DB in post array (located in postService)
         //  TODO - just delete this if not necessary
@@ -65,7 +66,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<DataResponse<PostDTO>> createPost(@RequestBody PostDTO postDTO) {
+    public ResponseEntity<DataResponse<PostDTO>> createPost(@RequestBody PostRequestBodyDTO postDTO) {
         //  Create post fields
         UUID uuid = UUID.randomUUID();
 

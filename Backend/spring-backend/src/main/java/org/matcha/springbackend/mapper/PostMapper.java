@@ -18,12 +18,15 @@ public class PostMapper {
         String author = model.getAccount().getUsername();
         String subreddit = model.getSubreddit().getDisplayName();
         //  TODO - SCORE
+        Integer score = 0;
         //  TODO - COMMENT COUNT
+        Integer commentCount = 0;
         //  TODO - USER VOTE
+        String userVote = "null";
         String createdAt = model.getCreatedAt().toString();
-        //  TODO - UPDATED AT
+        String updatedAt = model.getUpdatedAt().toString();
 
         return new PostDTO(id, title, content, author, subreddit, 0, 0,
-                null, null, null, createdAt, null);
+                score, commentCount, userVote, createdAt, updatedAt);
     }
 }
