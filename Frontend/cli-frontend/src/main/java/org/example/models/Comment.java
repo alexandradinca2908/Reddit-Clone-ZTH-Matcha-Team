@@ -6,6 +6,7 @@ import java.util.HashMap;
 public class Comment extends Likeable {
     private static int commentCounter = 1;
     private final int commentID;
+    private String commentUID;
     private String commentText;
     private final Post parentPost;
     private final Comment parentComment;
@@ -39,6 +40,10 @@ public class Comment extends Likeable {
         return commentText;
     }
 
+    public String getCommentUID() {
+        return commentUID;
+    }
+
     public int getCommentID() {
         return commentID;
     }
@@ -53,6 +58,10 @@ public class Comment extends Likeable {
 
     public Comment getParentComment() {
         return this.parentComment;
+    }
+
+    public Post getParentPost() {
+        return this.parentPost;
     }
 
 }
