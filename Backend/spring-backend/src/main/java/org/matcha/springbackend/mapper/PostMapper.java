@@ -2,16 +2,16 @@ package org.matcha.springbackend.mapper;
 
 import org.matcha.springbackend.dto.PostDTO;
 import org.matcha.springbackend.model.Post;
+import org.springframework.stereotype.Component;
 
-import java.time.OffsetDateTime;
-
+@Component
 public class PostMapper {
-    //  TODO
-    Post entityToModel(PostDTO dto) {
+    public Post entityToModel(PostDTO dto) {
+        //  TODO
         return null;
     }
 
-    PostDTO modelToDTO(Post model) {
+    public PostDTO modelToDTO(Post model) {
         String id = model.getPostID().toString();
         String title = model.getTitle();
         String content = model.getContent();

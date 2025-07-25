@@ -14,7 +14,7 @@ public class CommentEntity {
     private UUID commentId;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "fk_comment_account"), nullable = true)
+    @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "fk_comment_account"))
     private AccountEntity account;
 
     @Column(name = "parent_id", nullable = false)
@@ -33,11 +33,84 @@ public class CommentEntity {
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
+    @Column(name = "updated_at")
+    private OffsetDateTime updatedAt;
+
+    public CommentEntity() {}
+
     @PrePersist
     protected void onCreate() {
         if (commentId == null) {
             commentId = UUID.randomUUID();
         }
         createdAt = OffsetDateTime.now();
+        updatedAt = createdAt;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = OffsetDateTime.now();
+    }
+
+    // -------- Getters & Setters --------
+
+    public UUID getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(UUID commentId) {
+        this.commentId = commentId;
+    }
+
+    public AccountEntity getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountEntity account) {
+        this.account = account;
+    }
+
+    public UUID getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(UUID parentId) {
+        this.parentId = parentId;
+    }
+
+    public ParentType getParentType() {
+        return parentType;
+    }
+
+    public void setParentType(ParentType parentType) {
+        this.parentType = parentType;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

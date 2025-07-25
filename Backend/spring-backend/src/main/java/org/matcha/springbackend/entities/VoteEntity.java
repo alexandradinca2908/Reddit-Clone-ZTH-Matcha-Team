@@ -32,4 +32,62 @@ public class VoteEntity {
             foreignKey = @ForeignKey(name = "fk_vote_account"), nullable = false)
     private AccountEntity account;
 
+    public VoteEntity() {}
+
+    @PrePersist
+    protected void onCreate() {
+        if (voteId == null) {
+            voteId = UUID.randomUUID();
+        }
+    }
+
+    // Getters and setters
+
+    public UUID getVoteId() {
+        return voteId;
+    }
+
+    public void setVoteId(UUID voteId) {
+        this.voteId = voteId;
+    }
+
+    public UUID getVotableId() {
+        return votableId;
+    }
+
+    public void setVotableId(UUID votableId) {
+        this.votableId = votableId;
+    }
+
+    public UUID getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(UUID accountId) {
+        this.accountId = accountId;
+    }
+
+    public VotableType getVotableType() {
+        return votableType;
+    }
+
+    public void setVotableType(VotableType votableType) {
+        this.votableType = votableType;
+    }
+
+    public VoteType getVoteType() {
+        return voteType;
+    }
+
+    public void setVoteType(VoteType voteType) {
+        this.voteType = voteType;
+    }
+
+    public AccountEntity getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountEntity account) {
+        this.account = account;
+    }
 }
