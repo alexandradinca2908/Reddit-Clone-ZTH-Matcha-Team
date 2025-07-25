@@ -1,10 +1,10 @@
 package org.example.menu.commandexecution.oncomment;
 
-import org.example.DTO.Comment;
+import org.example.models.Comment;
 import org.example.menu.views.View;
 import org.example.menu.views.ViewManager;
 import org.example.menu.commandexecution.IMenuCommand;
-import org.example.DTO.Post;
+import org.example.models.Post;
 
 public class SelectReplyCommand implements IMenuCommand {
     @Override

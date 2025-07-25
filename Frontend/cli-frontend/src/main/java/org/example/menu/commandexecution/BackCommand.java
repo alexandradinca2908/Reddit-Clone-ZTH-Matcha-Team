@@ -2,9 +2,9 @@ package org.example.menu.commandexecution;
 
 import org.example.menu.views.View;
 import org.example.menu.views.ViewID;
-import org.example.DTO.Comment;
-import org.example.DTO.Post;
-import org.example.DTO.User;
+import org.example.models.Comment;
+import org.example.models.Post;
+import org.example.models.User;
 
 public class BackCommand implements IMenuCommand {
     @Override

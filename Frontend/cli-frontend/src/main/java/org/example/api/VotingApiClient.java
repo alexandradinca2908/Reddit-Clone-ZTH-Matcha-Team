@@ -1,8 +1,8 @@
 package org.example.api;
 
-import org.example.DTO.Comment;
-import org.example.DTO.Post;
-import org.example.DTO.User;
+import org.example.models.Comment;
+import org.example.models.Post;
+import org.example.models.User;
 
 public class VotingApiClient extends BaseApiClient{
     public static VotingApiClient instance;

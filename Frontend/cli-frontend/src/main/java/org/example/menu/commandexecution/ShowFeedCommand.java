@@ -2,7 +2,7 @@ package org.example.menu.commandexecution;
 
 import org.example.menu.views.View;
 import org.example.menu.views.ViewID;
-import org.example.DTO.User;
+import org.example.models.User;
 
 public class ShowFeedCommand implements IMenuCommand {
 

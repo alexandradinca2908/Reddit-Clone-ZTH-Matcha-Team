@@ -5,11 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3aaf886-41bf-49f3-a1bd-a575c08d36a2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Models/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/models/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Models/Likeable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/models/Likeable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Models/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/models/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Models/State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/models/State.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/CommentApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/CommentApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/PostApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/PostApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/UserApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/UserApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/VotingApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/VotingApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/menu/commandexecution/oncomment/DownvoteCommentCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/menu/commandexecution/oncomment/DownvoteCommentCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/menu/commandexecution/oncomment/UpvoteCommentCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/menu/commandexecution/oncomment/UpvoteCommentCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/menu/commandexecution/onpost/CommentCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/menu/commandexecution/onpost/CommentCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/menu/commandexecution/onpost/DownvotePostCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/menu/commandexecution/onpost/DownvotePostCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/menu/commandexecution/onpost/SelectCommentCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/menu/commandexecution/onpost/SelectCommentCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/userinterface/UIComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/userinterface/UIComment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +124,7 @@
       <workItem from="1753302999586" duration="2311000" />
       <workItem from="1753344199379" duration="9979000" />
       <workItem from="1753363520216" duration="476000" />
-      <workItem from="1753429151000" duration="3653000" />
+      <workItem from="1753429151000" duration="3954000" />
     </task>
     <servers />
   </component>

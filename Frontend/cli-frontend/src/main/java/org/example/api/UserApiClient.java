@@ -1,6 +1,6 @@
 package org.example.api;
 
-import org.example.DTO.User;
+import org.example.models.User;
 
 public class UserApiClient extends BaseApiClient {
     private static UserApiClient instance;

@@ -1,7 +1,7 @@
 package org.example.api;
 
 import com.google.gson.reflect.TypeToken;
-import org.example.DTO.Post;
+import org.example.models.Post;
 
 import java.io.IOException;
 import java.net.URI;
