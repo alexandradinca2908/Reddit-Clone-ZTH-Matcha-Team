@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public class Post extends Likeable {
-    private UUID postID;
+    private UUID postId;
     private Account account;
     private Subreddit subreddit;
     private String title;
@@ -14,9 +14,9 @@ public class Post extends Likeable {
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 
-    public Post(UUID postID, Account account, Subreddit subreddit, String title,
+    public Post(UUID postId, Account account, Subreddit subreddit, String title,
                 String content, String photoPath, boolean isDeleted, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
-        this.postID = postID;
+        this.postId = postId;
         this.account = account;
         this.subreddit = subreddit;
         this.title = title;
@@ -27,8 +27,10 @@ public class Post extends Likeable {
         this.updatedAt = updatedAt;
     }
 
+    public Post() {}
+
     public UUID getPostID() {
-        return postID;
+        return postId;
     }
 
     public Account getAccount() {
@@ -61,5 +63,41 @@ public class Post extends Likeable {
 
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setPostId(UUID postId) {
+        this.postId = postId;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public void setSubreddit(Subreddit subreddit) {
+        this.subreddit = subreddit;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

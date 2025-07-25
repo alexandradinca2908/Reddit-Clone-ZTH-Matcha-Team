@@ -14,6 +14,10 @@ public class Subreddit {
     private String iconUrl;
     private OffsetDateTime createdAt;
 
+    public Subreddit() {
+        // Default constructor
+    }
+
     public Subreddit(UUID id, Account account, String displayName,
                      String description, boolean isDeleted, Integer memberCount,
                      Integer postCount, String iconUrl, OffsetDateTime createdAt) {
