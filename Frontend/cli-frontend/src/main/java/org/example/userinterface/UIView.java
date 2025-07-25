@@ -6,12 +6,13 @@ import org.example.menu.MenuOption;
 import java.util.LinkedHashMap;
 
 public class UIView {
+    public static boolean accountsDisabled = false;
     private static UIView instance;
     private static final String UNKNOWN_COMMAND = "Unknown command";
     private static final String SIMPLE_LOGOUT = "You have been logged out.";
     private static final String LOGOUT_AFTER_QUIT = "You have been automatically logged out.";
     private static final String GOODBYE_MESSAGE = "See you soon!";
-    private static final String RESTART_APP = "\nPlease restart the application";
+    private static final String ACCOUNTS_DISABLED = "Accounts have been disabled";
 
     private UIView() {
     }
@@ -48,7 +49,11 @@ public class UIView {
     }
 
     public void printLogoutMessage() {
-        System.out.println(SIMPLE_LOGOUT);
+        if (accountsDisabled) {
+            System.out.println(ACCOUNTS_DISABLED);
+        } else {
+            System.out.println(SIMPLE_LOGOUT);
+        }
     }
 
     public void printLogoutMessageForQuit() {
@@ -61,9 +66,5 @@ public class UIView {
 
     public void printInvalidInputError(String message) {
         System.out.println(message);
-    }
-
-    public void printRestartAppMessage() {
-        System.out.println(RESTART_APP);
     }
 }

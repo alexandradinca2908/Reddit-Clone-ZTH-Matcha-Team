@@ -16,6 +16,7 @@ import static org.example.textprocessors.InputTranslator.translateInput;
 public class Main {
     public static void main(String[] args) {
         ViewManager viewManager = ViewManager.getInstance();
+        viewManager.disableAccounts(true);  // set this to false to enable accounts
 
         LogManager.getInstance().initLoggers();
         System.out.println(AnsiColors.toPurple("Welcome to Matcha Reddit!\nPlease choose an option:"));
@@ -24,13 +25,12 @@ public class Main {
         Scanner scan;
         String option;
         MenuOption translatedInput;
-        UIView uiView = UIView.getInstance();
 
         while (isActive) {
             View currentViewObject = viewManager.getCurrentViewObject();
             ViewID currentViewID = viewManager.getCurrentViewID();
 
-            uiView.renderMenu(currentViewObject.getMenu(), viewManager.isLoggedIn());
+            currentViewObject.displayMenu();
 
             scan = new Scanner(System.in);
             option = scan.nextLine();
