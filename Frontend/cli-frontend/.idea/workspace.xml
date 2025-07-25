@@ -5,21 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3aaf886-41bf-49f3-a1bd-a575c08d36a2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/PostMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/PostApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/PostApiClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/UserApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/UserApiClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/menu/views/ViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/menu/views/ViewManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/models/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/models/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/models/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/models/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/userinterface/UIPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/userinterface/UIPost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/CommentApiClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/api/CommentApiClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/PostApiClient$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/api/PostApiClient$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/PostApiClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/api/PostApiClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/UserApiClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/api/UserApiClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/views/ViewManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/menu/views/ViewManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/loggerobjects/ConsoleLogger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/loggerobjects/FileLogger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/loggerobjects/ILoggable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/loggerobjects/LogLevel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/loggerobjects/LogManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/loggerobjects/Logger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/loggerobjects/LoggerType.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +123,7 @@
       <workItem from="1753302999586" duration="2311000" />
       <workItem from="1753344199379" duration="9979000" />
       <workItem from="1753363520216" duration="476000" />
-      <workItem from="1753429151000" duration="15331000" />
+      <workItem from="1753429151000" duration="16223000" />
     </task>
     <servers />
   </component>

@@ -7,11 +7,14 @@ import com.google.gson.JsonParser;
 import org.example.dto.PostDTO;
 import org.example.models.Post;
 import org.example.mapper.PostMapper;
+import org.example.userinterface.UIPost;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class PostApiClient extends BaseApiClient {
     private static PostApiClient instance;
@@ -70,10 +73,47 @@ public class PostApiClient extends BaseApiClient {
         );
     }
 
+    private int getPostIDUser() {
+        int postID;
+        Scanner sc = new Scanner(System.in);
+        UIPost uiPost = UIPost.getInstance();
+
+        while (true) {
+            uiPost.pleaseEnterPostId();
+
+            try {
+                postID = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                uiPost.invalidInput();
+            }
+        }
+        return postID;
+    }
+
     //GET /post/:id
     public Post getPost() {
-        // TODO
-        return null;
+        int postId = getPostIDUser();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(baseUrl + "/posts/" + postId))
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                JsonElement postElement = JsonParser.parseString(response.body());
+                PostDTO postDto = getPostDTO(postElement);
+                return PostMapper.toModel(postDto);
+            } else {
+                System.err.println("Failed to fetch post with ID " + postId + ". Status code: " + response.statusCode());
+                return null;
+            }
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Get post request failed for ID " + postId + ": " + e.getMessage());
+            return null;
+        }
     }
 
     public void addPost(String username) {
