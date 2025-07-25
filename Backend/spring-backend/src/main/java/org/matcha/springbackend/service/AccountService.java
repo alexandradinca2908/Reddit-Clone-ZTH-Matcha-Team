@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class AccountService {
-    private List<Account> accounts;
+    private final List<Account> accounts;
     private final PasswordService passwordService;
 
     public AccountService(PasswordService passwordService) {

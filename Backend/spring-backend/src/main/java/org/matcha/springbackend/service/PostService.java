@@ -12,4 +12,8 @@ public class PostService {
     public List<Post> getPosts() {
         return posts;
     }
+
+    public void addPost(Post post) {
+        posts.add(post);
+    }
 }
