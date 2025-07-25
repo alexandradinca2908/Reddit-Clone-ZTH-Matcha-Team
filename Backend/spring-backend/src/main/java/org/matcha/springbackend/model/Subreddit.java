@@ -26,4 +26,40 @@ public class Subreddit {
         this.iconUrl = iconUrl;
         this.createdAt = createdAt;
     }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public Integer getMemberCount() {
+        return memberCount;
+    }
+
+    public Integer getPostCount() {
+        return postCount;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
 }
