@@ -1,4 +1,4 @@
-package org.matcha.springbackend.dto;
+package org.matcha.springbackend.dto.post.requestbody;
 
 public record PostRequestBodyDTO (
         String title,

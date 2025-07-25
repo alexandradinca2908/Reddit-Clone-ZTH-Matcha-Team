@@ -62,4 +62,12 @@ public class Post extends Likeable {
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

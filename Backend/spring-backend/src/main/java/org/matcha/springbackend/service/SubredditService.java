@@ -27,4 +27,8 @@ public class SubredditService {
 
         return null;
     }
+
+    public void addSubreddit(Subreddit subreddit) {
+        subreddits.add(subreddit);
+    }
 }

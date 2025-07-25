@@ -1,4 +1,4 @@
-package org.matcha.springbackend.dto;
+package org.matcha.springbackend.dto.post;
 
 public record PostDTO(
         String id,

@@ -1,6 +1,6 @@
 package org.matcha.springbackend.mapper;
 
-import org.matcha.springbackend.dto.PostDTO;
+import org.matcha.springbackend.dto.post.PostDTO;
 import org.matcha.springbackend.model.Post;
 import org.springframework.stereotype.Component;
 
