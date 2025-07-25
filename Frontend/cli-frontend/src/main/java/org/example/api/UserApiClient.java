@@ -3,6 +3,7 @@ package org.example.api;
 import org.example.models.User;
 
 public class UserApiClient extends BaseApiClient {
+    // ACCOUNTS CURRENTLY DISABLED
     private static UserApiClient instance;
     private static final String ACCOUNTS_DISABLED = "Accounts have been disabled";
     private UserApiClient(String baseUrl) {
