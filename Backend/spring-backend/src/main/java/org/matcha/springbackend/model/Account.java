@@ -6,6 +6,12 @@ public class Account {
     String email;
     String password;
 
+    public Account() {
+        this.username = "cineva";
+        this.email = "test@ex.com";
+        this.password = "123456";
+    }
+
     public Account(String userName, String email, String password) {
         this.username = userName;
         this.email = email;

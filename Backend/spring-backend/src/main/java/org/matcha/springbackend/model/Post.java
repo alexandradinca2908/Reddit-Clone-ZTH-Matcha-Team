@@ -27,6 +27,8 @@ public class Post extends Likeable {
         this.updatedAt = updatedAt;
     }
 
+    public Post() {}
+
     public UUID getPostID() {
         return postID;
     }
@@ -63,11 +65,39 @@ public class Post extends Likeable {
         return updatedAt;
     }
 
+    public void setPostId(UUID postId) {
+        this.postID = postId;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public void setSubreddit(Subreddit subreddit) {
+        this.subreddit = subreddit;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
