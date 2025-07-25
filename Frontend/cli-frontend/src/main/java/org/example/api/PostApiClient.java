@@ -11,10 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostApiClient extends BaseApiClient {
+    private static PostApiClient instance;
     public static ArrayList<Post> posts = new ArrayList<>();
 
-    public PostApiClient(String baseUrl) {
+    private PostApiClient(String baseUrl) {
         super(baseUrl);
+    }
+
+    public static PostApiClient getInstance(String baseUrl) {
+        if (instance == null) {
+            instance = new PostApiClient(baseUrl);
+        }
+        return instance;
     }
 
     public void getPosts() {

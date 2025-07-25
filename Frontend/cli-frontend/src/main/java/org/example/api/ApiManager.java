@@ -8,10 +8,10 @@ public class ApiManager {
     private final VotingApiClient votingApiClient;
 
     public ApiManager(String baseUrl) {
-        this.userApiClient = new UserApiClient(baseUrl);
-        this.postApiClient = new PostApiClient(baseUrl);
-        this.commentApiClient = new CommentApiClient(baseUrl);
-        this.votingApiClient = new VotingApiClient(baseUrl);
+        this.userApiClient = UserApiClient.getInstance(baseUrl);
+        this.postApiClient = PostApiClient.getInstance(baseUrl);
+        this.commentApiClient = CommentApiClient.getInstance(baseUrl);
+        this.votingApiClient = VotingApiClient.getInstance(baseUrl);
     }
 
     public static ApiManager getInstance(String baseUrl) {

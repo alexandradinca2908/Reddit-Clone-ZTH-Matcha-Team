@@ -5,69 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3aaf886-41bf-49f3-a1bd-a575c08d36a2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DTO/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Models/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DTO/Likeable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Models/Likeable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DTO/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Models/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DTO/State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Models/State.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DTO/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/DTO/Comment.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/DTO/Likeable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/DTO/Post.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/DTO/State.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/DTO/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/ApiManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/BaseApiClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/CommentApiClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/PostApiClient$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/PostApiClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/UserApiClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/VotingApiClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/loggerobjects/ConsoleLogger.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/loggerobjects/FileLogger.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/loggerobjects/ILoggable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/loggerobjects/LogLevel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/loggerobjects/LogManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/loggerobjects/Logger.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/loggerobjects/LoggerType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/Availability.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/MenuOption.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/BackCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/IMenuCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/QuitCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/ShowFeedCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/mainmenu/CreatePostCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/mainmenu/DeleteAccountCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/mainmenu/LoginCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/mainmenu/LogoutCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/mainmenu/RegisterCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/oncomment/DownvoteCommentCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/oncomment/ReplyCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/oncomment/SelectReplyCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/oncomment/UpvoteCommentCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/onfeed/ExpandPostCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/onpost/CommentCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/onpost/DownvotePostCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/onpost/SelectCommentCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/commandexecution/onpost/UpvotePostCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/views/View.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/views/ViewID.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/views/ViewManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/views/ViewSetup.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/textprocessors/AnsiColors.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/textprocessors/InputTranslator$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/textprocessors/InputTranslator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/textprocessors/ProfanityFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/textprocessors/TextSymbols.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/userinterface/UIComment.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/userinterface/UIPost.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/userinterface/UIUser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/userinterface/UIView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/userinterface/UIVote.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/ApiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/ApiManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/CommentApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/CommentApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/PostApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/PostApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/UserApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/UserApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/VotingApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/VotingApiClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +120,7 @@
       <workItem from="1753302999586" duration="2311000" />
       <workItem from="1753344199379" duration="9979000" />
       <workItem from="1753363520216" duration="476000" />
-      <workItem from="1753429151000" duration="2401000" />
+      <workItem from="1753429151000" duration="3227000" />
     </task>
     <servers />
   </component>
