@@ -1,4 +1,4 @@
-package org.matcha.springbackend.dto;
+package org.matcha.springbackend.dto.post.comment;
 
 import java.util.List;
 

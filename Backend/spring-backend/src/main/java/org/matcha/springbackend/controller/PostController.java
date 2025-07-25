@@ -1,8 +1,8 @@
 package org.matcha.springbackend.controller;
 
 import org.matcha.springbackend.dto.post.PostDTO;
-import org.matcha.springbackend.dto.post.requestbody.PostRequestBodyDTO;
-import org.matcha.springbackend.dto.post.requestbody.PutRequestBodyDTO;
+import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDTO;
+import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDTO;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
@@ -68,7 +68,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<DataResponse<PostDTO>> createPost(@RequestBody PostRequestBodyDTO postDTO) {
+    public ResponseEntity<DataResponse<PostDTO>> createPost(@RequestBody CreatePostBodyDTO postDTO) {
         //  Create post fields
         UUID uuid = UUID.randomUUID();
 
@@ -100,7 +100,7 @@ public class PostController {
 
     @PutMapping("{id}")
     public ResponseEntity<DataResponse<PostDTO>> updatePost(@PathVariable String id,
-                                                            @RequestBody PutRequestBodyDTO postDTO) {
+                                                            @RequestBody UpdatePostBodyDTO postDTO) {
         //  Get post by id and set new fields
         Post post = postService.getPostById(id);
 

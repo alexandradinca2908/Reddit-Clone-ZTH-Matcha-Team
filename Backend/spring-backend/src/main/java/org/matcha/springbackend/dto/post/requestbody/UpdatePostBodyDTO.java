@@ -1,6 +1,6 @@
 package org.matcha.springbackend.dto.post.requestbody;
 
-public record PutRequestBodyDTO(
+public record UpdatePostBodyDTO(
         String title,
         String content
 ) {
