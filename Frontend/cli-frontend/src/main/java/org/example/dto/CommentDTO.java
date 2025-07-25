@@ -1,6 +1,6 @@
 package org.example.dto;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public record CommentDTO(
         String id,
@@ -14,6 +14,6 @@ public record CommentDTO(
         String userVote,
         String createdAt,
         String updatedAt,
-        List<CommentDTO> replies
+        ArrayList<CommentDTO> replies
 ) {
 }
