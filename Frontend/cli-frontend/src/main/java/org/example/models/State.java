@@ -1,4 +1,4 @@
-package org.example.DTO;
+package org.example.models;
 
 public enum State {
     MAIN_MENU,
