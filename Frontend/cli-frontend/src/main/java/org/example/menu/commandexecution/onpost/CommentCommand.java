@@ -1,7 +1,7 @@
 package org.example.menu.commandexecution.onpost;
 
-import org.example.DTO.Post;
-import org.example.DTO.User;
+import org.example.models.Post;
+import org.example.models.User;
 import org.example.menu.views.View;
 import org.example.menu.commandexecution.IMenuCommand;
 

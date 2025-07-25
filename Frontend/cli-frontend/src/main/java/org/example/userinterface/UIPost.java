@@ -1,7 +1,7 @@
 package org.example.userinterface;
 
-import org.example.DTO.Post;
-import org.example.DTO.User;
+import org.example.models.Post;
+import org.example.models.User;
 import org.example.api.PostApiClient;
 import org.example.textprocessors.AnsiColors;
 import org.example.textprocessors.ProfanityFilter;

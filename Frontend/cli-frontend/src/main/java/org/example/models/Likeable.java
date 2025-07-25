@@ -1,4 +1,4 @@
-package org.example.DTO;
+package org.example.models;
 
 public abstract class Likeable {
     protected int voteCount;

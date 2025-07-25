@@ -2,9 +2,9 @@ package org.example.menu.views;
 
 import org.example.api.*;
 import org.example.loggerobjects.Logger;
-import org.example.DTO.Comment;
-import org.example.DTO.Post;
-import org.example.DTO.User;
+import org.example.models.Comment;
+import org.example.models.Post;
+import org.example.models.User;
 import org.example.userinterface.UIComment;
 import org.example.userinterface.UIPost;
 import org.example.userinterface.UIView;
