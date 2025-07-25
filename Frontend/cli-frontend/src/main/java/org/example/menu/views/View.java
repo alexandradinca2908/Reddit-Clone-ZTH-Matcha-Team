@@ -1,6 +1,5 @@
 package org.example.menu.views;
 
-import org.example.loggerobjects.Logger;
 import org.example.menu.Availability;
 import org.example.menu.MenuOption;
 import org.example.userinterface.UIView;
@@ -65,8 +64,6 @@ public class View {
         }
 
         if (!menu.containsKey(menuOption)) {
-            Logger.fatal("In " + viewID + " it is possible to access " + menuOption
-                    + " but it should NOT be available");
             return true;
         }
 

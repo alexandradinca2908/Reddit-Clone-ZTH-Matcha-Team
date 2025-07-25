@@ -14,6 +14,7 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 public class PostApiClient extends BaseApiClient {
@@ -76,16 +77,15 @@ public class PostApiClient extends BaseApiClient {
     private int getPostIDUser() {
         int postID;
         Scanner sc = new Scanner(System.in);
-        UIPost uiPost = UIPost.getInstance();
 
         while (true) {
-            uiPost.pleaseEnterPostId();
+            UIPost.pleaseEnterPostId();
 
             try {
                 postID = Integer.parseInt(sc.nextLine());
                 break;
             } catch (NumberFormatException e) {
-                uiPost.invalidInput();
+                UIPost.invalidInput();
             }
         }
         return postID;
@@ -94,9 +94,14 @@ public class PostApiClient extends BaseApiClient {
     //GET /post/:id
     public Post getPost() {
         int postId = getPostIDUser();
-
+        String postUUID = "";
+        for (Post post : posts) {
+            if (post.getPostID() == postId) {
+                postUUID = post.getUUID();
+            }
+        }
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(baseUrl + "/posts/" + postId))
+                .uri(URI.create(baseUrl + "/posts/" + postUUID))
                 .GET()
                 .build();
         try {
@@ -116,7 +121,31 @@ public class PostApiClient extends BaseApiClient {
         }
     }
 
-    public void addPost(String username) {
-        //TODO
+    // POST /posts
+    public void addPost(String authorName, String subreddit) {
+        Map<String, String> postContent = UIPost.getPostDetailsFromUser();
+        JsonObject requestBody = new JsonObject();
+        requestBody.addProperty("title", postContent.get("title"));
+        requestBody.addProperty("content", postContent.get("content"));
+        requestBody.addProperty("author", authorName);
+        requestBody.addProperty("subreddit", subreddit);
+
+        String jsonPayload = requestBody.toString();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(baseUrl + "/posts"))
+                .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+                .build();
+
+        try {
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 201){
+                System.err.println("Failed to create post. Status code: " + response.statusCode());
+                System.err.println("Response body: " + response.body());
+            }
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Create post request failed: " + e.getMessage());
+        }
     }
 }

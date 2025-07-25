@@ -241,11 +241,11 @@ public class UIPost {
         System.out.println(POST_ADDED_SUCCESSFULLY);
     }
 
-    public void pleaseEnterPostId() {
+    public static void pleaseEnterPostId() {
         System.out.println(PLEASE_ENTER_POST_ID);
     }
 
-    public void invalidInput() {
+    public static void invalidInput() {
         System.out.println(INVALID_INPUT);
     }
 }

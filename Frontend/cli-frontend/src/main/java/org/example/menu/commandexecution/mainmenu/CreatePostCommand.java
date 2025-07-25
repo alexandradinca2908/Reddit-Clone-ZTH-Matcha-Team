@@ -8,7 +8,7 @@ public class CreatePostCommand implements IMenuCommand {
     @Override
     public boolean execute(View view) {
         User user = view.getViewManager().getUser();
-        view.getViewManager().getPostApi().addPost(user.getUsername());
+        view.getViewManager().getPostApi().addPost(user.getUsername(), "MatchaSubreddit");
 
         return true;
     }
