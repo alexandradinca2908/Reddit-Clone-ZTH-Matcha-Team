@@ -14,13 +14,13 @@ public class SubredditService {
         this.subreddits = new ArrayList<>();
     }
 
-    public Subreddit findByDisplayName(String displayName) {
-        if (displayName == null || displayName.isEmpty()) {
+    public Subreddit findByName(String name) {
+        if (name == null || name.isEmpty()) {
             return null;
         }
 
         for (Subreddit subreddit : subreddits) {
-            if (displayName.equals(subreddit.getDisplayName())) {
+            if (name.equals(subreddit.getName())) {
                 return subreddit;
             }
         }

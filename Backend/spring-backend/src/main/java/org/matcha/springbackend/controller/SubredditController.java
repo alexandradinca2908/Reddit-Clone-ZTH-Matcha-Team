@@ -1,6 +1,5 @@
 package org.matcha.springbackend.controller;
 
-import org.matcha.springbackend.dto.post.PostDTO;
 import org.matcha.springbackend.dto.subreddit.SubredditDTO;
 import org.matcha.springbackend.dto.subreddit.requestbody.CreateSubredditBodyDTO;
 import org.matcha.springbackend.mapper.SubredditMapper;

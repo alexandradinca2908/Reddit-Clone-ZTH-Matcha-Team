@@ -75,7 +75,7 @@ public class PostController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
         }
 
-        Subreddit subreddit = subredditService.findByDisplayName(postDTO.subreddit());
+        Subreddit subreddit = subredditService.findByName(postDTO.subreddit());
         if  (subreddit == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Subreddit not found");
         }
