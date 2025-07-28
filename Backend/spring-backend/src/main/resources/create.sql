@@ -37,18 +37,25 @@ CREATE TABLE post (
     photo_path TEXT,
     is_deleted BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+	updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    upvotes INTEGER,
+    downvotes INTEGER,
+    score INTEGER,
+    comment_count INTEGER
 );
 
 CREATE TABLE comment (
     comment_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     account_id UUID REFERENCES account(account_id) ON DELETE SET NULL,
-    parent_id UUID NOT NULL, -- poate fi post_id sau comment_id
-    parent_type parent_type NOT NULL,
+    post_id UUID REFERENCES post(post_id) ON DELETE CASCADE,
+    parent_comment_id UUID REFERENCES comment(comment_id) ON DELETE CASCADE,
     text TEXT NOT NULL,
     is_deleted BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    upvotes INTEGER,
+    downvotes INTEGER,
+    score INTEGER
 );
 
 CREATE TABLE vote (

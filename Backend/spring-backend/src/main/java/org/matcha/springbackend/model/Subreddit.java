@@ -5,6 +5,7 @@ import java.util.UUID;
 
 public class Subreddit {
     private UUID id;
+    private Account account; // Optional: if you want to include the creator's account
     private String name;
     private String displayName;
     private String description;

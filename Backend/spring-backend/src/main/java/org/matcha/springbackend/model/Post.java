@@ -7,18 +7,27 @@ public class Post extends Likeable {
     private UUID postID;
     private Account account;
     private Subreddit subreddit;
+    private Integer upvotes;
+    private Integer downvotes;
+    private Integer score;
+    private Integer commentCount;
     private String title;
     private String content;
     private String photoPath;
     private boolean isDeleted;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
+    private java.util.List<Comment> comments;
 
     public Post(UUID postID, Account account, Subreddit subreddit, String title,
                 String content, String photoPath, boolean isDeleted, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.postID = postID;
         this.account = account;
         this.subreddit = subreddit;
+        this.upvotes = upvotes;
+        this.downvotes = downvotes;
+        this.score = score;
+        this.commentCount = commentCount;
         this.title = title;
         this.content = content;
         this.photoPath = photoPath;
@@ -65,6 +74,10 @@ public class Post extends Likeable {
         return updatedAt;
     }
 
+    public java.util.List<Comment> getComments() {
+        return comments;
+    }
+
     public void setPostId(UUID postId) {
         this.postID = postId;
     }
@@ -100,4 +113,10 @@ public class Post extends Likeable {
     public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public void setComments(java.util.List<Comment> comments) {
+        this.comments = comments;
+    }
+
+
 }

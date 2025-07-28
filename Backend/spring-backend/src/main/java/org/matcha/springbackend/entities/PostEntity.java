@@ -39,6 +39,20 @@ public class PostEntity {
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
+    @Column(name = "upvotes")
+    private Integer upvotes;
+
+    @Column(name = "downvotes")
+    private Integer downvotes;
+
+    @Column(name = "score")
+    private Integer score;
+
+    @Column(name = "comment_count")
+    private Integer commentCount;
+
+    private java.util.List<CommentEntity> comments;
+
 
     public PostEntity() {}
 
@@ -58,12 +72,12 @@ public class PostEntity {
 
     // -------- Getters & Setters --------
 
-    public UUID getPostId() {
+    public UUID getPostID() {
         return postId;
     }
 
-    public void setPostId(UUID postId) {
-        this.postId = postId;
+    public void setPostID(UUID postID) {
+        this.postId = postID;
     }
 
     public AccountEntity getAccount() {
@@ -124,5 +138,45 @@ public class PostEntity {
 
     public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Integer getUpvotes() {
+        return upvotes;
+    }
+
+    public void setUpvotes(Integer upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    public Integer getDownvotes() {
+        return downvotes;
+    }
+
+    public void setDownvotes(Integer downvotes) {
+        this.downvotes = downvotes;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public java.util.List<CommentEntity> getComments() {
+        return comments;
+    }
+
+    public void setComments(java.util.List<CommentEntity> comments) {
+        this.comments = comments;
     }
 }

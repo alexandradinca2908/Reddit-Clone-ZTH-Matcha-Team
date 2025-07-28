@@ -36,6 +36,16 @@ public class CommentEntity {
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
+    // Adaugare: campuri suplimentare pentru Likeable (daca este cazul)
+    @Column(name = "upvotes")
+    private Integer upvotes;
+
+    @Column(name = "downvotes")
+    private Integer downvotes;
+
+    @Column(name = "score")
+    private Integer score;
+
     public CommentEntity() {}
 
     @PrePersist
@@ -112,5 +122,29 @@ public class CommentEntity {
 
     public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Integer getUpvotes() {
+        return upvotes;
+    }
+
+    public void setUpvotes(Integer upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    public Integer getDownvotes() {
+        return downvotes;
+    }
+
+    public void setDownvotes(Integer downvotes) {
+        this.downvotes = downvotes;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 }

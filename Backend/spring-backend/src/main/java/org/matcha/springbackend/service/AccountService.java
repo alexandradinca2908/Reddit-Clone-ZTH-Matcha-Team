@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AccountService {
@@ -17,7 +18,7 @@ public class AccountService {
     }
 
     public Account userRegister(Account account) {
-        Account newAccount = new Account(account.getUsername(), account.getEmail(), account.getPassword());
+        Account newAccount = new Account(UUID.randomUUID(), account.getUsername(), account.getEmail(), account.getPassword());
         accounts.add(newAccount);
 
         //  TODO - add in DB
