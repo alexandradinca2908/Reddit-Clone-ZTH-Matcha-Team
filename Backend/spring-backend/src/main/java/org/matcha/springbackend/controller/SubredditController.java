@@ -17,12 +17,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/subreddits")
 public class SubredditController {
-    private final List<Subreddit> subreddits;
     private final SubredditService subredditService;
     private final SubredditMapper subredditMapper;
 
     public SubredditController(List<Subreddit> subreddits, SubredditService subredditService, SubredditMapper subredditMapper) {
-        this.subreddits = subreddits;
         this.subredditService = subredditService;
         this.subredditMapper = subredditMapper;
     }
@@ -38,7 +36,7 @@ public class SubredditController {
         return ResponseEntity.ok(dataResponse);
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<DataResponse<SubredditDTO>> createSubreddit(@RequestBody CreateSubredditBodyDTO subredditDTO) {
         //  Create post fields
         UUID uuid = UUID.randomUUID();

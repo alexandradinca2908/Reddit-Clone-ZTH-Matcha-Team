@@ -37,7 +37,7 @@ public class PostController {
         this.subredditService = subredditService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<DataResponse<List<PostDTO>>> getPosts() {
         //  Map Post to PostDTO
         List<PostDTO> postDTOs = postService.getPosts().stream()
