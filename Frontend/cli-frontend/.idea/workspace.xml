@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3aaf886-41bf-49f3-a1bd-a575c08d36a2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/api/PostApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/api/PostApiClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/menu/commandexecution/mainmenu/CreatePostCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/menu/commandexecution/mainmenu/CreatePostCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/userinterface/UIPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/userinterface/UIPost.java" afterDir="false" />
-    </list>
+    <list default="true" id="d3aaf886-41bf-49f3-a1bd-a575c08d36a2" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -117,7 +113,7 @@
       <workItem from="1753302999586" duration="2311000" />
       <workItem from="1753344199379" duration="9979000" />
       <workItem from="1753363520216" duration="476000" />
-      <workItem from="1753429151000" duration="17355000" />
+      <workItem from="1753429151000" duration="17568000" />
     </task>
     <servers />
   </component>
