@@ -9,11 +9,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PostMapper {
-    public Post entityToModel(PostDTO dto) {
-        //  TODO
-        return null;
-    }
-
     public PostDTO modelToDTO(Post model) {
         String id = model.getPostID().toString();
         String title = model.getTitle();
@@ -33,7 +28,7 @@ public class PostMapper {
                 score, commentCount, userVote, createdAt, updatedAt);
     }
 
-    public static Post toDomain(PostEntity entity) {
+    public static Post entityToModel(PostEntity entity) {
         if (entity == null) return null;
 
         // Map Account

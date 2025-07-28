@@ -28,6 +28,10 @@ public class SubredditService {
         return null;
     }
 
+    public List<Subreddit> getSubreddits() {
+        return subreddits;
+    }
+
     public void addSubreddit(Subreddit subreddit) {
         subreddits.add(subreddit);
     }

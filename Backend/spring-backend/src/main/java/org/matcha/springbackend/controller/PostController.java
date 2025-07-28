@@ -1,6 +1,7 @@
 package org.matcha.springbackend.controller;
 
 import org.matcha.springbackend.dto.post.PostDTO;
+import org.matcha.springbackend.dto.post.PostVotesDTO;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDTO;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDTO;
 import org.matcha.springbackend.mapper.PostMapper;
@@ -132,5 +133,11 @@ public class PostController {
         MessageResponse messageResponse = new MessageResponse(true,
                 "Postarea a fost stearsa cu succes");
         return ResponseEntity.ok(messageResponse);
+    }
+
+    // TODO
+    @PostMapping("/{id}/vote")
+    public ResponseEntity<DataResponse<PostVotesDTO>> votePost(@PathVariable String id) {
+        return null;
     }
 }
