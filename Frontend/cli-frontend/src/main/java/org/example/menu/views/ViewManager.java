@@ -13,7 +13,8 @@ import org.example.userinterface.UIView;
 import java.util.HashMap;
 
 public class ViewManager {
-    public static final String BACKEND_API_URL = "http://13.48.209.206:8080";  //to be moved soon
+    //public static final String BACKEND_API_URL = "http://13.48.209.206:8080";  //to be moved soon
+    public static final String BACKEND_API_URL = "http://localhost:8080"; //to be moved soon
     private static final String ACCOUNTS_DISABLED = "Accounts have been disabled! Logging in as TEST USER";
     private final ApiManager apiManager = ApiManager.getInstance(BACKEND_API_URL);
     private final UIPost uiPost = UIPost.getInstance();
@@ -143,7 +144,7 @@ public class ViewManager {
         UIView.accountsDisabled = disable;
         if (disable) {
             System.out.println(AnsiColors.toBlue(ACCOUNTS_DISABLED));
-            User dummyuser = new User("TEST_USER_MATCHA", "12345678aA!", "test@gmail.com");
+            User dummyuser = new User("TEST_USER_MATCHA", "test@gmail.com", "12345678aA!");
             this.setUser(dummyuser);
             this.setLoggedIn(true);
         }
