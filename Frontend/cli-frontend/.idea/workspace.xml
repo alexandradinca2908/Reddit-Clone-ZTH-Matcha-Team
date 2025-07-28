@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3aaf886-41bf-49f3-a1bd-a575c08d36a2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../.idea/Matcha.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/Matcha.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/jsonconverter/CommentToJson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/jsonconverter/CommentToJson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/menu/views/ViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/menu/views/ViewManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/DTO/CommentDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/DTO/CommentDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/CommentApiClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/api/CommentApiClient.class" afterDir="false" />
+    <list default="true" id="d3aaf886-41bf-49f3-a1bd-a575c08d36a2" name="Changes" comment="Updated for localhost">
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/views/ViewManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/menu/views/ViewManager.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,11 +116,35 @@
       <workItem from="1753344199379" duration="9979000" />
       <workItem from="1753363520216" duration="476000" />
       <workItem from="1753429151000" duration="17355000" />
-      <workItem from="1753702415699" duration="1693000" />
+      <workItem from="1753702415699" duration="2084000" />
     </task>
+    <task id="LOCAL-00001" summary="Updated for localhost">
+      <option name="closed" value="true" />
+      <created>1753704300588</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1753704300588</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updated for localhost" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated for localhost" />
   </component>
 </project>
