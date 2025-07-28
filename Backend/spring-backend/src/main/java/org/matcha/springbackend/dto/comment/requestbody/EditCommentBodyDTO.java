@@ -1,4 +1,4 @@
-package org.matcha.springbackend.dto.post.comment.requestbody;
+package org.matcha.springbackend.dto.comment.requestbody;
 
 public record EditCommentBodyDTO(
         String content

@@ -1,5 +1,6 @@
 package org.matcha.springbackend.controller;
 
+import org.matcha.springbackend.dto.post.PostDTO;
 import org.matcha.springbackend.dto.subreddit.SubredditDTO;
 import org.matcha.springbackend.dto.subreddit.requestbody.CreateSubredditBodyDTO;
 import org.matcha.springbackend.mapper.SubredditMapper;
@@ -7,10 +8,7 @@ import org.matcha.springbackend.model.Subreddit;
 import org.matcha.springbackend.response.DataResponse;
 import org.matcha.springbackend.service.SubredditService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -27,6 +25,17 @@ public class SubredditController {
         this.subreddits = subreddits;
         this.subredditService = subredditService;
         this.subredditMapper = subredditMapper;
+    }
+
+    @GetMapping
+    public ResponseEntity<DataResponse<List<SubredditDTO>>> getSubreddits() {
+        //  Map Post to PostDTO
+        List<SubredditDTO> subredditDTOs = subredditService.getSubreddits().stream()
+                .map(subredditMapper::modelToDTO)
+                .toList();
+
+        DataResponse<List<SubredditDTO>> dataResponse = new DataResponse<>(true, subredditDTOs);
+        return ResponseEntity.ok(dataResponse);
     }
 
     @PostMapping()

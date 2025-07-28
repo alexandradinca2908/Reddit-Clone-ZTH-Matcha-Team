@@ -22,14 +22,14 @@ public class PostService {
     public List<Post> getPosts() {
         List<PostEntity> entities = postRepository.findAll(); // Optionally: use `@EntityGraph` to fetch relations
         return entities.stream()
-                .map(PostMapper::toDomain)
+                .map(PostMapper::entityToModel)
                 .collect(Collectors.toList());
     }
 
     public List<Post> getAllPosts() {
         return postRepository.findAll()
                 .stream()
-                .map(PostMapper::toDomain)
+                .map(PostMapper::entityToModel)
                 .collect(Collectors.toList());
     }
 
@@ -49,5 +49,16 @@ public class PostService {
 
     public boolean deletePost(String id) {
         return posts.remove(getPostById(id));
+    }
+
+    //  TODO
+    public boolean votePost(String id, String vote) {
+        Post post = getPostById(id);
+
+        if (post != null) {
+            return false;
+        }
+
+        return true;
     }
 }
