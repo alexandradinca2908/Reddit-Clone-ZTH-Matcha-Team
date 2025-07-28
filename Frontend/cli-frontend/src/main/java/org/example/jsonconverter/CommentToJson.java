@@ -17,52 +17,52 @@ public class CommentToJson {
         return instance;
     }
 
-    public static CommentDTO mapCommentToDTO(Comment comment) {
-        LocalDateTime now = LocalDateTime.now();
-        CommentDTO commentDTO;
-        if(comment.getReplyList().isEmpty()) {
-            commentDTO = new CommentDTO(
-                    comment.getCommentUID(),
-                    comment.getParentPost().getPostUID(),
-                    comment.getParentPost().getPostUID(),
-                    comment.getCommentText(),
-                    comment.getParentUser().getUsername(),
-                    0,//TODO cu baiatul de la front
-                    0, //TODO cu baiatul de la front
-                    comment.getVotes(),
-                    "?", //TODO
-                    now.toString(),
-                    now.toString(),
-                    new ArrayList<CommentDTO>()
+//    public static CommentDTO mapCommentToDTO(Comment comment) {
+//        LocalDateTime now = LocalDateTime.now();
+//        CommentDTO commentDTO;
+//        if(comment.getReplyList().isEmpty()) {
+//            commentDTO = new CommentDTO(
+//                    comment.getCommentUID(),
+//                    comment.getParentPost().getPostUID(),
+//                    comment.getParentPost().getPostUID(),
+//                    comment.getCommentText(),
+//                    comment.getParentUser().getUsername(),
+//                    0,//TODO cu baiatul de la front
+//                    0, //TODO cu baiatul de la front
+//                    comment.getVotes(),
+//                    "?", //TODO
+//                    now.toString(),
+//                    now.toString(),
+//                    new ArrayList<CommentDTO>()
+//
+//            );
+//        } else {
+//            ArrayList<CommentDTO> replyDTO = new ArrayList<>();
+//            for(Comment reply : comment.getReplyList()) {
+//                replyDTO.add(mapCommentToDTO(reply));
+//            }
+//            commentDTO = new CommentDTO(
+//                    comment.getCommentUID(),
+//                    comment.getParentPost().getPostUID(),
+//                    comment.getParentPost().getPostUID(),
+//                    comment.getCommentText(),
+//                    comment.getParentUser().getUsername(),
+//                    0,//TODO cu baiatul de la front
+//                    0, //TODO cu baiatul de la front
+//                    comment.getVotes(),
+//                    "?", //TODO
+//                    now.toString(),
+//                    now.toString(),
+//                    replyDTO
+//            );
+//        }
+//
+//        return commentDTO;
+//    }
 
-            );
-        } else {
-            ArrayList<CommentDTO> replyDTO = new ArrayList<>();
-            for(Comment reply : comment.getReplyList()) {
-                replyDTO.add(mapCommentToDTO(reply));
-            }
-            commentDTO = new CommentDTO(
-                    comment.getCommentUID(),
-                    comment.getParentPost().getPostUID(),
-                    comment.getParentPost().getPostUID(),
-                    comment.getCommentText(),
-                    comment.getParentUser().getUsername(),
-                    0,//TODO cu baiatul de la front
-                    0, //TODO cu baiatul de la front
-                    comment.getVotes(),
-                    "?", //TODO
-                    now.toString(),
-                    now.toString(),
-                    replyDTO
-            );
-        }
-
-        return commentDTO;
-    }
-
-    public String convert(Comment comment) {
-        CommentDTO commentDTO = CommentToJson.mapCommentToDTO(comment);
-        Gson gson = new Gson();
-        return gson.toJson(commentDTO);
-    }
+//    public String convert(Comment comment) {
+//        CommentDTO commentDTO = CommentToJson.mapCommentToDTO(comment);
+//        Gson gson = new Gson();
+//        return gson.toJson(commentDTO);
+//    }
 }
