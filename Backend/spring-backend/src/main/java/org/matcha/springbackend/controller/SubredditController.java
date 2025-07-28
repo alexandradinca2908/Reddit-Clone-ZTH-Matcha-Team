@@ -1,15 +1,52 @@
 package org.matcha.springbackend.controller;
 
+import org.matcha.springbackend.dto.subreddit.SubredditDTO;
+import org.matcha.springbackend.dto.subreddit.requestbody.CreateSubredditBodyDTO;
+import org.matcha.springbackend.mapper.SubredditMapper;
 import org.matcha.springbackend.model.Subreddit;
+import org.matcha.springbackend.response.DataResponse;
+import org.matcha.springbackend.service.SubredditService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
+@RequestMapping("/subreddits")
 public class SubredditController {
     private final List<Subreddit> subreddits;
+    private final SubredditService subredditService;
+    private final SubredditMapper subredditMapper;
 
-    public SubredditController(List<Subreddit> subreddits) {
+    public SubredditController(List<Subreddit> subreddits, SubredditService subredditService, SubredditMapper subredditMapper) {
         this.subreddits = subreddits;
+        this.subredditService = subredditService;
+        this.subredditMapper = subredditMapper;
+    }
+
+    @PostMapping()
+    public ResponseEntity<DataResponse<SubredditDTO>> createSubreddit(@RequestBody CreateSubredditBodyDTO subredditDTO) {
+        //  Create post fields
+        UUID uuid = UUID.randomUUID();
+        OffsetDateTime createdAt = OffsetDateTime.now();
+
+        //  Create and add post
+        Subreddit subreddit = new Subreddit(uuid, subredditDTO.name(), subredditDTO.displayName(),
+                subredditDTO.description(), false, 0, 0,
+                subredditDTO.iconUrl(), createdAt);
+
+        subredditService.addSubreddit(subreddit);
+
+        //  TODO - UPDATE IN DB
+
+        //  Send response
+        DataResponse<SubredditDTO> dataResponse = new DataResponse<>(true,
+                subredditMapper.modelToDTO(subreddit));
+        return ResponseEntity.ok(dataResponse);
     }
 }
