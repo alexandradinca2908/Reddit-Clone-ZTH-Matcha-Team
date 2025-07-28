@@ -134,6 +134,7 @@ public class PostApiClient extends BaseApiClient {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseUrl + "/posts"))
+                .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
                 .build();
 

@@ -1,0 +1,248 @@
+[33mcommit 23341bd56fc6946302453819712c4f059284eac7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdarius[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: 7a379b2 e72e5e1
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Wed Jul 23 12:16:57 2025 +0300
+
+    Merge branch 'main' of https://github.com/alexandradinca2908/Matcha
+
+[33mcommit 7a379b244afa86eaeaabe4b69110aa1b1b0c012d[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Wed Jul 23 12:16:53 2025 +0300
+
+    Splitting frontend for post service
+
+[33mcommit 6d9c816322e0325f638c88492ad6a8244e778cbd[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Wed Jul 23 12:09:30 2025 +0300
+
+    Splitting frontend for comment service
+
+[33mcommit e72e5e1dee50ca5387680d3c87c92acb9606cee3[m
+Merge: e4dd2c1 ef6cf64
+Author: Darius Preda <dariuspreda02@gmail.com>
+Date:   Wed Jul 23 11:57:46 2025 +0300
+
+    Merge branch 'main' of https://github.com/alexandradinca2908/Matcha
+
+[33mcommit e4dd2c1213a7f3db971d2b763d30c69e0901a6a6[m
+Author: Darius Preda <dariuspreda02@gmail.com>
+Date:   Wed Jul 23 11:57:34 2025 +0300
+
+    Processor Folder
+
+[33mcommit ef6cf644d825132aeb37235c59c77fa398287f74[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Wed Jul 23 11:44:52 2025 +0300
+
+    Removed unused imports
+
+[33mcommit 926f411810ad9907d108542c35c495540ce82960[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Tue Jul 22 15:52:44 2025 +0300
+
+    Splitting UI from backend, deleted unused voteReply and small code refactoring
+
+[33mcommit 228977505394c0f9f6174549311df54a4c115319[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Tue Jul 22 15:02:08 2025 +0300
+
+    Splitting UI from backend
+
+[33mcommit d58d9ca27d9f306ded5631e1b37b48e84ffd1af0[m[33m ([m[1;31morigin/matei-test[m[33m)[m
+Author: Matthew64bit <matei.stoicea@gmail.com>
+Date:   Fri Jul 18 16:10:20 2025 +0300
+
+    Removed debug SOUT.
+
+[33mcommit 7770f61d50b0f8ca65d8b00d23865408ee3402ff[m
+Author: Matthew64bit <matei.stoicea@gmail.com>
+Date:   Fri Jul 18 16:04:05 2025 +0300
+
+    Added config file for ProfanityFilter.
+
+[33mcommit 49227cb6ca83214b1d51aaec99d21403286de2fd[m
+Merge: d16961f a6b92f3
+Author: Matthew64bit <matei.stoicea@gmail.com>
+Date:   Fri Jul 18 16:01:07 2025 +0300
+
+    Merge remote-tracking branch 'origin/main'
+    
+    # Conflicts:
+    #       Backend/cli-backend/en_banned.txt
+    #       Backend/cli-backend/src/main/java/org/example/textprocessors/ProfanityFilter.java
+    #       Backend/cli-backend/src/main/java/org/example/textprocessors/en_banned.txt
+    #       Backend/cli-backend/src/main/java/org/example/textprocessors/enbanned.txt
+
+[33mcommit d16961f7b022ce355a9ef437571ef9547a771222[m
+Author: Matthew64bit <matei.stoicea@gmail.com>
+Date:   Fri Jul 18 15:57:45 2025 +0300
+
+    Added config file for ProfanityFilter.
+
+[33mcommit de26f6e70962f8ca45b8f7c01f216d5b84d102f8[m
+Author: Matthew64bit <matei.stoicea@gmail.com>
+Date:   Fri Jul 18 15:57:12 2025 +0300
+
+    Added config file for ProfanityFilter.
+
+[33mcommit a6b92f3b806b5bed51735c9aa244b236888d3782[m
+Author: Darius Preda <dariuspreda02@gmail.com>
+Date:   Fri Jul 18 15:49:28 2025 +0300
+
+    Fixed typo
+
+[33mcommit 3ca701e28eb1e09f1f05d726b6ee9e466a98bf24[m
+Merge: cd0859b 5ffd3b4
+Author: Darius Preda <dariuspreda02@gmail.com>
+Date:   Fri Jul 18 15:47:51 2025 +0300
+
+    Fixed Conflict
+
+[33mcommit cd0859b6fc1dc66ebe52f47b8b4b80fb64abb2dd[m
+Author: Darius Preda <dariuspreda02@gmail.com>
+Date:   Fri Jul 18 15:46:16 2025 +0300
+
+    Tried to fix ProfanityFilter
+
+[33mcommit 5ffd3b4ab163fbad0bef4b15219fbc3ea6234a0e[m
+Merge: a8ac089 3c52810
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Fri Jul 18 15:39:14 2025 +0300
+
+    Merge branch 'main' of https://github.com/alexandradinca2908/Matcha
+
+[33mcommit a8ac0897c672232b20878722d019fb7151a66c3b[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Fri Jul 18 15:39:09 2025 +0300
+
+    [READY FOR REVIEW] YAY nested comments!
+
+[33mcommit 3c52810999bd080cddfabefa1453a56d404ac01c[m
+Author: Matthew64bit <matei.stoicea@gmail.com>
+Date:   Fri Jul 18 15:14:23 2025 +0300
+
+    Post title, body and comments now are filtered when posting by ProfanityFilter.
+
+[33mcommit 466de15c151c7249c88bcb91d2b578a017e4003f[m
+Merge: 54dabd9 cd5e4fd
+Author: Matthew64bit <matei.stoicea@gmail.com>
+Date:   Fri Jul 18 15:07:30 2025 +0300
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit 54dabd95bc930b9a4a0b8270444ca73b7b763925[m
+Author: Matthew64bit <matei.stoicea@gmail.com>
+Date:   Fri Jul 18 15:07:16 2025 +0300
+
+    Added ProfanityFilter and file to config for en.
+
+[33mcommit cd5e4fd51e47eae3bc12e648a397933702f76e53[m
+Author: Darius Preda <dariuspreda02@gmail.com>
+Date:   Fri Jul 18 14:26:08 2025 +0300
+
+    Code review for Feed UI
+
+[33mcommit 593869c41764d9daec3c65addfa5c8c0285e7ee6[m
+Merge: a092551 19528dd
+Author: Darius Preda <dariuspreda02@gmail.com>
+Date:   Fri Jul 18 12:23:37 2025 +0300
+
+    Merge branch 'main' of https://github.com/alexandradinca2908/Matcha
+
+[33mcommit 19528dddae79f293cccf2572c64f8cf10285660b[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Fri Jul 18 12:21:51 2025 +0300
+
+    Code review updates for Logger
+
+[33mcommit 7436be7913e99ecf760c2b718936e65a41a1b2bb[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Fri Jul 18 12:19:18 2025 +0300
+
+    Code review updates for Logger
+
+[33mcommit a092551750f2d1ba2d5e5520739f249fe63e14e9[m
+Merge: 1ffccf6 ea93012
+Author: Darius Preda <dariuspreda02@gmail.com>
+Date:   Fri Jul 18 11:55:45 2025 +0300
+
+    Merge branch 'main' of https://github.com/alexandradinca2908/Matcha
+
+[33mcommit ea9301229ce502b5fb296f8c849b934718730a67[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Fri Jul 18 11:51:39 2025 +0300
+
+    Services now all have non static functions
+
+[33mcommit 1ffccf6e3ff95c5dfc6c58f842b72e186f907c72[m
+Merge: 7d29b4a 0921460
+Author: Darius Preda <dariuspreda02@gmail.com>
+Date:   Fri Jul 18 11:45:36 2025 +0300
+
+    Merge branch 'main' of https://github.com/alexandradinca2908/Matcha
+
+[33mcommit 092146099fc0b5f3d26ef4e4e6007badf35945d4[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Fri Jul 18 11:43:34 2025 +0300
+
+    Unused imports in main
+
+[33mcommit 098cf116d0debed584a4600aee7e4603580daf02[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Fri Jul 18 11:43:10 2025 +0300
+
+    Variable uiUser renamed to match class
+
+[33mcommit b6d09cd1ab6def7112fad0ceeb1a241a4cbd9a8a[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Fri Jul 18 11:40:58 2025 +0300
+
+    Code review updates for Menu
+
+[33mcommit e421e953fe385d047f59094f399707dfe0b14d13[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Fri Jul 18 11:38:53 2025 +0300
+
+    Main cleanup
+
+[33mcommit 10e6bd62d5336372cb50bc94494b101a145c98f3[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Fri Jul 18 11:34:39 2025 +0300
+
+    .gitignore update
+
+[33mcommit 802bfacfe04acec82f7eff3fd9de964b164bd4db[m
+Merge: d3cfb24 887509b
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Fri Jul 18 11:34:30 2025 +0300
+
+    Merge branch 'main' of https://github.com/alexandradinca2908/Matcha
+
+[33mcommit d3cfb249ff2cf7885a4c1507765e7c6569f0de92[m
+Author: Alexandra Dinca <alexandradi2003@gmail.com>
+Date:   Fri Jul 18 11:32:01 2025 +0300
+
+    [FIXED] Loggers now log all the required levels
+
+[33mcommit 887509b1e7bc3e48afcbff864c8f842dfd8ac278[m
+Author: Matthew64bit <matei.stoicea@gmail.com>
+Date:   Fri Jul 18 11:30:36 2025 +0300
+
+    Moved UI elements from CommentService to UIComment.
+
+[33mcommit 7d29b4a03f2844616f2542edc249b8d29b660ba2[m
+Merge: d84d21c 0e5db4e
+Author: Darius Preda <dariuspreda02@gmail.com>
+Date:   Fri Jul 18 11:17:23 2025 +0300
+
+    Merge branch 'main' of https://github.com/alexandradinca2908/Matcha
+
+[33mcommit 0e5db4e54b5800b2b3c04750792224cfab130918[m
+Author: Matthew64bit <matei.stoicea@gmail.com>
+Date:   Fri Jul 18 11:11:00 2025 +0300
+
+    Refactored Comment and CommentService.
+
+[33mcommit d84d21c3acaed237668ba98d01265357c87159a2[m
+Merge: 547d001 43af0a6
+Author: Darius Pr
