@@ -4,9 +4,6 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3aaf886-41bf-49f3-a1bd-a575c08d36a2" name="Changes" comment="Updated for localhost">
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/menu/views/ViewManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/menu/views/ViewManager.class" afterDir="false" />
-    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,6 +31,9 @@
     "accountId": "49b4c0c6-07fe-42d2-a106-e5e3e13a0cb0"
   }
 }]]></component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -116,7 +116,7 @@
       <workItem from="1753344199379" duration="9979000" />
       <workItem from="1753363520216" duration="476000" />
       <workItem from="1753429151000" duration="17355000" />
-      <workItem from="1753702415699" duration="2084000" />
+      <workItem from="1753702415699" duration="2567000" />
     </task>
     <task id="LOCAL-00001" summary="Updated for localhost">
       <option name="closed" value="true" />
@@ -126,7 +126,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753704300588</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Updated">
+      <option name="closed" value="true" />
+      <created>1753704732893</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1753704732893</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,6 +153,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated for localhost" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated for localhost" />
+    <MESSAGE value="Updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated" />
   </component>
 </project>
