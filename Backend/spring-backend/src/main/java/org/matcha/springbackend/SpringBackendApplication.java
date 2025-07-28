@@ -13,10 +13,5 @@ public class SpringBackendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBackendApplication.class, args);
-
-        //  DELETE WHEN DB IS POPULATED
-        Account account = new Account();
-        Subreddit subreddit = new Subreddit(UUID.randomUUID(), account, "echipa 1", "matchaaa", false,
-                1, 0, "", OffsetDateTime.now());
     }
 }

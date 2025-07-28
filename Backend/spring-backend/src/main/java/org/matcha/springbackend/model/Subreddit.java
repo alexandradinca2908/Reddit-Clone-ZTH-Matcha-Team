@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Subreddit {
     private UUID id;
-    private Account account;
+    private String name;
     private String displayName;
     private String description;
     private boolean isDeleted;
@@ -18,11 +18,11 @@ public class Subreddit {
         // Default constructor
     }
 
-    public Subreddit(UUID id, Account account, String displayName,
+    public Subreddit(UUID id, String name, String displayName,
                      String description, boolean isDeleted, Integer memberCount,
                      Integer postCount, String iconUrl, OffsetDateTime createdAt) {
         this.id = id;
-        this.account = account;
+        this.name = name;
         this.displayName = displayName;
         this.description = description;
         this.isDeleted = isDeleted;
@@ -36,8 +36,8 @@ public class Subreddit {
         return id;
     }
 
-    public Account getAccount() {
-        return account;
+    public String getName() {
+        return name;
     }
 
     public String getDisplayName() {
