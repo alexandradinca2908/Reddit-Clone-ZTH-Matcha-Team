@@ -78,7 +78,7 @@ public class Post extends Likeable {
         return comments;
     }
 
-    public void setPostId(UUID postId) {
+    public void setPostID(UUID postId) {
         this.postID = postId;
     }
 
