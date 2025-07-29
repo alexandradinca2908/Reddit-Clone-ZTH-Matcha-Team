@@ -43,7 +43,10 @@ public class PostApiClient extends BaseApiClient {
             if (response.statusCode() == 200) {
                 posts.clear();
 
-                JsonArray postsArray = JsonParser.parseString(response.body()).getAsJsonArray();
+                JsonObject responseObject = JsonParser.parseString(response.body()).getAsJsonObject();
+
+                JsonArray postsArray = responseObject.getAsJsonArray("data");
+
                 for (JsonElement postElement : postsArray) {
                     PostDTO postDto = getPostDTO(postElement);
                     posts.add(PostMapper.toModel(postDto));
@@ -132,6 +135,9 @@ public class PostApiClient extends BaseApiClient {
 
         String jsonPayload = requestBody.toString();
 
+        String fullUrl = baseUrl + "/posts";
+        System.out.println("DEBUG: Sending POST request to URL -> " + fullUrl);
+
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseUrl + "/posts"))
                 .header("Content-Type", "application/json")
@@ -141,7 +147,7 @@ public class PostApiClient extends BaseApiClient {
         try {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() != 201){
+            if (response.statusCode() != 200){
                 System.err.println("Failed to create post. Status code: " + response.statusCode());
                 System.err.println("Response body: " + response.body());
             }
