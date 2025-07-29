@@ -17,12 +17,12 @@ public class CommentEntity {
     @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "fk_comment_account"))
     private AccountEntity account;
 
-    @Column(name = "parent_id", nullable = false)
+    @Column(name = "post_id", nullable = false)
+    private UUID postId;
+
+    @Column(name = "parent_id",  nullable = true)
     private UUID parentId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "parent_type", nullable = false)
-    private ParentType parentType;
 
     @Column(name = "text", nullable = false)
     private String text;
@@ -88,12 +88,11 @@ public class CommentEntity {
         this.parentId = parentId;
     }
 
-    public ParentType getParentType() {
-        return parentType;
+    public UUID getPostId() {
+        return postId;
     }
-
-    public void setParentType(ParentType parentType) {
-        this.parentType = parentType;
+    public void setPostId(UUID postId) {
+        this.postId = postId;
     }
 
     public String getText() {

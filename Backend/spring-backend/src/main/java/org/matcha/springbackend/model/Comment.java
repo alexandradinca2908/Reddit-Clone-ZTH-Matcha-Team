@@ -9,7 +9,7 @@ public class Comment extends Likeable {
     private UUID commentId;
     private Account account;
     private UUID parentId;
-    private ParentType parentType;
+    private UUID postId;
     private String text;
     private boolean isDeleted;
     private OffsetDateTime createdAt;
@@ -18,11 +18,11 @@ public class Comment extends Likeable {
 
     public Comment() {}
 
-    public Comment(UUID commentId, Account account, UUID parentId, ParentType parentType, String text, boolean isDeleted, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public Comment(UUID commentId, Account account, UUID parentId, UUID postId, String text, boolean isDeleted, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.commentId = commentId;
         this.account = account;
         this.parentId = parentId;
-        this.parentType = parentType;
+        this.postId = postId;
         this.text = text;
         this.isDeleted = isDeleted;
         this.createdAt = createdAt;
@@ -53,12 +53,12 @@ public class Comment extends Likeable {
         this.parentId = parentId;
     }
 
-    public ParentType getParentType() {
-        return parentType;
+    public UUID getPostId() {
+        return postId;
     }
 
-    public void setParentType(ParentType parentType) {
-        this.parentType = parentType;
+    public void setPostId(UUID postId) {
+        this.postId = postId;
     }
 
     public String getText() {
