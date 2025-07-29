@@ -50,7 +50,7 @@ public class PostMapper {
 
         // Map Post
         Post post = new Post();
-        post.setPostId(entity.getPostId());
+        post.setPostId(entity.getPostID());
         post.setAccount(account);
         post.setSubreddit(subreddit);
         post.setTitle(entity.getTitle());

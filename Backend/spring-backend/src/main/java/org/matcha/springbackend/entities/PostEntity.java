@@ -51,6 +51,7 @@ public class PostEntity {
     @Column(name = "comment_count")
     private Integer commentCount;
 
+    @OneToMany
     private java.util.List<CommentEntity> comments;
 
 
