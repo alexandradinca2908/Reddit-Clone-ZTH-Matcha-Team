@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,8 +53,8 @@ public class CommentController {
     }
 
     @PostMapping("/{postId}/comments")
-    public ResponseEntity<DataResponse<CommentDTO>> addCommentToPost(@PathVariable String postId, @RequestBody AddCommentBodyDTO commentDTO) {
-        // Salvează comentariul folosind serviciul
+    public ResponseEntity<DataResponse<CommentDTO>> addCommentToPost(@PathVariable String postId,
+                                                                     @RequestBody AddCommentBodyDTO commentDTO) {
         OffsetDateTime createdAt = OffsetDateTime.now();
         Comment comment = new Comment(UUID.randomUUID(), accountService.getCurrentAccount(), null,
                 UUID.fromString(postId), commentDTO.content(), false, 0, 0, createdAt, createdAt);
