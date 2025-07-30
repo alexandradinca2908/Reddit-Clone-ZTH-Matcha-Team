@@ -59,7 +59,7 @@ public class PostMapper {
         //  TODO - COMMENT COUNT
         Integer commentCount = 0;
         //  TODO - USER VOTE
-        String userVote = "null";
+        String userVote = "none";
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
 
