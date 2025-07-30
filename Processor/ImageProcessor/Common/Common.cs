@@ -6,7 +6,7 @@ namespace Common
     {
         public static void GetCommonMessage()
         {
-           Console.WriteLine("This is a common message from the Common namespace.");
+           Console.WriteLine("This is a common message from the Common namespace."); //copmment
         }
     }
 }

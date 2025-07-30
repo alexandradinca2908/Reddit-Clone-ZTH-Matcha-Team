@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Filters
 {
-    public class BlackAndWhiteFilter : IFilter
+    public class BlackAndWhiteFilter
     {
-        public void Apply(Bitmap originalImage)
+        public void Apply()
         {
 
         }
