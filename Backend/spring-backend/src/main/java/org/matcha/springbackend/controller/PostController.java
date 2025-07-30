@@ -5,6 +5,7 @@ import org.matcha.springbackend.dto.vote.AllVotesDTO;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDTO;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDTO;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDTO;
+import org.matcha.springbackend.entities.VotableType;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
@@ -24,6 +25,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
+
+import static org.matcha.springbackend.entities.VoteType.stringToVoteType;
 
 @RestController
 @RequestMapping("/posts")
@@ -133,7 +136,22 @@ public class PostController {
     public ResponseEntity<DataResponse<AllVotesDTO>> votePost(@PathVariable String id,
                                                               @RequestBody PutVoteBodyDTO putVoteDTO) {
 
-        Vote currentVote = voteService.getVoteByID(putVoteDTO.)
+        Account currentAccount = accountService.getCurrentAccount();
+        Vote currentVote = voteService.getVoteByAccountID(currentAccount.getAccountId());
+
+        //  Cancelling vote removes it from DB
+        if (putVoteDTO.voteType().equals("none")) {
+
+        }
+
+        if (currentVote == null) {
+            currentVote = new Vote(UUID.randomUUID(), UUID.fromString(id), VotableType.POST,
+                    stringToVoteType(putVoteDTO.voteType()), currentAccount);
+        } else {
+            currentVote.setVoteType(stringToVoteType(putVoteDTO.voteType()));
+        }
+
+        voteService.addVote(currentVote);
         return null;
     }
 }

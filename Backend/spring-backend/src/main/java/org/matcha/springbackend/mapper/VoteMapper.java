@@ -23,8 +23,8 @@ public class VoteMapper {
         entity.setVotableId(model.getVotableID());
         entity.setVotableType(model.getVotableType());
 
-        if (model.getVote() != null) {
-            entity.setVoteType(org.matcha.springbackend.entities.VoteType.valueOf(model.getVote()));
+        if (model.getVoteType() != null) {
+            entity.setVoteType(model.getVoteType());
         }
         if (model.getAccount() != null) {
             entity.setAccount(accountMapper.modelToEntity(model.getAccount()));
@@ -38,13 +38,12 @@ public class VoteMapper {
         if (entity.getAccount() != null) {
             account = accountMapper.entityToModel(entity.getAccount());
         }
-        String voteType = entity.getVoteType() != null ? entity.getVoteType().name() : null;
+
         return new Vote(
             entity.getVoteId(),
             entity.getVotableId(),
-            null,
             entity.getVotableType(),
-            voteType,
+            entity.getVoteType(),
             account
         );
     }
@@ -54,7 +53,8 @@ public class VoteMapper {
         Integer upvotes = null;
         Integer downvotes = null;
         Integer score = null;
-        String userVote = model.getVote();
+        String userVote = model.getVoteType().toString().toLowerCase();
+
         return new AllVotesDTO(upvotes, downvotes, score, userVote);
     }
 }

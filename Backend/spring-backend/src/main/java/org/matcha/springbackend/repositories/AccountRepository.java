@@ -1,7 +1,6 @@
 package org.matcha.springbackend.repositories;
 
 import org.matcha.springbackend.entities.AccountEntity;
-import org.matcha.springbackend.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -12,10 +12,12 @@ import java.util.UUID;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
+    private final Account currentAccount;
 
     public AccountService(AccountRepository accountRepository, PasswordService passwordService, AccountMapper accountMapper) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
+        this.currentAccount = accountMapper.entityToModel(accountRepository.findByUsername("Root").orElse(null));
     }
 
     public Account userRegister(Account account) {
@@ -28,5 +30,9 @@ public class AccountService {
     public Account findByUsername(String username) {
         AccountEntity entity = accountRepository.findByUsername(username).orElse(null);
         return entity != null ? accountMapper.entityToModel(entity) : null;
+    }
+
+    public Account getCurrentAccount() {
+        return currentAccount;
     }
 }
