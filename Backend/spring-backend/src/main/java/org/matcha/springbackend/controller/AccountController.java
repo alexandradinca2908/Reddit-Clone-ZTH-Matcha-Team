@@ -1,5 +1,6 @@
 package org.matcha.springbackend.controller;
 
+import org.matcha.springbackend.loggerobjects.Logger;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.service.AccountService;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,9 @@ public class AccountController {
 
     @PostMapping("/add")
     public Account registerUser(@RequestBody Account account) {
-        return accountService.userRegister(account);
+        Logger.debug("Register endpoint called for username: " + account.getUsername());
+        Account registered = accountService.userRegister(account);
+        Logger.debug("Register endpoint finished for username: " + account.getUsername());
+        return registered;
     }
 }
