@@ -2,11 +2,8 @@ package org.matcha.springbackend.mapper;
 
 import org.matcha.springbackend.entities.VoteEntity;
 import org.matcha.springbackend.model.Vote;
-import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.model.Account;
-import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.dto.vote.AllVotesDTO;
-import org.matcha.springbackend.service.AccountService;
 import org.springframework.stereotype.Component;
 
 @Component
