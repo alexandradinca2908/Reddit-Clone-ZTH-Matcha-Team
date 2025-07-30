@@ -56,6 +56,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "SixLabors.ImageSharp": {
+              "target": "Package",
+              "version": "[3.1.11, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -237,7 +243,11 @@
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\Common\\Common.csproj": {
+                "projectPath": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\Common\\Common.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -255,6 +265,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "SixLabors.ImageSharp": {
+              "target": "Package",
+              "version": "[3.1.11, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

@@ -21,3 +21,4 @@ C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\EntryPoint\obj\Debug\n
 C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\EntryPoint\obj\Debug\net9.0\EntryPoint.pdb
 C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\EntryPoint\obj\Debug\net9.0\EntryPoint.genruntimeconfig.cache
 C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\EntryPoint\obj\Debug\net9.0\ref\EntryPoint.dll
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\EntryPoint\bin\Debug\net9.0\SixLabors.ImageSharp.dll

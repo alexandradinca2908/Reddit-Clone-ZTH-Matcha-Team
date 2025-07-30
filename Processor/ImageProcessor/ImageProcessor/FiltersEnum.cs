@@ -9,6 +9,7 @@ namespace Filters
             Grayscale,
             Sepia,
             Invert,
+            Nothing,
         }
     }
 }

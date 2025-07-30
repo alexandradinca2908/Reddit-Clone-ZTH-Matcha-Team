@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
+using Common;
 
 namespace Filters
 {
-    internal interface IFilter
+    public interface IFilter
     {
-        
+        RawImage Apply(RawImage originalImage);
     }
 }

@@ -1,41 +1,71 @@
 ﻿using Filters;
 using Common;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace App;
 public class App {
     public void Start()
     {   
-        string imagePath = "C:\\Users\\DARIUS\\Desktop\\photos\\photo.jpeg";
+        string imagePath = "C:\\Users\\DARIUS\\Desktop\\photos\\photo.jpeg";  //for easy testing
 
         if (!File.Exists(imagePath))
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Error: The file was not found at '{imagePath}'");
-            Console.ResetColor();
+            Console.WriteLine(Common.ConsoleMessages.ErrorFileNotFound);
             return;
         }
 
-        string outputPath = Path.Combine(Path.GetDirectoryName(imagePath), "output_bw.jpg");
+        string outputPath = Path.Combine(Path.GetDirectoryName(imagePath), "photo_out.jpeg");  //for easy testing
 
-        Console.WriteLine("Welcome to the Image Processor Application!");
-        Console.WriteLine("Please choose a filter option:\n");
         Console.WriteLine($"""
+            Welcome to the Image Processor Application!
+            Please choose a filter option:
+
             1. {FiltersEnum.FilterTypes.Grayscale}
             2. {FiltersEnum.FilterTypes.Sepia}
             3. {FiltersEnum.FilterTypes.Invert}
+            4. {FiltersEnum.FilterTypes.Nothing}
             """);
 
         string input = Console.ReadLine();
-        if (!int.TryParse(input, out int filterType))
+        while (!int.TryParse(input, out int filterType) && filterType < 1 || filterType > 4)
         {
-            Console.WriteLine($"Invalid filter argument: {input}. Please provide valid integers.");
-            return;
+            Console.WriteLine("Invalid input. Please enter a NUMBER between 1 and 4.");
+            input = Console.ReadLine();
         }
-        if (filterType < 1 || filterType > 3)
+
+        Image<Rgba32> loadedImage = Image.Load<Rgba32>(imagePath);
+        byte[] pixelData = new byte[loadedImage.Width * loadedImage.Height * 4];
+        loadedImage.CopyPixelDataTo(pixelData);
+        RawImage originalRawImage = new RawImage(pixelData, loadedImage.Width, loadedImage.Height, 4);
+
+        RawImage filteredRawImage;
+        IFilter filter = new Filters.GrayScaleFilter();
+
+        switch (input)
         {
-            Console.WriteLine($"Invalid filter type: {filterType}. Please choose a number between 1 and 3.");
-            return;
+            case "1":
+                filter = new Filters.GrayScaleFilter();
+                break;
+            case "2":
+                filter = new Filters.SepiaFilter();
+                break;
+            case "3":
+                filter = new Filters.InvertFilter();
+                break;
+            case "4":
+                break;
+            default:
+                Console.WriteLine("Invalid option selected. No filter will be applied.");
+                break;
         }
-                
+
+        RawImage copyRawImage = originalRawImage;
+        filteredRawImage = filter.Apply(copyRawImage);
+        Image<Rgba32> outputImage = Image.LoadPixelData<Rgba32>(filteredRawImage.PixelData, filteredRawImage.Width, filteredRawImage.Height);
+
+        outputImage.Save(outputPath);
+
     }
 }
