@@ -6,7 +6,6 @@ import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDTO;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDTO;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDTO;
 import org.matcha.springbackend.entities.VotableType;
-import org.matcha.springbackend.entities.VoteType;
 import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
