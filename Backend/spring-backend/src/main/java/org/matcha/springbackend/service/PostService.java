@@ -30,6 +30,7 @@ public class PostService {
     public void addPost(Post post) {
         Logger.debug("[PostService] addPost called for post title: " + post.getTitle());
         PostEntity entity = postMapper.modelToEntity(post);
+        entity.setPostID(null);
         Logger.debug("[PostService] PostEntity mapped: " + entity);
         // Debug: print all IDs to catch argument issues
         if(entity.getAccount() != null) Logger.debug("[PostService] AccountEntity ID: " + entity.getAccount().getAccountId());
