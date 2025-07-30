@@ -1,0 +1,12 @@
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\Filters.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\Filters.AssemblyInfoInputs.cache
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\Filters.AssemblyInfo.cs
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\Filters.csproj.CoreCompileInputs.cache
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\Filters.sourcelink.json
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\bin\Debug\net9.0\Filters.deps.json
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\bin\Debug\net9.0\Filters.dll
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\bin\Debug\net9.0\Filters.pdb
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\Filters.dll
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\refint\Filters.dll
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\Filters.pdb
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\ref\Filters.dll

@@ -1,0 +1,15 @@
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\bin\Debug\net9.0\ImageProcessor.exe
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\bin\Debug\net9.0\ImageProcessor.deps.json
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\bin\Debug\net9.0\ImageProcessor.runtimeconfig.json
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\bin\Debug\net9.0\ImageProcessor.dll
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\bin\Debug\net9.0\ImageProcessor.pdb
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\ImageProcessor.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\ImageProcessor.AssemblyInfoInputs.cache
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\ImageProcessor.AssemblyInfo.cs
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\ImageProcessor.csproj.CoreCompileInputs.cache
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\ImageProcessor.sourcelink.json
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\ImageProcessor.dll
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\refint\ImageProcessor.dll
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\ImageProcessor.pdb
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\ImageProcessor.genruntimeconfig.cache
+C:\Users\DARIUS\Documents\Matcha\Processor\ImageProcessor\ImageProcessor\obj\Debug\net9.0\ref\ImageProcessor.dll

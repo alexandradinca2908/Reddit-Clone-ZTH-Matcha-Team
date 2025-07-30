@@ -1,0 +1,147 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E6713E05-7E49-4748-A753-C8E0628B5853}|App\\App.csproj|c:\\users\\darius\\documents\\matcha\\processor\\imageprocessor\\app\\app.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E6713E05-7E49-4748-A753-C8E0628B5853}|App\\App.csproj|solutionrelative:app\\app.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71663DBE-2AF6-4328-951A-7C30701252DB}|EntryPoint\\EntryPoint.csproj|c:\\users\\darius\\documents\\matcha\\processor\\imageprocessor\\entrypoint\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71663DBE-2AF6-4328-951A-7C30701252DB}|EntryPoint\\EntryPoint.csproj|solutionrelative:entrypoint\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6713E05-7E49-4748-A753-C8E0628B5853}|App\\App.csproj|c:\\users\\darius\\documents\\matcha\\processor\\imageprocessor\\app\\app.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6713E05-7E49-4748-A753-C8E0628B5853}|App\\App.csproj|solutionrelative:app\\app.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E701272-FF8E-466F-881B-CDDE29563B3C}|Common\\Common.csproj|c:\\users\\darius\\documents\\matcha\\processor\\imageprocessor\\common\\common.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{7E701272-FF8E-466F-881B-CDDE29563B3C}|Common\\Common.csproj|solutionrelative:common\\common.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FAE694D-11CA-438E-80E4-77F8D55EE5E3}|ImageProcessor\\Filters.csproj|c:\\users\\darius\\documents\\matcha\\processor\\imageprocessor\\imageprocessor\\filters.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{8FAE694D-11CA-438E-80E4-77F8D55EE5E3}|ImageProcessor\\Filters.csproj|solutionrelative:imageprocessor\\filters.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E701272-FF8E-466F-881B-CDDE29563B3C}|Common\\Common.csproj|c:\\users\\darius\\documents\\matcha\\processor\\imageprocessor\\common\\common.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7E701272-FF8E-466F-881B-CDDE29563B3C}|Common\\Common.csproj|solutionrelative:common\\common.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FAE694D-11CA-438E-80E4-77F8D55EE5E3}|ImageProcessor\\Filters.csproj|c:\\users\\darius\\documents\\matcha\\processor\\imageprocessor\\imageprocessor\\filtersenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FAE694D-11CA-438E-80E4-77F8D55EE5E3}|ImageProcessor\\Filters.csproj|solutionrelative:imageprocessor\\filtersenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "App",
+              "DocumentMoniker": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\App\\App.csproj",
+              "RelativeDocumentMoniker": "App\\App.csproj",
+              "ToolTip": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\App\\App.csproj",
+              "RelativeToolTip": "App\\App.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-30T10:06:25.348Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Common",
+              "DocumentMoniker": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\Common\\Common.csproj",
+              "RelativeDocumentMoniker": "Common\\Common.csproj",
+              "ToolTip": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\Common\\Common.csproj",
+              "RelativeToolTip": "Common\\Common.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-30T10:06:18.753Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Filters",
+              "DocumentMoniker": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\ImageProcessor\\Filters.csproj",
+              "RelativeDocumentMoniker": "ImageProcessor\\Filters.csproj",
+              "ToolTip": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\ImageProcessor\\Filters.csproj",
+              "RelativeToolTip": "ImageProcessor\\Filters.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-30T10:05:43.733Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FiltersEnum.cs",
+              "DocumentMoniker": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\ImageProcessor\\FiltersEnum.cs",
+              "RelativeDocumentMoniker": "ImageProcessor\\FiltersEnum.cs",
+              "ToolTip": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\ImageProcessor\\FiltersEnum.cs",
+              "RelativeToolTip": "ImageProcessor\\FiltersEnum.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-30T10:00:00.218Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Common.cs",
+              "DocumentMoniker": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\Common\\Common.cs",
+              "RelativeDocumentMoniker": "Common\\Common.cs",
+              "ToolTip": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\Common\\Common.cs",
+              "RelativeToolTip": "Common\\Common.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-30T09:58:50.875Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "App.cs",
+              "DocumentMoniker": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\App\\App.cs",
+              "RelativeDocumentMoniker": "App\\App.cs",
+              "ToolTip": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\App\\App.cs",
+              "RelativeToolTip": "App\\App.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-30T09:55:30.836Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\EntryPoint\\Program.cs",
+              "RelativeDocumentMoniker": "EntryPoint\\Program.cs",
+              "ToolTip": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\EntryPoint\\Program.cs",
+              "RelativeToolTip": "EntryPoint\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-30T09:52:38.994Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
