@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface VoteRepository extends JpaRepository<VoteEntity, UUID> {
-    Optional<VoteEntity> findByVoteId(UUID uuid);
+    Optional<VoteEntity> findByAccount(UUID uuid);
 }

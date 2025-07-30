@@ -31,7 +31,7 @@ public class PostService {
         postRepository.save(entity);
     }
 
-public void updatePost(Post post) {
+    public void updatePost(Post post) {
         PostEntity entity = postMapper.modelToEntity(post);
         if (postRepository.existsById(entity.getPostID())) {
             postRepository.save(entity);

@@ -9,11 +9,13 @@ import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Subreddit;
+import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.response.DataResponse;
 import org.matcha.springbackend.response.MessageResponse;
 import org.matcha.springbackend.service.AccountService;
 import org.matcha.springbackend.service.PostService;
 import org.matcha.springbackend.service.SubredditService;
+import org.matcha.springbackend.service.VoteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +32,14 @@ public class PostController {
     private final PostService postService;
     private final PostMapper postMapper;
     private final SubredditService subredditService;
+    private final VoteService voteService;
 
-    public PostController(AccountService accountService, PostService postService, PostMapper postMapper, SubredditService subredditService) {
+    public PostController(AccountService accountService, PostService postService, PostMapper postMapper, SubredditService subredditService, VoteService voteService) {
         this.accountService = accountService;
         this.postService = postService;
         this.postMapper = postMapper;
         this.subredditService = subredditService;
+        this.voteService = voteService;
     }
 
     @GetMapping
@@ -128,6 +132,8 @@ public class PostController {
     @PutMapping("/{id}/vote")
     public ResponseEntity<DataResponse<AllVotesDTO>> votePost(@PathVariable String id,
                                                               @RequestBody PutVoteBodyDTO putVoteDTO) {
+
+        Vote currentVote = voteService.getVoteByID(putVoteDTO.)
         return null;
     }
 }
