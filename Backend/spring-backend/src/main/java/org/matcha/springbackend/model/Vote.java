@@ -33,4 +33,28 @@ public class Vote {
     public void cancelVote() {
         this.vote = "none";
     }
+
+    public UUID getVoteID() {
+        return voteID;
+    }
+
+    public UUID getVotableID() {
+        return votableID;
+    }
+
+    public String getVote() {
+        return vote;
+    }
+
+    public VotableType getVotableType() {
+        return votableType;
+    }
+
+    public String getVoteType() {
+        return voteType;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
 }
