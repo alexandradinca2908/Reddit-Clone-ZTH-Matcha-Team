@@ -19,8 +19,9 @@ public class Post extends Likeable {
     private OffsetDateTime updatedAt;
     private java.util.List<Comment> comments;
 
-    public Post(UUID postID, Account account, Subreddit subreddit, String title,
-                String content, String photoPath, boolean isDeleted, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public Post(UUID postID, Account account, Subreddit subreddit, int upvotes, int downvotes, int commentCount,
+                String title, String content, String photoPath, boolean isDeleted, OffsetDateTime createdAt,
+                OffsetDateTime updatedAt) {
         this.postID = postID;
         this.account = account;
         this.subreddit = subreddit;

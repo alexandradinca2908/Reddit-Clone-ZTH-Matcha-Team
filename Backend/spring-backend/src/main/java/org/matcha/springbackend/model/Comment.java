@@ -1,30 +1,34 @@
 package org.matcha.springbackend.model;
 
-import org.matcha.springbackend.entities.ParentType;
-
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
-public class Comment extends Likeable {
+public class Comment {
     private UUID commentId;
     private Account account;
     private UUID parentId;
     private UUID postId;
     private String text;
     private boolean isDeleted;
+    private int upvotes;
+    private int downvotes;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
-    private java.util.List<Comment> comments;
+    private List<Comment> comments;
 
     public Comment() {}
 
-    public Comment(UUID commentId, Account account, UUID parentId, UUID postId, String text, boolean isDeleted, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public Comment(UUID commentId, Account account, UUID parentId, UUID postId, String text,
+                   boolean isDeleted, int upvotes, int downvotes, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.commentId = commentId;
         this.account = account;
         this.parentId = parentId;
         this.postId = postId;
         this.text = text;
         this.isDeleted = isDeleted;
+        this.upvotes = upvotes;
+        this.downvotes = downvotes;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -75,6 +79,22 @@ public class Comment extends Likeable {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public int getUpvotes() {
+        return upvotes;
+    }
+
+    public void setUpvotes(int upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    public int getDownvotes() {
+        return downvotes;
+    }
+
+    public void setDownvotes(int downvotes) {
+        this.downvotes = downvotes;
     }
 
     public OffsetDateTime getCreatedAt() {

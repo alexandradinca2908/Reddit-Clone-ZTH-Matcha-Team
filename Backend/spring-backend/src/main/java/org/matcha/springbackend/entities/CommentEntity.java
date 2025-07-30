@@ -23,7 +23,6 @@ public class CommentEntity {
     @Column(name = "parent_id",  nullable = true)
     private UUID parentId;
 
-
     @Column(name = "text", nullable = false)
     private String text;
 
