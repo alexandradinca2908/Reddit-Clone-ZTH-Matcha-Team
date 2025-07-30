@@ -5,7 +5,9 @@ logging
 
 ### VS ###
 .vs/
-
-./Processor/ImageProcessor/
-
 ./Processor/ImageProcessor/.vs/ImageProcessor/
+./Processor/ImageProcessor/obj/*
+
+# .NET build output
+[Bb]in/
+[Oo]bj/
