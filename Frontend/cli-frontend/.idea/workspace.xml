@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c207288f-de79-425d-90bb-63d06376b7d2" name="Changes" comment="Update">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/api/PostApiClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/api/PostApiClient.class" afterDir="false" />
-    </list>
+    <list default="true" id="c207288f-de79-425d-90bb-63d06376b7d2" name="Changes" comment="Update" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -129,6 +126,7 @@
       <workItem from="1753705634150" duration="176000" />
       <workItem from="1753735576198" duration="1267000" />
       <workItem from="1753792910135" duration="1225000" />
+      <workItem from="1753876631281" duration="40000" />
     </task>
     <task id="LOCAL-00001" summary="Updated for localhost">
       <option name="closed" value="true" />
