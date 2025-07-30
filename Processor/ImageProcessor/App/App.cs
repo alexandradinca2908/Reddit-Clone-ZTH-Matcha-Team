@@ -36,7 +36,6 @@ public class App {
             Console.WriteLine($"Invalid filter type: {filterType}. Please choose a number between 1 and 3.");
             return;
         }
-3
                 
     }
 }

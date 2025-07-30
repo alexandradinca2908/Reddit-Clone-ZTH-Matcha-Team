@@ -9,6 +9,6 @@ namespace Filters
 {
     internal interface IFilter
     {
-        Bitmap Apply(Bitmap originalImage);
+        
     }
 }
