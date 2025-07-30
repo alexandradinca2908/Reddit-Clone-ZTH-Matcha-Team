@@ -11,7 +11,7 @@ public class PostEntity {
     @Id
     @GeneratedValue
     @Column(name = "post_id", nullable = false, updatable = false)
-    private UUID postId;
+    private UUID postID;
 
     @ManyToOne
     @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "fk_post_account"))
@@ -59,8 +59,8 @@ public class PostEntity {
 
     @PrePersist
     protected void onCreate() {
-        if (postId == null) {
-            postId = UUID.randomUUID();
+        if (postID == null) {
+            postID = UUID.randomUUID();
         }
         createdAt = OffsetDateTime.now();
         updatedAt = createdAt;
@@ -74,11 +74,11 @@ public class PostEntity {
     // -------- Getters & Setters --------
 
     public UUID getPostID() {
-        return postId;
+        return postID;
     }
 
     public void setPostID(UUID postID) {
-        this.postId = postID;
+        this.postID = postID;
     }
 
     public AccountEntity getAccount() {
