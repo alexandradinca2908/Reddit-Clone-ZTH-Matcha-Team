@@ -91,6 +91,8 @@ public class VoteService {
         }
     }
 
+    //TODO: Crapa daca dau de 2 ori vote
+
     public void updateVote(Vote vote) {
         VoteEntity entity = voteMapper.modelToEntity(vote);
         if (voteRepository.existsById(entity.getVoteId())) {

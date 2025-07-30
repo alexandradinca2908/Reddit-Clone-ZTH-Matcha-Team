@@ -5,6 +5,7 @@ import org.matcha.springbackend.dto.vote.AllVotesDTO;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDTO;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDTO;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDTO;
+import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.VotableType;
 import org.matcha.springbackend.entities.VoteType;
 import org.matcha.springbackend.loggerobjects.Logger;
@@ -155,9 +156,12 @@ public class PostController {
                                                               @RequestBody PutVoteBodyDTO putVoteDTO) {
 
         Account currentAccount = accountService.getCurrentAccount();
-        Vote currentVote = voteService.getVoteByAccountAndVotable(accountMapper.modelToEntity(currentAccount), UUID.fromString(id));
+        AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
+        if (accountEntity == null) {
+            throw new IllegalArgumentException("Current account does not exist in DB! id: " + currentAccount.getAccountId());
+        }
+        Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(id));
 
-        //  Cancelling vote removes it from DB
         if (putVoteDTO.voteType().equals("none")) {
             voteService.deleteVoteByID(currentVote.getVoteID());
 

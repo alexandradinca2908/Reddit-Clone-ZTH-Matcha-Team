@@ -44,4 +44,10 @@ public class AccountService {
     public Account getCurrentAccount() {
         return currentAccount;
     }
+
+    public AccountEntity getAccountEntityById(UUID accountId) {
+        Logger.debug("getAccountEntityById called for accountId: " + accountId);
+        return accountRepository.findById(accountId)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found in DB for id: " + accountId));
+    }
 }
