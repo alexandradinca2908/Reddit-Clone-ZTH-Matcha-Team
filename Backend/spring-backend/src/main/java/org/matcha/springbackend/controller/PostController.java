@@ -7,6 +7,7 @@ import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDTO;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDTO;
 import org.matcha.springbackend.entities.VotableType;
 import org.matcha.springbackend.entities.VoteType;
+import org.matcha.springbackend.loggerobjects.Logger;
 import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
@@ -109,22 +110,31 @@ public class PostController {
     @PutMapping("{id}")
     public ResponseEntity<DataResponse<PostDTO>> updatePost(@PathVariable String id,
                                                             @RequestBody UpdatePostBodyDTO postDTO) {
-        // Get post by id
-        Post post = postService.getPostById(id);
-        if (post == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Post with UUID %s not found", id));
+        Logger.info("[PostController] updatePost called for id: " + id);
+        try {
+            // Get post by id
+            Post post = postService.getPostById(id);
+            if (post == null) {
+                Logger.warn("[PostController] Post not found for id: " + id);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("Post with UUID %s not found", id));
+            }
+            Logger.info("[PostController] Updating post with id: " + id);
+            post.setTitle(postDTO.title());
+            post.setContent(postDTO.content());
+            postService.updatePost(post);
+            Logger.info("[PostController] Post updated successfully for id: " + id);
+            DataResponse<PostDTO> dataResponse = new DataResponse<>(true, postMapper.modelToDTO(post));
+            Logger.info("[PostController] PostDTO mapped and response ready for id: " + id);
+            return ResponseEntity.ok(dataResponse);
+        } catch (Exception e) {
+            Logger.error("[PostController] Exception at updatePost for id: " + id + ", message: " + e.getMessage());
+            throw e;
         }
-        post.setTitle(postDTO.title());
-        post.setContent(postDTO.content());
-        postService.updatePost(post);
-
-        DataResponse<PostDTO> dataResponse = new DataResponse<>(true, postMapper.modelToDTO(post));
-        return ResponseEntity.ok(dataResponse);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<MessageResponse> deletePost(@PathVariable String id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable String id) {
 
         Post post = postService.getPostById(id);
         if (post == null) {
@@ -136,10 +146,7 @@ public class PostController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.format("Post with UUID %s could not be deleted", id));
         }
-
-        MessageResponse messageResponse = new MessageResponse(true,
-                "Postarea a fost stearsa cu succes");
-        return ResponseEntity.ok(messageResponse);
+        return ResponseEntity.noContent().build();
     }
 
     // TODO

@@ -31,7 +31,10 @@ public class PostMapper {
         if (post == null) return null;
 
         PostEntity entity = new PostEntity();
-//        entity.setPostID(post.getPostID());
+        // Setează ID-ul doar dacă nu este null (pentru update)
+        if (post.getPostID() != null) {
+            entity.setPostID(post.getPostID());
+        }
         entity.setTitle(post.getTitle());
         entity.setContent(post.getContent());
         entity.setPhotoPath(post.getPhotoPath());
@@ -74,8 +77,9 @@ public class PostMapper {
         String content = model.getContent();
         String author = model.getAccount().getUsername();
         String subreddit = model.getSubreddit().getDisplayName();
-        Integer upvotes = model.getUpvotes();
-        Integer downvotes = model.getDownvotes();
+        // Treat null upvotes/downvotes as 0
+        Integer upvotes = model.getUpvotes() != null ? model.getUpvotes() : 0;
+        Integer downvotes = model.getDownvotes() != null ? model.getDownvotes() : 0;
         Integer score = upvotes - downvotes;
         Integer commentCount = (model.getComments() != null) ? model.getComments().size() : 0;
 
