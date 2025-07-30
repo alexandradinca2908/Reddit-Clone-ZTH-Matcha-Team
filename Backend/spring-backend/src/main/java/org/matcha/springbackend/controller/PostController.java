@@ -4,6 +4,7 @@ import org.matcha.springbackend.dto.post.PostDTO;
 import org.matcha.springbackend.dto.vote.AllVotesDTO;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDTO;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDTO;
+import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDTO;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
@@ -124,8 +125,9 @@ public class PostController {
     }
 
     // TODO
-    @PostMapping("/{id}/vote")
-    public ResponseEntity<DataResponse<AllVotesDTO>> votePost(@PathVariable String id) {
+    @PutMapping("/{id}/vote")
+    public ResponseEntity<DataResponse<AllVotesDTO>> votePost(@PathVariable String id,
+                                                              @RequestBody PutVoteBodyDTO putVoteDTO) {
         return null;
     }
 }
