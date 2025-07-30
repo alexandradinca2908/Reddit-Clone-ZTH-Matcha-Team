@@ -16,9 +16,6 @@ public class VoteEntity {
     @Column(name = "votable_id", nullable = false)
     private UUID votableId;
 
-    @Column(name = "account_id", nullable = false)
-    private UUID accountId;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "votable_type", nullable = false)
     private VotableType votableType;
@@ -57,14 +54,6 @@ public class VoteEntity {
 
     public void setVotableId(UUID votableId) {
         this.votableId = votableId;
-    }
-
-    public UUID getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(UUID accountId) {
-        this.accountId = accountId;
     }
 
     public VotableType getVotableType() {

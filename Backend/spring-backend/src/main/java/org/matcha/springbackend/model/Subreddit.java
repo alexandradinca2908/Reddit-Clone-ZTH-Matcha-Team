@@ -74,4 +74,44 @@ public class Subreddit {
     public UUID getSubredditId() {
         return id;
     }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public void setMemberCount(Integer memberCount) {
+        this.memberCount = memberCount;
+    }
+
+    public void setPostCount(Integer postCount) {
+        this.postCount = postCount;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setId(UUID subredditId) {
+        this.id = subredditId;
+    }
 }

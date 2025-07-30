@@ -145,4 +145,8 @@ public class CommentEntity {
     public void setScore(Integer score) {
         this.score = score;
     }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }
