@@ -48,8 +48,6 @@ public class SubredditController {
 
         subredditService.addSubreddit(subreddit);
 
-        //  TODO - UPDATE IN DB
-
         //  Send response
         DataResponse<SubredditDTO> dataResponse = new DataResponse<>(true,
                 subredditMapper.modelToDTO(subreddit));
