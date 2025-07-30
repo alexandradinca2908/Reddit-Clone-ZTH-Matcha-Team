@@ -108,4 +108,7 @@ public class AccountEntity {
     public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+    }
 }

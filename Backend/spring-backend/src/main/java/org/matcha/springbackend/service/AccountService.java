@@ -1,5 +1,7 @@
 package org.matcha.springbackend.service;
 
+import org.matcha.springbackend.entities.AccountEntity;
+import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.repositories.AccountRepository;
 import org.springframework.stereotype.Service;
@@ -12,12 +14,14 @@ import java.util.UUID;
 public class AccountService {
     private final List<Account> accounts;
     private final AccountRepository accountRepository;
+    private final AccountMapper accountMapper;
     private final Account currentAccount;
     private final PasswordService passwordService;
 
-    public AccountService(AccountRepository accountRepository, PasswordService passwordService) {
+    public AccountService(AccountRepository accountRepository, PasswordService passwordService, AccountMapper accountMapper) {
         this.accounts = new ArrayList<>();
         this.accountRepository = accountRepository;
+        this.accountMapper = accountMapper;
         this.currentAccount = findByUsername("Root");
         this.passwordService = passwordService;
     }
@@ -31,6 +35,7 @@ public class AccountService {
     }
 
     public Account findByUsername(String username) {
-        return accountRepository.findByUsername(username).orElse(null);
+        AccountEntity entity = accountRepository.findByUsername(username).orElse(null);
+        return entity != null ? accountMapper.entityToModel(entity) : null;
     }
 }
