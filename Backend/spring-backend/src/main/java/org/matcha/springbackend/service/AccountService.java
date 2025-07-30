@@ -1,36 +1,32 @@
 package org.matcha.springbackend.service;
 
+import org.matcha.springbackend.entities.AccountEntity;
+import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.repositories.AccountRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service
 public class AccountService {
-    private final List<Account> accounts;
     private final AccountRepository accountRepository;
-    private final Account currentAccount;
-    private final PasswordService passwordService;
+    private final AccountMapper accountMapper;
 
-    public AccountService(AccountRepository accountRepository, PasswordService passwordService) {
-        this.accounts = new ArrayList<>();
+    public AccountService(AccountRepository accountRepository, PasswordService passwordService, AccountMapper accountMapper) {
         this.accountRepository = accountRepository;
-        this.currentAccount = findByUsername("Root");
-        this.passwordService = passwordService;
+        this.accountMapper = accountMapper;
     }
 
     public Account userRegister(Account account) {
-        Account newAccount = new Account(UUID.randomUUID(), account.getUsername(), account.getEmail(), account.getPassword());
-        accounts.add(newAccount);
-
-        //  TODO - add in DB
-        return newAccount;
+        AccountEntity entity = accountMapper.modelToEntity(account);
+        entity.setAccountId(UUID.randomUUID());
+        AccountEntity saved = accountRepository.save(entity);
+        return accountMapper.entityToModel(saved);
     }
 
     public Account findByUsername(String username) {
-        return accountRepository.findByUsername(username).orElse(null);
+        AccountEntity entity = accountRepository.findByUsername(username).orElse(null);
+        return entity != null ? accountMapper.entityToModel(entity) : null;
     }
 }
