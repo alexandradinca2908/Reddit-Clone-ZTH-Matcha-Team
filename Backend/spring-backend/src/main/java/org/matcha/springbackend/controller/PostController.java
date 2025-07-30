@@ -7,6 +7,7 @@ import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDTO;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDTO;
 import org.matcha.springbackend.entities.VotableType;
 import org.matcha.springbackend.mapper.PostMapper;
+import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Subreddit;
@@ -36,13 +37,15 @@ public class PostController {
     private final PostMapper postMapper;
     private final SubredditService subredditService;
     private final VoteService voteService;
+    private final VoteMapper voteMapper;
 
-    public PostController(AccountService accountService, PostService postService, PostMapper postMapper, SubredditService subredditService, VoteService voteService) {
+    public PostController(AccountService accountService, PostService postService, PostMapper postMapper, SubredditService subredditService, VoteService voteService, VoteMapper voteMapper) {
         this.accountService = accountService;
         this.postService = postService;
         this.postMapper = postMapper;
         this.subredditService = subredditService;
         this.voteService = voteService;
+        this.voteMapper = voteMapper;
     }
 
     @GetMapping
@@ -108,6 +111,7 @@ public class PostController {
         post.setTitle(postDTO.title());
         post.setContent(postDTO.content());
         postService.updatePost(post);
+
         DataResponse<PostDTO> dataResponse = new DataResponse<>(true, postMapper.modelToDTO(post));
         return ResponseEntity.ok(dataResponse);
     }
@@ -137,21 +141,28 @@ public class PostController {
                                                               @RequestBody PutVoteBodyDTO putVoteDTO) {
 
         Account currentAccount = accountService.getCurrentAccount();
-        Vote currentVote = voteService.getVoteByAccountID(currentAccount.getAccountId());
+        Vote currentVote = voteService.getVoteByAccountAndVotable(currentAccount.getAccountId(), UUID.fromString(id));
 
         //  Cancelling vote removes it from DB
         if (putVoteDTO.voteType().equals("none")) {
+            voteService.deleteVoteByID(currentVote.getVoteID());
 
-        }
-
-        if (currentVote == null) {
-            currentVote = new Vote(UUID.randomUUID(), UUID.fromString(id), VotableType.POST,
-                    stringToVoteType(putVoteDTO.voteType()), currentAccount);
         } else {
-            currentVote.setVoteType(stringToVoteType(putVoteDTO.voteType()));
+            //  Adding a vote
+            if (currentVote == null) {
+                currentVote = new Vote(UUID.randomUUID(), UUID.fromString(id), VotableType.POST,
+                        stringToVoteType(putVoteDTO.voteType()), currentAccount);
+
+                voteService.addVote(currentVote);
+
+            //  Updating a vote
+            } else {
+                currentVote.setVoteType(stringToVoteType(putVoteDTO.voteType()));
+                voteService.updateVote(currentVote);
+            }
         }
 
-        voteService.addVote(currentVote);
-        return null;
+        DataResponse<AllVotesDTO> dataResponse = new DataResponse<>(true, voteMapper.modelToDTO(currentVote));
+        return ResponseEntity.ok(dataResponse);
     }
 }

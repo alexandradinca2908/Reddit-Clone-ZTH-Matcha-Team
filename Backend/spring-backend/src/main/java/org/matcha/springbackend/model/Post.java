@@ -27,7 +27,6 @@ public class Post extends Likeable {
         this.subreddit = subreddit;
         this.upvotes = upvotes;
         this.downvotes = downvotes;
-        this.score = score;
         this.commentCount = commentCount;
         this.title = title;
         this.content = content;

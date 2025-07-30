@@ -32,6 +32,11 @@ public class AccountService {
         return entity != null ? accountMapper.entityToModel(entity) : null;
     }
 
+    public Account findByID(UUID id) {
+        AccountEntity entity = accountRepository.findById(id).orElse(null);
+        return entity != null ? accountMapper.entityToModel(entity) : null;
+    }
+
     public Account getCurrentAccount() {
         return currentAccount;
     }
