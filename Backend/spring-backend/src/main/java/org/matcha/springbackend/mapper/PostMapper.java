@@ -31,13 +31,27 @@ public class PostMapper {
         if (post == null) return null;
 
         PostEntity entity = new PostEntity();
-        entity.setPostID(post.getPostID());
+//        entity.setPostID(post.getPostID());
         entity.setTitle(post.getTitle());
         entity.setContent(post.getContent());
         entity.setPhotoPath(post.getPhotoPath());
         entity.setDeleted(post.isDeleted());
         entity.setCreatedAt(post.getCreatedAt());
         entity.setUpdatedAt(post.getUpdatedAt());
+        entity.setUpvotes(post.getUpvotes());
+        entity.setDownvotes(post.getDownvotes());
+
+        Integer score = 0;
+        if (post.getUpvotes() != null && post.getDownvotes() != null) {
+            score = post.getUpvotes() - post.getDownvotes();
+        }
+        entity.setScore(score);
+
+        Integer commentCount = 0;
+        if (post.getComments() != null) {
+            commentCount = post.getComments().size();
+        }
+        entity.setCommentCount(commentCount);
 
         // Map Account
         if (post.getAccount() != null && post.getAccount().getAccountId() != null) {
@@ -46,8 +60,8 @@ public class PostMapper {
         }
 
         // Map Subreddit
-        if (post.getSubreddit() != null && post.getSubreddit().getSubredditId() != null) {
-            SubredditEntity subredditEntity = subredditRepository.findById(post.getSubreddit().getSubredditId()).orElse(null);
+        if (post.getSubreddit() != null && post.getSubreddit().getId() != null) {
+            SubredditEntity subredditEntity = subredditRepository.findById(post.getSubreddit().getId()).orElse(null);
             entity.setSubreddit(subredditEntity);
         }
 
@@ -63,11 +77,18 @@ public class PostMapper {
         Integer upvotes = model.getUpvotes();
         Integer downvotes = model.getDownvotes();
         Integer score = upvotes - downvotes;
-        Integer commentCount = model.getComments().size();
+        Integer commentCount = (model.getComments() != null) ? model.getComments().size() : 0;
 
-        Vote vote = voteService.getVoteByAccountAndVotable(accountMapper.modelToEntity(model.getAccount()),
-                model.getPostID());
-        String userVote = vote.getVoteType().toString();
+        // Only try to get userVote if account and postID are not null and account has an ID
+        String userVote = null;
+        if (model.getAccount() != null && model.getAccount().getAccountId() != null && model.getPostID() != null) {
+            try {
+                Vote vote = voteService.getVoteByAccountAndVotable(accountMapper.modelToEntity(model.getAccount()), model.getPostID());
+                userVote = vote != null && vote.getVoteType() != null ? vote.getVoteType().toString() : null;
+            } catch (Exception e) {
+                userVote = null;
+            }
+        }
 
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
@@ -107,7 +128,8 @@ public class PostMapper {
         post.setDeleted(entity.isDeleted());
         post.setCreatedAt(entity.getCreatedAt());
         post.setUpdatedAt(entity.getUpdatedAt());
-
+        // Avoid NullPointerException for comments
+        post.setComments(new java.util.ArrayList<>());
         return post;
     }
 

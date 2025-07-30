@@ -22,7 +22,7 @@ public class CommentMapper {
     public CommentEntity modelToEntity(Comment comment) {
         if (comment == null) return null;
         CommentEntity entity = new CommentEntity();
-        entity.setCommentId(comment.getCommentId());
+        // entity.setCommentId(comment.getCommentId());
         entity.setText(comment.getText());
         entity.setDeleted(comment.isDeleted());
         entity.setCreatedAt(comment.getCreatedAt());

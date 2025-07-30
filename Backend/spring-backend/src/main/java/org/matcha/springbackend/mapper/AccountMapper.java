@@ -24,7 +24,7 @@ public class AccountMapper {
     public AccountEntity modelToEntity(Account model) {
         if (model == null) return null;
         AccountEntity entity = new AccountEntity();
-        entity.setAccountId(model.getAccountId());
+        // entity.setAccountId(model.getAccountId());
         entity.setUsername(model.getUsername());
         entity.setEmail(model.getEmail());
         entity.setPassword(model.getPassword());
