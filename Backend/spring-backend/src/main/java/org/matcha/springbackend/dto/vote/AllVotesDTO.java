@@ -1,6 +1,6 @@
-package org.matcha.springbackend.dto.post;
+package org.matcha.springbackend.dto.vote;
 
-public record PostVotesDTO(
+public record AllVotesDTO(
         Integer upvotes,
         Integer downvotes,
         Integer score,
