@@ -1,6 +1,7 @@
 package org.matcha.springbackend.service;
 
 import org.matcha.springbackend.model.Account;
+import org.matcha.springbackend.repositories.AccountRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,10 +11,14 @@ import java.util.UUID;
 @Service
 public class AccountService {
     private final List<Account> accounts;
+    private final AccountRepository accountRepository;
+    private final Account currentAccount;
     private final PasswordService passwordService;
 
-    public AccountService(PasswordService passwordService) {
+    public AccountService(AccountRepository accountRepository, PasswordService passwordService) {
         this.accounts = new ArrayList<>();
+        this.accountRepository = accountRepository;
+        this.currentAccount = findByUsername("Root");
         this.passwordService = passwordService;
     }
 
@@ -26,16 +31,6 @@ public class AccountService {
     }
 
     public Account findByUsername(String username) {
-        if (username == null || username.isEmpty()) {
-            return null;
-        }
-
-        for (Account account : accounts) {
-            if (username.equals(account.getUsername())) {
-                return account;
-            }
-        }
-
-        return null;
+        return accountRepository.findByUsername(username).orElse(null);
     }
 }

@@ -12,24 +12,26 @@ import java.util.stream.Collectors;
 @Service
 public class PostService {
     private final List<Post> posts;
+    private final PostMapper postMapper;
     private final PostRepository postRepository;
 
-    public PostService(List<Post> posts, PostRepository postRepository) {
+    public PostService(List<Post> posts, PostMapper postMapper, PostRepository postRepository) {
         this.posts = posts;
+        this.postMapper = postMapper;
         this.postRepository = postRepository;
     }
 
     public List<Post> getPosts() {
         List<PostEntity> entities = postRepository.findAll(); // Optionally: use `@EntityGraph` to fetch relations
         return entities.stream()
-                .map(PostMapper::entityToModel)
+                .map(postMapper::entityToModel)
                 .collect(Collectors.toList());
     }
 
     public List<Post> getAllPosts() {
         return postRepository.findAll()
                 .stream()
-                .map(PostMapper::entityToModel)
+                .map(postMapper::entityToModel)
                 .collect(Collectors.toList());
     }
 

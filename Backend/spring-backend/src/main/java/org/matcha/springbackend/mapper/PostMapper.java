@@ -28,7 +28,7 @@ public class PostMapper {
                 score, commentCount, userVote, createdAt, updatedAt);
     }
 
-    public static Post entityToModel(PostEntity entity) {
+    public Post entityToModel(PostEntity entity) {
         if (entity == null) return null;
 
         // Map Account
