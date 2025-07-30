@@ -112,4 +112,8 @@ public class Subreddit {
     public void setSubredditId(UUID subredditId) {
         this.id = subredditId;
     }
+
+    public void setId(UUID subredditId) {
+        this.id = subredditId;
+    }
 }

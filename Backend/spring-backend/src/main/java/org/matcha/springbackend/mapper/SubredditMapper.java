@@ -3,25 +3,10 @@ package org.matcha.springbackend.mapper;
 import org.matcha.springbackend.dto.subreddit.SubredditDTO;
 import org.matcha.springbackend.model.Subreddit;
 import org.springframework.stereotype.Component;
+import org.matcha.springbackend.entities.SubredditEntity;
 
 @Component
 public class SubredditMapper {
-
-    public Subreddit entityToModel(SubredditDTO dto) {
-        if (dto == null) return null;
-        // isDeleted not present in DTO, default to false
-        return new Subreddit(
-                java.util.UUID.fromString(dto.id()),
-                dto.name(),
-                dto.displayName(),
-                dto.description(),
-                false, // isDeleted not present in DTO, default to false
-                dto.memberCount(),
-                dto.postCount(),
-                dto.iconUrl(),
-                java.time.OffsetDateTime.parse(dto.createdAt())
-        );
-    }
 
     public SubredditDTO modelToDTO(Subreddit model) {
         String id = model.getId().toString();
@@ -41,7 +26,7 @@ public class SubredditMapper {
     public Subreddit entityToModel(org.matcha.springbackend.entities.SubredditEntity entity) {
         if (entity == null) return null;
         Subreddit subreddit = new Subreddit();
-        subreddit.setSubredditId(entity.getSubredditId());
+        //subreddit.setId(entity.getSubredditId());
         subreddit.setName(entity.getName());
         subreddit.setDisplayName(entity.getName()); // Assuming displayName is same as name
         subreddit.setDescription(entity.getDescription());
@@ -53,5 +38,17 @@ public class SubredditMapper {
         subreddit.setIconUrl(null);
         // Account mapping can be added if needed
         return subreddit;
+    }
+
+    public SubredditEntity modelToEntity(Subreddit model) {
+        if (model == null) return null;
+        SubredditEntity entity = new SubredditEntity();
+        // entity.setSubredditId(model.getId());
+        entity.setName(model.getName());
+        entity.setDescription(model.getDescription());
+        entity.setDeleted(model.isDeleted());
+        entity.setCreatedAt(model.getCreatedAt());
+        // Alte câmpuri (memberCount, postCount, iconUrl) nu există în entity
+        return entity;
     }
 }

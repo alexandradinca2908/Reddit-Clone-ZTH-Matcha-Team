@@ -17,7 +17,7 @@ public class VoteMapper {
     public VoteEntity modelToEntity(Vote model) {
         if (model == null) return null;
         VoteEntity entity = new VoteEntity();
-        entity.setVoteId(model.getVoteID());
+        // entity.setVoteId(model.getVoteID());
         entity.setVotableId(model.getVotableID());
         entity.setVotableType(model.getVotableType());
 

@@ -99,4 +99,8 @@ public class SubredditEntity {
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }
