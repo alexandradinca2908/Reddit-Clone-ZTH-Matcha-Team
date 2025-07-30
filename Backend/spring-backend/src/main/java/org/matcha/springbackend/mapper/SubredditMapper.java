@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SubredditMapper {
+
     public Subreddit entityToModel(SubredditDTO dto) {
         //  TODO
         return null;

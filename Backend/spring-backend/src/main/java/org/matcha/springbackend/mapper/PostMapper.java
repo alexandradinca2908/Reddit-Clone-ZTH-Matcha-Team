@@ -1,14 +1,53 @@
 package org.matcha.springbackend.mapper;
 
 import org.matcha.springbackend.dto.post.PostDTO;
+import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.PostEntity;
+import org.matcha.springbackend.entities.SubredditEntity;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Subreddit;
+import org.matcha.springbackend.repositories.AccountRepository;
+import org.matcha.springbackend.repositories.SubredditRepository;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PostMapper {
+    private final AccountRepository accountRepository;
+    private final SubredditRepository subredditRepository;
+
+    public PostMapper(AccountRepository accountRepository, SubredditRepository subredditRepository) {
+        this.accountRepository = accountRepository;
+        this.subredditRepository = subredditRepository;
+    }
+
+    public PostEntity modelToEntity(Post post) {
+        if (post == null) return null;
+
+        PostEntity entity = new PostEntity();
+        entity.setPostID(post.getPostID());
+        entity.setTitle(post.getTitle());
+        entity.setContent(post.getContent());
+        entity.setPhotoPath(post.getPhotoPath());
+        entity.setDeleted(post.isDeleted());
+        entity.setCreatedAt(post.getCreatedAt());
+        entity.setUpdatedAt(post.getUpdatedAt());
+
+        // Map Account
+        if (post.getAccount() != null && post.getAccount().getAccountId() != null) {
+            AccountEntity accountEntity = accountRepository.findById(post.getAccount().getAccountId()).orElse(null);
+            entity.setAccount(accountEntity);
+        }
+
+        // Map Subreddit
+        if (post.getSubreddit() != null && post.getSubreddit().getSubredditId() != null) {
+            SubredditEntity subredditEntity = subredditRepository.findById(post.getSubreddit().getSubredditId()).orElse(null);
+            entity.setSubreddit(subredditEntity);
+        }
+
+        return entity;
+    }
+
     public PostDTO modelToDTO(Post model) {
         String id = model.getPostID().toString();
         String title = model.getTitle();

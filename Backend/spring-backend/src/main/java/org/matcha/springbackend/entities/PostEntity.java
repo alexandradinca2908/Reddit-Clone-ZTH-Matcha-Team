@@ -180,4 +180,15 @@ public class PostEntity {
     public void setComments(java.util.List<CommentEntity> comments) {
         this.comments = comments;
     }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setAccountId(UUID accountId) {
+        if (this.account == null) {
+            this.account = new AccountEntity();
+        }
+        this.account.setAccountId(accountId);
+    }
 }

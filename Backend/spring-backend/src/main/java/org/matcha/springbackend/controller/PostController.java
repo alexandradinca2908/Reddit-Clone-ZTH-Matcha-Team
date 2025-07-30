@@ -50,12 +50,7 @@ public class PostController {
 
     @GetMapping("{id}")
     public ResponseEntity<DataResponse<PostDTO>> getPostById(@PathVariable String id) {
-        //  TODO - retrieve from DB in post array (located in postService)
-        //  TODO - just delete this if not necessary
-
-        //  Filter posts by id and map to DTO
         Post post = postService.getPostById(id);
-
         if (post == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.format("Post with UUID %s not found", id));
@@ -89,8 +84,6 @@ public class PostController {
 
         postService.addPost(post);
 
-        //  TODO - UPDATE IN DB
-
         //  Send response
         DataResponse<PostDTO> dataResponse = new DataResponse<>(true, postMapper.modelToDTO(post));
         return ResponseEntity.ok(dataResponse);
@@ -99,36 +92,32 @@ public class PostController {
     @PutMapping("{id}")
     public ResponseEntity<DataResponse<PostDTO>> updatePost(@PathVariable String id,
                                                             @RequestBody UpdatePostBodyDTO postDTO) {
-        //  Get post by id and set new fields
+        // Get post by id
         Post post = postService.getPostById(id);
-
         if (post == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.format("Post with UUID %s not found", id));
         }
-
         post.setTitle(postDTO.title());
         post.setContent(postDTO.content());
-
-        //  TODO - UPDATE IN DB
-
+        postService.updatePost(post);
         DataResponse<PostDTO> dataResponse = new DataResponse<>(true, postMapper.modelToDTO(post));
         return ResponseEntity.ok(dataResponse);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<MessageResponse> deletePost(@PathVariable String id) {
-        //  Get post by id and delete it
-        boolean isDeleted = postService.deletePost(id);
 
+        Post post = postService.getPostById(id);
+        if (post == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Post with UUID %s not found", id));
+        }
+        boolean isDeleted = postService.deletePost(id);
         if (!isDeleted) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.format("Post with UUID %s could not be deleted", id));
         }
-
-        //  TODO - DELETE FROM DB
-        //  TODO - you'll probably need to getPost from postService, map to entity and then delete from DB
-        //  TODO - if ID is enough and no mapping is needed, then that works too
 
         MessageResponse messageResponse = new MessageResponse(true,
                 "Postarea a fost stearsa cu succes");

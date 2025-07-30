@@ -1,5 +1,7 @@
 package org.matcha.springbackend.model;
 
+import org.matcha.springbackend.entities.SubredditEntity;
+
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -67,5 +69,9 @@ public class Subreddit {
 
     public OffsetDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public UUID getSubredditId() {
+        return id;
     }
 }
