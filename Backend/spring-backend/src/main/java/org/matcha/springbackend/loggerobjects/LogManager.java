@@ -35,7 +35,7 @@ public class LogManager {
 
         //  Create current logger directory
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy_HH-mm-ss");
-        String timestamp = ".\\logging\\" + dtf.format(LocalDateTime.now());
+        String timestamp = "logging/" + dtf.format(LocalDateTime.now());
 
         Path logDir = Paths.get(timestamp);
 
@@ -47,12 +47,12 @@ public class LogManager {
         }
 
         //  Instantiate loggers
-        ILoggable verboseLogger = new FileLogger(LogLevel.VERBOSE, timestamp + "\\verbose.log");
-        ILoggable debugLogger = new FileLogger(LogLevel.DEBUG, timestamp + "\\debug.log");
-        ILoggable infoLogger = new FileLogger(LogLevel.INFO, timestamp + "\\info.log");
-        ILoggable warningLogger = new FileLogger(LogLevel.WARN,timestamp + "\\warnings.log");
-        ILoggable errorLogger = new FileLogger(LogLevel.ERROR, timestamp + "\\errors.log");
-        ILoggable fatalLogger = new FileLogger(LogLevel.FATAL, timestamp + "\\fatal.log");
+        ILoggable verboseLogger = new FileLogger(LogLevel.VERBOSE, timestamp + "/verbose.log");
+        ILoggable debugLogger = new FileLogger(LogLevel.DEBUG, timestamp + "/debug.log");
+        ILoggable infoLogger = new FileLogger(LogLevel.INFO, timestamp + "/info.log");
+        ILoggable warningLogger = new FileLogger(LogLevel.WARN, timestamp + "/warnings.log");
+        ILoggable errorLogger = new FileLogger(LogLevel.ERROR, timestamp + "/errors.log");
+        ILoggable fatalLogger = new FileLogger(LogLevel.FATAL, timestamp + "/fatal.log");
         LogManager.getInstance().registerMultipleLoggers(verboseLogger, debugLogger, errorLogger,
                 infoLogger, warningLogger, fatalLogger);
     }

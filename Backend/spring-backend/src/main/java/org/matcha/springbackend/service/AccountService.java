@@ -1,6 +1,7 @@
 package org.matcha.springbackend.service;
 
 import org.matcha.springbackend.entities.AccountEntity;
+import org.matcha.springbackend.loggerobjects.Logger;
 import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.repositories.AccountRepository;
@@ -21,9 +22,12 @@ public class AccountService {
     }
 
     public Account userRegister(Account account) {
+        Logger.debug("userRegister called for username: " + account.getUsername());
         AccountEntity entity = accountMapper.modelToEntity(account);
-        entity.setAccountId(UUID.randomUUID());
+        entity.setAccountId(null);
+        Logger.debug("AccountEntity created and accountId set to null for username: " + account.getUsername());
         AccountEntity saved = accountRepository.save(entity);
+        Logger.debug("AccountEntity saved for username: " + account.getUsername());
         return accountMapper.entityToModel(saved);
     }
 
