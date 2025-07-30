@@ -34,4 +34,9 @@ public class CommentService {
     public List<Comment> organizeCommentsByHierarchy(List<Comment> comments) {
         return null;
     }
+
+    public void addCommentToPost(Comment comment) {
+        CommentEntity commentEntity = commentMapper.modelToEntity(comment);
+        commentRepository.save(commentEntity);
+    }
 }
