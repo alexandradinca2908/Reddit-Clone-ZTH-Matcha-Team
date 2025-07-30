@@ -1,9 +1,8 @@
 package org.matcha.springbackend.service;
 
-import org.matcha.springbackend.entities.PostEntity;
+import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.VoteEntity;
 import org.matcha.springbackend.mapper.VoteMapper;
-import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.repositories.VoteRepository;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,8 @@ public class VoteService {
         this.voteMapper = voteMapper;
     }
 
-    public Vote getVoteByAccountAndVotable(UUID accountId, UUID votableId) {
-        return voteRepository.findByAccountIdAndVotableId(accountId, votableId)
+    public Vote getVoteByAccountAndVotable(AccountEntity account, UUID votableId) {
+        return voteRepository.findByAccountAndVotableId(account, votableId)
                 .map(voteMapper::entityToModel)
                 .orElse(null);
     }

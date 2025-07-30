@@ -12,11 +12,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class VoteMapper {
     private final AccountMapper accountMapper;
-    private final AccountService accountService;
 
-    public VoteMapper(AccountMapper accountMapper, AccountService accountService) {
+    public VoteMapper(AccountMapper accountMapper) {
         this.accountMapper = accountMapper;
-        this.accountService = accountService;
     }
 
     public VoteEntity modelToEntity(Vote model) {
@@ -30,7 +28,7 @@ public class VoteMapper {
             entity.setVoteType(model.getVoteType());
         }
         if (model.getAccount() != null) {
-            entity.setAccountId(model.getAccount().getAccountId());
+            entity.setAccount(accountMapper.modelToEntity(model.getAccount()));
         }
         return entity;
     }
@@ -39,8 +37,10 @@ public class VoteMapper {
         if (entity == null) return null;
 
         Account account = null;
-        if (entity.getAccountId() != null) {
-            account = accountService.findByID(entity.getAccountId());
+        if (entity.getAccount() != null) {
+            account = accountMapper.entityToModel(entity.getAccount());
+        } else {
+            return null;
         }
 
         return new Vote(

@@ -24,8 +24,9 @@ public class VoteEntity {
     @Column(name = "vote_type", nullable = false)
     private VoteType voteType;
 
-    @Column(name = "account_id", nullable = false)
-    private UUID accountId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "account_id", nullable = false, foreignKey = @ForeignKey(name = "fk_vote_account"))
+    private AccountEntity account;
 
     public VoteEntity() {}
 
@@ -70,11 +71,11 @@ public class VoteEntity {
         this.voteType = voteType;
     }
 
-    public UUID getAccountId() {
-        return accountId;
+    public AccountEntity getAccount() {
+        return account;
     }
 
-    public void setAccountId(UUID accountId) {
-        this.accountId = accountId;
+    public void setAccount(AccountEntity account) {
+        this.account = account;
     }
 }

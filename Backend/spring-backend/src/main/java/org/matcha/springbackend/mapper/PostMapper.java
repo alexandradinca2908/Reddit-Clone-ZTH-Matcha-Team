@@ -7,18 +7,24 @@ import org.matcha.springbackend.entities.SubredditEntity;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Subreddit;
+import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.repositories.AccountRepository;
 import org.matcha.springbackend.repositories.SubredditRepository;
+import org.matcha.springbackend.service.VoteService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PostMapper {
     private final AccountRepository accountRepository;
     private final SubredditRepository subredditRepository;
+    private final VoteService voteService;
+    private final AccountMapper accountMapper;
 
-    public PostMapper(AccountRepository accountRepository, SubredditRepository subredditRepository) {
+    public PostMapper(AccountRepository accountRepository, SubredditRepository subredditRepository, VoteService voteService, AccountMapper accountMapper) {
         this.accountRepository = accountRepository;
         this.subredditRepository = subredditRepository;
+        this.voteService = voteService;
+        this.accountMapper = accountMapper;
     }
 
     public PostEntity modelToEntity(Post post) {
@@ -54,11 +60,15 @@ public class PostMapper {
         String content = model.getContent();
         String author = model.getAccount().getUsername();
         String subreddit = model.getSubreddit().getDisplayName();
-        int upvotes = model.getUpvotes() != null ? model.getUpvotes() : 0;
-        int downvotes = model.getDownvotes() != null ? model.getDownvotes() : 0;
+        Integer upvotes = model.getUpvotes();
+        Integer downvotes = model.getDownvotes();
         Integer score = upvotes - downvotes;
-        int commentCount = (model.getComments() != null) ? model.getComments().size() : 0;
-        String userVote = "null";
+        Integer commentCount = model.getComments().size();
+
+        Vote vote = voteService.getVoteByAccountAndVotable(accountMapper.modelToEntity(model.getAccount()),
+                model.getPostID());
+        String userVote = vote.getVoteType().toString();
+
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
 
@@ -71,20 +81,20 @@ public class PostMapper {
 
         // Map Account
         Account account = new Account();
-//        if (entity.getAccount() != null) {
-//            account.setAccountId(entity.getAccount().getAccountId());
-//            account.setUsername(entity.getAccount().getUsername());
-//            account.setEmail(entity.getAccount().getEmail());
-//            account.setPhotoPath(entity.getAccount().getPhotoPath());
-//        }
+        if (entity.getAccount() != null) {
+            account.setAccountId(entity.getAccount().getAccountId());
+            account.setUsername(entity.getAccount().getUsername());
+            account.setEmail(entity.getAccount().getEmail());
+            account.setPhotoPath(entity.getAccount().getPhotoPath());
+        }
 
         // Map Subreddit
         Subreddit subreddit = new Subreddit();
-//        if (entity.getSubreddit() != null) {
-//            subreddit.setSubredditId(entity.getSubreddit().getSubredditId());
-//            subreddit.setDisplayName(entity.getSubreddit().getName());
-//            subreddit.setDescription(entity.getSubreddit().getDescription());
-//        }
+        if (entity.getSubreddit() != null) {
+            subreddit.setSubredditId(entity.getSubreddit().getSubredditId());
+            subreddit.setDisplayName(entity.getSubreddit().getName());
+            subreddit.setDescription(entity.getSubreddit().getDescription());
+        }
 
         // Map Post
         Post post = new Post();

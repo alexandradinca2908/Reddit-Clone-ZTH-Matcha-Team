@@ -9,7 +9,8 @@ public class SubredditMapper {
 
     public Subreddit entityToModel(SubredditDTO dto) {
         if (dto == null) return null;
-        Subreddit subreddit = new Subreddit(
+        // isDeleted not present in DTO, default to false
+        return new Subreddit(
                 java.util.UUID.fromString(dto.id()),
                 dto.name(),
                 dto.displayName(),
@@ -20,7 +21,6 @@ public class SubredditMapper {
                 dto.iconUrl(),
                 java.time.OffsetDateTime.parse(dto.createdAt())
         );
-        return subreddit;
     }
 
     public SubredditDTO modelToDTO(Subreddit model) {
@@ -41,7 +41,7 @@ public class SubredditMapper {
     public Subreddit entityToModel(org.matcha.springbackend.entities.SubredditEntity entity) {
         if (entity == null) return null;
         Subreddit subreddit = new Subreddit();
-        subreddit.setId(entity.getSubredditId());
+        subreddit.setSubredditId(entity.getSubredditId());
         subreddit.setName(entity.getName());
         subreddit.setDisplayName(entity.getName()); // Assuming displayName is same as name
         subreddit.setDescription(entity.getDescription());

@@ -6,6 +6,8 @@ import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDTO;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDTO;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDTO;
 import org.matcha.springbackend.entities.VotableType;
+import org.matcha.springbackend.entities.VoteType;
+import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Account;
@@ -33,14 +35,19 @@ import static org.matcha.springbackend.entities.VoteType.stringToVoteType;
 @RequestMapping("/posts")
 public class PostController {
     private final AccountService accountService;
+    private final AccountMapper accountMapper;
     private final PostService postService;
     private final PostMapper postMapper;
     private final SubredditService subredditService;
     private final VoteService voteService;
     private final VoteMapper voteMapper;
 
-    public PostController(AccountService accountService, PostService postService, PostMapper postMapper, SubredditService subredditService, VoteService voteService, VoteMapper voteMapper) {
+    public PostController(AccountService accountService, AccountMapper accountMapper,
+                          PostService postService, PostMapper postMapper,
+                          SubredditService subredditService,
+                          VoteService voteService, VoteMapper voteMapper) {
         this.accountService = accountService;
+        this.accountMapper = accountMapper;
         this.postService = postService;
         this.postMapper = postMapper;
         this.subredditService = subredditService;
@@ -89,8 +96,8 @@ public class PostController {
         OffsetDateTime createdAt = OffsetDateTime.now();
 
         //  Create and add post
-        Post post = new Post(uuid, account, subreddit, 0, 0, 0,
-                postDTO.title(), postDTO.content(), "", false, createdAt, createdAt);
+        Post post = new Post(uuid, postDTO.title(), postDTO.content(), account, subreddit,
+                0, 0, 0, "", false, createdAt, createdAt);
 
         postService.addPost(post);
 
@@ -141,7 +148,7 @@ public class PostController {
                                                               @RequestBody PutVoteBodyDTO putVoteDTO) {
 
         Account currentAccount = accountService.getCurrentAccount();
-        Vote currentVote = voteService.getVoteByAccountAndVotable(currentAccount.getAccountId(), UUID.fromString(id));
+        Vote currentVote = voteService.getVoteByAccountAndVotable(accountMapper.modelToEntity(currentAccount), UUID.fromString(id));
 
         //  Cancelling vote removes it from DB
         if (putVoteDTO.voteType().equals("none")) {
