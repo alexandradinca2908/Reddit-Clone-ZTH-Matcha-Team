@@ -22,30 +22,25 @@ public class VoteMapper {
         entity.setVoteId(model.getVoteID());
         entity.setVotableId(model.getVotableID());
         entity.setVotableType(model.getVotableType());
-
         if (model.getVote() != null) {
             entity.setVoteType(org.matcha.springbackend.entities.VoteType.valueOf(model.getVote()));
         }
         if (model.getAccount() != null) {
-            entity.setAccount(accountMapper.modelToEntity(model.getAccount()));
+            entity.setAccountId(model.getAccount().getAccountId());
         }
         return entity;
     }
 
     public Vote entityToModel(VoteEntity entity) {
         if (entity == null) return null;
-        Account account = null;
-        if (entity.getAccount() != null) {
-            account = accountMapper.entityToModel(entity.getAccount());
-        }
         String voteType = entity.getVoteType() != null ? entity.getVoteType().name() : null;
         return new Vote(
             entity.getVoteId(),
             entity.getVotableId(),
-            null,
+            voteType, // or null, depending on your Vote constructor
             entity.getVotableType(),
             voteType,
-            account
+            null // No Account object, only UUID is available
         );
     }
 

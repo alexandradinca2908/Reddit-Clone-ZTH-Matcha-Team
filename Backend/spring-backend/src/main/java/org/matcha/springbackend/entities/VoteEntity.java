@@ -24,10 +24,8 @@ public class VoteEntity {
     @Column(name = "vote_type", nullable = false)
     private VoteType voteType;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id", insertable = false, updatable = false,
-            foreignKey = @ForeignKey(name = "fk_vote_account"), nullable = false)
-    private AccountEntity account;
+    @Column(name = "account_id", nullable = false)
+    private UUID accountId;
 
     public VoteEntity() {}
 
@@ -72,11 +70,11 @@ public class VoteEntity {
         this.voteType = voteType;
     }
 
-    public AccountEntity getAccount() {
-        return account;
+    public UUID getAccountId() {
+        return accountId;
     }
 
-    public void setAccount(AccountEntity account) {
-        this.account = account;
+    public void setAccountId(UUID accountId) {
+        this.accountId = accountId;
     }
 }
