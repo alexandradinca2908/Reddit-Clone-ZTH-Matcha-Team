@@ -4,4 +4,8 @@
 logging
 
 ### VS ###
-/.vs/
+.vs/
+
+./Processor/ImageProcessor/
+
+./Processor/ImageProcessor/.vs/ImageProcessor/
