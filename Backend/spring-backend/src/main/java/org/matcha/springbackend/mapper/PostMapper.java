@@ -54,16 +54,15 @@ public class PostMapper {
         String content = model.getContent();
         String author = model.getAccount().getUsername();
         String subreddit = model.getSubreddit().getDisplayName();
-        //  TODO - SCORE
-        Integer score = 0;
-        //  TODO - COMMENT COUNT
-        Integer commentCount = 0;
-        //  TODO - USER VOTE
+        int upvotes = model.getUpvotes() != null ? model.getUpvotes() : 0;
+        int downvotes = model.getDownvotes() != null ? model.getDownvotes() : 0;
+        Integer score = upvotes - downvotes;
+        int commentCount = (model.getComments() != null) ? model.getComments().size() : 0;
         String userVote = "null";
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
 
-        return new PostDTO(id, title, content, author, subreddit, 0, 0,
+        return new PostDTO(id, title, content, author, subreddit, upvotes, downvotes,
                 score, commentCount, userVote, createdAt, updatedAt);
     }
 

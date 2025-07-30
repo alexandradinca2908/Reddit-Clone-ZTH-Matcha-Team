@@ -119,5 +119,11 @@ public class Post extends Likeable {
         this.comments = comments;
     }
 
+    public Integer getUpvotes() {
+        return upvotes;
+    }
 
+    public Integer getDownvotes() {
+        return downvotes;
+    }
 }

@@ -78,9 +78,8 @@ public class PostController {
         OffsetDateTime createdAt = OffsetDateTime.now();
 
         //  Create and add post
-        Post post = new Post(uuid, account, subreddit,
-                postDTO.title(), postDTO.content(), "",
-                false, createdAt, createdAt);
+        Post post = new Post(uuid, account, subreddit, 0, 0, 0,
+                postDTO.title(), postDTO.content(), "", false, createdAt, createdAt);
 
         postService.addPost(post);
 

@@ -120,4 +120,6 @@ public class Comment {
     public void setComments(java.util.List<Comment> comments) {
         this.comments = comments;
     }
+
+
 }
