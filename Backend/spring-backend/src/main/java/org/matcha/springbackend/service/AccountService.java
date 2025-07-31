@@ -18,7 +18,7 @@ public class AccountService {
     public AccountService(AccountRepository accountRepository, PasswordService passwordService, AccountMapper accountMapper) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
-        this.currentAccount = accountMapper.entityToModel(accountRepository.findByUsername("Root").orElse(null));
+        this.currentAccount = accountMapper.entityToModel(accountRepository.findByUsername("current_user").orElse(null));
     }
 
     public Account userRegister(Account account) {
