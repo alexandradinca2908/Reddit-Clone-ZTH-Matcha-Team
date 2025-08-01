@@ -1,6 +1,8 @@
 package org.matcha.springbackend.service;
 
+import org.hibernate.sql.Update;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
+import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.entities.PostEntity;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.model.Account;
@@ -79,13 +81,30 @@ public class PostService {
         return postMapper.entityToModel(entity);
     }
 
-    public void updatePost(Post post) {
+    public Post updatePost(String id, UpdatePostBodyDto postDto) {
+        // Get post by id
+        Post post = this.getPostById(id);
+
+        if (post == null) {
+            Logger.warn("[PostService] Post not found for id: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Post with UUID %s not found", id));
+        }
+
+        Logger.info("[PostService] Updating post with id: " + id);
+
+        post.setTitle(postDto.title());
+        post.setContent(postDto.content());
+
         PostEntity entity = postMapper.modelToEntity(post);
+
         if (postRepository.existsById(entity.getPostID())) {
             postRepository.save(entity);
         } else {
             throw new IllegalArgumentException("Post with ID " + entity.getPostID() + " does not exist.");
         }
+
+        return postMapper.entityToModel(entity);
     }
 
     public Post getPostById(String id) {
@@ -94,12 +113,15 @@ public class PostService {
                 .orElse(null);
     }
 
-    public boolean deletePost(String id) {
-        if (!postRepository.existsById(java.util.UUID.fromString(id))) {
-            return false;
+    public void deletePost(String id) {
+        Post post = this.getPostById(id);
+
+        if (post == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Post with UUID %s not found", id));
         }
+
         postRepository.deleteById(java.util.UUID.fromString(id));
-        return true;
     }
 
     //  TODO
