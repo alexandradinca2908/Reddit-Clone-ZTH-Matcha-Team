@@ -2,7 +2,7 @@ package org.matcha.springbackend.service;
 
 import org.matcha.springbackend.entities.SubredditEntity;
 import org.matcha.springbackend.model.Subreddit;
-import org.matcha.springbackend.repositories.SubredditRepository;
+import org.matcha.springbackend.repository.SubredditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

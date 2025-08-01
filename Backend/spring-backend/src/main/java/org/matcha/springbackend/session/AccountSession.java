@@ -2,7 +2,7 @@ package org.matcha.springbackend.session;
 
 import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.model.Account;
-import org.matcha.springbackend.repositories.AccountRepository;
+import org.matcha.springbackend.repository.AccountRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 

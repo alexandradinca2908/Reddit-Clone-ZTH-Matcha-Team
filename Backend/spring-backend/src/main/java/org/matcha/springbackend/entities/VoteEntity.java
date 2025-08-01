@@ -1,6 +1,9 @@
 package org.matcha.springbackend.entities;
 
 import jakarta.persistence.*;
+import org.matcha.springbackend.enums.VotableType;
+import org.matcha.springbackend.enums.VoteType;
+
 import java.util.UUID;
 
 @Entity

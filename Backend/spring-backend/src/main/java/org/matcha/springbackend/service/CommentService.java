@@ -2,13 +2,12 @@ package org.matcha.springbackend.service;
 
 import org.matcha.springbackend.dto.comment.requestbody.AddCommentBodyDTO;
 import org.matcha.springbackend.entities.CommentEntity;
-import org.matcha.springbackend.entities.VoteType;
-import org.matcha.springbackend.loggerobjects.Logger;
+import org.matcha.springbackend.enums.VoteType;
+import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.mapper.CommentMapper;
-import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.model.Post;
-import org.matcha.springbackend.repositories.CommentRepository;
+import org.matcha.springbackend.repository.CommentRepository;
 import org.matcha.springbackend.session.AccountSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
