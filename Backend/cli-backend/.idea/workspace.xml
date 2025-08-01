@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="77969094-1cc8-4f89-8efb-1b34df610b74" name="Changes" comment="CLI Backend project added" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;alexandradinca2908&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/alexandradinca2908/Matcha.git&quot;,
+    &quot;accountId&quot;: &quot;3bccfd65-5949-456b-b745-000ef17c3a4e&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2zOyU1gHNwzIMZls2yJqVS4zl5D" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.DatabaseConnection.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Docker.Docker Run Matcha.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/Cognyte/Matcha/Backend/cli-backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "D:/Cognyte/Matcha/Backend/cli-backend/src/main/java/org/example/Main.java",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="DatabaseConnection" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.dbconnection.DatabaseConnection" />
+      <module name="cli-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.dbconnection.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
+      <module name="cli-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Docker Run Matcha" type="docker-deploy" factoryName="docker-image" server-name="Docker">
+      <deployment type="docker-image">
+        <settings>
+          <option name="imageTag" value="matcha-app:v1" />
+          <option name="containerName" value="" />
+          <option name="commandLineOptions" value="-t -i" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.DatabaseConnection" />
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Docker.Docker Run Matcha" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.DatabaseConnection" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="77969094-1cc8-4f89-8efb-1b34df610b74" name="Changes" comment="" />
+      <created>1751616429168</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1751616429168</updated>
+      <workItem from="1751616431005" duration="12250000" />
+      <workItem from="1751892102882" duration="912000" />
+      <workItem from="1752047500800" duration="16919000" />
+      <workItem from="1752131664680" duration="9903000" />
+      <workItem from="1752142701951" duration="6901000" />
+      <workItem from="1752221051063" duration="13264000" />
+      <workItem from="1752488582668" duration="6166000" />
+      <workItem from="1752563286462" duration="151000" />
+      <workItem from="1752577451909" duration="799000" />
+      <workItem from="1752604764473" duration="3338000" />
+      <workItem from="1752612447887" duration="3302000" />
+      <workItem from="1752650017426" duration="21287000" />
+      <workItem from="1752682025653" duration="231000" />
+      <workItem from="1752698883238" duration="1317000" />
+      <workItem from="1752736279399" duration="22738000" />
+      <workItem from="1752955051023" duration="304000" />
+      <workItem from="1753184350143" duration="4394000" />
+      <workItem from="1753260231897" duration="696000" />
+      <workItem from="1753270900410" duration="3854000" />
+      <workItem from="1753345418471" duration="3897000" />
+      <workItem from="1753428729414" duration="466000" />
+      <workItem from="1753429233317" duration="1255000" />
+      <workItem from="1753701218340" duration="615000" />
+      <workItem from="1753818821860" duration="5208000" />
+    </task>
+    <task id="LOCAL-00001" summary="CLI Backend project added">
+      <option name="closed" value="true" />
+      <created>1751616497874</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1751616497875</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="CLI Backend project added" />
+    <option name="LAST_COMMIT_MESSAGE" value="CLI Backend project added" />
+  </component>
+</project>

@@ -2,12 +2,12 @@ package org.matcha.springbackend.entities;
 
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "post")
 public class PostEntity {
-
     @Id
     @GeneratedValue
     @Column(name = "post_id", nullable = false, updatable = false)
@@ -51,17 +51,13 @@ public class PostEntity {
     @Column(name = "comment_count")
     private Integer commentCount;
 
-    @OneToMany
-    private java.util.List<CommentEntity> comments;
-
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CommentEntity> comments;
 
     public PostEntity() {}
 
     @PrePersist
     protected void onCreate() {
-        if (postID == null) {
-            postID = UUID.randomUUID();
-        }
         createdAt = OffsetDateTime.now();
         updatedAt = createdAt;
     }

@@ -1,0 +1,59 @@
+Index: src/main/java/org/example/Post.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example;\r\n\r\npublic class Post implements Likeable{\r\n    int postID;\r\n    static int postCounter = 0;\r\n    int voteCount = 0;\r\n    String title;\r\n    String body;\r\n\r\n    @Override\r\n    public void upvote() {\r\n        postCounter++;\r\n    }\r\n    @Override\r\n    public void downvote() {\r\n        postCounter--;\r\n    }\r\n    @Override\r\n    public int getVotes() {\r\n        return voteCount;\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/Post.java b/src/main/java/org/example/Post.java
+--- a/src/main/java/org/example/Post.java	(revision 53ad8372b2f7919773abed2d058254ee7af0a231)
++++ b/src/main/java/org/example/Post.java	(date 1751622778586)
+@@ -1,24 +1,44 @@
+ package org.example;
++import java.util.ArrayList;
+ 
+ public class Post implements Likeable{
++    private static ArrayList<Post> posts = new ArrayList<Post>();
++    static int postsCounter = 0;
+     int postID;
+-    static int postCounter = 0;
+-    int voteCount = 0;
++    int ownershipID;
+     String title;
+     String body;
++    int voteCount;
+ 
+     @Override
+     public void upvote() {
+-        postCounter++;
++        voteCount++;
+     }
+     @Override
+     public void downvote() {
+-        postCounter--;
++        voteCount--;
+     }
+     @Override
+     public int getVotes() {
+         return voteCount;
+     }
+ 
++    public Post(String title, String body, int ownershipID) {
++        this.title = title;
++        this.body = body;
++        this.voteCount = 0;
++        this.ownershipID = ownershipID;
++        postID = postsCounter++;
++    }
++
++    public void addPost(Post post) {
++        posts.add(post);
++    }
++
++    public void deletePost(Post post) {
++        posts.remove(post);
++    }
++
++
+ 
+ }

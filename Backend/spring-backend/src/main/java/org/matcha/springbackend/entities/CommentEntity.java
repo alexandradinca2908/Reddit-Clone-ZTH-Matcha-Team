@@ -1,30 +1,33 @@
 package org.matcha.springbackend.entities;
 
 import jakarta.persistence.*;
+
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "comment")
 public class CommentEntity {
-
     @Id
     @GeneratedValue
     @Column(name = "comment_id", nullable = false, updatable = false)
     private UUID commentId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "fk_comment_account"))
     private AccountEntity account;
 
-    @Column(name = "post_id", nullable = false)
-    private UUID postId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", foreignKey = @ForeignKey(name = "fk_comment_post"), nullable = false)
+    private PostEntity post;
 
-    @Column(name = "parent_id",  nullable = true)
-    private UUID parentId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "fk_comment_comment"))
+    private CommentEntity parent;
 
-    @Column(name = "text", nullable = false)
-    private String text;
+    @Column(nullable = false)
+    private String content;
 
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted = false;
@@ -35,23 +38,20 @@ public class CommentEntity {
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
-    // Adaugare: campuri suplimentare pentru Likeable (daca este cazul)
-    @Column(name = "upvotes")
+    @Column
     private Integer upvotes;
 
-    @Column(name = "downvotes")
+    @Column
     private Integer downvotes;
 
-    @Column(name = "score")
+    @Column
     private Integer score;
 
-    public CommentEntity() {}
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CommentEntity> replies;
 
     @PrePersist
     protected void onCreate() {
-        if (commentId == null) {
-            commentId = UUID.randomUUID();
-        }
         createdAt = OffsetDateTime.now();
         updatedAt = createdAt;
     }
@@ -79,27 +79,27 @@ public class CommentEntity {
         this.account = account;
     }
 
-    public UUID getParentId() {
-        return parentId;
+    public CommentEntity getParent() {
+        return parent;
     }
 
-    public void setParentId(UUID parentId) {
-        this.parentId = parentId;
+    public void setParent(CommentEntity parent) {
+        this.parent = parent;
     }
 
-    public UUID getPostId() {
-        return postId;
+    public PostEntity getPost() {
+        return post;
     }
-    public void setPostId(UUID postId) {
-        this.postId = postId;
-    }
-
-    public String getText() {
-        return text;
+    public void setPost(PostEntity post) {
+        this.post = post;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public boolean isDeleted() {

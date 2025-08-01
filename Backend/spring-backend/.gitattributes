@@ -1,2 +1,2 @@
-/mvnw text eol=lf
-*.cmd text eol=crlf
+/mvnw content eol=lf
+*.cmd content eol=crlf

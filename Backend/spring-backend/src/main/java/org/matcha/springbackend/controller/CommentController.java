@@ -49,12 +49,13 @@ public class CommentController {
         return ResponseEntity.ok(dataResponse);
     }
 
+    //  TODO
     @PostMapping("/{postId}/comments")
     public ResponseEntity<DataResponse<CommentDto>> addCommentToPost(@PathVariable String postId,
                                                                      @RequestBody AddCommentBodyDTO commentDTO) {
         OffsetDateTime createdAt = OffsetDateTime.now();
         Comment comment = new Comment(UUID.randomUUID(), accountService.getCurrentAccount(), null,
-                UUID.fromString(postId), commentDTO.content(), false, 0, 0, createdAt, createdAt);
+                null, commentDTO.content(), false, 0, 0, createdAt, createdAt);
 
         commentService.addCommentToPost(comment);
 

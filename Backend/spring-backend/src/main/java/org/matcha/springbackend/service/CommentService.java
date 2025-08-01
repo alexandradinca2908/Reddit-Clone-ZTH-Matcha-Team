@@ -22,7 +22,7 @@ public class CommentService {
     }
 
     public List<Comment> getCommentsByPostId(UUID postId) {
-        List<CommentEntity> entities = commentRepository.findByPostId(postId).orElse(new ArrayList<>());
+        List<CommentEntity> entities = commentRepository.findByPost_PostID(postId).orElse(new ArrayList<>());
 
         return entities.stream()
                 .map(commentMapper::entityToModel)

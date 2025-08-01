@@ -14,7 +14,7 @@ INSERT INTO post (post_id, account_id, subreddit_id, title, content) VALUES
                                                                          (gen_random_uuid(), (SELECT account_id FROM account OFFSET 1 LIMIT 1), (SELECT subreddit_id FROM subreddit OFFSET 1 LIMIT 1), 'Spring e tare', 'Hai să discutăm despre Spring!');
 
 -- Populare tabela comment
-INSERT INTO comment (comment_id, account_id, post_id, text) VALUES
+INSERT INTO comment (comment_id, account_id, post_id, content) VALUES
                                                                 (gen_random_uuid(), (SELECT account_id FROM account LIMIT 1), (SELECT post_id FROM post LIMIT 1), 'Super postare!'),
                                                                 (gen_random_uuid(), (SELECT account_id FROM account OFFSET 1 LIMIT 1), (SELECT post_id FROM post LIMIT 1), 'Mulțumesc!');
 

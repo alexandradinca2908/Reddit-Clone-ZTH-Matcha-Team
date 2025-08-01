@@ -7,7 +7,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "account")
 public class AccountEntity {
-
     @Id
     @GeneratedValue
     @Column(name = "account_id", nullable = false, updatable = false)

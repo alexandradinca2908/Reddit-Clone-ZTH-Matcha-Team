@@ -49,7 +49,7 @@ CREATE TABLE comment (
     account_id UUID REFERENCES account(account_id) ON DELETE SET NULL,
     post_id UUID REFERENCES post(post_id) ON DELETE CASCADE,
     parent_comment_id UUID REFERENCES comment(comment_id) ON DELETE CASCADE,
-    text TEXT NOT NULL,
+    content TEXT NOT NULL,
     is_deleted BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
