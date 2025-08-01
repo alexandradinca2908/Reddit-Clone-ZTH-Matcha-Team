@@ -51,6 +51,7 @@ public class PostService {
             throw e;
         }
 
+        //  Retrieve JPA-generated UUID
         return entity.getPostID();
     }
 
