@@ -4,8 +4,6 @@ import org.matcha.springbackend.dto.post.PostDto;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
-import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
-import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.VotableType;
@@ -82,33 +80,17 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<DataResponse<PostDto>> createPost(@RequestBody CreatePostBodyDto postDTO) {
-        Account account = accountService.findByUsername(postDTO.author());
-        if (account == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
-        }
+    public ResponseEntity<DataResponse<PostDto>> createPost(@RequestBody CreatePostBodyDto postDto) {
+        Logger.debug("[PostService] addPost called for post title: " + postDto.title());
 
-        Subreddit subreddit = subredditService.findByName(postDTO.subreddit());
-        if  (subreddit == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Subreddit not found");
-        }
-
-        OffsetDateTime createdAt = OffsetDateTime.now();
-
-        //  Create and add post
-        Post post = new Post(null, postDTO.title(), postDTO.content(), account, subreddit,
-                0, 0, 0, "", false, createdAt, createdAt);
-
-        UUID postId;
-
+        Post post;
         try {
-            postId = postService.addPost(post);
+            post = postService.addPost(postDto);
+        } catch (ResponseStatusException e) {
+            throw e;
         }  catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
-
-        //  Set JPA-generated UUID
-        post.setPostID(postId);
 
         //  Send response
         DataResponse<PostDto> dataResponse = new DataResponse<>(true, postMapper.modelToDto(post));
@@ -117,28 +99,16 @@ public class PostController {
 
     @PutMapping("{id}")
     public ResponseEntity<DataResponse<PostDto>> updatePost(@PathVariable String id,
-                                                            @RequestBody UpdatePostBodyDto postDTO) {
+                                                            @RequestBody UpdatePostBodyDto postDto) {
         Logger.info("[PostController] updatePost called for id: " + id);
 
-        // Get post by id
-        Post post = postService.getPostById(id);
-
-        if (post == null) {
-            Logger.warn("[PostController] Post not found for id: " + id);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Post with UUID %s not found", id));
-        }
-
-        Logger.info("[PostController] Updating post with id: " + id);
-
-        post.setTitle(postDTO.title());
-        post.setContent(postDTO.content());
-
+        Post post;
         try {
-            postService.updatePost(post);
+            post = postService.updatePost(id, postDto);
             Logger.info("[PostController] Post updated successfully for id: " + id);
         } catch (Exception e) {
             Logger.error("[PostController] Exception at updatePost for id: " + id + ", message: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
 
         DataResponse<PostDto> dataResponse = new DataResponse<>(true, postMapper.modelToDto(post));
@@ -147,20 +117,14 @@ public class PostController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deletePost(@PathVariable String id) {
-        Post post = postService.getPostById(id);
-
-        if (post == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Post with UUID %s not found", id));
+        try {
+            postService.deletePost(id);
+        } catch (ResponseStatusException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
-
-        boolean isDeleted = postService.deletePost(id);
-
-        if (!isDeleted) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Post with UUID %s could not be deleted", id));
-        }
-
+        
         MessageResponse messageResponse = new MessageResponse(true,
                 "\"Postarea a fost ștearsă cu succes\"");
         return ResponseEntity.ok(messageResponse);
