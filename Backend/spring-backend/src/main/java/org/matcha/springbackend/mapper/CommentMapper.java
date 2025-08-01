@@ -1,6 +1,6 @@
 package org.matcha.springbackend.mapper;
 
-import org.matcha.springbackend.dto.comment.CommentDTO;
+import org.matcha.springbackend.dto.comment.CommentDto;
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.CommentEntity;
 import org.matcha.springbackend.model.Account;
@@ -49,7 +49,7 @@ public class CommentMapper {
         return entity;
     }
 
-    public CommentDTO modelToDTO(Comment model) {
+    public CommentDto modelToDto(Comment model) {
         String id = model.getCommentId().toString();
         String postId = model.getPost().getPostID().toString();
         String parentId = model.getParent().getCommentId().toString();
@@ -61,9 +61,9 @@ public class CommentMapper {
         String userVote = "null"; // TODO: implement if needed
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
-        List<CommentDTO> replies = model.getComments().stream().map(this::modelToDTO).collect(Collectors.toList());
+        List<CommentDto> replies = model.getComments().stream().map(this::modelToDto).collect(Collectors.toList());
 
-        return new CommentDTO(id, postId, parentId, content, author,
+        return new CommentDto(id, postId, parentId, content, author,
                 upvotes, downvotes, score, userVote, createdAt, updatedAt, replies);
     }
 
