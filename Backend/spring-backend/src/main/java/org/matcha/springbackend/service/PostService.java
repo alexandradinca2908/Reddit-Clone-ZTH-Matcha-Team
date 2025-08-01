@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.matcha.springbackend.loggerobjects.Logger;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,18 +28,21 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-    public void addPost(Post post) {
+    public UUID addPost(Post post) {
         Logger.debug("[PostService] addPost called for post title: " + post.getTitle());
+
         PostEntity entity = postMapper.modelToEntity(post);
-        entity.setPostID(null);
+
         Logger.debug("[PostService] PostEntity mapped: " + entity);
-        // Debug: print all IDs to catch argument issues
-        if(entity.getAccount() != null) {
+
+        if (entity.getAccount() != null) {
             Logger.debug("[PostService] AccountEntity ID: " + entity.getAccount().getAccountId());
         }
-        if(entity.getSubreddit() != null) {
+
+        if (entity.getSubreddit() != null) {
             Logger.debug("[PostService] SubredditEntity ID: " + entity.getSubreddit().getSubredditId());
         }
+
         try {
             postRepository.save(entity);
             Logger.info("[PostService] Post saved with title: " + post.getTitle());
@@ -46,6 +50,8 @@ public class PostService {
             Logger.error("[PostService] Exception at save: " + e.getMessage());
             throw e;
         }
+
+        return entity.getPostID();
     }
 
     public void updatePost(Post post) {

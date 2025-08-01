@@ -31,10 +31,13 @@ public class PostMapper {
         if (post == null) return null;
 
         PostEntity entity = new PostEntity();
-        // Setează ID-ul doar dacă nu este null (pentru update)
+
         if (post.getPostID() != null) {
             entity.setPostID(post.getPostID());
+        } else {
+            entity.setPostID(null);
         }
+
         entity.setTitle(post.getTitle());
         entity.setContent(post.getContent());
         entity.setPhotoPath(post.getPhotoPath());
