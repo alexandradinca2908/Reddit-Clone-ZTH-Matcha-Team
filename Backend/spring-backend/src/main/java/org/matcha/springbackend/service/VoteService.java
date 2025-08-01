@@ -34,6 +34,7 @@ public class VoteService {
                 .orElse(null);
     }
 
+    //PUT /posts/:id/vote
     public void addVote(Vote vote) {
         VoteEntity entity = voteMapper.modelToEntity(vote);
         voteRepository.save(entity);
