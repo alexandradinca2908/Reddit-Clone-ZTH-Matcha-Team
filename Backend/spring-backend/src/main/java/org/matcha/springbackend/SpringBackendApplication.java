@@ -1,7 +1,7 @@
 package org.matcha.springbackend;
 
-import org.matcha.springbackend.loggerobjects.LogManager;
-import org.matcha.springbackend.loggerobjects.Logger;
+import org.matcha.springbackend.loggerobject.LogManager;
+import org.matcha.springbackend.loggerobject.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

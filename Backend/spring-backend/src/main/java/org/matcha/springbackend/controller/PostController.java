@@ -6,8 +6,8 @@ import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
-import org.matcha.springbackend.entities.VotableType;
-import org.matcha.springbackend.loggerobjects.Logger;
+import org.matcha.springbackend.enumpackage.VotableType;
+import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Account;
@@ -27,7 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.UUID;
 
-import static org.matcha.springbackend.entities.VoteType.stringToVoteType;
+import static org.matcha.springbackend.enumpackage.VoteType.stringToVoteType;
 
 @RestController
 @RequestMapping("/posts")
@@ -139,17 +139,20 @@ public class PostController {
         if (putVoteDTO.voteType().equals("none")) {
             voteService.deleteVoteByID(currentVote.getVoteID());
         } else {
-            //  Adding a vote
             if (currentVote == null) {
+                System.out.println("First time voting");
                 currentVote = new Vote(UUID.randomUUID(), UUID.fromString(id), VotableType.POST,
                         stringToVoteType(putVoteDTO.voteType()), currentAccount);
-
                 voteService.addVote(currentVote);
-
-            //  Updating a vote
             } else {
-                currentVote.setVoteType(stringToVoteType(putVoteDTO.voteType()));
-                voteService.updateVote(currentVote);
+                if (putVoteDTO.voteType().equals(currentVote.getVoteType().toString())) {
+                    System.out.println("Double click");
+                    voteService.deleteVoteByID(currentVote.getVoteID());
+                } else {
+                    currentVote.setVoteType(stringToVoteType(putVoteDTO.voteType()));
+                    System.out.println("Changed your mind");
+                    voteService.updateVote(currentVote);
+                }
             }
         }
 

@@ -1,6 +1,5 @@
 package org.matcha.springbackend.service;
 
-import org.hibernate.sql.Update;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.entities.PostEntity;
@@ -8,10 +7,10 @@ import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Subreddit;
-import org.matcha.springbackend.repositories.PostRepository;
+import org.matcha.springbackend.repository.PostRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.matcha.springbackend.loggerobjects.Logger;
+import org.matcha.springbackend.loggerobject.Logger;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.OffsetDateTime;

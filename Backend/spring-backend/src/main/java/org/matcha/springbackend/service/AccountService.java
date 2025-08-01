@@ -1,11 +1,10 @@
 package org.matcha.springbackend.service;
 
 import org.matcha.springbackend.entities.AccountEntity;
-import org.matcha.springbackend.loggerobjects.Logger;
+import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.model.Account;
-import org.matcha.springbackend.repositories.AccountRepository;
-import org.matcha.springbackend.session.AccountSession;
+import org.matcha.springbackend.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

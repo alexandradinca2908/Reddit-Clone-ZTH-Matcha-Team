@@ -1,8 +1,7 @@
 package org.matcha.springbackend.model;
 
-import org.hibernate.annotations.DialectOverride;
-import org.matcha.springbackend.entities.VotableType;
-import org.matcha.springbackend.entities.VoteType;
+import org.matcha.springbackend.enumpackage.VotableType;
+import org.matcha.springbackend.enumpackage.VoteType;
 
 import java.util.UUID;
 
