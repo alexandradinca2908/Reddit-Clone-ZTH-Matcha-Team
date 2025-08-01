@@ -38,7 +38,7 @@ public class VoteService {
         VoteEntity entity = voteMapper.modelToEntity(vote);
         voteRepository.save(entity);
 
-        if (vote.getVotableType() == VotableType.POST) {
+        if (VotableType.POST.equals(vote.getVotableType())) {
             postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
                 if (vote.getVoteType() == VoteType.UP) {
                     post.setUpvotes(post.getUpvotes() + 1);

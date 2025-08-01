@@ -2,7 +2,7 @@ package org.matcha.springbackend.mapper;
 
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.model.Account;
-import org.matcha.springbackend.dto.account.AccountDTO;
+import org.matcha.springbackend.dto.account.AccountDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -35,9 +35,9 @@ public class AccountMapper {
         return entity;
     }
 
-    public AccountDTO modelToDTO(Account model) {
+    public AccountDto modelToDto(Account model) {
         if (model == null) return null;
-        return new AccountDTO(
+        return new AccountDto(
             model.getAccountId() != null ? model.getAccountId().toString() : null,
             model.getUsername(),
             model.getEmail(),

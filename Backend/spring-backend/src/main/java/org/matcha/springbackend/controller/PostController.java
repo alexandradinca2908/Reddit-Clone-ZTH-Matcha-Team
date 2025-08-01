@@ -1,13 +1,12 @@
 package org.matcha.springbackend.controller;
 
-import org.matcha.springbackend.dto.post.PostDTO;
-import org.matcha.springbackend.dto.vote.AllVotesDTO;
+import org.matcha.springbackend.dto.post.PostDto;
+import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDTO;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDTO;
-import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDTO;
+import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.VotableType;
-import org.matcha.springbackend.entities.VoteType;
 import org.matcha.springbackend.loggerobjects.Logger;
 import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.mapper.PostMapper;
@@ -17,7 +16,6 @@ import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Subreddit;
 import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.response.DataResponse;
-import org.matcha.springbackend.response.MessageResponse;
 import org.matcha.springbackend.service.AccountService;
 import org.matcha.springbackend.service.PostService;
 import org.matcha.springbackend.service.SubredditService;
@@ -58,30 +56,30 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<DataResponse<List<PostDTO>>> getPosts() {
+    public ResponseEntity<DataResponse<List<PostDto>>> getPosts() {
         //  Map Post to PostDTO
-        List<PostDTO> postDTOs = postService.getPosts().stream()
-                .map(postMapper::modelToDTO)
+        List<PostDto> postDtos = postService.getPosts().stream()
+                .map(postMapper::modelToDto)
                 .toList();
 
-        DataResponse<List<PostDTO>> dataResponse = new DataResponse<>(true, postDTOs);
+        DataResponse<List<PostDto>> dataResponse = new DataResponse<>(true, postDtos);
         return ResponseEntity.ok(dataResponse);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<DataResponse<PostDTO>> getPostById(@PathVariable String id) {
+    public ResponseEntity<DataResponse<PostDto>> getPostById(@PathVariable String id) {
         Post post = postService.getPostById(id);
         if (post == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.format("Post with UUID %s not found", id));
         }
 
-        DataResponse<PostDTO> dataResponse = new DataResponse<>(true, postMapper.modelToDTO(post));
+        DataResponse<PostDto> dataResponse = new DataResponse<>(true, postMapper.modelToDto(post));
         return ResponseEntity.ok(dataResponse);
     }
 
     @PostMapping
-    public ResponseEntity<DataResponse<PostDTO>> createPost(@RequestBody CreatePostBodyDTO postDTO) {
+    public ResponseEntity<DataResponse<PostDto>> createPost(@RequestBody CreatePostBodyDTO postDTO) {
         //  Create post fields
         UUID uuid = UUID.randomUUID();
 
@@ -104,12 +102,12 @@ public class PostController {
         postService.addPost(post);
 
         //  Send response
-        DataResponse<PostDTO> dataResponse = new DataResponse<>(true, postMapper.modelToDTO(post));
+        DataResponse<PostDto> dataResponse = new DataResponse<>(true, postMapper.modelToDto(post));
         return ResponseEntity.ok(dataResponse);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<DataResponse<PostDTO>> updatePost(@PathVariable String id,
+    public ResponseEntity<DataResponse<PostDto>> updatePost(@PathVariable String id,
                                                             @RequestBody UpdatePostBodyDTO postDTO) {
         Logger.info("[PostController] updatePost called for id: " + id);
         try {
@@ -125,7 +123,7 @@ public class PostController {
             post.setContent(postDTO.content());
             postService.updatePost(post);
             Logger.info("[PostController] Post updated successfully for id: " + id);
-            DataResponse<PostDTO> dataResponse = new DataResponse<>(true, postMapper.modelToDTO(post));
+            DataResponse<PostDto> dataResponse = new DataResponse<>(true, postMapper.modelToDto(post));
             Logger.info("[PostController] PostDTO mapped and response ready for id: " + id);
             return ResponseEntity.ok(dataResponse);
         } catch (Exception e) {
@@ -152,8 +150,8 @@ public class PostController {
 
     // TODO
     @PutMapping("/{id}/vote")
-    public ResponseEntity<DataResponse<AllVotesDTO>> votePost(@PathVariable String id,
-                                                              @RequestBody PutVoteBodyDTO putVoteDTO) {
+    public ResponseEntity<DataResponse<AllVotesDto>> votePost(@PathVariable String id,
+                                                              @RequestBody PutVoteBodyDto putVoteDTO) {
 
         Account currentAccount = accountService.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
@@ -180,7 +178,7 @@ public class PostController {
             }
         }
 
-        DataResponse<AllVotesDTO> dataResponse = new DataResponse<>(true, voteMapper.modelToDTO(currentVote));
+        DataResponse<AllVotesDto> dataResponse = new DataResponse<>(true, voteMapper.modelToDto(currentVote));
         return ResponseEntity.ok(dataResponse);
     }
 }

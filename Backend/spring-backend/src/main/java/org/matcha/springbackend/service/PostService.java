@@ -33,8 +33,12 @@ public class PostService {
         entity.setPostID(null);
         Logger.debug("[PostService] PostEntity mapped: " + entity);
         // Debug: print all IDs to catch argument issues
-        if(entity.getAccount() != null) Logger.debug("[PostService] AccountEntity ID: " + entity.getAccount().getAccountId());
-        if(entity.getSubreddit() != null) Logger.debug("[PostService] SubredditEntity ID: " + entity.getSubreddit().getSubredditId());
+        if(entity.getAccount() != null) {
+            Logger.debug("[PostService] AccountEntity ID: " + entity.getAccount().getAccountId());
+        }
+        if(entity.getSubreddit() != null) {
+            Logger.debug("[PostService] SubredditEntity ID: " + entity.getSubreddit().getSubredditId());
+        }
         try {
             postRepository.save(entity);
             Logger.info("[PostService] Post saved with title: " + post.getTitle());
