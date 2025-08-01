@@ -8,8 +8,8 @@ import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.response.DataResponse;
-import org.matcha.springbackend.service.AccountService;
 import org.matcha.springbackend.service.CommentService;
+import org.matcha.springbackend.session.AccountSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,16 +25,17 @@ public class CommentController {
     private final VoteMapper voteMapper;
     private final CommentMapper commentMapper;
     private final CommentService commentService;
-    private final AccountService accountService;
+    private final AccountSession accountSession;
 
-    public CommentController(PostMapper postMapper, AccountMapper accountMapper, VoteMapper voteMapper,
-                             CommentMapper commentMapper, CommentService commentService, AccountService accountService) {
+    public CommentController(PostMapper postMapper, AccountMapper accountMapper,
+                             VoteMapper voteMapper, CommentMapper commentMapper,
+                             CommentService commentService, AccountSession accountSession) {
         this.postMapper = postMapper;
         this.accountMapper = accountMapper;
         this.voteMapper = voteMapper;
         this.commentMapper = commentMapper;
         this.commentService = commentService;
-        this.accountService = accountService;
+        this.accountSession = accountSession;
     }
 
     @GetMapping("/{postId}/comments")
@@ -54,7 +55,7 @@ public class CommentController {
     public ResponseEntity<DataResponse<CommentDto>> addCommentToPost(@PathVariable String postId,
                                                                      @RequestBody AddCommentBodyDTO commentDTO) {
         OffsetDateTime createdAt = OffsetDateTime.now();
-        Comment comment = new Comment(UUID.randomUUID(), accountService.getCurrentAccount(), null,
+        Comment comment = new Comment(UUID.randomUUID(), accountSession.getCurrentAccount(), null,
                 null, commentDTO.content(), false, 0, 0, createdAt, createdAt);
 
         commentService.addCommentToPost(comment);
