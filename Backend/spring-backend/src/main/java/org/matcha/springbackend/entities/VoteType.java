@@ -2,7 +2,8 @@ package org.matcha.springbackend.entities;
 
 public enum VoteType {
     UP,
-    DOWN;
+    DOWN,
+    NONE;
 
     public static VoteType stringToVoteType(String string) {
         if (string.equalsIgnoreCase("UP")) {

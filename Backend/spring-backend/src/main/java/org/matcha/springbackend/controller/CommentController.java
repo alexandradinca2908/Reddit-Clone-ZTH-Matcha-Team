@@ -7,11 +7,14 @@ import org.matcha.springbackend.mapper.CommentMapper;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Comment;
+import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.response.DataResponse;
 import org.matcha.springbackend.service.CommentService;
 import org.matcha.springbackend.session.AccountSession;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -54,11 +57,14 @@ public class CommentController {
     @PostMapping("/{postId}/comments")
     public ResponseEntity<DataResponse<CommentDto>> addCommentToPost(@PathVariable String postId,
                                                                      @RequestBody AddCommentBodyDTO commentDTO) {
-        OffsetDateTime createdAt = OffsetDateTime.now();
-        Comment comment = new Comment(UUID.randomUUID(), accountSession.getCurrentAccount(), null,
-                null, commentDTO.content(), false, 0, 0, createdAt, createdAt);
-
-        commentService.addCommentToPost(comment);
+        Comment comment;
+        try {
+            comment = commentService.addCommentToPost(postId, commentDTO);
+        } catch (ResponseStatusException e) {
+            throw e;
+        }  catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
 
         DataResponse<CommentDto> dataResponse = new DataResponse<>(true, commentMapper.modelToDto(comment));
         return ResponseEntity.ok(dataResponse);

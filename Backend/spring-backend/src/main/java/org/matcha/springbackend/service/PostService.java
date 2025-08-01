@@ -42,7 +42,6 @@ public class PostService {
 
     public Post addPost(CreatePostBodyDto postDto) {
         Account account = accountService.findByUsername(postDto.author());
-
         if (account == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
         }
@@ -57,8 +56,8 @@ public class PostService {
         //  Create and add post
         Post post = new Post(null, postDto.title(), postDto.content(), account, subreddit,
                 0, 0, 0, "", false, createdAt, createdAt);
-
         PostEntity entity = postMapper.modelToEntity(post);
+
         Logger.debug("[PostService] PostEntity mapped: " + entity);
 
         if (entity.getAccount() != null) {
@@ -77,7 +76,7 @@ public class PostService {
             throw e;
         }
 
-        //  Retrieve JPA-generated UUID
+        //  Retrieve JPA-populated entity as model
         return postMapper.entityToModel(entity);
     }
 
