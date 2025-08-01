@@ -1,9 +1,11 @@
 package org.matcha.springbackend.controller;
 
 import org.matcha.springbackend.dto.post.PostDto;
+import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
+import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
-import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDTO;
-import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDTO;
+import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
+import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.VotableType;
@@ -80,7 +82,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<DataResponse<PostDto>> createPost(@RequestBody CreatePostBodyDTO postDTO) {
+    public ResponseEntity<DataResponse<PostDto>> createPost(@RequestBody CreatePostBodyDto postDTO) {
         Account account = accountService.findByUsername(postDTO.author());
         if (account == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
@@ -115,7 +117,7 @@ public class PostController {
 
     @PutMapping("{id}")
     public ResponseEntity<DataResponse<PostDto>> updatePost(@PathVariable String id,
-                                                            @RequestBody UpdatePostBodyDTO postDTO) {
+                                                            @RequestBody UpdatePostBodyDto postDTO) {
         Logger.info("[PostController] updatePost called for id: " + id);
 
         // Get post by id
