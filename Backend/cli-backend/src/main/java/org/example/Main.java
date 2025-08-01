@@ -8,10 +8,10 @@ import org.example.menu.views.ViewID;
 import org.example.menu.views.ViewManager;
 import org.example.textprocessors.AnsiColors;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+//import org.hibernate.Session;
+//import org.hibernate.SessionFactory;
+//import org.hibernate.Transaction;
+//import org.hibernate.cfg.Configuration;
 
 import java.util.Scanner;
 
@@ -20,9 +20,7 @@ import static org.example.textprocessors.InputTranslator.translateInput;
 public class Main {
     public static void main(String[] args) {
 
-        // Initialize Hibernate SessionFactory (singleton in real apps)
-        Configuration config = new Configuration().configure();
-        try (SessionFactory sessionFactory = config.buildSessionFactory()) {
+
 
             // Test DB connection (opțional, în funcție de implementarea ta)
             if (!DatabaseConnection.isConnected()) {
@@ -57,9 +55,6 @@ public class Main {
                 }
             }
 
-        } catch (Exception e) {
-            System.err.println(AnsiColors.toRed("Error initializing the application: " + e.getMessage()));
-            e.printStackTrace();
-        }
+
     }
 }

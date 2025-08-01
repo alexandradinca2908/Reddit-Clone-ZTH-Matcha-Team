@@ -56,6 +56,7 @@ public class VoteMapper {
         );
     }
 
+    //TODO
     public AllVotesDTO modelToDTO(Vote model) {
         if (model == null) return null;
         Integer upvotes = null;

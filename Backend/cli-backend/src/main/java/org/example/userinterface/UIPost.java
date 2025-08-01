@@ -20,7 +20,7 @@ public class UIPost {
     public static final int MIN_TITLE_LENGTH = 10;
     public static final int MAX_TITLE_LENGTH = 40;
     private static final int POST_WIDTH = 50;
-    public static final int MIN_REWARD_VOTES = 3;
+    public static final int MIN_REWARD_VOTES = 1;
     private static final String PROMPT_TITLE = AnsiColors.toGreen("Please enter title: ");
     private static final String PROMPT_DESCRIPTION = AnsiColors.toGreen("Please enter description: ");
     private static final String ERROR_TITLE_TOO_LONG =
