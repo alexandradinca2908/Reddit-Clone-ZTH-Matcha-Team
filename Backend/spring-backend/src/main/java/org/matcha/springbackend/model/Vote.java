@@ -1,5 +1,6 @@
 package org.matcha.springbackend.model;
 
+import org.hibernate.annotations.DialectOverride;
 import org.matcha.springbackend.entities.VotableType;
 import org.matcha.springbackend.entities.VoteType;
 
@@ -43,5 +44,16 @@ public class Vote {
 
     public Account getAccount() {
         return account;
+    }
+
+    @Override
+    public String toString() {
+        return "Vote{" +
+                "voteID=" + voteID +
+                ", votableID=" + votableID +
+                ", votableType=" + votableType +
+                ", voteType=" + voteType +
+                ", account=" + account +
+                '}';
     }
 }
