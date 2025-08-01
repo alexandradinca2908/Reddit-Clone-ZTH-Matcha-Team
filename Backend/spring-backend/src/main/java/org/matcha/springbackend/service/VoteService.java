@@ -1,9 +1,9 @@
 package org.matcha.springbackend.service;
 
 import org.matcha.springbackend.entities.AccountEntity;
-import org.matcha.springbackend.enumpackage.VotableType;
+import org.matcha.springbackend.enums.VotableType;
 import org.matcha.springbackend.entities.VoteEntity;
-import org.matcha.springbackend.enumpackage.VoteType;
+import org.matcha.springbackend.enums.VoteType;
 import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.repository.CommentRepository;

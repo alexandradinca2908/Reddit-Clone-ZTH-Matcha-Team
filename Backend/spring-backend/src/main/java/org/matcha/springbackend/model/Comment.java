@@ -1,6 +1,6 @@
 package org.matcha.springbackend.model;
 
-import org.matcha.springbackend.enumpackage.VoteType;
+import org.matcha.springbackend.enums.VoteType;
 
 import java.time.OffsetDateTime;
 import java.util.List;

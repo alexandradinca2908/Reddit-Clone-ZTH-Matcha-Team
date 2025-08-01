@@ -2,7 +2,7 @@ package org.matcha.springbackend.service;
 
 import org.matcha.springbackend.dto.comment.requestbody.AddCommentBodyDTO;
 import org.matcha.springbackend.entities.CommentEntity;
-import org.matcha.springbackend.enumpackage.VoteType;
+import org.matcha.springbackend.enums.VoteType;
 import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.mapper.CommentMapper;
 import org.matcha.springbackend.model.Comment;

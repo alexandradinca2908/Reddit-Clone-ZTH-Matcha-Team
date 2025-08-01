@@ -6,7 +6,7 @@ import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
-import org.matcha.springbackend.enumpackage.VotableType;
+import org.matcha.springbackend.enums.VotableType;
 import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
@@ -27,7 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.UUID;
 
-import static org.matcha.springbackend.enumpackage.VoteType.stringToVoteType;
+import static org.matcha.springbackend.enums.VoteType.stringToVoteType;
 
 @RestController
 @RequestMapping("/posts")

@@ -1,4 +1,4 @@
-package org.matcha.springbackend.enumpackage;
+package org.matcha.springbackend.enums;
 
 public enum VoteType {
     UP,
