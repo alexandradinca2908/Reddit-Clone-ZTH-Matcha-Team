@@ -39,26 +39,29 @@ public class VoteService {
         VoteEntity entity = voteMapper.modelToEntity(vote);
         voteRepository.save(entity);
 
+        //  Post
         if (VotableType.POST.equals(vote.getVotableType())) {
             postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
-                if (vote.getVoteType() == VoteType.UP) {
+                if (VoteType.UP.equals(vote.getVoteType())) {
                     post.setUpvotes(post.getUpvotes() + 1);
                 } else if (vote.getVoteType() == VoteType.DOWN) {
                     post.setDownvotes(post.getDownvotes() + 1);
                 }
+
                 postRepository.save(post);
             });
-        } else if (vote.getVotableType() == VotableType.COMMENT) {
+
+        //  Comment
+        } else {
             commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
-                if (vote.getVoteType() == VoteType.UP) {
+                if (VoteType.UP.equals(vote.getVoteType())) {
                     comment.setUpvotes(comment.getUpvotes() + 1);
-                } else if (vote.getVoteType() == VoteType.DOWN) {
+                } else if (VoteType.DOWN.equals(vote.getVoteType())) {
                     comment.setDownvotes(comment.getDownvotes() + 1);
                 }
+
                 commentRepository.save(comment);
             });
-        } else {
-            throw new IllegalArgumentException("Unsupported votable type: " + vote.getVotableType());
         }
     }
 
@@ -69,31 +72,33 @@ public class VoteService {
 
         voteRepository.deleteByVoteId(id);
 
-        if (vote.getVotableType() == VotableType.POST) {
+        //  Post
+        if (VotableType.POST.equals(vote.getVotableType())) {
             postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
-                if (vote.getVoteType() == VoteType.UP) {
+                if (VoteType.UP.equals(vote.getVoteType())) {
                     post.setUpvotes(post.getUpvotes() - 1);
-                } else if (vote.getVoteType() == VoteType.DOWN) {
+                } else if (VoteType.DOWN.equals(vote.getVoteType())) {
                     post.setDownvotes(post.getDownvotes() - 1);
                 }
+
                 postRepository.save(post);
             });
-        } else if (vote.getVotableType() == VotableType.COMMENT) {
+
+        //  Comment
+        } else {
             commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
-                if (vote.getVoteType() == VoteType.UP) {
+                if (VoteType.UP.equals(vote.getVoteType())) {
                     comment.setUpvotes(comment.getUpvotes() - 1);
-                } else if (vote.getVoteType() == VoteType.DOWN) {
+                } else if (VoteType.DOWN.equals(vote.getVoteType())) {
                     comment.setDownvotes(comment.getDownvotes() - 1);
                 }
+
                 commentRepository.save(comment);
             });
-        } else {
-            throw new IllegalArgumentException("Unsupported votable type: " + vote.getVotableType());
         }
     }
 
-    //TODO: Crapa daca dau de 2 ori vote
-
+    //  TODO: Crapa daca dau de 2 ori vote
     public void updateVote(Vote vote) {
         VoteEntity entity = voteMapper.modelToEntity(vote);
         if (voteRepository.existsById(entity.getVoteId())) {
@@ -102,26 +107,26 @@ public class VoteService {
             throw new IllegalArgumentException("Vote with ID " + entity.getVoteId() + " does not exist.");
         }
 
-        if (vote.getVotableType() == VotableType.POST) {
+        if (VotableType.POST.equals(vote.getVotableType())) {
             postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
-                if (vote.getVoteType() == VoteType.UP) {
+                if (VoteType.UP.equals(vote.getVoteType())) {
                     post.setUpvotes(post.getUpvotes() + 1);
-                } else if (vote.getVoteType() == VoteType.DOWN) {
+                } else if (VoteType.DOWN.equals(vote.getVoteType())) {
                     post.setDownvotes(post.getDownvotes() + 1);
                 }
+
                 postRepository.save(post);
             });
-        } else if (vote.getVotableType() == VotableType.COMMENT) {
+        } else {
             commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
-                if (vote.getVoteType() == VoteType.UP) {
+                if (VoteType.UP.equals(vote.getVoteType())) {
                     comment.setUpvotes(comment.getUpvotes() + 1);
-                } else if (vote.getVoteType() == VoteType.DOWN) {
+                } else if (VoteType.DOWN.equals(vote.getVoteType())) {
                     comment.setDownvotes(comment.getDownvotes() + 1);
                 }
+
                 commentRepository.save(comment);
             });
-        } else {
-            throw new IllegalArgumentException("Unsupported votable type: " + vote.getVotableType());
         }
     }
 }
