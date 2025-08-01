@@ -1,6 +1,5 @@
 package org.matcha.springbackend.service;
 
-import org.matcha.springbackend.dto.comment.CommentDTO;
 import org.matcha.springbackend.entities.CommentEntity;
 import org.matcha.springbackend.mapper.CommentMapper;
 import org.matcha.springbackend.model.Comment;

@@ -1,6 +1,6 @@
 package org.matcha.springbackend.dto.subreddit;
 
-public record SubredditDTO(
+public record SubredditDto(
         String id,
         String name,
         String displayName,

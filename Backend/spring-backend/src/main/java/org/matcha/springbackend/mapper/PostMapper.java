@@ -1,6 +1,6 @@
 package org.matcha.springbackend.mapper;
 
-import org.matcha.springbackend.dto.post.PostDTO;
+import org.matcha.springbackend.dto.post.PostDto;
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.PostEntity;
 import org.matcha.springbackend.entities.SubredditEntity;
@@ -71,7 +71,7 @@ public class PostMapper {
         return entity;
     }
 
-    public PostDTO modelToDTO(Post model) {
+    public PostDto modelToDto(Post model) {
         String id = model.getPostID().toString();
         String title = model.getTitle();
         String content = model.getContent();
@@ -97,7 +97,7 @@ public class PostMapper {
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
 
-        return new PostDTO(id, title, content, author, subreddit, upvotes, downvotes,
+        return new PostDto(id, title, content, author, subreddit, upvotes, downvotes,
                 score, commentCount, userVote, createdAt, updatedAt);
     }
 

@@ -1,6 +1,6 @@
 package org.matcha.springbackend.dto.account;
 
-public record AccountDTO(
+public record AccountDto(
         String accountId,
         String username,
         String email,

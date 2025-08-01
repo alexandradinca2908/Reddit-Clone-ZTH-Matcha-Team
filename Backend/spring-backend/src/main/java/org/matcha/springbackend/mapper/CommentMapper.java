@@ -1,13 +1,13 @@
 package org.matcha.springbackend.mapper;
 
-import org.matcha.springbackend.dto.comment.CommentDTO;
+import org.matcha.springbackend.dto.comment.CommentDto;
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.CommentEntity;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.repositories.AccountRepository;
 import org.springframework.stereotype.Component;
-import java.util.UUID;
+
 import java.util.stream.Collectors;
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class CommentMapper {
         return entity;
     }
 
-    public CommentDTO modelToDTO(Comment model) {
+    public CommentDto modelToDto(Comment model) {
         String id = model.getCommentId().toString();
         String postId = model.getPostId() != null ? model.getPostId().toString() : null;
         String parentId = model.getParentId() != null ? model.getParentId().toString() : null;
@@ -50,8 +50,8 @@ public class CommentMapper {
         String userVote = "null"; // TODO: implement if needed
         String createdAt = model.getCreatedAt() != null ? model.getCreatedAt().toString() : null;
         String updatedAt = model.getUpdatedAt() != null ? model.getUpdatedAt().toString() : null;
-        List<CommentDTO> replies = model.getComments() != null ? model.getComments().stream().map(this::modelToDTO).collect(Collectors.toList()) : null;
-        return new CommentDTO(id, postId, parentId, content, author, upvotes, downvotes, score, userVote, createdAt, updatedAt, replies);
+        List<CommentDto> replies = model.getComments() != null ? model.getComments().stream().map(this::modelToDto).collect(Collectors.toList()) : null;
+        return new CommentDto(id, postId, parentId, content, author, upvotes, downvotes, score, userVote, createdAt, updatedAt, replies);
     }
 
     public Comment entityToModel(CommentEntity entity) {

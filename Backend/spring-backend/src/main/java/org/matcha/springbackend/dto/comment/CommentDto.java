@@ -2,7 +2,7 @@ package org.matcha.springbackend.dto.comment;
 
 import java.util.List;
 
-public record CommentDTO(
+public record CommentDto(
         String id,
         String postId,
         String parentId,
@@ -14,6 +14,6 @@ public record CommentDTO(
         String userVote,
         String createdAt,
         String updatedAt,
-        List<CommentDTO> replies
+        List<CommentDto> replies
 ) {
 }

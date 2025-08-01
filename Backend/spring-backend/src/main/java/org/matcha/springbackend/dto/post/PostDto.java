@@ -1,6 +1,6 @@
 package org.matcha.springbackend.dto.post;
 
-public record PostDTO(
+public record PostDto(
         String id,
         String title,
         String content,
