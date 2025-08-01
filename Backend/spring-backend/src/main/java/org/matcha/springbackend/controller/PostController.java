@@ -144,7 +144,6 @@ public class PostController {
 
         if (putVoteDTO.voteType().equals("none")) {
             voteService.deleteVoteByID(currentVote.getVoteID());
-
         } else {
             //  Adding a vote
             if (currentVote == null) {
