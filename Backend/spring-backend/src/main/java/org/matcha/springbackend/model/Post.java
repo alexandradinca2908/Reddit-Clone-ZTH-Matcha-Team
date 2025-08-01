@@ -6,7 +6,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public class Post extends Likeable {
+public class Post {
     private UUID postID;
     private String title;
     private String content;
