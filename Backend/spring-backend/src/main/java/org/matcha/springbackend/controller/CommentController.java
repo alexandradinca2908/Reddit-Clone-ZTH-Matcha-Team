@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/posts")
 public class CommentController {
     private final PostMapper postMapper;
     private final AccountMapper accountMapper;
@@ -41,7 +40,7 @@ public class CommentController {
         this.accountSession = accountSession;
     }
 
-    @GetMapping("/{postId}/comments")
+    @GetMapping("/posts/{postId}/comments")
     public ResponseEntity<DataResponse<List<CommentDto>>> getCommentsFromPost(@PathVariable String postId) {
         //  Map Comments to CommentDTOs
         List<CommentDto> commentDtos = commentService.getCommentsByPostId(UUID.fromString(postId))
@@ -54,7 +53,7 @@ public class CommentController {
     }
 
     //  TODO
-    @PostMapping("/{postId}/comments")
+    @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<DataResponse<CommentDto>> addCommentToPost(@PathVariable String postId,
                                                                      @RequestBody AddCommentBodyDTO commentDTO) {
         Comment comment;

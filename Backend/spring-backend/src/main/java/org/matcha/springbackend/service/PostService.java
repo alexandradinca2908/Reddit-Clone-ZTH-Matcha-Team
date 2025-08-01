@@ -132,4 +132,9 @@ public class PostService {
         // Implement vote logic here
         return true;
     }
+
+    public PostEntity getPostEntityById(String id) {
+        return postRepository.findByPostID(UUID.fromString(id))
+                .orElseThrow(() -> new IllegalArgumentException("Account not found in DB for id: " + id));
+    }
 }

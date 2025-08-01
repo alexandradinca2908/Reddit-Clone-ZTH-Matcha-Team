@@ -7,6 +7,8 @@ import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.repositories.AccountRepository;
 import org.matcha.springbackend.repositories.VoteRepository;
+import org.matcha.springbackend.service.AccountService;
+import org.matcha.springbackend.service.PostService;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
@@ -16,16 +18,18 @@ import java.util.List;
 
 @Component
 public class CommentMapper {
-    private final AccountRepository accountRepository;
     private final PostMapper postMapper;
     private final AccountMapper accountMapper;
     private final VoteRepository voteRepository;
+    private final AccountService accountService;
+    private final PostService postService;
 
-    public CommentMapper(AccountRepository accountRepository, PostMapper postMapper, AccountMapper accountMapper, VoteRepository voteRepository) {
-        this.accountRepository = accountRepository;
+    public CommentMapper(PostMapper postMapper, AccountMapper accountMapper, VoteRepository voteRepository, AccountService accountService, PostService postService) {
         this.postMapper = postMapper;
         this.accountMapper = accountMapper;
         this.voteRepository = voteRepository;
+        this.accountService = accountService;
+        this.postService = postService;
     }
 
     public CommentEntity modelToEntity(Comment model) {
@@ -34,7 +38,7 @@ public class CommentMapper {
         CommentEntity entity = new CommentEntity();
 
         entity.setCommentId(model.getCommentId());
-        entity.setAccount(accountMapper.modelToEntity(model.getAccount()));
+        entity.setAccount(accountService.getAccountEntityById(model.getAccount().getAccountId()));
 
         CommentEntity parent;
         if (model.getParent() != null) {
@@ -44,7 +48,7 @@ public class CommentMapper {
         }
         entity.setParent(parent);
 
-        entity.setPost(postMapper.modelToEntity(model.getPost()));
+        entity.setPost(postService.getPostEntityById(model.getPost().getPostID().toString()));
         entity.setContent(model.getText());
         entity.setDeleted(model.isDeleted());
         entity.setUpvotes(model.getUpvotes());
