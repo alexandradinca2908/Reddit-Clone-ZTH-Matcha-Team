@@ -4,8 +4,6 @@ import org.matcha.springbackend.dto.post.PostDto;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
-import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
-import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.VotableType;
@@ -82,33 +80,17 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<DataResponse<PostDto>> createPost(@RequestBody CreatePostBodyDto postDTO) {
-        Account account = accountService.findByUsername(postDTO.author());
-        if (account == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
-        }
-
-        Subreddit subreddit = subredditService.findByName(postDTO.subreddit());
-        if  (subreddit == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Subreddit not found");
-        }
-
-        OffsetDateTime createdAt = OffsetDateTime.now();
-
-        //  Create and add post
-        Post post = new Post(null, postDTO.title(), postDTO.content(), account, subreddit,
-                0, 0, 0, "", false, createdAt, createdAt);
-
-        UUID postId;
+    public ResponseEntity<DataResponse<PostDto>> createPost(@RequestBody CreatePostBodyDto postDto) {
+        Post post;
 
         try {
-            postId = postService.addPost(post);
+            Logger.debug("[PostService] addPost called for post title: " + postDto.title());
+            post = postService.addPost(postDto);
+        } catch (ResponseStatusException e) {
+            throw e;
         }  catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
-
-        //  Set JPA-generated UUID
-        post.setPostID(postId);
 
         //  Send response
         DataResponse<PostDto> dataResponse = new DataResponse<>(true, postMapper.modelToDto(post));

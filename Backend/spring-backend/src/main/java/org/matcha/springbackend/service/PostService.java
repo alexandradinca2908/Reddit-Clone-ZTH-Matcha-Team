@@ -1,12 +1,18 @@
 package org.matcha.springbackend.service;
 
+import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
 import org.matcha.springbackend.entities.PostEntity;
 import org.matcha.springbackend.mapper.PostMapper;
+import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
+import org.matcha.springbackend.model.Subreddit;
 import org.matcha.springbackend.repositories.PostRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.matcha.springbackend.loggerobjects.Logger;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -15,10 +21,14 @@ import java.util.stream.Collectors;
 public class PostService {
     private final PostMapper postMapper;
     private final PostRepository postRepository;
+    private final AccountService accountService;
+    private final SubredditService subredditService;
 
-    public PostService(PostMapper postMapper, PostRepository postRepository) {
+    public PostService(PostMapper postMapper, PostRepository postRepository, AccountService accountService, SubredditService subredditService) {
         this.postMapper = postMapper;
         this.postRepository = postRepository;
+        this.accountService = accountService;
+        this.subredditService = subredditService;
     }
 
     public List<Post> getPosts() {
@@ -28,11 +38,25 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-    public UUID addPost(Post post) {
-        Logger.debug("[PostService] addPost called for post title: " + post.getTitle());
+    public Post addPost(CreatePostBodyDto postDto) {
+        Account account = accountService.findByUsername(postDto.author());
+
+        if (account == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
+        }
+
+        Subreddit subreddit = subredditService.findByName(postDto.subreddit());
+        if  (subreddit == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Subreddit not found");
+        }
+
+        OffsetDateTime createdAt = OffsetDateTime.now();
+
+        //  Create and add post
+        Post post = new Post(null, postDto.title(), postDto.content(), account, subreddit,
+                0, 0, 0, "", false, createdAt, createdAt);
 
         PostEntity entity = postMapper.modelToEntity(post);
-
         Logger.debug("[PostService] PostEntity mapped: " + entity);
 
         if (entity.getAccount() != null) {
@@ -52,7 +76,7 @@ public class PostService {
         }
 
         //  Retrieve JPA-generated UUID
-        return entity.getPostID();
+        return postMapper.entityToModel(entity);
     }
 
     public void updatePost(Post post) {
