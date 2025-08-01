@@ -8,25 +8,22 @@ import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.VotableType;
 import org.matcha.springbackend.loggerobjects.Logger;
-import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
-import org.matcha.springbackend.model.Subreddit;
 import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.response.DataResponse;
 import org.matcha.springbackend.response.MessageResponse;
 import org.matcha.springbackend.service.AccountService;
 import org.matcha.springbackend.service.PostService;
-import org.matcha.springbackend.service.SubredditService;
 import org.matcha.springbackend.service.VoteService;
+import org.matcha.springbackend.session.AccountSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,22 +33,19 @@ import static org.matcha.springbackend.entities.VoteType.stringToVoteType;
 @RequestMapping("/posts")
 public class PostController {
     private final AccountService accountService;
-    private final AccountMapper accountMapper;
+    private final AccountSession accountSession;
     private final PostService postService;
     private final PostMapper postMapper;
-    private final SubredditService subredditService;
     private final VoteService voteService;
     private final VoteMapper voteMapper;
 
-    public PostController(AccountService accountService, AccountMapper accountMapper,
+    public PostController(AccountService accountService, AccountSession accountSession,
                           PostService postService, PostMapper postMapper,
-                          SubredditService subredditService,
                           VoteService voteService, VoteMapper voteMapper) {
         this.accountService = accountService;
-        this.accountMapper = accountMapper;
+        this.accountSession = accountSession;
         this.postService = postService;
         this.postMapper = postMapper;
-        this.subredditService = subredditService;
         this.voteService = voteService;
         this.voteMapper = voteMapper;
     }
@@ -124,7 +118,7 @@ public class PostController {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
-        
+
         MessageResponse messageResponse = new MessageResponse(true,
                 "\"Postarea a fost ștearsă cu succes\"");
         return ResponseEntity.ok(messageResponse);
@@ -135,7 +129,7 @@ public class PostController {
     public ResponseEntity<DataResponse<AllVotesDto>> votePost(@PathVariable String id,
                                                               @RequestBody PutVoteBodyDto putVoteDTO) {
 
-        Account currentAccount = accountService.getCurrentAccount();
+        Account currentAccount = accountSession.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
         if (accountEntity == null) {
             throw new IllegalArgumentException("Current account does not exist in DB! id: " + currentAccount.getAccountId());
