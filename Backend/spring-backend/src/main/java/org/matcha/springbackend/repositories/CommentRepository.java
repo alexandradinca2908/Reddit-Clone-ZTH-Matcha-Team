@@ -1,6 +1,7 @@
 package org.matcha.springbackend.repositories;
 
 import org.matcha.springbackend.entities.CommentEntity;
+import org.matcha.springbackend.entities.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +11,6 @@ import java.util.UUID;
 
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, UUID> {
-    Optional<List<CommentEntity>> findByPostId(UUID id);
-
+    Optional<List<CommentEntity>> findByPost_PostID(UUID postId);
     Optional<CommentEntity> findByCommentId(UUID votableID);
 }

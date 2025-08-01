@@ -5,9 +5,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "vote",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"account_id", "votable_id"}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {"account_id", "votable_id", "votable_type"}))
 public class VoteEntity {
-
     @Id
     @GeneratedValue
     @Column(name = "vote_id", nullable = false, updatable = false)

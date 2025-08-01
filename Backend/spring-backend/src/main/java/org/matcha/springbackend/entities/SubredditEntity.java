@@ -7,13 +7,11 @@ import java.util.UUID;
 @Entity
 @Table(name = "subreddit")
 public class SubredditEntity {
-
     @Id
     @GeneratedValue
     @Column(name = "subreddit_id", nullable = false, updatable = false)
     private UUID subredditId;
 
-    // Mulți subreddits pot avea un singur creator (account)
     // ON DELETE SET NULL → nullable și setat null dacă contul dispare
     @ManyToOne
     @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "fk_subreddit_account"), nullable = true)
@@ -38,9 +36,6 @@ public class SubredditEntity {
 
     @PrePersist
     protected void onCreate() {
-        if (subredditId == null) {
-            subredditId = UUID.randomUUID();
-        }
         createdAt = OffsetDateTime.now();
         updatedAt = createdAt;
     }
