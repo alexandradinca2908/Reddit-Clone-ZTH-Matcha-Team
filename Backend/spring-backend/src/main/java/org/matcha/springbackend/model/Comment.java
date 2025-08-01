@@ -18,13 +18,13 @@ public class Comment {
     private VoteType userVote;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
-    private List<Comment> comments;
+    private List<Comment> replies;
 
     public Comment() {}
 
     public Comment(UUID commentId, Account account, Comment parent, Post post, String text,
                    boolean isDeleted, int upvotes, int downvotes,  VoteType voteType,
-                   OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+                   OffsetDateTime createdAt, OffsetDateTime updatedAt,  List<Comment> replies) {
         this.commentId = commentId;
         this.account = account;
         this.parent = parent;
@@ -36,6 +36,7 @@ public class Comment {
         this.userVote = voteType;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.replies = replies;
     }
 
     public UUID getCommentId() {
@@ -126,12 +127,12 @@ public class Comment {
         this.updatedAt = updatedAt;
     }
 
-    public java.util.List<Comment> getComments() {
-        return comments;
+    public java.util.List<Comment> getReplies() {
+        return replies;
     }
 
-    public void setComments(java.util.List<Comment> comments) {
-        this.comments = comments;
+    public void setReplies(java.util.List<Comment> replies) {
+        this.replies = replies;
     }
 
 

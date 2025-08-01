@@ -56,7 +56,8 @@ public class CommentService {
         }
 
         Comment comment = new Comment(null, accountSession.getCurrentAccount(), null,
-                post, commentDto.content(), false, 0, 0, VoteType.NONE, createdAt, createdAt);
+                post, commentDto.content(), false, 0, 0,
+                VoteType.NONE, createdAt, createdAt, new ArrayList<>());
         CommentEntity commentEntity = commentMapper.modelToEntity(comment);
 
         try {
@@ -69,5 +70,10 @@ public class CommentService {
 
         //  Retrieve JPA-populated entity as model
         return commentMapper.entityToModel(commentEntity);
+    }
+
+    public CommentEntity getCommentEntityById(String parentId) {
+        return commentRepository.findByCommentId(UUID.fromString(parentId))
+                .orElseThrow(() -> new IllegalArgumentException("Comment not found in DB for id: " + parentId));
     }
 }

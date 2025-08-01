@@ -5,9 +5,10 @@ import org.matcha.springbackend.entities.*;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.model.Post;
-import org.matcha.springbackend.repositories.AccountRepository;
+import org.matcha.springbackend.repositories.CommentRepository;
 import org.matcha.springbackend.repositories.VoteRepository;
 import org.matcha.springbackend.service.AccountService;
+import org.matcha.springbackend.service.CommentService;
 import org.matcha.springbackend.service.PostService;
 import org.springframework.stereotype.Component;
 
@@ -23,13 +24,17 @@ public class CommentMapper {
     private final VoteRepository voteRepository;
     private final AccountService accountService;
     private final PostService postService;
+    private final CommentRepository commentRepository;
 
-    public CommentMapper(PostMapper postMapper, AccountMapper accountMapper, VoteRepository voteRepository, AccountService accountService, PostService postService) {
+    public CommentMapper(PostMapper postMapper, AccountMapper accountMapper,
+                         VoteRepository voteRepository, AccountService accountService,
+                         PostService postService, CommentRepository commentRepository) {
         this.postMapper = postMapper;
         this.accountMapper = accountMapper;
         this.voteRepository = voteRepository;
         this.accountService = accountService;
         this.postService = postService;
+        this.commentRepository = commentRepository;
     }
 
     public CommentEntity modelToEntity(Comment model) {
@@ -42,7 +47,8 @@ public class CommentMapper {
 
         CommentEntity parent;
         if (model.getParent() != null) {
-            parent = this.modelToEntity(model.getParent());
+            UUID parentId = model.getParent().getCommentId();
+            parent = commentRepository.findByCommentId(parentId).orElse(null);
         } else {
             parent = null;
         }
@@ -62,7 +68,12 @@ public class CommentMapper {
     public CommentDto modelToDto(Comment model) {
         String id = model.getCommentId().toString();
         String postId = model.getPost().getPostID().toString();
-        String parentId = model.getParent().getCommentId().toString();
+        String parentId;
+        if (model.getParent() != null) {
+            parentId = model.getParent().getCommentId().toString();
+        } else {
+            parentId = null;
+        }
         String content = model.getText();
         String author = model.getAccount().getUsername();
         int upvotes = model.getUpvotes();
@@ -71,7 +82,7 @@ public class CommentMapper {
         String userVote = model.getUserVote().toString();
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
-        List<CommentDto> replies = model.getComments().stream().map(this::modelToDto).collect(Collectors.toList());
+        List<CommentDto> replies = model.getReplies().stream().map(this::modelToDto).collect(Collectors.toList());
 
         return new CommentDto(id, postId, parentId, content, author,
                 upvotes, downvotes, score, userVote, createdAt, updatedAt, replies);
@@ -109,7 +120,15 @@ public class CommentMapper {
         OffsetDateTime createdAt = entity.getCreatedAt();
         OffsetDateTime updatedAt = entity.getUpdatedAt();
 
+        List<Comment> replies = null;
+        if (entity.getReplies() != null && !entity.getReplies().isEmpty()) {
+            replies = entity.getReplies().stream()
+                    .map(this::entityToModel)
+                    .collect(Collectors.toList());
+        }
+
         return new Comment(id, author, parent, post, text,
-                deleted, upvotes, downvotes, voteType, createdAt, updatedAt);
+                deleted, upvotes, downvotes, voteType,
+                createdAt, updatedAt, replies);
     }
 }

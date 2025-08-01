@@ -7,7 +7,6 @@ import org.matcha.springbackend.mapper.CommentMapper;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Comment;
-import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.response.DataResponse;
 import org.matcha.springbackend.service.CommentService;
 import org.matcha.springbackend.session.AccountSession;
@@ -22,22 +21,12 @@ import java.util.UUID;
 
 @RestController
 public class CommentController {
-    private final PostMapper postMapper;
-    private final AccountMapper accountMapper;
-    private final VoteMapper voteMapper;
     private final CommentMapper commentMapper;
     private final CommentService commentService;
-    private final AccountSession accountSession;
 
-    public CommentController(PostMapper postMapper, AccountMapper accountMapper,
-                             VoteMapper voteMapper, CommentMapper commentMapper,
-                             CommentService commentService, AccountSession accountSession) {
-        this.postMapper = postMapper;
-        this.accountMapper = accountMapper;
-        this.voteMapper = voteMapper;
+    public CommentController(CommentMapper commentMapper, CommentService commentService) {
         this.commentMapper = commentMapper;
         this.commentService = commentService;
-        this.accountSession = accountSession;
     }
 
     @GetMapping("/posts/{postId}/comments")

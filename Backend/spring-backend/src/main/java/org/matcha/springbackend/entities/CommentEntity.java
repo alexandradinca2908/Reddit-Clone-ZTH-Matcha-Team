@@ -138,4 +138,12 @@ public class CommentEntity {
     public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    public List<CommentEntity> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(List<CommentEntity> replies) {
+        this.replies = replies;
+    }
 }
