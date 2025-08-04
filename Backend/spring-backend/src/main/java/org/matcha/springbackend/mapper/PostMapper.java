@@ -8,8 +8,8 @@ import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Subreddit;
 import org.matcha.springbackend.model.Vote;
-import org.matcha.springbackend.repositories.AccountRepository;
-import org.matcha.springbackend.repositories.SubredditRepository;
+import org.matcha.springbackend.repository.AccountRepository;
+import org.matcha.springbackend.repository.SubredditRepository;
 import org.matcha.springbackend.service.VoteService;
 import org.springframework.stereotype.Component;
 

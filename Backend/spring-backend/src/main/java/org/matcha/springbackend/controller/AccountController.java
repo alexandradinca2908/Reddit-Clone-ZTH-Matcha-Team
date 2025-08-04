@@ -1,6 +1,6 @@
 package org.matcha.springbackend.controller;
 
-import org.matcha.springbackend.loggerobjects.Logger;
+import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.service.AccountService;
 import org.springframework.web.bind.annotation.*;

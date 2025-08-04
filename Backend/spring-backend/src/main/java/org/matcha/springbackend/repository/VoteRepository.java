@@ -1,4 +1,4 @@
-package org.matcha.springbackend.repositories;
+package org.matcha.springbackend.repository;
 
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.VoteEntity;

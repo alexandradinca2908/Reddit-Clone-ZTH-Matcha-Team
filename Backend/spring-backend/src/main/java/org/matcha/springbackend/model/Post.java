@@ -1,7 +1,5 @@
 package org.matcha.springbackend.model;
 
-import org.matcha.springbackend.entities.VoteType;
-
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;

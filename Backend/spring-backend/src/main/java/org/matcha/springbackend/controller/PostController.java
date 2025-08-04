@@ -1,14 +1,13 @@
 package org.matcha.springbackend.controller;
 
-import jdk.swing.interop.SwingInterOpUtils;
 import org.matcha.springbackend.dto.post.PostDto;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
-import org.matcha.springbackend.entities.VotableType;
-import org.matcha.springbackend.loggerobjects.Logger;
+import org.matcha.springbackend.enums.VotableType;
+import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Account;
@@ -28,7 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.UUID;
 
-import static org.matcha.springbackend.entities.VoteType.stringToVoteType;
+import static org.matcha.springbackend.enums.VoteType.stringToVoteType;
 
 @RestController
 @RequestMapping("/posts")
@@ -142,9 +141,10 @@ public class PostController {
         } else {
             //  Adding a vote
             if (currentVote == null) {
-                System.out.println("first time votinmg");
+                System.out.println("first time voting");
                 currentVote = new Vote(UUID.randomUUID(), UUID.fromString(id), VotableType.POST,
                         stringToVoteType(putVoteDTO.voteType()), currentAccount);
+
                 voteService.addVote(currentVote);
 
             //  Updating a vote

@@ -1,6 +1,5 @@
 package org.matcha.springbackend.service;
 
-import org.hibernate.sql.Update;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.entities.PostEntity;
@@ -8,10 +7,10 @@ import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Subreddit;
-import org.matcha.springbackend.repositories.PostRepository;
+import org.matcha.springbackend.repository.PostRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.matcha.springbackend.loggerobjects.Logger;
+import org.matcha.springbackend.loggerobject.Logger;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.OffsetDateTime;
@@ -42,7 +41,6 @@ public class PostService {
 
     public Post addPost(CreatePostBodyDto postDto) {
         Account account = accountService.findByUsername(postDto.author());
-
         if (account == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
         }
@@ -57,8 +55,8 @@ public class PostService {
         //  Create and add post
         Post post = new Post(null, postDto.title(), postDto.content(), account, subreddit,
                 0, 0, 0, "", false, createdAt, createdAt);
-
         PostEntity entity = postMapper.modelToEntity(post);
+
         Logger.debug("[PostService] PostEntity mapped: " + entity);
 
         if (entity.getAccount() != null) {
@@ -77,7 +75,7 @@ public class PostService {
             throw e;
         }
 
-        //  Retrieve JPA-generated UUID
+        //  Retrieve JPA-populated entity as model
         return postMapper.entityToModel(entity);
     }
 
@@ -132,5 +130,10 @@ public class PostService {
         }
         // Implement vote logic here
         return true;
+    }
+
+    public PostEntity getPostEntityById(String id) {
+        return postRepository.findByPostID(UUID.fromString(id))
+                .orElseThrow(() -> new IllegalArgumentException("Account not found in DB for id: " + id));
     }
 }

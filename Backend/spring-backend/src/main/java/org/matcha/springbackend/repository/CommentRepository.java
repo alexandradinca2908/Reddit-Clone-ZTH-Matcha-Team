@@ -1,7 +1,6 @@
-package org.matcha.springbackend.repositories;
+package org.matcha.springbackend.repository;
 
 import org.matcha.springbackend.entities.CommentEntity;
-import org.matcha.springbackend.entities.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

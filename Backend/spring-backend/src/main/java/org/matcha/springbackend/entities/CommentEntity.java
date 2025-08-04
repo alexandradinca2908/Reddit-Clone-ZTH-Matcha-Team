@@ -44,9 +44,6 @@ public class CommentEntity {
     @Column
     private Integer downvotes;
 
-    @Column
-    private Integer score;
-
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentEntity> replies;
 
@@ -138,15 +135,15 @@ public class CommentEntity {
         this.downvotes = downvotes;
     }
 
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
     public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<CommentEntity> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(List<CommentEntity> replies) {
+        this.replies = replies;
     }
 }
