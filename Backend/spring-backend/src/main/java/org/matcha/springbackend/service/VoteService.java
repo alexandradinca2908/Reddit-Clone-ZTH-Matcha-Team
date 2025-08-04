@@ -11,6 +11,7 @@ import org.matcha.springbackend.repositories.PostRepository;
 import org.matcha.springbackend.repositories.VoteRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -35,8 +36,10 @@ public class VoteService {
     }
 
     //PUT /posts/:id/vote
+    @Transactional
     public void addVote(Vote vote) {
         VoteEntity entity = voteMapper.modelToEntity(vote);
+        entity.setVoteId(null);
         voteRepository.save(entity);
 
         //  Post
@@ -51,7 +54,7 @@ public class VoteService {
                 postRepository.save(post);
             });
 
-        //  Comment
+            //  Comment
         } else {
             commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
                 if (VoteType.UP.equals(vote.getVoteType())) {
@@ -65,6 +68,7 @@ public class VoteService {
         }
     }
 
+    @Transactional
     public void deleteVoteByID(UUID id) {
         Vote vote = voteRepository.findById(id)
                 .map(voteMapper::entityToModel)
@@ -98,9 +102,11 @@ public class VoteService {
         }
     }
 
-    //  TODO: Crapa daca dau de 2 ori vote
+    @Transactional
     public void updateVote(Vote vote) {
-        VoteEntity entity = voteMapper.modelToEntity(vote);
+        VoteEntity entity = voteRepository.findById(vote.getVoteID())
+                .orElseThrow(() -> new IllegalArgumentException("Vote with ID " + vote.getVoteID() + " does not exist."));
+
         if (voteRepository.existsById(entity.getVoteId())) {
             voteRepository.save(entity);
         } else {

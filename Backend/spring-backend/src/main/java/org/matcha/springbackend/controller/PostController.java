@@ -1,5 +1,6 @@
 package org.matcha.springbackend.controller;
 
+import jdk.swing.interop.SwingInterOpUtils;
 import org.matcha.springbackend.dto.post.PostDto;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
@@ -141,15 +142,23 @@ public class PostController {
         } else {
             //  Adding a vote
             if (currentVote == null) {
+                System.out.println("first time votinmg");
                 currentVote = new Vote(UUID.randomUUID(), UUID.fromString(id), VotableType.POST,
                         stringToVoteType(putVoteDTO.voteType()), currentAccount);
-
                 voteService.addVote(currentVote);
 
             //  Updating a vote
             } else {
-                currentVote.setVoteType(stringToVoteType(putVoteDTO.voteType()));
-                voteService.updateVote(currentVote);
+                System.out.println(currentVote.getVoteType() + " " + putVoteDTO.voteType());
+                //currentVote.setVoteType(stringToVoteType(putVoteDTO.voteType()));
+                if (putVoteDTO.voteType().equals(currentVote.getVoteType().toString().toLowerCase())) {
+                    System.out.println("oops, double click");
+                    voteService.deleteVoteByID(currentVote.getVoteID());  // this doesnt delete right
+                } else {
+                    currentVote.setVoteType(stringToVoteType(putVoteDTO.voteType()));
+                    System.out.println("changed your mind, huh");
+                    voteService.updateVote(currentVote);
+                }
             }
         }
 

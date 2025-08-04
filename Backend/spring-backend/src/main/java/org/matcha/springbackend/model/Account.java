@@ -89,4 +89,10 @@ public class Account {
     public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public String toString() {
+        return "Account [accountId=" + accountId + ", username=" + username + ", email=" + email + ", password="
+                + password + ", photoPath=" + photoPath + ", isDeleted=" + isDeleted + ", createdAt=" + createdAt
+                + ", updatedAt=" + updatedAt + "]";
+    }
 }
