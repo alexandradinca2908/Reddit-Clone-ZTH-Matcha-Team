@@ -106,6 +106,7 @@ public class VoteService {
         VoteEntity entity = voteRepository.findById(vote.getVoteID())
                 .orElseThrow(() -> new IllegalArgumentException("Vote with ID " + vote.getVoteID() + " does not exist."));
 
+        entity.setVoteType(vote.getVoteType());
         if (voteRepository.existsById(entity.getVoteId())) {
             voteRepository.save(entity);
         } else {
