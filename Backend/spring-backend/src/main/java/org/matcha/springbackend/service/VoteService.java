@@ -107,18 +107,16 @@ public class VoteService {
                 .orElseThrow(() -> new IllegalArgumentException("Vote with ID " + vote.getVoteID() + " does not exist."));
 
         entity.setVoteType(vote.getVoteType());
-        if (voteRepository.existsById(entity.getVoteId())) {
-            voteRepository.save(entity);
-        } else {
-            throw new IllegalArgumentException("Vote with ID " + entity.getVoteId() + " does not exist.");
-        }
+        voteRepository.save(entity);
 
         if (VotableType.POST.equals(vote.getVotableType())) {
             postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
                 if (VoteType.UP.equals(vote.getVoteType())) {
                     post.setUpvotes(post.getUpvotes() + 1);
+                    post.setDownvotes(post.getDownvotes() - 1);
                 } else if (VoteType.DOWN.equals(vote.getVoteType())) {
                     post.setDownvotes(post.getDownvotes() + 1);
+                    post.setUpvotes(post.getUpvotes() - 1);
                 }
 
                 postRepository.save(post);

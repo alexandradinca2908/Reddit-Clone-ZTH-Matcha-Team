@@ -141,7 +141,7 @@ public class PostController {
         } else {
             //  Adding a vote
             if (currentVote == null) {
-                System.out.println("first time voting");
+                Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername() + " and post: " + id);
                 currentVote = new Vote(UUID.randomUUID(), UUID.fromString(id), VotableType.POST,
                         stringToVoteType(putVoteDTO.voteType()), currentAccount);
 
@@ -150,13 +150,12 @@ public class PostController {
             //  Updating a vote
             } else {
                 System.out.println(currentVote.getVoteType() + " " + putVoteDTO.voteType());
-                //currentVote.setVoteType(stringToVoteType(putVoteDTO.voteType()));
                 if (putVoteDTO.voteType().equals(currentVote.getVoteType().toString().toLowerCase())) {
-                    System.out.println("oops, double click");
-                    voteService.deleteVoteByID(currentVote.getVoteID());  // this doesnt delete right
+                    Logger.info("[VoteController] Vote already exists for account: " + currentAccount.getUsername() + " and post: " + id);
+                    voteService.deleteVoteByID(currentVote.getVoteID());
                 } else {
                     currentVote.setVoteType(stringToVoteType(putVoteDTO.voteType()));
-                    System.out.println("changed your mind, huh");
+                    Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and post: " + id);
                     voteService.updateVote(currentVote);
                 }
             }
