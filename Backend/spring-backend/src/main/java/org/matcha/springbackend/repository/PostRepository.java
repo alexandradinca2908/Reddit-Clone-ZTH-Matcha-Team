@@ -15,5 +15,7 @@ public interface PostRepository extends JpaRepository<PostEntity, UUID> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<PostEntity> findByPostID(UUID uuid);
 
+    List<PostEntity> findAllByOrderByCreatedAtDesc();
+
     List<PostEntity> findAllBySubreddit_Name(String name);
 }

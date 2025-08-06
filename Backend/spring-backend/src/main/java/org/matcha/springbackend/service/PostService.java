@@ -34,7 +34,7 @@ public class PostService {
     }
 
     public List<Post> getPosts() {
-        List<PostEntity> entities = postRepository.findAll();
+        List<PostEntity> entities = postRepository.findAllByOrderByCreatedAtDesc();
         return entities.stream()
                 .map(postMapper::entityToModel)
                 .collect(Collectors.toList());

@@ -49,12 +49,14 @@ public class VoteService {
                     } else {
                         post.setUpvotes(1);
                     }
+                    post.setScore(post.getScore() + 1);
                 } else if (VoteType.DOWN.equals(vote.getVoteType())) {
                     if (post.getDownvotes() != null) {
                         post.setDownvotes(post.getUpvotes() + 1);
                     } else {
                         post.setDownvotes(1);
                     }
+                    post.setScore(post.getScore() - 1);
                 }
 
                 postRepository.save(post);
@@ -87,8 +89,10 @@ public class VoteService {
             postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
                 if (VoteType.UP.equals(vote.getVoteType())) {
                     post.setUpvotes(post.getUpvotes() - 1);
+                    post.setScore(post.getScore() - 1);
                 } else if (VoteType.DOWN.equals(vote.getVoteType())) {
                     post.setDownvotes(post.getDownvotes() - 1);
+                    post.setScore(post.getScore() + 1);
                 }
 
                 postRepository.save(post);
@@ -121,9 +125,11 @@ public class VoteService {
                 if (VoteType.UP.equals(vote.getVoteType())) {
                     post.setUpvotes(post.getUpvotes() + 1);
                     post.setDownvotes(post.getDownvotes() - 1);
+                    post.setScore(post.getScore() + 1);
                 } else if (VoteType.DOWN.equals(vote.getVoteType())) {
                     post.setDownvotes(post.getDownvotes() + 1);
                     post.setUpvotes(post.getUpvotes() - 1);
+                    post.setScore(post.getScore() - 1);
                 }
 
                 postRepository.save(post);
