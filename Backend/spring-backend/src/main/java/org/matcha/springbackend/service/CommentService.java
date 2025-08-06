@@ -1,13 +1,16 @@
 package org.matcha.springbackend.service;
 
+import jakarta.transaction.Transactional;
 import org.matcha.springbackend.dto.comment.requestbody.AddCommentBodyDTO;
 import org.matcha.springbackend.entities.CommentEntity;
+import org.matcha.springbackend.entities.PostEntity;
 import org.matcha.springbackend.enums.VoteType;
 import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.mapper.CommentMapper;
 import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.repository.CommentRepository;
+import org.matcha.springbackend.repository.PostRepository;
 import org.matcha.springbackend.session.AccountSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,12 +28,14 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final AccountSession accountSession;
     private final PostService postService;
+    private final PostRepository postRepository;
 
-    public CommentService(CommentMapper commentMapper, CommentRepository commentRepository, AccountSession accountSession, PostService postService) {
+    public CommentService(CommentMapper commentMapper, CommentRepository commentRepository, AccountSession accountSession, PostService postService, PostRepository postRepository) {
         this.commentMapper = commentMapper;
         this.commentRepository = commentRepository;
         this.accountSession = accountSession;
         this.postService = postService;
+        this.postRepository = postRepository;
     }
 
     public List<Comment> getCommentsByPostId(UUID postId) {
@@ -46,6 +51,7 @@ public class CommentService {
         return null;
     }
 
+    @Transactional
     public Comment addCommentToPost(String postId, AddCommentBodyDTO commentDto) {
         OffsetDateTime createdAt = OffsetDateTime.now();
 
@@ -59,11 +65,35 @@ public class CommentService {
                 VoteType.NONE, createdAt, createdAt, new ArrayList<>());
         CommentEntity commentEntity = commentMapper.modelToEntity(comment);
 
+        //  Save comment
         try {
             commentRepository.save(commentEntity);
             Logger.info("[CommentService] Comment saved with title: " + post.getTitle());
         } catch (Exception e) {
             Logger.error("[CommentService] Exception at save: " + e.getMessage());
+            throw e;
+        }
+
+        //  Update comment counter for the parent post
+        try {
+            PostEntity postEntity = postRepository.findByPostID(UUID.fromString(postId)).orElse(null);
+
+            if (postEntity == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found when trying to update " +
+                        "comment counter.");
+            }
+
+            int currentCount;
+            if (postEntity.getCommentCount() != null) {
+                currentCount = postEntity.getCommentCount();
+            } else {
+                currentCount = 0;
+            }
+
+            postEntity.setCommentCount(currentCount + 1);
+            postRepository.save(postEntity);
+        } catch (Exception e) {
+            Logger.error("[CommentService] Exception at post update: " + e.getMessage());
             throw e;
         }
 

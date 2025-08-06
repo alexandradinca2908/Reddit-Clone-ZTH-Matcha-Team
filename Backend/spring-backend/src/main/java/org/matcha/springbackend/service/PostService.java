@@ -1,5 +1,6 @@
 package org.matcha.springbackend.service;
 
+import jakarta.transaction.Transactional;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.entities.PostEntity;
@@ -79,6 +80,7 @@ public class PostService {
         return postMapper.entityToModel(entity);
     }
 
+    @Transactional
     public Post updatePost(String id, UpdatePostBodyDto postDto) {
         // Get post by id
         Post post = this.getPostById(id);
@@ -105,12 +107,14 @@ public class PostService {
         return postMapper.entityToModel(entity);
     }
 
+    @Transactional
     public Post getPostById(String id) {
-        return postRepository.findById(java.util.UUID.fromString(id))
+        return postRepository.findByPostID(UUID.fromString(id))
                 .map(postMapper::entityToModel)
                 .orElse(null);
     }
 
+    @Transactional
     public void deletePost(String id) {
         Post post = this.getPostById(id);
 
@@ -120,16 +124,6 @@ public class PostService {
         }
 
         postRepository.deleteById(java.util.UUID.fromString(id));
-    }
-
-    //  TODO
-    public boolean votePost(String id, String vote) {
-        Post post = getPostById(id);
-        if (post == null) {
-            return false;
-        }
-        // Implement vote logic here
-        return true;
     }
 
     public PostEntity getPostEntityById(String id) {
