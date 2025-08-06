@@ -14,7 +14,6 @@ public class Post {
     private Subreddit subreddit;
     private Integer upvotes;
     private Integer downvotes;
-    private Integer score;
     private Integer commentCount;
     private VoteType voteType;
     private String photoPath;
@@ -137,14 +136,6 @@ public class Post {
 
     public void setDownvotes(Integer downvotes) {
         this.downvotes = downvotes;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
     }
 
     public Integer getCommentCount() {

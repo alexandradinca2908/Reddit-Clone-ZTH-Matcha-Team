@@ -174,7 +174,7 @@ public class PostController {
         AllVotesDto allVotesDto = new AllVotesDto(
                 post.getUpvotes(),
                 post.getDownvotes(),
-                post.getScore(),
+                post.getUpvotes() - post.getDownvotes(),
                 userVote
         );
 

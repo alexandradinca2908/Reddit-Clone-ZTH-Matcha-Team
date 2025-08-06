@@ -23,7 +23,7 @@ public class Comment {
     public Comment() {}
 
     public Comment(UUID commentId, Account account, Comment parent, Post post, String text,
-                   boolean isDeleted, int upvotes, int downvotes,  VoteType voteType,
+                   boolean isDeleted, int upvotes, int downvotes, VoteType voteType,
                    OffsetDateTime createdAt, OffsetDateTime updatedAt,  List<Comment> replies) {
         this.commentId = commentId;
         this.account = account;
@@ -134,6 +134,4 @@ public class Comment {
     public void setReplies(java.util.List<Comment> replies) {
         this.replies = replies;
     }
-
-
 }

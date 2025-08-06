@@ -46,6 +46,12 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    public Comment getCommentById(String commentId) {
+        return commentRepository.findByCommentId(UUID.fromString(commentId))
+                .map(commentMapper::entityToModel)
+                .orElse(null);
+    }
+
     //  TODO
     public List<Comment> organizeCommentsByHierarchy(List<Comment> comments) {
         return null;

@@ -57,7 +57,6 @@ public class PostMapper {
         if (post.getUpvotes() != null && post.getDownvotes() != null) {
             score = post.getUpvotes() - post.getDownvotes();
         }
-        entity.setScore(score);
 
         Integer commentCount = 0;
         if (post.getComments() != null) {
@@ -86,16 +85,15 @@ public class PostMapper {
         String content = model.getContent();
         String author = model.getAccount().getUsername();
         String subreddit = model.getSubreddit().getDisplayName();
-        Integer upvotes = model.getUpvotes();
-        Integer downvotes = model.getDownvotes();
-        Integer score = upvotes - downvotes;
+        Integer upvotes = model.getUpvotes() == null ? 0 : model.getUpvotes();
+        Integer downvotes = model.getDownvotes() == null ? 0 : model.getDownvotes();
         Integer commentCount = model.getCommentCount();
         String userVote = model.getVoteType().toString();
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
 
         return new PostDto(id, title, content, author, subreddit, upvotes, downvotes,
-                score, commentCount, userVote, createdAt, updatedAt);
+                commentCount, userVote, createdAt, updatedAt);
     }
 
     public Post entityToModel(PostEntity entity) {
@@ -173,6 +171,7 @@ public class PostMapper {
         boolean deleted = entity.isDeleted();
         Integer upvotes = entity.getUpvotes();
         Integer downvotes = entity.getDownvotes();
+        Integer score = upvotes - downvotes;
 
         VoteEntity voteEntity = voteRepository.findByAccountAndVotableId(entity.getAccount(), id).orElse(null);
 

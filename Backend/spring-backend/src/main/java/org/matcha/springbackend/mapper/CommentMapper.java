@@ -110,8 +110,8 @@ public class CommentMapper {
         Post post = postMapper.entityToModel(entity.getPost());
         String text = entity.getContent();
         boolean deleted = entity.isDeleted();
-        Integer upvotes = entity.getUpvotes();
-        Integer downvotes = entity.getDownvotes();
+        Integer upvotes = entity.getUpvotes() == null ? 0 : entity.getUpvotes();
+        Integer downvotes = entity.getDownvotes() == null ? 0 : entity.getDownvotes();
 
         VoteEntity voteEntity = voteRepository.findByAccountAndVotableId(entity.getAccount(), id).orElse(null);
 

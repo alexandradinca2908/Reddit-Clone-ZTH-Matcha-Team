@@ -45,9 +45,6 @@ public class PostEntity {
     @Column(name = "downvotes")
     private Integer downvotes;
 
-    @Column(name = "score")
-    private Integer score;
-
     @Column(name = "comment_count")
     private Integer commentCount;
 
@@ -151,14 +148,6 @@ public class PostEntity {
 
     public void setDownvotes(Integer downvotes) {
         this.downvotes = downvotes;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
     }
 
     public Integer getCommentCount() {

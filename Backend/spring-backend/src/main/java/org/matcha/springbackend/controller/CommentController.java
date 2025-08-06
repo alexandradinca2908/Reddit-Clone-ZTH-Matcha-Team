@@ -14,6 +14,7 @@ import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.model.Vote;
+import org.matcha.springbackend.repository.CommentRepository;
 import org.matcha.springbackend.response.DataResponse;
 import org.matcha.springbackend.service.AccountService;
 import org.matcha.springbackend.service.CommentService;
@@ -38,16 +39,18 @@ public class CommentController {
     private final AccountSession accountSession;
     private final VoteService voteService;
     private final VoteMapper voteMapper;
+    private final CommentRepository commentRepository;
 
     public CommentController(CommentMapper commentMapper, CommentService commentService,
                              AccountService accountService, AccountSession accountSession,
-                             VoteService voteService, VoteMapper voteMapper) {
+                             VoteService voteService, VoteMapper voteMapper, CommentRepository commentRepository) {
         this.commentMapper = commentMapper;
         this.commentService = commentService;
         this.accountService = accountService;
         this.accountSession = accountSession;
         this.voteService = voteService;
         this.voteMapper = voteMapper;
+        this.commentRepository = commentRepository;
     }
 
     @GetMapping("/posts/{postId}/comments")
@@ -92,24 +95,41 @@ public class CommentController {
             voteService.deleteVoteByID(currentVote.getVoteID());
         } else {
             if (currentVote == null) {
-                currentVote = new Vote(UUID.randomUUID(), UUID.fromString(commentId), VotableType.POST,
+                currentVote = new Vote(UUID.randomUUID(), UUID.fromString(commentId), VotableType.COMMENT,
                         stringToVoteType(putVoteDto.voteType()), currentAccount);
-
+                Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername() + " and comment: " + commentId);
                 voteService.addVote(currentVote);
             } else {
                 if (putVoteDto.voteType().equals(currentVote.getVoteType().toString().toLowerCase())) {
-                    Logger.info("[VoteController] Vote already exists for account: " + currentAccount.getUsername() + " and post: " + commentId);
+                    Logger.info("[VoteController] Vote already exists for account: " + currentAccount.getUsername() + " and comment: " + commentId);
                     voteService.deleteVoteByID(currentVote.getVoteID());
                 } else {
                     currentVote.setVoteType(stringToVoteType(putVoteDto.voteType()));
-                    Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and post: " + commentId);
+                    Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + commentId);
                     voteService.updateVote(currentVote);
                 }
             }
         }
 
-        DataResponse<AllVotesDto> dataResponse = new DataResponse<>(true, voteMapper.modelToDto(currentVote));
+        Comment comment = commentService.getCommentById(commentId);
+        if (comment == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found with id: " + commentId);
+        }
+
+
+        Vote finalVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(commentId));
+        String userVoteString = (finalVote != null) ? finalVote.getVoteType().toString().toLowerCase() : "none";
+
+        AllVotesDto allVotesDto = new AllVotesDto(
+                comment.getUpvotes(),
+                comment.getDownvotes(),
+                comment.getUpvotes() - comment.getDownvotes(),
+                userVoteString
+        );
+
+        DataResponse<AllVotesDto> dataResponse = new DataResponse<>(true, allVotesDto);
         return ResponseEntity.ok(dataResponse);
+
     }
 
 }

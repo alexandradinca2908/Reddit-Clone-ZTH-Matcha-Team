@@ -120,7 +120,7 @@ public class CommentEntity {
     }
 
     public Integer getUpvotes() {
-        return upvotes;
+        return upvotes == null ? 0 : upvotes;
     }
 
     public void setUpvotes(Integer upvotes) {
@@ -128,7 +128,7 @@ public class CommentEntity {
     }
 
     public Integer getDownvotes() {
-        return downvotes;
+        return downvotes == null ? 0 : downvotes;
     }
 
     public void setDownvotes(Integer downvotes) {
