@@ -7,6 +7,7 @@ import org.matcha.springbackend.entities.PostEntity;
 import org.matcha.springbackend.enums.VoteType;
 import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.mapper.CommentMapper;
+import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.repository.CommentRepository;
@@ -107,8 +108,19 @@ public class CommentService {
         return commentMapper.entityToModel(commentEntity);
     }
 
-    public CommentEntity getCommentEntityById(String parentId) {
-        return commentRepository.findByCommentId(UUID.fromString(parentId))
-                .orElseThrow(() -> new IllegalArgumentException("Comment not found in DB for id: " + parentId));
+    @Transactional
+    public Comment updateComment(String commentId, String content) {
+        CommentEntity commentEntity = commentRepository.findByCommentId(UUID.fromString(commentId))
+                .orElseThrow(() -> new IllegalArgumentException("Comment not found in DB for id: " + commentId));
+
+        Account currentUser = accountSession.getCurrentAccount();
+        if (!commentEntity.getAccount().getAccountId().equals(currentUser.getAccountId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to edit this comment.");
+        }
+
+        commentEntity.setContent(content);
+        commentRepository.save(commentEntity);
+
+        return commentMapper.entityToModel(commentEntity);
     }
 }

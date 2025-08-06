@@ -2,6 +2,8 @@ package org.matcha.springbackend.controller;
 
 import org.matcha.springbackend.dto.comment.CommentDto;
 import org.matcha.springbackend.dto.comment.requestbody.AddCommentBodyDTO;
+import org.matcha.springbackend.dto.comment.requestbody.EditCommentBodyDTO;
+import org.matcha.springbackend.dto.post.PostDto;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
@@ -13,6 +15,7 @@ import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
+import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.repository.CommentRepository;
 import org.matcha.springbackend.response.DataResponse;
@@ -116,7 +119,6 @@ public class CommentController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found with id: " + commentId);
         }
 
-
         Vote finalVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(commentId));
         String userVoteString = (finalVote != null) ? finalVote.getVoteType().toString().toLowerCase() : "none";
 
@@ -129,7 +131,23 @@ public class CommentController {
 
         DataResponse<AllVotesDto> dataResponse = new DataResponse<>(true, allVotesDto);
         return ResponseEntity.ok(dataResponse);
-
     }
+
+    @PutMapping("/comments/{commentId}")
+    public ResponseEntity<DataResponse<CommentDto>> updateComment(@PathVariable String commentId,
+                                                                  @RequestBody EditCommentBodyDTO contentDto) {
+        Comment comment;
+        try {
+            comment = commentService.updateComment(commentId, contentDto.content());
+            Logger.info("[CommentController] Comment updated successfully for id: " + commentId);
+        } catch (Exception e) {
+            Logger.error("[CommentController] Exception at updateComment for id: " + commentId + ", message: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+
+        DataResponse<CommentDto> dataResponse = new DataResponse<>(true, commentMapper.modelToDto(comment));
+        return ResponseEntity.ok(dataResponse);
+    }
+
 
 }
