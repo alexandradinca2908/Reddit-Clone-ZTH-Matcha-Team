@@ -97,15 +97,18 @@ public class SubredditController {
     }
 
     @DeleteMapping("/{name}")
-    public ResponseEntity<?> deleteSubreddit(@PathVariable String name) {
+    public ResponseEntity<DataResponse<String>> deleteSubreddit(@PathVariable String name) {
         try {
             subredditService.deleteSubredditIfNoPosts(name);
-            return ResponseEntity.noContent().build();
+            DataResponse<String> response = new DataResponse<>(true, "Subreddit deleted successfully");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (ResponseStatusException ex) {
             if (ex.getStatusCode() == HttpStatus.CONFLICT) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(new DataResponse<>(false, "Subreddit cannot be deleted because it has posts"));
+                DataResponse<String> response = new DataResponse<>(false, "Subreddit cannot be deleted because it has posts");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
             } else if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
-                return ResponseEntity.notFound().build();
+                DataResponse<String> response = new DataResponse<>(false, "Subreddit not found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
             throw ex;
         }
