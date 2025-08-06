@@ -146,4 +146,5 @@ public class CommentEntity {
     public void setReplies(List<CommentEntity> replies) {
         this.replies = replies;
     }
+
 }

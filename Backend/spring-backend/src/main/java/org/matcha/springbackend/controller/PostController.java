@@ -127,7 +127,7 @@ public class PostController {
     // TODO
     @PutMapping("/{id}/vote")
     public ResponseEntity<DataResponse<AllVotesDto>> votePost(@PathVariable String id,
-                                                              @RequestBody PutVoteBodyDto putVoteDTO) {
+                                                              @RequestBody PutVoteBodyDto putVoteDto) {
 
         Account currentAccount = accountSession.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
@@ -136,32 +136,50 @@ public class PostController {
         }
         Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(id));
 
-        if (putVoteDTO.voteType().equals("none")) {
+        if (putVoteDto.voteType().equals("none")) {
             voteService.deleteVoteByID(currentVote.getVoteID());
         } else {
             //  Adding a vote
             if (currentVote == null) {
                 Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername() + " and post: " + id);
                 currentVote = new Vote(UUID.randomUUID(), UUID.fromString(id), VotableType.POST,
-                        stringToVoteType(putVoteDTO.voteType()), currentAccount);
+                        stringToVoteType(putVoteDto.voteType()), currentAccount);
 
                 voteService.addVote(currentVote);
 
             //  Updating a vote
             } else {
-                System.out.println(currentVote.getVoteType() + " " + putVoteDTO.voteType());
-                if (putVoteDTO.voteType().equals(currentVote.getVoteType().toString().toLowerCase())) {
+                if (putVoteDto.voteType().equals(currentVote.getVoteType().toString().toLowerCase())) {
                     Logger.info("[VoteController] Vote already exists for account: " + currentAccount.getUsername() + " and post: " + id);
                     voteService.deleteVoteByID(currentVote.getVoteID());
                 } else {
-                    currentVote.setVoteType(stringToVoteType(putVoteDTO.voteType()));
+                    currentVote.setVoteType(stringToVoteType(putVoteDto.voteType()));
                     Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and post: " + id);
                     voteService.updateVote(currentVote);
                 }
             }
         }
 
-        DataResponse<AllVotesDto> dataResponse = new DataResponse<>(true, voteMapper.modelToDto(currentVote));
+        Post post = postService.getPostById(id);
+        if (post == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found with id: " + id);
+        }
+
+        Vote newVoteState = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(id));
+        String userVote = "none";
+        if (newVoteState != null) {
+            userVote = newVoteState.getVoteType().toString().toLowerCase();
+        }
+
+        AllVotesDto allVotesDto = new AllVotesDto(
+                post.getUpvotes(),
+                post.getDownvotes(),
+                0,
+                userVote
+        );
+
+        DataResponse<AllVotesDto> dataResponse = new DataResponse<>(true, allVotesDto);
         return ResponseEntity.ok(dataResponse);
+
     }
 }

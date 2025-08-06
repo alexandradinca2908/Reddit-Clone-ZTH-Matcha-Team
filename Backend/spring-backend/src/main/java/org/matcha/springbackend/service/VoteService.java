@@ -34,7 +34,6 @@ public class VoteService {
                 .orElse(null);
     }
 
-    //PUT /posts/:id/vote
     @Transactional
     public void addVote(Vote vote) {
         VoteEntity entity = voteMapper.modelToEntity(vote);
@@ -45,9 +44,17 @@ public class VoteService {
         if (VotableType.POST.equals(vote.getVotableType())) {
             postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
                 if (VoteType.UP.equals(vote.getVoteType())) {
-                    post.setUpvotes(post.getUpvotes() + 1);
-                } else if (vote.getVoteType() == VoteType.DOWN) {
-                    post.setDownvotes(post.getDownvotes() + 1);
+                    if (post.getUpvotes() != null) {
+                        post.setUpvotes(post.getUpvotes() + 1);
+                    } else {
+                        post.setUpvotes(1);
+                    }
+                } else if (VoteType.DOWN.equals(vote.getVoteType())) {
+                    if (post.getDownvotes() != null) {
+                        post.setDownvotes(post.getUpvotes() + 1);
+                    } else {
+                        post.setDownvotes(1);
+                    }
                 }
 
                 postRepository.save(post);
