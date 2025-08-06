@@ -2,11 +2,12 @@ package org.matcha.springbackend.mapper;
 
 import org.matcha.springbackend.dto.comment.CommentDto;
 import org.matcha.springbackend.entities.*;
+import org.matcha.springbackend.enums.VoteType;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.model.Post;
-import org.matcha.springbackend.repositories.CommentRepository;
-import org.matcha.springbackend.repositories.VoteRepository;
+import org.matcha.springbackend.repository.CommentRepository;
+import org.matcha.springbackend.repository.VoteRepository;
 import org.matcha.springbackend.service.AccountService;
 import org.matcha.springbackend.service.CommentService;
 import org.matcha.springbackend.service.PostService;
