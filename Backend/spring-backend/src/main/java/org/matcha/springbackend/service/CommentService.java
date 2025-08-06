@@ -123,4 +123,15 @@ public class CommentService {
 
         return commentMapper.entityToModel(commentEntity);
     }
+
+    @Transactional
+    public void deleteComment(String commentId) {
+        CommentEntity commentEntity = commentRepository.findByCommentId(UUID.fromString(commentId))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found with id: " + commentId));
+
+        commentEntity.setDeleted(true);
+        commentEntity.setContent("[deleted]");
+        commentEntity.setAccount(null);
+        commentRepository.save(commentEntity);
+    }
 }

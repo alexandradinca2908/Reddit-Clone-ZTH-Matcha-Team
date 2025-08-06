@@ -19,6 +19,7 @@ import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.repository.CommentRepository;
 import org.matcha.springbackend.response.DataResponse;
+import org.matcha.springbackend.response.MessageResponse;
 import org.matcha.springbackend.service.AccountService;
 import org.matcha.springbackend.service.CommentService;
 import org.matcha.springbackend.service.VoteService;
@@ -149,5 +150,12 @@ public class CommentController {
         return ResponseEntity.ok(dataResponse);
     }
 
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<MessageResponse> deleteComment(@PathVariable String commentId) {
+        commentService.deleteComment(commentId);
 
+        MessageResponse messageResponse = new MessageResponse(true,
+                "Comentariul a fost sters cu succes");
+        return ResponseEntity.ok(messageResponse);
+    }
 }
