@@ -84,7 +84,10 @@ public class CommentMapper {
         String userVote = model.getUserVote().toString();
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
-        List<CommentDto> replies = model.getReplies().stream().map(this::modelToDto).collect(Collectors.toList());
+        List<CommentDto> replies = null;
+        if (model.getReplies() != null && !model.getReplies().isEmpty()) {
+            replies = model.getReplies().stream().map(this::modelToDto).collect(Collectors.toList());
+        }
 
         return new CommentDto(id, postId, parentId, content, author,
                 upvotes, downvotes, score, userVote, createdAt, updatedAt, replies);
