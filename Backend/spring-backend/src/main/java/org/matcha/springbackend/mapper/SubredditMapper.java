@@ -26,9 +26,9 @@ public class SubredditMapper {
     public Subreddit entityToModel(org.matcha.springbackend.entities.SubredditEntity entity) {
         if (entity == null) return null;
         Subreddit subreddit = new Subreddit();
-        //subreddit.setId(entity.getSubredditId());
+        subreddit.setId(entity.getSubredditId());
         subreddit.setName(entity.getName());
-        subreddit.setDisplayName(entity.getName()); // Assuming displayName is same as name
+        subreddit.setDisplayName(entity.getDisplayName());
         subreddit.setDescription(entity.getDescription());
         subreddit.setDeleted(entity.isDeleted());
         subreddit.setCreatedAt(entity.getCreatedAt());
@@ -43,11 +43,13 @@ public class SubredditMapper {
     public SubredditEntity modelToEntity(Subreddit model) {
         if (model == null) return null;
         SubredditEntity entity = new SubredditEntity();
-        // entity.setSubredditId(model.getId());
+        entity.setSubredditId(model.getId());
         entity.setName(model.getName());
         entity.setDescription(model.getDescription());
         entity.setDeleted(model.isDeleted());
         entity.setCreatedAt(model.getCreatedAt());
+        entity.setDisplayName(model.getDisplayName());
+        entity.setIconUrl(model.getIconUrl());
         // Alte câmpuri (memberCount, postCount, iconUrl) nu există în entity
         return entity;
     }
