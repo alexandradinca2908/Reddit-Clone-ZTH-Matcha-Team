@@ -32,6 +32,9 @@ public class SubredditEntity {
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
+    @Column(name = "display_name")
+    private String displayName;
+
     public SubredditEntity() {}
 
     @PrePersist
@@ -97,5 +100,23 @@ public class SubredditEntity {
 
     public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    //TODO
+    public String getIconUrl() {
+        return null;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    //TODO
+    public void setIconUrl(String iconUrl) {
+
     }
 }

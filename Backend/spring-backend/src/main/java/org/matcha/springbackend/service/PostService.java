@@ -130,4 +130,11 @@ public class PostService {
         return postRepository.findByPostID(UUID.fromString(id))
                 .orElseThrow(() -> new IllegalArgumentException("Account not found in DB for id: " + id));
     }
+
+    public List<Post> getPostsBySubredditName(String subredditName) {
+        List<PostEntity> entities = postRepository.findAllBySubreddit_Name(subredditName);
+        return entities.stream()
+                .map(postMapper::entityToModel)
+                .collect(Collectors.toList());
+    }
 }
