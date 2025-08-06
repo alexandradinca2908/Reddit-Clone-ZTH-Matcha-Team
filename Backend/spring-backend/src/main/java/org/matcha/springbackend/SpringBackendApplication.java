@@ -13,5 +13,9 @@ public class SpringBackendApplication {
 
         // Example usage
         Logger.info("SpringBackendApplication started.");
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            LogManager.getInstance().shutdown();
+        }));
     }
 }
