@@ -1,5 +1,7 @@
 package org.matcha.springbackend.model;
 
+import org.matcha.springbackend.enums.VoteType;
+
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +16,7 @@ public class Post {
     private Integer downvotes;
     private Integer score;
     private Integer commentCount;
+    private VoteType voteType;
     private String photoPath;
     private boolean isDeleted;
     private OffsetDateTime createdAt;
@@ -21,7 +24,7 @@ public class Post {
     private List<Comment> comments;
 
     public Post(UUID postID, String title, String content, Account account, Subreddit subreddit,
-                int upvotes, int downvotes, int commentCount, String photoPath,
+                int upvotes, int downvotes, int commentCount, VoteType voteType, String photoPath,
                 boolean isDeleted, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.postID = postID;
         this.title = title;
@@ -31,6 +34,7 @@ public class Post {
         this.upvotes = upvotes;
         this.downvotes = downvotes;
         this.commentCount = commentCount;
+        this.voteType = voteType;
         this.photoPath = photoPath;
         this.isDeleted = isDeleted;
         this.createdAt = createdAt;
@@ -75,7 +79,7 @@ public class Post {
         return updatedAt;
     }
 
-    public java.util.List<Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
@@ -125,5 +129,37 @@ public class Post {
 
     public Integer getDownvotes() {
         return downvotes;
+    }
+
+    public void setUpvotes(Integer upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    public void setDownvotes(Integer downvotes) {
+        this.downvotes = downvotes;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public VoteType getVoteType() {
+        return voteType;
+    }
+
+    public void setVoteType(VoteType voteType) {
+        this.voteType = voteType;
     }
 }

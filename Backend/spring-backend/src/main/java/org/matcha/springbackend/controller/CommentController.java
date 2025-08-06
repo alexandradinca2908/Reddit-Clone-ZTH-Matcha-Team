@@ -62,7 +62,6 @@ public class CommentController {
         return ResponseEntity.ok(dataResponse);
     }
 
-    //  TODO
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<DataResponse<CommentDto>> addCommentToPost(@PathVariable String postId,
                                                                      @RequestBody AddCommentBodyDTO commentDTO) {
