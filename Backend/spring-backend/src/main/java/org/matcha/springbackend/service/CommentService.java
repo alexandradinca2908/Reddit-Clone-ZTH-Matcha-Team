@@ -68,7 +68,7 @@ public class CommentService {
         }
 
         Comment comment = new Comment(null, accountSession.getCurrentAccount(), null,
-                post, commentDto.content(), false, 0, 0,
+                post, commentDto.content(), false, 0, 0, 0, 
                 VoteType.NONE, createdAt, createdAt, new ArrayList<>());
         CommentEntity commentEntity = commentMapper.modelToEntity(comment);
 

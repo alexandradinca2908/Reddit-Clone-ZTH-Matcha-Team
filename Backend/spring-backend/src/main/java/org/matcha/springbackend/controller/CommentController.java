@@ -126,7 +126,7 @@ public class CommentController {
         AllVotesDto allVotesDto = new AllVotesDto(
                 comment.getUpvotes(),
                 comment.getDownvotes(),
-                comment.getUpvotes() - comment.getDownvotes(),
+                comment.getScore(),
                 userVoteString
         );
 

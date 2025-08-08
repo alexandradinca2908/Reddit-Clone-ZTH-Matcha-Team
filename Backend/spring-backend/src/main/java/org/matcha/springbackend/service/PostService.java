@@ -55,7 +55,7 @@ public class PostService {
 
         //  Create and add post
         Post post = new Post(null, postDto.title(), postDto.content(), account, subreddit,
-                0, 0, 0, null, "", false, createdAt, createdAt);
+                0, 0, 0, 0,  null, "", false, createdAt, createdAt);
         PostEntity entity = postMapper.modelToEntity(post);
 
         Logger.debug("[PostService] PostEntity mapped: " + entity);

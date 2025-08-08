@@ -44,17 +44,9 @@ public class VoteService {
         if (VotableType.POST.equals(vote.getVotableType())) {
             postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
                 if (VoteType.UP.equals(vote.getVoteType())) {
-                    if (post.getUpvotes() != null) {
-                        post.setUpvotes(post.getUpvotes() + 1);
-                    } else {
-                        post.setUpvotes(1);
-                    }
+                    post.setUpvotes(post.getUpvotes() + 1);
                 } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-                    if (post.getDownvotes() != null) {
-                        post.setDownvotes(post.getUpvotes() + 1);
-                    } else {
-                        post.setDownvotes(1);
-                    }
+                    post.setDownvotes(post.getDownvotes() + 1);
                 }
 
                 postRepository.save(post);
@@ -64,19 +56,9 @@ public class VoteService {
         } else {
             commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
                 if (VoteType.UP.equals(vote.getVoteType())) {
-                    if (comment.getUpvotes() != null) {
-                        comment.setUpvotes(comment.getUpvotes() + 1);
-                    } else {
-                        comment.setUpvotes(1);
-                    }
-
+                    comment.setUpvotes(comment.getUpvotes() + 1);
                 } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-                    if (comment.getDownvotes() != null) {
-                        comment.setDownvotes(comment.getDownvotes() + 1);
-                    } else {
-                        comment.setDownvotes(1);
-                    }
-
+                    comment.setDownvotes(comment.getDownvotes() + 1);
                 }
                 commentRepository.save(comment);
             });

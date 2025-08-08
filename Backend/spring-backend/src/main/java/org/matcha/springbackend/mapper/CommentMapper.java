@@ -78,7 +78,6 @@ public class CommentMapper {
         }
         String content = model.getText();
         String author = model.getAccount().getUsername();
-        //String author = "User";
         int upvotes = model.getUpvotes();
         int downvotes = model.getDownvotes();
         int score = upvotes - downvotes;
@@ -113,6 +112,7 @@ public class CommentMapper {
         boolean deleted = entity.isDeleted();
         Integer upvotes = entity.getUpvotes() == null ? 0 : entity.getUpvotes();
         Integer downvotes = entity.getDownvotes() == null ? 0 : entity.getDownvotes();
+        Integer score = upvotes - downvotes;
 
         VoteEntity voteEntity = voteRepository.findByAccountAndVotableId(entity.getAccount(), id).orElse(null);
 
@@ -134,7 +134,7 @@ public class CommentMapper {
         }
 
         return new Comment(id, author, parent, post, text,
-                deleted, upvotes, downvotes, voteType,
+                deleted, upvotes, downvotes, score, voteType,
                 createdAt, updatedAt, replies);
     }
 }
