@@ -129,7 +129,6 @@ public class PostController {
         return ResponseEntity.ok(messageResponse);
     }
 
-    // TODO
     @PutMapping("/{postId}/vote")
     public ResponseEntity<DataResponse<AllVotesDto>> votePost(@PathVariable String postId,
                                                               @RequestBody PutVoteBodyDto putVoteDto) {

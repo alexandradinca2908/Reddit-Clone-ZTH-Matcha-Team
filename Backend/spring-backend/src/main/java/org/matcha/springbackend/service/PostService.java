@@ -35,7 +35,7 @@ public class PostService {
     }
 
     public List<Post> getPosts() {
-        List<PostEntity> entities = postRepository.findAllByOrderByCreatedAtDesc();
+        List<PostEntity> entities = postRepository.findAllByIsDeletedFalseOrderByCreatedAtDesc();
         return entities.stream()
                 .map(postMapper::entityToModel)
                 .collect(Collectors.toList());
@@ -111,25 +111,23 @@ public class PostService {
 
     @Transactional
     public Post getPostById(String id) {
-        return postRepository.findByPostID(UUID.fromString(id))
+        return postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
                 .map(postMapper::entityToModel)
                 .orElse(null);
     }
 
     @Transactional
     public void deletePost(String id) {
-        Post post = this.getPostById(id);
+        PostEntity postEntity = postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found with id: " + id));
+        //TODO: Account check logic goes here
+        postEntity.setDeleted(true);
 
-        if (post == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Post with UUID %s not found", id));
-        }
-
-        postRepository.deleteById(java.util.UUID.fromString(id));
+        postRepository.save(postEntity);
     }
 
     public PostEntity getPostEntityById(String id) {
-        return postRepository.findByPostID(UUID.fromString(id))
+        return postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
                 .orElseThrow(() -> new IllegalArgumentException("Account not found in DB for id: " + id));
     }
 
