@@ -20,17 +20,20 @@ public class VoteMapper {
 
     public VoteEntity modelToEntity(Vote model) {
         if (model == null) return null;
+
         VoteEntity entity = new VoteEntity();
         if (model.getVoteID() != null) {
             entity.setVoteId(model.getVoteID());
         } else {
             entity.setVoteId(null);
         }
+
         entity.setVotableId(model.getVotableID());
         entity.setVotableType(model.getVotableType());
         if (model.getVoteType() != null) {
             entity.setVoteType(model.getVoteType());
         }
+
         if (model.getAccount() != null && model.getAccount().getAccountId() != null) {
             AccountEntity accountEntity = accountRepository.findById(model.getAccount().getAccountId())
                 .orElseThrow(() -> new IllegalArgumentException("Account not found in DB for id: " + model.getAccount().getAccountId()));

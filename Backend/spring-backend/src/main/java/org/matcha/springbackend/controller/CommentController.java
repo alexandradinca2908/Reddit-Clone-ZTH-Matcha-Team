@@ -7,6 +7,7 @@ import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.enums.VotableType;
+import org.matcha.springbackend.enums.VoteType;
 import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.mapper.CommentMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
@@ -55,6 +56,7 @@ public class CommentController {
         Comment comment = commentService.getCommentById(commentId);
         Account currentAccount = accountSession.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
+
         if (accountEntity == null) {
             throw new IllegalArgumentException("Current account does not exist in DB! id: " + currentAccount.getAccountId());
         }
@@ -64,25 +66,25 @@ public class CommentController {
         }
 
         Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(commentId));
-        String newVoteType = putVoteDto.voteType().toLowerCase();
+        VoteType newVoteType = stringToVoteType(putVoteDto.voteType());
         boolean hasPreviousVote = currentVote != null;
 
         // Double click or "none"
-        if (hasPreviousVote && (newVoteType.equals("none")
-                || newVoteType.equals(currentVote.getVoteType().toString().toLowerCase()))) {
+        if (hasPreviousVote && (VoteType.NONE.equals(newVoteType)
+                || currentVote.getVoteType().equals(newVoteType))) {
             voteService.deleteVoteForComment(currentVote.getVoteID());
 
             Logger.info("[VoteController] Vote deleted for account: " + currentAccount.getUsername() + " and comment: " + commentId);
 
         // First time voting
-        } else if (!hasPreviousVote && !newVoteType.equals("none")) {
+        } else if (!hasPreviousVote && !VoteType.NONE.equals(newVoteType)) {
             voteService.addVoteForComment(commentId, newVoteType, currentAccount);
 
             Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername() + " and comment: " + commentId);
 
         // Change vote
         } else if (hasPreviousVote) {
-            currentVote.setVoteType(stringToVoteType(newVoteType));
+            currentVote.setVoteType(newVoteType);
             voteService.updateVoteForComment(currentVote);
 
             Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + commentId);
