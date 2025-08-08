@@ -18,10 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class CommentService {
@@ -31,7 +28,9 @@ public class CommentService {
     private final PostService postService;
     private final PostRepository postRepository;
 
-    public CommentService(CommentMapper commentMapper, CommentRepository commentRepository, AccountSession accountSession, PostService postService, PostRepository postRepository) {
+    public CommentService(CommentMapper commentMapper, CommentRepository commentRepository,
+                          AccountSession accountSession, PostService postService,
+                          PostRepository postRepository) {
         this.commentMapper = commentMapper;
         this.commentRepository = commentRepository;
         this.accountSession = accountSession;
@@ -42,9 +41,10 @@ public class CommentService {
     public List<Comment> getCommentsByPostId(UUID postId) {
         List<CommentEntity> entities = commentRepository.findByPost_PostID(postId).orElse(new ArrayList<>());
 
-        return entities.stream()
-                .map(commentMapper::entityToModel)
-                .collect(Collectors.toList());
+        List<Comment> models = entities.stream().map(commentMapper::entityToModel).toList();
+
+        //  Return organized comments
+        return organizeCommentsByHierarchy(models);
     }
 
     public Comment getCommentById(String commentId) {
@@ -53,13 +53,36 @@ public class CommentService {
                 .orElse(null);
     }
 
-    //  TODO
     public List<Comment> organizeCommentsByHierarchy(List<Comment> comments) {
-        return null;
+        Map<UUID, Comment> commentById = new HashMap<>();
+        for (Comment comment : comments) {
+            comment.setReplies(new ArrayList<>());
+            commentById.put(comment.getCommentId(), comment);
+        }
+
+        List<Comment> rootComments = new ArrayList<>();
+
+        for (Comment comment : comments) {
+
+            //  Link children to parents
+            if (comment.getParent() != null) {
+                UUID parentId = comment.getParent().getCommentId();
+                Comment parent = commentById.get(parentId);
+                if (parent != null) {
+                    parent.getReplies().add(comment);
+                }
+
+            // No parent == it's a root comment
+            } else {
+                rootComments.add(comment);
+            }
+        }
+
+        return rootComments;
     }
 
     @Transactional
-    public Comment addCommentToPost(String postId, AddCommentBodyDTO commentDto) {
+    public Comment addComment(String postId, AddCommentBodyDTO commentDto) {
         OffsetDateTime createdAt = OffsetDateTime.now();
 
         Post post = postService.getPostById(postId);
@@ -67,8 +90,16 @@ public class CommentService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found");
         }
 
-        Comment comment = new Comment(null, accountSession.getCurrentAccount(), null,
-                post, commentDto.content(), false, 0, 0, 0, 
+        //  If the comment is a reply, also add its parent
+        //  Only id needs to be set
+        Comment parentComment = null;
+        if (commentDto.parentId() != null) {
+            parentComment = new Comment();
+            parentComment.setCommentId(UUID.fromString(commentDto.parentId()));
+        }
+
+        Comment comment = new Comment(null, accountSession.getCurrentAccount(), parentComment,
+                post, commentDto.content(), false, 0, 0,
                 VoteType.NONE, createdAt, createdAt, new ArrayList<>());
         CommentEntity commentEntity = commentMapper.modelToEntity(comment);
 
