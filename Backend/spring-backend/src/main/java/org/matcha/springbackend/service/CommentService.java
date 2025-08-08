@@ -142,7 +142,7 @@ public class CommentService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to edit this comment.");
         }
 
-        commentEntity.setContent(content);
+        commentEntity.setContent("[edit] " + content);
         commentRepository.save(commentEntity);
 
         return commentMapper.entityToModel(commentEntity);

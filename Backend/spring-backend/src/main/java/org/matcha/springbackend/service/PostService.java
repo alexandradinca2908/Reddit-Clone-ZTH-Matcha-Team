@@ -96,7 +96,7 @@ public class PostService {
         Logger.info("[PostService] Updating post with id: " + id);
 
         post.setTitle(postDto.title());
-        post.setContent(postDto.content());
+        post.setContent("[edit] " + postDto.content());
 
         PostEntity entity = postMapper.modelToEntity(post);
 
