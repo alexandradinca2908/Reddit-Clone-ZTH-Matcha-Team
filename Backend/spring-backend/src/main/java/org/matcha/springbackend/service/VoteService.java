@@ -1,7 +1,6 @@
 package org.matcha.springbackend.service;
 
 import org.matcha.springbackend.dto.vote.AllVotesDto;
-import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.enums.VotableType;
 import org.matcha.springbackend.entities.VoteEntity;
@@ -55,7 +54,7 @@ public class VoteService {
         VoteEntity entity = voteMapper.modelToEntity(vote);
         voteRepository.save(entity);
 
-        postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
+        postRepository.findByPostIDAndIsDeletedFalse(vote.getVotableID()).ifPresent(post -> {
             if (VoteType.UP.equals(vote.getVoteType())) {
                 post.setUpvotes(post.getUpvotes() + 1);
             } else if (VoteType.DOWN.equals(vote.getVoteType())) {
@@ -92,7 +91,7 @@ public class VoteService {
 
         voteRepository.deleteByVoteId(id);
 
-        postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
+        postRepository.findByPostIDAndIsDeletedFalse(vote.getVotableID()).ifPresent(post -> {
             if (VoteType.UP.equals(vote.getVoteType())) {
                 post.setUpvotes(post.getUpvotes() - 1);
             } else if (VoteType.DOWN.equals(vote.getVoteType())) {
@@ -130,7 +129,7 @@ public class VoteService {
         entity.setVoteType(vote.getVoteType());
         voteRepository.save(entity);
 
-        postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
+        postRepository.findByPostIDAndIsDeletedFalse(vote.getVotableID()).ifPresent(post -> {
             if (VoteType.UP.equals(vote.getVoteType())) {
                 post.setUpvotes(post.getUpvotes() + 1);
                 post.setDownvotes(post.getDownvotes() - 1);

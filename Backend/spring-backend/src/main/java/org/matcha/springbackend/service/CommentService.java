@@ -9,7 +9,6 @@ import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.mapper.CommentMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
-import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.repository.CommentRepository;
 import org.matcha.springbackend.repository.PostRepository;
 import org.matcha.springbackend.session.AccountSession;
@@ -108,7 +107,7 @@ public class CommentService {
 
         //  Update comment counter for the parent post
         try {
-            PostEntity postEntity = postRepository.findByPostID(UUID.fromString(postId)).orElse(null);
+            PostEntity postEntity = postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(postId)).orElse(null);
 
             if (postEntity == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found when trying to update " +
@@ -155,7 +154,6 @@ public class CommentService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found with id: " + commentId));
 
         commentEntity.setDeleted(true);
-        commentEntity.setContent("[deleted]");
         commentRepository.save(commentEntity);
     }
 }

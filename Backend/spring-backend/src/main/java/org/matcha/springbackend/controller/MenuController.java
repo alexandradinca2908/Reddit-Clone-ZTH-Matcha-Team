@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class MenuController {
     @GetMapping
     public String hello() {
-        return "Hello from the Matcha team!";
+        return "🍵Hello from the Matcha team!";
     }
 }
