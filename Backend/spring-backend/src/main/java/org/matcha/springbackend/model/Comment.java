@@ -15,6 +15,7 @@ public class Comment {
     private boolean isDeleted;
     private int upvotes;
     private int downvotes;
+    private int score;
     private VoteType userVote;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
@@ -23,7 +24,7 @@ public class Comment {
     public Comment() {}
 
     public Comment(UUID commentId, Account account, Comment parent, Post post, String text,
-                   boolean isDeleted, int upvotes, int downvotes, VoteType voteType,
+                   boolean isDeleted, int upvotes, int downvotes, int score, VoteType voteType,
                    OffsetDateTime createdAt, OffsetDateTime updatedAt,  List<Comment> replies) {
         this.commentId = commentId;
         this.account = account;
@@ -33,6 +34,7 @@ public class Comment {
         this.isDeleted = isDeleted;
         this.upvotes = upvotes;
         this.downvotes = downvotes;
+        this.score = score;
         this.userVote = voteType;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -133,5 +135,13 @@ public class Comment {
 
     public void setReplies(java.util.List<Comment> replies) {
         this.replies = replies;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

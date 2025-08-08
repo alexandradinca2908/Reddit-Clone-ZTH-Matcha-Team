@@ -12,8 +12,9 @@ public class Post {
     private String content;
     private Account account;
     private Subreddit subreddit;
-    private Integer upvotes;
-    private Integer downvotes;
+    private int upvotes;
+    private int downvotes;
+    private int score;
     private Integer commentCount;
     private VoteType voteType;
     private String photoPath;
@@ -23,7 +24,7 @@ public class Post {
     private List<Comment> comments;
 
     public Post(UUID postID, String title, String content, Account account, Subreddit subreddit,
-                int upvotes, int downvotes, int commentCount, VoteType voteType, String photoPath,
+                int upvotes, int downvotes, int score, int commentCount, VoteType voteType, String photoPath,
                 boolean isDeleted, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.postID = postID;
         this.title = title;
@@ -32,6 +33,7 @@ public class Post {
         this.subreddit = subreddit;
         this.upvotes = upvotes;
         this.downvotes = downvotes;
+        this.score = score;
         this.commentCount = commentCount;
         this.voteType = voteType;
         this.photoPath = photoPath;
@@ -152,5 +154,13 @@ public class Post {
 
     public void setVoteType(VoteType voteType) {
         this.voteType = voteType;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

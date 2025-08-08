@@ -53,11 +53,6 @@ public class PostMapper {
         entity.setUpvotes(post.getUpvotes());
         entity.setDownvotes(post.getDownvotes());
 
-        Integer score = 0;
-        if (post.getUpvotes() != null && post.getDownvotes() != null) {
-            score = post.getUpvotes() - post.getDownvotes();
-        }
-
         Integer commentCount = 0;
         if (post.getComments() != null) {
             commentCount = post.getComments().size();
@@ -87,13 +82,14 @@ public class PostMapper {
         String subreddit = model.getSubreddit().getDisplayName();
         Integer upvotes = model.getUpvotes() == null ? 0 : model.getUpvotes();
         Integer downvotes = model.getDownvotes() == null ? 0 : model.getDownvotes();
+        Integer score = upvotes - downvotes;
         Integer commentCount = model.getCommentCount();
         String userVote = model.getVoteType().toString();
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
 
         return new PostDto(id, title, content, author, subreddit, upvotes, downvotes,
-                commentCount, userVote, createdAt, updatedAt);
+                score, commentCount, userVote, createdAt, updatedAt);
     }
 
     public Post entityToModel(PostEntity entity) {
@@ -125,6 +121,7 @@ public class PostMapper {
         post.setContent(entity.getContent());
         post.setUpvotes(entity.getUpvotes());
         post.setDownvotes(entity.getDownvotes());
+        post.setScore(entity.getUpvotes() - entity.getDownvotes());
         post.setCommentCount(entity.getCommentCount());
         post.setPhotoPath(entity.getPhotoPath());
         post.setDeleted(entity.isDeleted());
@@ -164,7 +161,7 @@ public class PostMapper {
 
         // Don't recurse into full post
         Post post = new Post(entity.getPost().getPostID(), "", "", null, null, 0,
-                0, 0, null, "", false,
+                0, 0, 0, null, "", false,
                 OffsetDateTime.now(), OffsetDateTime.now());
 
         String text = entity.getContent();
@@ -193,7 +190,7 @@ public class PostMapper {
         }
 
         return new Comment(id, author, parent, post, text,
-                deleted, upvotes, downvotes, voteType,
+                deleted, upvotes, downvotes, score, voteType,
                 createdAt, updatedAt, replies);
     }
 }

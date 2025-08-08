@@ -8,9 +8,10 @@ public record PostDto(
         String subreddit,
         Integer upvotes,
         Integer downvotes,
+        Integer score,
         Integer commentCount,
         String userVote,
         String createdAt,
         String updatedAt
-) { //TODO re-add score everywhere
+) {
 }
