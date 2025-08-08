@@ -48,7 +48,7 @@ public class SubredditController {
     @PostMapping
     public ResponseEntity<DataResponse<SubredditDto>> createSubreddit(@RequestBody CreateSubredditBodyDto subredditDTO) {
         Subreddit subreddit = subredditService.addSubreddit(subredditDTO);
-        
+
         DataResponse<SubredditDto> dataResponse = new DataResponse<>(true,
                 subredditMapper.modelToDto(subreddit));
         return ResponseEntity.ok(dataResponse);

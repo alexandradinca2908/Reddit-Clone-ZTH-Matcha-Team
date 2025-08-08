@@ -65,7 +65,7 @@ public class CommentController {
         // Double click or "none"
         if (hasPreviousVote && (newVoteType.equals("none")
                 || newVoteType.equals(currentVote.getVoteType().toString().toLowerCase()))) {
-            voteService.deleteVoteByID(currentVote.getVoteID());
+            voteService.deleteVoteForComment(currentVote.getVoteID());
 
             Logger.info("[VoteController] Vote deleted for account: " + currentAccount.getUsername() + " and comment: " + commentId);
 
@@ -78,7 +78,7 @@ public class CommentController {
         // Change vote
         } else if (hasPreviousVote) {
             currentVote.setVoteType(stringToVoteType(newVoteType));
-            voteService.updateVote(currentVote);
+            voteService.updateVoteForComment(currentVote);
 
             Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + commentId);
         }

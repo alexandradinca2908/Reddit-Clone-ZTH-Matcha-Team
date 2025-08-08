@@ -87,72 +87,83 @@ public class VoteService {
     }
 
     @Transactional
-    public void deleteVoteByID(UUID id) {
+    public void deleteVoteForPost(UUID id) {
         Vote vote = voteRepository.findById(id)
                 .map(voteMapper::entityToModel)
                 .orElseThrow(() -> new IllegalArgumentException("Vote with ID " + id + " does not exist."));
 
         voteRepository.deleteByVoteId(id);
 
-        //  Post
-        if (VotableType.POST.equals(vote.getVotableType())) {
-            postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
-                if (VoteType.UP.equals(vote.getVoteType())) {
-                    post.setUpvotes(post.getUpvotes() - 1);
-                } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-                    post.setDownvotes(post.getDownvotes() - 1);
-                }
+        postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
+            if (VoteType.UP.equals(vote.getVoteType())) {
+                post.setUpvotes(post.getUpvotes() - 1);
+            } else if (VoteType.DOWN.equals(vote.getVoteType())) {
+                post.setDownvotes(post.getDownvotes() - 1);
+            }
 
-                postRepository.save(post);
-            });
-
-        //  Comment
-        } else {
-            commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
-                if (VoteType.UP.equals(vote.getVoteType())) {
-                    comment.setUpvotes(comment.getUpvotes() - 1);
-                } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-                    comment.setDownvotes(comment.getDownvotes() - 1);
-                }
-
-                commentRepository.save(comment);
-            });
-        }
+            postRepository.save(post);
+        });
     }
 
     @Transactional
-    public void updateVote(Vote vote) {
+    public void deleteVoteForComment(UUID id) {
+        Vote vote = voteRepository.findById(id)
+                .map(voteMapper::entityToModel)
+                .orElseThrow(() -> new IllegalArgumentException("Vote with ID " + id + " does not exist."));
+
+        voteRepository.deleteByVoteId(id);
+
+        commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
+            if (VoteType.UP.equals(vote.getVoteType())) {
+                comment.setUpvotes(comment.getUpvotes() - 1);
+            } else if (VoteType.DOWN.equals(vote.getVoteType())) {
+                comment.setDownvotes(comment.getDownvotes() - 1);
+            }
+
+            commentRepository.save(comment);
+        });
+    }
+
+    @Transactional
+    public void updateVoteForPost(Vote vote) {
         VoteEntity entity = voteRepository.findById(vote.getVoteID())
                 .orElseThrow(() -> new IllegalArgumentException("Vote with ID " + vote.getVoteID() + " does not exist."));
 
         entity.setVoteType(vote.getVoteType());
         voteRepository.save(entity);
 
-        if (VotableType.POST.equals(vote.getVotableType())) {
-            postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
-                if (VoteType.UP.equals(vote.getVoteType())) {
-                    post.setUpvotes(post.getUpvotes() + 1);
-                    post.setDownvotes(post.getDownvotes() - 1);
-                } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-                    post.setDownvotes(post.getDownvotes() + 1);
-                    post.setUpvotes(post.getUpvotes() - 1);
-                }
+        postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
+            if (VoteType.UP.equals(vote.getVoteType())) {
+                post.setUpvotes(post.getUpvotes() + 1);
+                post.setDownvotes(post.getDownvotes() - 1);
+            } else if (VoteType.DOWN.equals(vote.getVoteType())) {
+                post.setDownvotes(post.getDownvotes() + 1);
+                post.setUpvotes(post.getUpvotes() - 1);
+            }
 
-                postRepository.save(post);
-            });
-        } else {
-            commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
-                if (VoteType.UP.equals(vote.getVoteType())) {
-                    comment.setUpvotes(comment.getUpvotes() + 1);
-                    comment.setDownvotes(comment.getDownvotes() - 1);
-                } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-                    comment.setDownvotes(comment.getDownvotes() + 1);
-                    comment.setUpvotes(comment.getUpvotes() - 1);
-                }
+            postRepository.save(post);
+        });
+    }
 
-                commentRepository.save(comment);
-            });
-        }
+    @Transactional
+    public void updateVoteForComment(Vote vote) {
+        VoteEntity entity = voteRepository.findById(vote.getVoteID())
+                .orElseThrow(() -> new IllegalArgumentException("Vote with ID " + vote.getVoteID() + " does not exist."));
+
+        entity.setVoteType(vote.getVoteType());
+        voteRepository.save(entity);
+
+        commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
+            if (VoteType.UP.equals(vote.getVoteType())) {
+                comment.setUpvotes(comment.getUpvotes() + 1);
+                comment.setDownvotes(comment.getDownvotes() - 1);
+            } else if (VoteType.DOWN.equals(vote.getVoteType())) {
+                comment.setDownvotes(comment.getDownvotes() + 1);
+                comment.setUpvotes(comment.getUpvotes() - 1);
+            }
+
+            commentRepository.save(comment);
+        });
     }
 
     public AllVotesDto getUpdatedPost(String postId, AccountEntity accountEntity) {

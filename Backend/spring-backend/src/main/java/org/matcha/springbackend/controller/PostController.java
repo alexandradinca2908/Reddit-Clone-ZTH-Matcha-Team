@@ -147,22 +147,25 @@ public class PostController {
         // Double click or "none"
         if (hasPreviousVote && (newVoteType.equals("none")
                 || newVoteType.equals(currentVote.getVoteType().toString().toLowerCase()))) {
-            voteService.deleteVoteByID(currentVote.getVoteID());
+            voteService.deleteVoteForPost(currentVote.getVoteID());
 
-            Logger.info("[VoteController] Vote deleted for account: " + currentAccount.getUsername() + " and comment: " + postId);
+            Logger.info("[VoteController] Vote deleted for account: " + currentAccount.getUsername()
+                    + " and comment: " + postId);
 
         // First time voting
         } else if (!hasPreviousVote && !newVoteType.equals("none")) {
             voteService.addVoteForPost(postId, newVoteType, currentAccount);
 
-            Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername() + " and comment: " + postId);
+            Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername()
+                    + " and comment: " + postId);
 
         //  Change vote
         } else if (hasPreviousVote) {
             currentVote.setVoteType(stringToVoteType(newVoteType));
-            voteService.updateVote(currentVote);
+            voteService.updateVoteForPost(currentVote);
 
-            Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + postId);
+            Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername()
+                    + " and comment: " + postId);
         }
 
         AllVotesDto allVotesDto = voteService.getUpdatedPost(postId, accountEntity);
