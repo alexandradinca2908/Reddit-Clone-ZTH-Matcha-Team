@@ -4,10 +4,13 @@
 logging
 
 ### VS ###
-.vs/
-./Processor/ImageProcessor/.vs/ImageProcessor/
-./Processor/ImageProcessor/obj/*
-
-# .NET build output
-[Bb]in/
-[Oo]bj/
+**/.vs/
+./Processor/ImageProcessor/.vs/ImageProcessor/*
+./Processor/ImageProcessor/EntryPoint/obj/
+./Processor/ImageProcessor/EntryPoint/bin/
+./Processor/ImageProcessor/App/obj/
+./Processor/ImageProcessor/App/bin/
+./Processor/ImageProcessor/Common/obj/
+./Processor/ImageProcessor/Common/bin/
+./Processor/ImageProcessor/ImageProcessor/obj/
+./Processor/ImageProcessor/ImageProcessor/bin/
