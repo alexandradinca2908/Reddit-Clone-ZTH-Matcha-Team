@@ -21,21 +21,17 @@ public class PostMapper {
     private final AccountRepository accountRepository;
     private final SubredditRepository subredditRepository;
     private final VoteRepository voteRepository;
-    private final VoteService voteService;
     private final AccountMapper accountMapper;
 
     public PostMapper(AccountRepository accountRepository, SubredditRepository subredditRepository,
-                      VoteRepository voteRepository, VoteService voteService, AccountMapper accountMapper) {
+                      VoteRepository voteRepository, AccountMapper accountMapper) {
         this.accountRepository = accountRepository;
         this.subredditRepository = subredditRepository;
         this.voteRepository = voteRepository;
-        this.voteService = voteService;
         this.accountMapper = accountMapper;
     }
 
     public PostEntity modelToEntity(Post post) {
-        if (post == null) return null;
-
         PostEntity entity = new PostEntity();
 
         if (post.getPostID() != null) {
@@ -53,7 +49,7 @@ public class PostMapper {
         entity.setUpvotes(post.getUpvotes());
         entity.setDownvotes(post.getDownvotes());
 
-        Integer commentCount = 0;
+        int commentCount = 0;
         if (post.getComments() != null) {
             commentCount = post.getComments().size();
         }
@@ -93,8 +89,6 @@ public class PostMapper {
     }
 
     public Post entityToModel(PostEntity entity) {
-        if (entity == null) return null;
-
         // Map Account
         Account account = new Account();
         if (entity.getAccount() != null) {
@@ -146,20 +140,20 @@ public class PostMapper {
     }
 
     public Comment commentEntityToModel(CommentEntity entity) {
-        if (entity == null) return null;
-
         UUID id = entity.getCommentId();
         Account author = accountMapper.entityToModel(entity.getAccount());
 
         Comment parent;
 
         if (entity.getParent() != null) {
-            parent = this.commentEntityToModel(entity.getParent());
+            //  Incomplete init; don't recurse into full parent comment
+            parent = new Comment();
+            parent.setCommentId(entity.getParent().getCommentId());
         } else {
             parent = null;
         }
 
-        // Don't recurse into full post
+        //  Incomplete init; don't recurse into full post
         Post post = new Post(entity.getPost().getPostID(), "", "", null, null, 0,
                 0, 0, 0, null, "", false,
                 OffsetDateTime.now(), OffsetDateTime.now());
@@ -168,7 +162,7 @@ public class PostMapper {
         boolean deleted = entity.isDeleted();
         Integer upvotes = entity.getUpvotes();
         Integer downvotes = entity.getDownvotes();
-        Integer score = upvotes - downvotes;
+        int score = upvotes - downvotes;
 
         VoteEntity voteEntity = voteRepository.findByAccountAndVotableId(entity.getAccount(), id).orElse(null);
 

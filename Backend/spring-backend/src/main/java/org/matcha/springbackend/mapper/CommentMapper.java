@@ -15,6 +15,7 @@ import org.matcha.springbackend.service.PostService;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.List;
@@ -70,12 +71,14 @@ public class CommentMapper {
     public CommentDto modelToDto(Comment model) {
         String id = model.getCommentId().toString();
         String postId = model.getPost().getPostID().toString();
+
         String parentId;
         if (model.getParent() != null) {
             parentId = model.getParent().getCommentId().toString();
         } else {
             parentId = null;
         }
+
         String content = model.getText();
         String author = model.getAccount().getUsername();
         int upvotes = model.getUpvotes();
@@ -84,9 +87,12 @@ public class CommentMapper {
         String userVote = model.getUserVote().toString();
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
-        List<CommentDto> replies = null;
+
+        List<CommentDto> replies;
         if (model.getReplies() != null && !model.getReplies().isEmpty()) {
-            replies = model.getReplies().stream().map(this::modelToDto).collect(Collectors.toList());
+            replies = model.getReplies().stream().map(this::modelToDto).toList();
+        } else {
+            replies = new ArrayList<>();
         }
 
         return new CommentDto(id, postId, parentId, content, author,
@@ -100,9 +106,10 @@ public class CommentMapper {
         Account author = accountMapper.entityToModel(entity.getAccount());
 
         Comment parent;
-
         if (entity.getParent() != null) {
-            parent = this.entityToModel(entity.getParent());
+            //  Incomplete init; don't recurse into full parent comment
+            parent = new Comment();
+            parent.setCommentId(entity.getParent().getCommentId());
         } else {
             parent = null;
         }
@@ -110,9 +117,9 @@ public class CommentMapper {
         Post post = postMapper.entityToModel(entity.getPost());
         String text = entity.getContent();
         boolean deleted = entity.isDeleted();
-        Integer upvotes = entity.getUpvotes() == null ? 0 : entity.getUpvotes();
-        Integer downvotes = entity.getDownvotes() == null ? 0 : entity.getDownvotes();
-        Integer score = upvotes - downvotes;
+        int upvotes = entity.getUpvotes() == null ? 0 : entity.getUpvotes();
+        int downvotes = entity.getDownvotes() == null ? 0 : entity.getDownvotes();
+        int score = upvotes - downvotes;
 
         VoteEntity voteEntity = voteRepository.findByAccountAndVotableId(entity.getAccount(), id).orElse(null);
 

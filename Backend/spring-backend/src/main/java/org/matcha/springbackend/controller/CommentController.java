@@ -37,19 +37,15 @@ public class CommentController {
     private final AccountService accountService;
     private final AccountSession accountSession;
     private final VoteService voteService;
-    private final VoteMapper voteMapper;
-    private final CommentRepository commentRepository;
 
     public CommentController(CommentMapper commentMapper, CommentService commentService,
                              AccountService accountService, AccountSession accountSession,
-                             VoteService voteService, VoteMapper voteMapper, CommentRepository commentRepository) {
+                             VoteService voteService) {
         this.commentMapper = commentMapper;
         this.commentService = commentService;
         this.accountService = accountService;
         this.accountSession = accountSession;
         this.voteService = voteService;
-        this.voteMapper = voteMapper;
-        this.commentRepository = commentRepository;
     }
 
     @GetMapping("/posts/{postId}/comments")
