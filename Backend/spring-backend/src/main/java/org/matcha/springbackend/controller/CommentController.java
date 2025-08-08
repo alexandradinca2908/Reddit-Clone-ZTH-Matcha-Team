@@ -31,6 +31,7 @@ import java.util.UUID;
 import static org.matcha.springbackend.enums.VoteType.stringToVoteType;
 
 @RestController
+@RequestMapping("/comments")
 public class CommentController {
     private final CommentMapper commentMapper;
     private final CommentService commentService;
@@ -48,35 +49,7 @@ public class CommentController {
         this.voteService = voteService;
     }
 
-    @GetMapping("/posts/{postId}/comments")
-    public ResponseEntity<DataResponse<List<CommentDto>>> getCommentsFromPost(@PathVariable String postId) {
-        //  Map Comments to CommentDTOs
-        List<CommentDto> commentDtos = commentService.getCommentsByPostId(UUID.fromString(postId))
-                .stream()
-                .map(commentMapper::modelToDto)
-                .toList();
-
-        DataResponse<List<CommentDto>> dataResponse = new DataResponse<>(true, commentDtos);
-        return ResponseEntity.ok(dataResponse);
-    }
-
-    @PostMapping("/posts/{postId}/comments")
-    public ResponseEntity<DataResponse<CommentDto>> addCommentToPost(@PathVariable String postId,
-                                                                     @RequestBody AddCommentBodyDTO commentDTO) {
-        Comment comment;
-        try {
-            comment = commentService.addComment(postId, commentDTO);
-        } catch (ResponseStatusException e) {
-            throw e;
-        }  catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
-        }
-
-        DataResponse<CommentDto> dataResponse = new DataResponse<>(true, commentMapper.modelToDto(comment));
-        return ResponseEntity.ok(dataResponse);
-    }
-
-    @PutMapping("/comments/{commentId}/vote")
+    @PutMapping("/{commentId}/vote")
     public ResponseEntity<DataResponse<AllVotesDto>> voteComment(@PathVariable String commentId,
                                                                  @RequestBody PutVoteBodyDto putVoteDto) {
         Account currentAccount = accountSession.getCurrentAccount();
@@ -116,7 +89,7 @@ public class CommentController {
         return ResponseEntity.ok(dataResponse);
     }
 
-    @PutMapping("/comments/{commentId}")
+    @PutMapping("/{commentId}")
     public ResponseEntity<DataResponse<CommentDto>> updateComment(@PathVariable String commentId,
                                                                   @RequestBody EditCommentBodyDTO contentDto) {
         Comment comment;
@@ -132,7 +105,7 @@ public class CommentController {
         return ResponseEntity.ok(dataResponse);
     }
 
-    @DeleteMapping("/comments/{commentId}")
+    @DeleteMapping("/{commentId}")
     public ResponseEntity<MessageResponse> deleteComment(@PathVariable String commentId) {
         commentService.deleteComment(commentId);
 

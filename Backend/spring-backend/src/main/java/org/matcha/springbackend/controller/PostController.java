@@ -1,21 +1,24 @@
 package org.matcha.springbackend.controller;
 
+import org.matcha.springbackend.dto.comment.CommentDto;
+import org.matcha.springbackend.dto.comment.requestbody.AddCommentBodyDTO;
 import org.matcha.springbackend.dto.post.PostDto;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
-import org.matcha.springbackend.enums.VotableType;
 import org.matcha.springbackend.loggerobject.Logger;
+import org.matcha.springbackend.mapper.CommentMapper;
 import org.matcha.springbackend.mapper.PostMapper;
-import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Account;
+import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.response.DataResponse;
 import org.matcha.springbackend.response.MessageResponse;
 import org.matcha.springbackend.service.AccountService;
+import org.matcha.springbackend.service.CommentService;
 import org.matcha.springbackend.service.PostService;
 import org.matcha.springbackend.service.VoteService;
 import org.matcha.springbackend.session.AccountSession;
@@ -37,15 +40,19 @@ public class PostController {
     private final PostService postService;
     private final PostMapper postMapper;
     private final VoteService voteService;
+    private final CommentService commentService;
+    private final CommentMapper commentMapper;
 
     public PostController(AccountService accountService, AccountSession accountSession,
                           PostService postService, PostMapper postMapper,
-                          VoteService voteService) {
+                          VoteService voteService, CommentService commentService, CommentMapper commentMapper) {
         this.accountService = accountService;
         this.accountSession = accountSession;
         this.postService = postService;
         this.postMapper = postMapper;
         this.voteService = voteService;
+        this.commentService = commentService;
+        this.commentMapper = commentMapper;
     }
 
     @GetMapping
@@ -163,4 +170,33 @@ public class PostController {
         DataResponse<AllVotesDto> dataResponse = new DataResponse<>(true, allVotesDto);
         return ResponseEntity.ok(dataResponse);
     }
+
+    @GetMapping("/{postId}/comments")
+    public ResponseEntity<DataResponse<List<CommentDto>>> getCommentsFromPost(@PathVariable String postId) {
+        //  Map Comments to CommentDTOs
+        List<CommentDto> commentDtos = commentService.getCommentsByPostId(UUID.fromString(postId))
+                .stream()
+                .map(commentMapper::modelToDto)
+                .toList();
+
+        DataResponse<List<CommentDto>> dataResponse = new DataResponse<>(true, commentDtos);
+        return ResponseEntity.ok(dataResponse);
+    }
+
+    @PostMapping("/{postId}/comments")
+    public ResponseEntity<DataResponse<CommentDto>> addCommentToPost(@PathVariable String postId,
+                                                                     @RequestBody AddCommentBodyDTO commentDTO) {
+        Comment comment;
+        try {
+            comment = commentService.addComment(postId, commentDTO);
+        } catch (ResponseStatusException e) {
+            throw e;
+        }  catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+
+        DataResponse<CommentDto> dataResponse = new DataResponse<>(true, commentMapper.modelToDto(comment));
+        return ResponseEntity.ok(dataResponse);
+    }
+
 }
