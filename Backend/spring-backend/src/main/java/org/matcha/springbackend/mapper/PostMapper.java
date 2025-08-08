@@ -79,8 +79,8 @@ public class PostMapper {
         String content = model.getContent();
         String author = model.getAccount().getUsername();
         String subreddit = model.getSubreddit().getDisplayName();
-        Integer upvotes = model.getUpvotes() == null ? 0 : model.getUpvotes();
-        Integer downvotes = model.getDownvotes() == null ? 0 : model.getDownvotes();
+        Integer upvotes = model.getUpvotes();
+        Integer downvotes = model.getDownvotes();
         Integer score = upvotes - downvotes;
         Integer commentCount = model.getCommentCount();
         String userVote = model.getVoteType().toString();
