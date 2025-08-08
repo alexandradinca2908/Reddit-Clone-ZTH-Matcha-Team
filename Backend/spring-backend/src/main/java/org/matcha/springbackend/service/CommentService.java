@@ -38,7 +38,7 @@ public class CommentService {
     }
 
     public List<Comment> getCommentsByPostId(UUID postId) {
-        List<CommentEntity> entities = commentRepository.findByPost_PostID(postId).orElse(new ArrayList<>());
+        List<CommentEntity> entities = commentRepository.findByPost_PostIDAndIsDeletedFalseOrderByCreatedAtAsc(postId).orElse(new ArrayList<>());
 
         List<Comment> models = entities.stream().map(commentMapper::entityToModel).toList();
 
