@@ -3,19 +3,15 @@ package org.matcha.springbackend.controller;
 import org.matcha.springbackend.dto.comment.CommentDto;
 import org.matcha.springbackend.dto.comment.requestbody.AddCommentBodyDTO;
 import org.matcha.springbackend.dto.comment.requestbody.EditCommentBodyDTO;
-import org.matcha.springbackend.dto.post.PostDto;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.enums.VotableType;
 import org.matcha.springbackend.loggerobject.Logger;
-import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.mapper.CommentMapper;
-import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
-import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.repository.CommentRepository;
 import org.matcha.springbackend.response.DataResponse;
@@ -29,7 +25,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,7 +69,7 @@ public class CommentController {
                                                                      @RequestBody AddCommentBodyDTO commentDTO) {
         Comment comment;
         try {
-            comment = commentService.addCommentToPost(postId, commentDTO);
+            comment = commentService.addComment(postId, commentDTO);
         } catch (ResponseStatusException e) {
             throw e;
         }  catch (Exception e) {
