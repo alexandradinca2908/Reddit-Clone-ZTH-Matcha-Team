@@ -32,13 +32,6 @@ public class VoteEntity {
 
     public VoteEntity() {}
 
-    @PrePersist
-    protected void onCreate() {
-        if (voteId == null) {
-            voteId = UUID.randomUUID();
-        }
-    }
-
     // Getters and setters
 
     public UUID getVoteId() {

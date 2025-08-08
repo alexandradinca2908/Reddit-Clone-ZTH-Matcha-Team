@@ -49,11 +49,10 @@ public class VoteService {
 
     @Transactional
     public void addVoteForPost(String commentId, String newVoteType, Account currentAccount) {
-        Vote vote = new Vote(UUID.randomUUID(), UUID.fromString(commentId), VotableType.COMMENT,
+        Vote vote = new Vote(null, UUID.fromString(commentId), VotableType.COMMENT,
                 stringToVoteType(newVoteType), currentAccount);
 
         VoteEntity entity = voteMapper.modelToEntity(vote);
-        entity.setVoteId(null);
         voteRepository.save(entity);
 
         postRepository.findByPostID(vote.getVotableID()).ifPresent(post -> {
@@ -69,11 +68,10 @@ public class VoteService {
 
     @Transactional
     public void addVoteForComment(String postId, String newVoteType, Account currentAccount) {
-        Vote vote = new Vote(UUID.randomUUID(), UUID.fromString(postId), VotableType.COMMENT,
+        Vote vote = new Vote(null, UUID.fromString(postId), VotableType.COMMENT,
                 stringToVoteType(newVoteType), currentAccount);
 
         VoteEntity entity = voteMapper.modelToEntity(vote);
-        entity.setVoteId(null);
         voteRepository.save(entity);
 
         commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
