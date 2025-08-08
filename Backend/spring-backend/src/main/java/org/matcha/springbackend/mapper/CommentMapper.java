@@ -90,10 +90,14 @@ public class CommentMapper {
 
         List<CommentDto> replies;
         if (model.getReplies() != null && !model.getReplies().isEmpty()) {
-            replies = model.getReplies().stream().map(this::modelToDto).toList();
+            replies = model.getReplies().stream()
+                    .filter(reply -> !reply.isDeleted())
+                    .map(this::modelToDto)
+                    .toList();
         } else {
             replies = new ArrayList<>();
         }
+
 
         return new CommentDto(id, postId, parentId, content, author,
                 upvotes, downvotes, score, userVote, createdAt, updatedAt, replies);
