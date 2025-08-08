@@ -21,14 +21,13 @@ import java.util.Optional;
 public class SubredditService {
     private final SubredditRepository subredditRepository;
     private final SubredditMapper subredditMapper;
+    private final PostRepository postRepository;
 
-    @Autowired
-    private PostRepository postRepository;
-
-    @Autowired
-    public SubredditService(SubredditRepository subredditRepository, SubredditMapper subredditMapper) {
+    public SubredditService(SubredditRepository subredditRepository, SubredditMapper subredditMapper,
+                            PostRepository postRepository) {
         this.subredditRepository = subredditRepository;
         this.subredditMapper = subredditMapper;
+        this.postRepository = postRepository;
     }
 
     public Subreddit findByName(String name) {
@@ -114,7 +113,7 @@ public class SubredditService {
             // TODO: no web stuff in Service. Service does not know we are a web server
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Subreddit cannot be deleted because it has posts");
         }
-        
+
         subredditRepository.delete(entity);
     }
 }
