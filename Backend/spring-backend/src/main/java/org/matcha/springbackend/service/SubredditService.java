@@ -35,49 +35,29 @@ public class SubredditService {
         if (name == null || name.isEmpty()) {
             return null;
         }
+
         Optional<SubredditEntity> entityOpt = subredditRepository.findByName(name);
-        if (entityOpt.isPresent()) {
-            SubredditEntity entity = entityOpt.get();
-            Subreddit subreddit = new Subreddit();
-            subreddit.setId(entity.getSubredditId());
-            subreddit.setName(entity.getName());
-            subreddit.setDescription(entity.getDescription());
-            subreddit.setDeleted(entity.isDeleted());
-            subreddit.setCreatedAt(entity.getCreatedAt());
-            subreddit.setDisplayName(entity.getDisplayName());
-            subreddit.setIconUrl(entity.getIconUrl());
-            return subreddit;
-        }
-        return null;
+
+        return entityOpt.map(subredditMapper::entityToModel).orElse(null);
     }
 
     public List<Subreddit> getSubreddits() {
         List<Subreddit> result = new ArrayList<>();
         List<SubredditEntity> entities = subredditRepository.findAll();
+
         for (SubredditEntity entity : entities) {
-            Subreddit subreddit = new Subreddit();
-            subreddit.setId(entity.getSubredditId());
-            subreddit.setName(entity.getName());
-            subreddit.setDescription(entity.getDescription());
-            subreddit.setDeleted(entity.isDeleted());
-            subreddit.setCreatedAt(entity.getCreatedAt());
-            subreddit.setDisplayName(entity.getDisplayName());
-            subreddit.setIconUrl(entity.getIconUrl());
+            Subreddit subreddit = subredditMapper.entityToModel(entity);
             result.add(subreddit);
         }
+
         return result;
     }
 
     public void addSubreddit(Subreddit subreddit) {
         // TODO: Always check input for contracts (public methods). If bad input found: must throw error
         if (subreddit == null) return;
-        SubredditEntity entity = new SubredditEntity();
-        entity.setName(subreddit.getName());
-        entity.setDescription(subreddit.getDescription());
-        entity.setDeleted(subreddit.isDeleted());
-        entity.setCreatedAt(subreddit.getCreatedAt());
-        entity.setDisplayName(subreddit.getDisplayName());
-        entity.setIconUrl(subreddit.getIconUrl());
+
+        SubredditEntity entity = subredditMapper.modelToEntity(subreddit);
         subredditRepository.save(entity);
     }
 
@@ -85,22 +65,11 @@ public class SubredditService {
         if (name == null || name.isEmpty()) {
             return null;
         }
-        Optional<SubredditEntity> entityOpt = subredditRepository.findByName(name);
-        if (entityOpt.isPresent()) {
-            SubredditEntity entity = entityOpt.get();
-            Subreddit subreddit = new Subreddit();
-            subreddit.setId(entity.getSubredditId());
-            subreddit.setName(entity.getName());
-            subreddit.setDescription(entity.getDescription());
-            subreddit.setDeleted(entity.isDeleted());
-            subreddit.setCreatedAt(entity.getCreatedAt());
-            subreddit.setDisplayName(entity.getDisplayName());
-            subreddit.setIconUrl(entity.getIconUrl());
-            return subreddit;
-        }
-        return null;
-    }
 
+        Optional<SubredditEntity> entityOpt = subredditRepository.findByName(name);
+
+        return entityOpt.map(subredditMapper::entityToModel).orElse(null);
+    }
 
     public Subreddit updateSubreddit(String name, UpdateSubredditBodyDto updateDto) {
         Subreddit subreddit = this.getSubredditByName(name);
@@ -137,12 +106,15 @@ public class SubredditService {
             // 2. The input (minimalistic) that caused this (we don't have this)
             // 3. (optional) The original cause (N/A)
         }
+
         SubredditEntity entity = entityOpt.get();
         List<PostEntity> posts = postRepository.findAllBySubreddit_Name(name); // TODO: consistency _
+
         if (!posts.isEmpty()) {
             // TODO: no web stuff in Service. Service does not know we are a web server
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Subreddit cannot be deleted because it has posts");
         }
+        
         subredditRepository.delete(entity);
     }
 }

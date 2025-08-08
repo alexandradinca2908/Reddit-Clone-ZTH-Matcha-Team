@@ -198,5 +198,4 @@ public class PostController {
         DataResponse<CommentDto> dataResponse = new DataResponse<>(true, commentMapper.modelToDto(comment));
         return ResponseEntity.ok(dataResponse);
     }
-
 }
