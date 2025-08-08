@@ -17,10 +17,10 @@ public class SubredditEntity {
     @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "fk_subreddit_account"), nullable = true)
     private AccountEntity account;
 
-    @Column(name = "name", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @Column(name = "description")
+    @Column
     private String description;
 
     @Column(name = "is_deleted", nullable = false)
@@ -29,23 +29,17 @@ public class SubredditEntity {
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
-    @Column(name = "updated_at")
-    private OffsetDateTime updatedAt;
-
     @Column(name = "display_name")
     private String displayName;
+
+    @Column(name = "icon_url")
+    private String iconUrl;
 
     public SubredditEntity() {}
 
     @PrePersist
     protected void onCreate() {
         createdAt = OffsetDateTime.now();
-        updatedAt = createdAt;
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = OffsetDateTime.now();
     }
 
     // Getters și setters
@@ -94,10 +88,6 @@ public class SubredditEntity {
         return createdAt;
     }
 
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
     public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
     }
@@ -106,17 +96,15 @@ public class SubredditEntity {
         return displayName;
     }
 
-    //TODO
-    public String getIconUrl() {
-        return null;
-    }
-
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
-    //TODO
-    public void setIconUrl(String iconUrl) {
+    public String getIconUrl() {
+        return iconUrl;
+    }
 
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
     }
 }

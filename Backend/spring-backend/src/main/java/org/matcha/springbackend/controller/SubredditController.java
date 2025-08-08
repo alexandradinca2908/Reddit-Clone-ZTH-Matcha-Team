@@ -47,18 +47,8 @@ public class SubredditController {
 
     @PostMapping
     public ResponseEntity<DataResponse<SubredditDto>> createSubreddit(@RequestBody CreateSubredditBodyDto subredditDTO) {
-        //  Create post fields
-        UUID uuid = UUID.randomUUID();
-        OffsetDateTime createdAt = OffsetDateTime.now();
-
-        //  Create and add post // TODO: maybe extract to mapper DTO to model
-        Subreddit subreddit = new Subreddit(uuid, subredditDTO.name(), subredditDTO.displayName(),
-                subredditDTO.description(), false, 0, 0,
-                subredditDTO.iconUrl(), createdAt);
-
-        subredditService.addSubreddit(subreddit);
-
-        //  Send response
+        Subreddit subreddit = subredditService.addSubreddit(subredditDTO);
+        
         DataResponse<SubredditDto> dataResponse = new DataResponse<>(true,
                 subredditMapper.modelToDto(subreddit));
         return ResponseEntity.ok(dataResponse);

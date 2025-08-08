@@ -1,5 +1,6 @@
 package org.matcha.springbackend.service;
 
+import org.matcha.springbackend.dto.subreddit.requestbody.CreateSubredditBodyDto;
 import org.matcha.springbackend.dto.subreddit.requestbody.UpdateSubredditBodyDto;
 import org.matcha.springbackend.entities.PostEntity;
 import org.matcha.springbackend.entities.SubredditEntity;
@@ -8,7 +9,6 @@ import org.matcha.springbackend.mapper.SubredditMapper;
 import org.matcha.springbackend.model.Subreddit;
 import org.matcha.springbackend.repository.PostRepository;
 import org.matcha.springbackend.repository.SubredditRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -31,6 +31,7 @@ public class SubredditService {
     }
 
     public Subreddit findByName(String name) {
+        // TODO: Always check input for contracts (public methods). If bad input found: must throw error
         if (name == null || name.isEmpty()) {
             return null;
         }
@@ -52,12 +53,15 @@ public class SubredditService {
         return result;
     }
 
-    public void addSubreddit(Subreddit subreddit) {
-        // TODO: Always check input for contracts (public methods). If bad input found: must throw error
-        if (subreddit == null) return;
+    public Subreddit addSubreddit(CreateSubredditBodyDto subredditDTO) {
+        Subreddit subreddit = new Subreddit(null, subredditDTO.name(), subredditDTO.displayName(),
+                subredditDTO.description(), false, 0, 0,
+                subredditDTO.iconUrl(), null);
 
         SubredditEntity entity = subredditMapper.modelToEntity(subreddit);
         subredditRepository.save(entity);
+
+        return subredditMapper.entityToModel(entity);
     }
 
     public Subreddit getSubredditByName(String name) {
