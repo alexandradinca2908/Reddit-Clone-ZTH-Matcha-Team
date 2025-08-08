@@ -141,10 +141,10 @@ public class PostController {
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
         PostEntity postEntity = postRepository.findById(UUID.fromString(postId)).orElse(null);
         if (accountEntity == null) {
-            throw new IllegalArgumentException("Current account does not exist in DB! id: " + currentAccount.getAccountId());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account does not exist in DB or was deleted! id: " + currentAccount.getAccountId());
         }
         if (postEntity == null || postEntity.isDeleted()) {
-            throw new IllegalArgumentException("Post does not exist in DB or was deleted! id: " + postId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post does not exist in DB or was deleted! id: " + postId);
         }
 
         Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(postId));
@@ -183,6 +183,11 @@ public class PostController {
 
     @GetMapping("/{postId}/comments")
     public ResponseEntity<DataResponse<List<CommentDto>>> getCommentsFromPost(@PathVariable String postId) {
+        Post post = postService.getPostById(postId);
+        if (post == null || post.isDeleted()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Post with UUID %s not found", postId));
+        }
         //  Map Comments to CommentDTOs
         List<CommentDto> commentDtos = commentService.getCommentsByPostId(UUID.fromString(postId))
                 .stream()
@@ -196,6 +201,11 @@ public class PostController {
     @PostMapping("/{postId}/comments")
     public ResponseEntity<DataResponse<CommentDto>> addCommentToPost(@PathVariable String postId,
                                                                      @RequestBody AddCommentBodyDTO commentDTO) {
+        Post post = postService.getPostById(postId);
+        if (post == null || post.isDeleted()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Post with UUID %s not found", postId));
+        }
         Comment comment;
         try {
             comment = commentService.addComment(postId, commentDTO);

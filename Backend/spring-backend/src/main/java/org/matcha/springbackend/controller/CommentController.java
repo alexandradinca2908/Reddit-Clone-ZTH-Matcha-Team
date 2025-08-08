@@ -52,10 +52,15 @@ public class CommentController {
     @PutMapping("/{commentId}/vote")
     public ResponseEntity<DataResponse<AllVotesDto>> voteComment(@PathVariable String commentId,
                                                                  @RequestBody PutVoteBodyDto putVoteDto) {
+        Comment comment = commentService.getCommentById(commentId);
         Account currentAccount = accountSession.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
         if (accountEntity == null) {
             throw new IllegalArgumentException("Current account does not exist in DB! id: " + currentAccount.getAccountId());
+        }
+        if (comment == null || comment.isDeleted()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Comment with UUID %s not found", commentId));
         }
 
         Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(commentId));
@@ -92,7 +97,11 @@ public class CommentController {
     @PutMapping("/{commentId}")
     public ResponseEntity<DataResponse<CommentDto>> updateComment(@PathVariable String commentId,
                                                                   @RequestBody EditCommentBodyDTO contentDto) {
-        Comment comment;
+        Comment comment = commentService.getCommentById(commentId);
+        if (comment == null || comment.isDeleted()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Comment with UUID %s not found", commentId));
+        }
         try {
             comment = commentService.updateComment(commentId, contentDto.content());
             Logger.info("[CommentController] Comment updated successfully for id: " + commentId);
