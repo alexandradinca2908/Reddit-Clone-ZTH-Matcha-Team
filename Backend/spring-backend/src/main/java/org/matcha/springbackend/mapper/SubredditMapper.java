@@ -1,12 +1,23 @@
 package org.matcha.springbackend.mapper;
 
 import org.matcha.springbackend.dto.subreddit.SubredditDto;
+import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.model.Subreddit;
+import org.matcha.springbackend.repository.AccountRepository;
+import org.matcha.springbackend.session.AccountSession;
 import org.springframework.stereotype.Component;
 import org.matcha.springbackend.entities.SubredditEntity;
 
 @Component
 public class SubredditMapper {
+
+    private final AccountSession accountSession;
+    private final AccountRepository accountRepository;
+
+    public SubredditMapper(AccountSession accountSession, AccountRepository accountRepository) {
+        this.accountSession = accountSession;
+        this.accountRepository = accountRepository;
+    }
 
     public SubredditDto modelToDto(Subreddit model) {
         String id = model.getId().toString();
@@ -22,35 +33,43 @@ public class SubredditMapper {
                 postCount, iconURL, createdAt);
     }
 
-    // Converts SubredditEntity to Subreddit model
-    public Subreddit entityToModel(org.matcha.springbackend.entities.SubredditEntity entity) {
+    public Subreddit entityToModel(SubredditEntity entity) {
         if (entity == null) return null;
+
         Subreddit subreddit = new Subreddit();
         subreddit.setId(entity.getSubredditId());
         subreddit.setName(entity.getName());
+        subreddit.setAccount(accountSession.getCurrentAccount());
         subreddit.setDisplayName(entity.getDisplayName());
         subreddit.setDescription(entity.getDescription());
         subreddit.setDeleted(entity.isDeleted());
         subreddit.setCreatedAt(entity.getCreatedAt());
-        // memberCount, postCount, iconUrl are not present in entity, set as null
-        subreddit.setMemberCount(null);
-        subreddit.setPostCount(null);
-        subreddit.setIconUrl(null);
-        // Account mapping can be added if needed
+        subreddit.setMemberCount(entity.getMemberCount());
+        subreddit.setPostCount(entity.getPostCount());
+        subreddit.setIconUrl(entity.getIconUrl());
+
         return subreddit;
     }
 
     public SubredditEntity modelToEntity(Subreddit model) {
         if (model == null) return null;
+
         SubredditEntity entity = new SubredditEntity();
         entity.setSubredditId(model.getId());
         entity.setName(model.getName());
+
+        AccountEntity account = accountRepository.findById(model.getAccount().getAccountId())
+                .orElse(null);
+        entity.setAccount(account);
+
+        entity.setDisplayName(model.getDisplayName());
         entity.setDescription(model.getDescription());
         entity.setDeleted(model.isDeleted());
-        entity.setCreatedAt(model.getCreatedAt());
-        entity.setDisplayName(model.getDisplayName());
+        entity.setMemberCount(model.getMemberCount());
+        entity.setPostCount(model.getPostCount());
         entity.setIconUrl(model.getIconUrl());
-        // Alte câmpuri (memberCount, postCount, iconUrl) nu există în entity
+        entity.setCreatedAt(model.getCreatedAt());
+
         return entity;
     }
 }

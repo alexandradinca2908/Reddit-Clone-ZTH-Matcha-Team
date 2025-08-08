@@ -1,10 +1,15 @@
 package org.matcha.springbackend.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "subreddit")
 public class SubredditEntity {
     @Id
@@ -20,91 +25,31 @@ public class SubredditEntity {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @Column(name = "display_name", nullable = false)
+    private String displayName;
+
     @Column
     private String description;
 
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted = false;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private OffsetDateTime createdAt;
+    @Column(name = "member_count", nullable = false)
+    private Integer memberCount;
 
-    @Column(name = "display_name")
-    private String displayName;
+    @Column(name = "post_count", nullable = false)
+    private Integer postCount;
 
     @Column(name = "icon_url")
     private String iconUrl;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private OffsetDateTime createdAt;
 
     public SubredditEntity() {}
 
     @PrePersist
     protected void onCreate() {
         createdAt = OffsetDateTime.now();
-    }
-
-    // Getters și setters
-
-    public UUID getSubredditId() {
-        return subredditId;
-    }
-
-    public void setSubredditId(UUID subredditId) {
-        this.subredditId = subredditId;
-    }
-
-    public AccountEntity getAccount() {
-        return account;
-    }
-
-    public void setAccount(AccountEntity account) {
-        this.account = account;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getIconUrl() {
-        return iconUrl;
-    }
-
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl;
     }
 }

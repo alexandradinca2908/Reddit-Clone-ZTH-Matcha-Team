@@ -9,6 +9,7 @@ import org.matcha.springbackend.mapper.SubredditMapper;
 import org.matcha.springbackend.model.Subreddit;
 import org.matcha.springbackend.repository.PostRepository;
 import org.matcha.springbackend.repository.SubredditRepository;
+import org.matcha.springbackend.session.AccountSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -22,12 +23,14 @@ public class SubredditService {
     private final SubredditRepository subredditRepository;
     private final SubredditMapper subredditMapper;
     private final PostRepository postRepository;
+    private final AccountSession accountSession;
 
     public SubredditService(SubredditRepository subredditRepository, SubredditMapper subredditMapper,
-                            PostRepository postRepository) {
+                            PostRepository postRepository, AccountSession accountSession) {
         this.subredditRepository = subredditRepository;
         this.subredditMapper = subredditMapper;
         this.postRepository = postRepository;
+        this.accountSession = accountSession;
     }
 
     public Subreddit findByName(String name) {
@@ -55,8 +58,8 @@ public class SubredditService {
 
     public Subreddit addSubreddit(CreateSubredditBodyDto subredditDTO) {
         Subreddit subreddit = new Subreddit(null, subredditDTO.name(), subredditDTO.displayName(),
-                subredditDTO.description(), false, 0, 0,
-                subredditDTO.iconUrl(), null);
+                accountSession.getCurrentAccount(), subredditDTO.description(), false,
+                0, 0, subredditDTO.iconUrl(), null);
 
         SubredditEntity entity = subredditMapper.modelToEntity(subreddit);
         subredditRepository.save(entity);

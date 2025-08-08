@@ -27,7 +27,8 @@ public class SubredditController {
     private final PostService postService;
     private final PostMapper postMapper;
 
-    public SubredditController(List<Subreddit> subreddits, SubredditService subredditService, SubredditMapper subredditMapper, PostService postService, PostMapper postMapper) {
+    public SubredditController(SubredditService subredditService, SubredditMapper subredditMapper,
+                               PostService postService, PostMapper postMapper) {
         this.subredditService = subredditService;
         this.subredditMapper = subredditMapper;
         this.postService = postService;
