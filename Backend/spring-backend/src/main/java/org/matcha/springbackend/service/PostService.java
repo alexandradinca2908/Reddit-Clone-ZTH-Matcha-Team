@@ -128,7 +128,7 @@ public class PostService {
 
     public PostEntity getPostEntityById(String id) {
         return postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
-                .orElseThrow(() -> new IllegalArgumentException("Account not found in DB for id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Post not found in DB for id: " + id));
     }
 
     public List<Post> getPostsBySubredditName(String subredditName) {

@@ -8,6 +8,7 @@ import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
+import org.matcha.springbackend.entities.PostEntity;
 import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.mapper.CommentMapper;
 import org.matcha.springbackend.mapper.PostMapper;
@@ -15,6 +16,7 @@ import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Vote;
+import org.matcha.springbackend.repository.PostRepository;
 import org.matcha.springbackend.response.DataResponse;
 import org.matcha.springbackend.response.MessageResponse;
 import org.matcha.springbackend.service.AccountService;
@@ -42,10 +44,11 @@ public class PostController {
     private final VoteService voteService;
     private final CommentService commentService;
     private final CommentMapper commentMapper;
+    private final PostRepository postRepository;
 
     public PostController(AccountService accountService, AccountSession accountSession,
                           PostService postService, PostMapper postMapper,
-                          VoteService voteService, CommentService commentService, CommentMapper commentMapper) {
+                          VoteService voteService, CommentService commentService, CommentMapper commentMapper, PostRepository postRepository) {
         this.accountService = accountService;
         this.accountSession = accountSession;
         this.postService = postService;
@@ -53,6 +56,7 @@ public class PostController {
         this.voteService = voteService;
         this.commentService = commentService;
         this.commentMapper = commentMapper;
+        this.postRepository = postRepository;
     }
 
     @GetMapping
@@ -135,8 +139,12 @@ public class PostController {
 
         Account currentAccount = accountSession.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
+        PostEntity postEntity = postRepository.findById(UUID.fromString(postId)).orElse(null);
         if (accountEntity == null) {
             throw new IllegalArgumentException("Current account does not exist in DB! id: " + currentAccount.getAccountId());
+        }
+        if (postEntity == null || postEntity.isDeleted()) {
+            throw new IllegalArgumentException("Post does not exist in DB or was deleted! id: " + postId);
         }
 
         Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(postId));
