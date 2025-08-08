@@ -47,9 +47,9 @@ public class VoteService {
     }
 
     @Transactional
-    public void addVoteForPost(String commentId, String newVoteType, Account currentAccount) {
+    public void addVoteForPost(String commentId, VoteType newVoteType, Account currentAccount) {
         Vote vote = new Vote(null, UUID.fromString(commentId), VotableType.COMMENT,
-                stringToVoteType(newVoteType), currentAccount);
+                newVoteType, currentAccount);
 
         VoteEntity entity = voteMapper.modelToEntity(vote);
         voteRepository.save(entity);
@@ -66,9 +66,9 @@ public class VoteService {
     }
 
     @Transactional
-    public void addVoteForComment(String postId, String newVoteType, Account currentAccount) {
+    public void addVoteForComment(String postId, VoteType newVoteType, Account currentAccount) {
         Vote vote = new Vote(null, UUID.fromString(postId), VotableType.COMMENT,
-                stringToVoteType(newVoteType), currentAccount);
+                newVoteType, currentAccount);
 
         VoteEntity entity = voteMapper.modelToEntity(vote);
         voteRepository.save(entity);

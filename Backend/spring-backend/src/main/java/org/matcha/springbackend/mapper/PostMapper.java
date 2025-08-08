@@ -83,7 +83,7 @@ public class PostMapper {
         Integer downvotes = model.getDownvotes();
         Integer score = upvotes - downvotes;
         Integer commentCount = model.getCommentCount();
-        String userVote = model.getVoteType().toString();
+        String userVote = model.getVoteType().toString().toLowerCase();
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
 
