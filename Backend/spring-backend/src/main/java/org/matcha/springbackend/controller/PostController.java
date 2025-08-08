@@ -37,17 +37,15 @@ public class PostController {
     private final PostService postService;
     private final PostMapper postMapper;
     private final VoteService voteService;
-    private final VoteMapper voteMapper;
 
     public PostController(AccountService accountService, AccountSession accountSession,
                           PostService postService, PostMapper postMapper,
-                          VoteService voteService, VoteMapper voteMapper) {
+                          VoteService voteService) {
         this.accountService = accountService;
         this.accountSession = accountSession;
         this.postService = postService;
         this.postMapper = postMapper;
         this.voteService = voteService;
-        this.voteMapper = voteMapper;
     }
 
     @GetMapping
@@ -134,45 +132,35 @@ public class PostController {
         if (accountEntity == null) {
             throw new IllegalArgumentException("Current account does not exist in DB! id: " + currentAccount.getAccountId());
         }
+
         Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(postId));
         String newVoteType = putVoteDto.voteType().toLowerCase();
         boolean hasPreviousVote = currentVote != null;
 
+        // Double click or "none"
         if (hasPreviousVote && (newVoteType.equals("none")
-                || newVoteType.equals(currentVote.getVoteType().toString().toLowerCase()))) {  // Double click or "none"
+                || newVoteType.equals(currentVote.getVoteType().toString().toLowerCase()))) {
             voteService.deleteVoteByID(currentVote.getVoteID());
+
             Logger.info("[VoteController] Vote deleted for account: " + currentAccount.getUsername() + " and comment: " + postId);
-        } else if (!hasPreviousVote && !newVoteType.equals("none")) {  // First time voting
-            Vote newVote = new Vote(UUID.randomUUID(), UUID.fromString(postId), VotableType.COMMENT,
-                    stringToVoteType(newVoteType), currentAccount);
-            voteService.addVote(newVote);
+
+        // First time voting
+        } else if (!hasPreviousVote && !newVoteType.equals("none")) {
+            voteService.addVoteForPost(postId, newVoteType, currentAccount);
+
             Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername() + " and comment: " + postId);
-        } else if (hasPreviousVote) {  // Change vote
+
+        //  Change vote
+        } else if (hasPreviousVote) {
             currentVote.setVoteType(stringToVoteType(newVoteType));
             voteService.updateVote(currentVote);
+
             Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + postId);
         }
 
-        Post post = postService.getPostById(postId);
-        if (post == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found with id: " + postId);
-        }
-
-        Vote newVoteState = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(postId));
-        String userVote = "none";
-        if (newVoteState != null) {
-            userVote = newVoteState.getVoteType().toString().toLowerCase();
-        }
-
-        AllVotesDto allVotesDto = new AllVotesDto(
-                post.getUpvotes(),
-                post.getDownvotes(),
-                post.getScore(),
-                userVote
-        );
+        AllVotesDto allVotesDto = voteService.getUpdatedPost(postId, accountEntity);
 
         DataResponse<AllVotesDto> dataResponse = new DataResponse<>(true, allVotesDto);
         return ResponseEntity.ok(dataResponse);
-
     }
 }
