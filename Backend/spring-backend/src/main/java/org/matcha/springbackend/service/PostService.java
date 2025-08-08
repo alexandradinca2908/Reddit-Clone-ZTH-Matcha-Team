@@ -15,6 +15,7 @@ import org.matcha.springbackend.loggerobject.Logger;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -55,7 +56,8 @@ public class PostService {
 
         //  Create and add post
         Post post = new Post(null, postDto.title(), postDto.content(), account, subreddit,
-                0, 0, 0, 0,  null, "", false, createdAt, createdAt);
+                0, 0, 0, 0,  null, "", false,
+                createdAt, createdAt, new ArrayList<>());
         PostEntity entity = postMapper.modelToEntity(post);
 
         Logger.debug("[PostService] PostEntity mapped: " + entity);

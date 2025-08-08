@@ -65,8 +65,8 @@ public class CommentService {
         for (Comment comment : comments) {
 
             //  Link children to parents
-            if (comment.getParent() != null) {
-                UUID parentId = comment.getParent().getCommentId();
+            if (comment.getParentCommentId() != null) {
+                UUID parentId = comment.getParentCommentId();
                 Comment parent = commentById.get(parentId);
                 if (parent != null) {
                     parent.getReplies().add(comment);
@@ -85,28 +85,22 @@ public class CommentService {
     public Comment addComment(String postId, AddCommentBodyDTO commentDto) {
         OffsetDateTime createdAt = OffsetDateTime.now();
 
-        Post post = postService.getPostById(postId);
-        if (post == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found");
-        }
-
         //  If the comment is a reply, also add its parent
-        //  Only id needs to be set
-        Comment parentComment = null;
+        UUID parentCommentId = null;
         if (commentDto.parentId() != null) {
-            parentComment = new Comment();
-            parentComment.setCommentId(UUID.fromString(commentDto.parentId()));
+            parentCommentId = UUID.fromString(commentDto.parentId());
+
         }
 
-        Comment comment = new Comment(null, accountSession.getCurrentAccount(), parentComment,
-                post, commentDto.content(), false, 0, 0, 0,
+        Comment comment = new Comment(null, accountSession.getCurrentAccount(), parentCommentId,
+                UUID.fromString(postId), commentDto.content(), false, 0, 0, 0,
                 VoteType.NONE, createdAt, createdAt, new ArrayList<>());
         CommentEntity commentEntity = commentMapper.modelToEntity(comment);
 
         //  Save comment
         try {
             commentRepository.save(commentEntity);
-            Logger.info("[CommentService] Comment saved with title: " + post.getTitle());
+            Logger.info("[CommentService] Comment saved for post " + postId + " with content " + commentDto.content());
         } catch (Exception e) {
             Logger.error("[CommentService] Exception at save: " + e.getMessage());
             throw e;

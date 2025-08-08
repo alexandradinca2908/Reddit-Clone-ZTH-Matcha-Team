@@ -22,13 +22,16 @@ public class PostMapper {
     private final SubredditRepository subredditRepository;
     private final VoteRepository voteRepository;
     private final AccountMapper accountMapper;
+    private final SubredditMapper subredditMapper;
 
     public PostMapper(AccountRepository accountRepository, SubredditRepository subredditRepository,
-                      VoteRepository voteRepository, AccountMapper accountMapper) {
+                      VoteRepository voteRepository, AccountMapper accountMapper,
+                      SubredditMapper subredditMapper) {
         this.accountRepository = accountRepository;
         this.subredditRepository = subredditRepository;
         this.voteRepository = voteRepository;
         this.accountMapper = accountMapper;
+        this.subredditMapper = subredditMapper;
     }
 
     public PostEntity modelToEntity(Post post) {
@@ -90,37 +93,19 @@ public class PostMapper {
 
     public Post entityToModel(PostEntity entity) {
         // Map Account
-        Account account = new Account();
-        if (entity.getAccount() != null) {
-            account.setAccountId(entity.getAccount().getAccountId());
-            account.setUsername(entity.getAccount().getUsername());
-            account.setEmail(entity.getAccount().getEmail());
-            account.setPhotoPath(entity.getAccount().getPhotoPath());
-        }
+        Account account = accountMapper.entityToModel(entity.getAccount());
 
         // Map Subreddit
-        Subreddit subreddit = new Subreddit();
-        if (entity.getSubreddit() != null) {
-            subreddit.setSubredditId(entity.getSubreddit().getSubredditId());
-            subreddit.setDisplayName(entity.getSubreddit().getName());
-            subreddit.setDescription(entity.getSubreddit().getDescription());
-        }
+        Subreddit subreddit = subredditMapper.entityToModel(entity.getSubreddit());
 
         // Map Post
-        Post post = new Post();
-        post.setPostID(entity.getPostID());
-        post.setAccount(account);
-        post.setSubreddit(subreddit);
-        post.setTitle(entity.getTitle());
-        post.setContent(entity.getContent());
-        post.setUpvotes(entity.getUpvotes());
-        post.setDownvotes(entity.getDownvotes());
-        post.setScore(entity.getUpvotes() - entity.getDownvotes());
-        post.setCommentCount(entity.getCommentCount());
-        post.setPhotoPath(entity.getPhotoPath());
-        post.setDeleted(entity.isDeleted());
-        post.setCreatedAt(entity.getCreatedAt());
-        post.setUpdatedAt(entity.getUpdatedAt());
+        UUID id = entity.getPostID();
+        String title = entity.getTitle();
+        String content = entity.getContent();
+        int upvotes = entity.getUpvotes();
+        int downvotes = entity.getDownvotes();
+        int score = entity.getUpvotes() - entity.getDownvotes();
+        int commentCount = entity.getCommentCount();
 
         VoteEntity voteEntity = voteRepository.findByAccountAndVotableId(entity.getAccount(), entity.getPostID())
                 .orElse(null);
@@ -131,33 +116,31 @@ public class PostMapper {
         } else {
             voteType = voteEntity.getVoteType();
         }
-        post.setVoteType(voteType);
+
+        String photoPath = entity.getPhotoPath();
+        boolean isDeleted = entity.isDeleted();
+        OffsetDateTime createdAt = entity.getCreatedAt();
+        OffsetDateTime updatedAt = entity.getUpdatedAt();
 
         List<Comment> comments = entity.getComments().stream().map(this::commentEntityToModel).toList();
-        post.setComments(comments);
 
-        return post;
+        return new Post(id, title, content, account, subreddit,
+                upvotes, downvotes, score, commentCount, voteType,
+                photoPath, isDeleted, createdAt, updatedAt, comments);
     }
 
     public Comment commentEntityToModel(CommentEntity entity) {
         UUID id = entity.getCommentId();
         Account author = accountMapper.entityToModel(entity.getAccount());
 
-        Comment parent;
-
+        UUID parentCommentId;
         if (entity.getParent() != null) {
-            //  Incomplete init; don't recurse into full parent comment
-            parent = new Comment();
-            parent.setCommentId(entity.getParent().getCommentId());
+            parentCommentId = entity.getParent().getCommentId();
         } else {
-            parent = null;
+            parentCommentId = null;
         }
 
-        //  Incomplete init; don't recurse into full post
-        Post post = new Post(entity.getPost().getPostID(), "", "", null, null, 0,
-                0, 0, 0, null, "", false,
-                OffsetDateTime.now(), OffsetDateTime.now());
-
+        UUID postId = entity.getPost().getPostID();
         String text = entity.getContent();
         boolean deleted = entity.isDeleted();
         Integer upvotes = entity.getUpvotes();
@@ -183,7 +166,7 @@ public class PostMapper {
                     .collect(Collectors.toList());
         }
 
-        return new Comment(id, author, parent, post, text,
+        return new Comment(id, author, parentCommentId, postId, text,
                 deleted, upvotes, downvotes, score, voteType,
                 createdAt, updatedAt, replies);
     }

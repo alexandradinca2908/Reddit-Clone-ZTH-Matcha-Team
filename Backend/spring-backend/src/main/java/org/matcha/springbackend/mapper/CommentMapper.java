@@ -49,15 +49,15 @@ public class CommentMapper {
         entity.setAccount(accountService.getAccountEntityById(model.getAccount().getAccountId()));
 
         CommentEntity parent;
-        if (model.getParent() != null) {
-            UUID parentId = model.getParent().getCommentId();
+        if (model.getParentCommentId() != null) {
+            UUID parentId = model.getParentCommentId();
             parent = commentRepository.findByCommentId(parentId).orElse(null);
         } else {
             parent = null;
         }
         entity.setParent(parent);
 
-        entity.setPost(postService.getPostEntityById(model.getPost().getPostID().toString()));
+        entity.setPost(postService.getPostEntityById(model.getPostId().toString()));
         entity.setContent(model.getText());
         entity.setDeleted(model.isDeleted());
         entity.setUpvotes(model.getUpvotes());
@@ -70,11 +70,11 @@ public class CommentMapper {
 
     public CommentDto modelToDto(Comment model) {
         String id = model.getCommentId().toString();
-        String postId = model.getPost().getPostID().toString();
+        String postId = model.getPostId().toString();
 
         String parentId;
-        if (model.getParent() != null) {
-            parentId = model.getParent().getCommentId().toString();
+        if (model.getParentCommentId() != null) {
+            parentId = model.getParentCommentId().toString();
         } else {
             parentId = null;
         }
@@ -105,16 +105,14 @@ public class CommentMapper {
         UUID id = entity.getCommentId();
         Account author = accountMapper.entityToModel(entity.getAccount());
 
-        Comment parent;
+        UUID parentCommentId;
         if (entity.getParent() != null) {
-            //  Incomplete init; don't recurse into full parent comment
-            parent = new Comment();
-            parent.setCommentId(entity.getParent().getCommentId());
+            parentCommentId = entity.getParent().getCommentId();
         } else {
-            parent = null;
+            parentCommentId = null;
         }
 
-        Post post = postMapper.entityToModel(entity.getPost());
+        UUID postId = entity.getPost().getPostID();
         String text = entity.getContent();
         boolean deleted = entity.isDeleted();
         int upvotes = entity.getUpvotes() == null ? 0 : entity.getUpvotes();
@@ -140,7 +138,7 @@ public class CommentMapper {
                     .collect(Collectors.toList());
         }
 
-        return new Comment(id, author, parent, post, text,
+        return new Comment(id, author, parentCommentId, postId, text,
                 deleted, upvotes, downvotes, score, voteType,
                 createdAt, updatedAt, replies);
     }

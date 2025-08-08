@@ -9,8 +9,8 @@ import java.util.UUID;
 public class Comment {
     private UUID commentId;
     private Account account;
-    private Comment parent;
-    private Post post;
+    private UUID parentCommentId;
+    private UUID postId;
     private String text;
     private boolean isDeleted;
     private int upvotes;
@@ -23,13 +23,13 @@ public class Comment {
 
     public Comment() {}
 
-    public Comment(UUID commentId, Account account, Comment parent, Post post, String text,
+    public Comment(UUID commentId, Account account, UUID parentCommentId, UUID postId, String text,
                    boolean isDeleted, int upvotes, int downvotes, int score, VoteType voteType,
                    OffsetDateTime createdAt, OffsetDateTime updatedAt,  List<Comment> replies) {
         this.commentId = commentId;
         this.account = account;
-        this.parent = parent;
-        this.post = post;
+        this.parentCommentId = parentCommentId;
+        this.postId = postId;
         this.text = text;
         this.isDeleted = isDeleted;
         this.upvotes = upvotes;
@@ -57,20 +57,20 @@ public class Comment {
         this.account = account;
     }
 
-    public Comment getParent() {
-        return parent;
+    public UUID getParentCommentId() {
+        return parentCommentId;
     }
 
-    public void setParent(Comment parent) {
-        this.parent = parent;
+    public void setParentCommentId(UUID parentCommentId) {
+        this.parentCommentId = parentCommentId;
     }
 
-    public Post getPost() {
-        return post;
+    public UUID getPostId() {
+        return postId;
     }
 
-    public void setPost(Post postId) {
-        this.post = postId;
+    public void setPostId(UUID postId) {
+        this.postId = postId;
     }
 
     public String getText() {

@@ -15,9 +15,7 @@ public class Subreddit {
     private String iconUrl;
     private OffsetDateTime createdAt;
 
-    public Subreddit() {
-        // Default constructor
-    }
+    public Subreddit() {}
 
     public Subreddit(UUID id, String name, String displayName,
                      String description, boolean isDeleted, Integer memberCount,

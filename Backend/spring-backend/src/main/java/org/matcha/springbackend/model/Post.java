@@ -25,7 +25,7 @@ public class Post {
 
     public Post(UUID postID, String title, String content, Account account, Subreddit subreddit,
                 int upvotes, int downvotes, int score, int commentCount, VoteType voteType, String photoPath,
-                boolean isDeleted, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+                boolean isDeleted, OffsetDateTime createdAt, OffsetDateTime updatedAt, List<Comment> comments) {
         this.postID = postID;
         this.title = title;
         this.content = content;
@@ -40,6 +40,7 @@ public class Post {
         this.isDeleted = isDeleted;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.comments = comments;
     }
 
     public Post() {}
