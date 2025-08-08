@@ -95,6 +95,8 @@ public class PostController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
 
+        Logger.debug("New post DTO looks like this:\n" + postMapper.modelToDto(post).toString());
+
         //  Send response
         DataResponse<PostDto> dataResponse = new DataResponse<>(true, postMapper.modelToDto(post));
         return ResponseEntity.ok(dataResponse);

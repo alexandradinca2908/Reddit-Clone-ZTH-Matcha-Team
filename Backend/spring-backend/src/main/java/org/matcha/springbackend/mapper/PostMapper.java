@@ -122,7 +122,10 @@ public class PostMapper {
         OffsetDateTime createdAt = entity.getCreatedAt();
         OffsetDateTime updatedAt = entity.getUpdatedAt();
 
-        List<Comment> comments = entity.getComments().stream().map(this::commentEntityToModel).toList();
+        List<Comment> comments = null;
+        if (entity.getComments() != null) {
+            comments = entity.getComments().stream().map(this::commentEntityToModel).toList();
+        }
 
         return new Post(id, title, content, account, subreddit,
                 upvotes, downvotes, score, commentCount, voteType,
