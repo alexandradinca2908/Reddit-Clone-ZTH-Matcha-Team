@@ -12,5 +12,5 @@ public record PostDto(
         String userVote,
         String createdAt,
         String updatedAt
-) {
+) { //TODO re-add score everywhere
 }

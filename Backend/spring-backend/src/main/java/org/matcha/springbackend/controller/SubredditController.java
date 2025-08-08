@@ -51,7 +51,7 @@ public class SubredditController {
         UUID uuid = UUID.randomUUID();
         OffsetDateTime createdAt = OffsetDateTime.now();
 
-        //  Create and add post
+        //  Create and add post // TODO: maybe extract to mapper DTO to model
         Subreddit subreddit = new Subreddit(uuid, subredditDTO.name(), subredditDTO.displayName(),
                 subredditDTO.description(), false, 0, 0,
                 subredditDTO.iconUrl(), createdAt);

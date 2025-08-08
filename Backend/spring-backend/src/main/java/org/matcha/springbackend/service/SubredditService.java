@@ -69,6 +69,7 @@ public class SubredditService {
     }
 
     public void addSubreddit(Subreddit subreddit) {
+        // TODO: Always check input for contracts (public methods). If bad input found: must throw error
         if (subreddit == null) return;
         SubredditEntity entity = new SubredditEntity();
         entity.setName(subreddit.getName());
@@ -131,10 +132,15 @@ public class SubredditService {
         Optional<SubredditEntity> entityOpt = subredditRepository.findByName(name);
         if (entityOpt.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Subreddit not found");
+            // TODO: When throwing exception, must include:
+            // 1. A message that describes (we have this, nice!)
+            // 2. The input (minimalistic) that caused this (we don't have this)
+            // 3. (optional) The original cause (N/A)
         }
         SubredditEntity entity = entityOpt.get();
-        List<PostEntity> posts = postRepository.findAllBySubreddit_Name(name);
+        List<PostEntity> posts = postRepository.findAllBySubreddit_Name(name); // TODO: consistency _
         if (!posts.isEmpty()) {
+            // TODO: no web stuff in Service. Service does not know we are a web server
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Subreddit cannot be deleted because it has posts");
         }
         subredditRepository.delete(entity);

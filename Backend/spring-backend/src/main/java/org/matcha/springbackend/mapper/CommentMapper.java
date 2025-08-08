@@ -78,6 +78,7 @@ public class CommentMapper {
         }
         String content = model.getText();
         String author = model.getAccount().getUsername();
+        //String author = "User";
         int upvotes = model.getUpvotes();
         int downvotes = model.getDownvotes();
         int score = upvotes - downvotes;

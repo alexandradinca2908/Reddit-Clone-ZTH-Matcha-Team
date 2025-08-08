@@ -131,7 +131,6 @@ public class CommentService {
 
         commentEntity.setDeleted(true);
         commentEntity.setContent("[deleted]");
-        commentEntity.setAccount(null);
         commentRepository.save(commentEntity);
     }
 }
