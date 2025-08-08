@@ -94,25 +94,22 @@ public class CommentController {
             throw new IllegalArgumentException("Current account does not exist in DB! id: " + currentAccount.getAccountId());
         }
         Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(commentId));
+        String newVoteType = putVoteDto.voteType().toLowerCase();
+        boolean hasPreviousVote = currentVote != null;
 
-        if (putVoteDto.voteType().equals("none")) {
+        if (hasPreviousVote && (newVoteType.equals("none")
+                || newVoteType.equals(currentVote.getVoteType().toString().toLowerCase()))) {  // Double click or "none"
             voteService.deleteVoteByID(currentVote.getVoteID());
-        } else {
-            if (currentVote == null) {
-                currentVote = new Vote(UUID.randomUUID(), UUID.fromString(commentId), VotableType.COMMENT,
-                        stringToVoteType(putVoteDto.voteType()), currentAccount);
-                Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername() + " and comment: " + commentId);
-                voteService.addVote(currentVote);
-            } else {
-                if (putVoteDto.voteType().equals(currentVote.getVoteType().toString().toLowerCase())) {
-                    Logger.info("[VoteController] Vote already exists for account: " + currentAccount.getUsername() + " and comment: " + commentId);
-                    voteService.deleteVoteByID(currentVote.getVoteID());
-                } else {
-                    currentVote.setVoteType(stringToVoteType(putVoteDto.voteType()));
-                    Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + commentId);
-                    voteService.updateVote(currentVote);
-                }
-            }
+            Logger.info("[VoteController] Vote deleted for account: " + currentAccount.getUsername() + " and comment: " + commentId);
+        } else if (!hasPreviousVote && !newVoteType.equals("none")) {  // First time voting
+            Vote newVote = new Vote(UUID.randomUUID(), UUID.fromString(commentId), VotableType.COMMENT,
+                    stringToVoteType(newVoteType), currentAccount);
+            voteService.addVote(newVote);
+            Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername() + " and comment: " + commentId);
+        } else if (hasPreviousVote) {  // Change vote
+            currentVote.setVoteType(stringToVoteType(newVoteType));
+            voteService.updateVote(currentVote);
+            Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + commentId);
         }
 
         Comment comment = commentService.getCommentById(commentId);

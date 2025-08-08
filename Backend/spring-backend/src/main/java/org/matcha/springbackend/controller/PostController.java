@@ -125,8 +125,8 @@ public class PostController {
     }
 
     // TODO
-    @PutMapping("/{id}/vote")
-    public ResponseEntity<DataResponse<AllVotesDto>> votePost(@PathVariable String id,
+    @PutMapping("/{postId}/vote")
+    public ResponseEntity<DataResponse<AllVotesDto>> votePost(@PathVariable String postId,
                                                               @RequestBody PutVoteBodyDto putVoteDto) {
 
         Account currentAccount = accountSession.getCurrentAccount();
@@ -134,38 +134,31 @@ public class PostController {
         if (accountEntity == null) {
             throw new IllegalArgumentException("Current account does not exist in DB! id: " + currentAccount.getAccountId());
         }
-        Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(id));
+        Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(postId));
+        String newVoteType = putVoteDto.voteType().toLowerCase();
+        boolean hasPreviousVote = currentVote != null;
 
-        if (putVoteDto.voteType().equals("none")) {
+        if (hasPreviousVote && (newVoteType.equals("none")
+                || newVoteType.equals(currentVote.getVoteType().toString().toLowerCase()))) {  // Double click or "none"
             voteService.deleteVoteByID(currentVote.getVoteID());
-        } else {
-            //  Adding a vote
-            if (currentVote == null) {
-                Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername() + " and post: " + id);
-                currentVote = new Vote(UUID.randomUUID(), UUID.fromString(id), VotableType.POST,
-                        stringToVoteType(putVoteDto.voteType()), currentAccount);
-
-                voteService.addVote(currentVote);
-
-            //  Updating a vote
-            } else {
-                if (putVoteDto.voteType().equals(currentVote.getVoteType().toString().toLowerCase())) {
-                    Logger.info("[VoteController] Vote already exists for account: " + currentAccount.getUsername() + " and post: " + id);
-                    voteService.deleteVoteByID(currentVote.getVoteID());
-                } else {
-                    currentVote.setVoteType(stringToVoteType(putVoteDto.voteType()));
-                    Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and post: " + id);
-                    voteService.updateVote(currentVote);
-                }
-            }
+            Logger.info("[VoteController] Vote deleted for account: " + currentAccount.getUsername() + " and comment: " + postId);
+        } else if (!hasPreviousVote && !newVoteType.equals("none")) {  // First time voting
+            Vote newVote = new Vote(UUID.randomUUID(), UUID.fromString(postId), VotableType.COMMENT,
+                    stringToVoteType(newVoteType), currentAccount);
+            voteService.addVote(newVote);
+            Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername() + " and comment: " + postId);
+        } else if (hasPreviousVote) {  // Change vote
+            currentVote.setVoteType(stringToVoteType(newVoteType));
+            voteService.updateVote(currentVote);
+            Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + postId);
         }
 
-        Post post = postService.getPostById(id);
+        Post post = postService.getPostById(postId);
         if (post == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found with id: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found with id: " + postId);
         }
 
-        Vote newVoteState = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(id));
+        Vote newVoteState = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(postId));
         String userVote = "none";
         if (newVoteState != null) {
             userVote = newVoteState.getVoteType().toString().toLowerCase();
