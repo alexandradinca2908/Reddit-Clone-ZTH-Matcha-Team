@@ -6,7 +6,13 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "subreddit")
+@Table(
+        name = "subreddit",
+        indexes = {
+                @Index(name = "idx_subreddit_subreddit_id", columnList = "subreddit_id"),
+                @Index(name = "idx_subreddit_name", columnList = "name")
+        }
+)
 public class SubredditEntity {
     @Id
     @GeneratedValue

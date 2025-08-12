@@ -6,7 +6,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "post")
+@Table(
+        name = "post",
+        indexes = {
+                @Index(name = "idx_post_id", columnList = "post_id")
+        }
+)
 public class PostEntity {
     @Id
     @GeneratedValue
