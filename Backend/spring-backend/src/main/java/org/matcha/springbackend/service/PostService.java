@@ -37,7 +37,7 @@ public class PostService {
     public List<Post> getPosts() {
         List<PostEntity> entities = postRepository.findAllByIsDeletedFalseOrderByCreatedAtDesc();
         return entities.stream()
-                .map(postMapper::entityToModel)
+                .map(entity -> postMapper.entityToModel(entity, true))
                 .collect(Collectors.toList());
     }
 
@@ -79,7 +79,7 @@ public class PostService {
         }
 
         //  Retrieve JPA-populated entity as model
-        return postMapper.entityToModel(entity);
+        return postMapper.entityToModel(entity, false);
     }
 
     @Transactional
@@ -106,13 +106,13 @@ public class PostService {
             throw new IllegalArgumentException("Post with ID " + entity.getPostID() + " does not exist.");
         }
 
-        return postMapper.entityToModel(entity);
+        return postMapper.entityToModel(entity, true);
     }
 
     @Transactional
     public Post getPostById(String id) {
         return postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
-                .map(postMapper::entityToModel)
+                .map(entity -> postMapper.entityToModel(entity, true))
                 .orElse(null);
     }
 
@@ -134,7 +134,7 @@ public class PostService {
     public List<Post> getPostsBySubredditName(String subredditName) {
         List<PostEntity> entities = postRepository.findAllBySubreddit_Name(subredditName);
         return entities.stream()
-                .map(postMapper::entityToModel)
+                .map(entity -> postMapper.entityToModel(entity, false))
                 .collect(Collectors.toList());
     }
 }

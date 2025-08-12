@@ -91,7 +91,7 @@ public class PostMapper {
                 score, commentCount, userVote, createdAt, updatedAt);
     }
 
-    public Post entityToModel(PostEntity entity) {
+    public Post entityToModel(PostEntity entity, boolean needsComments) {
         // Map Account
         Account account = accountMapper.entityToModel(entity.getAccount());
 
@@ -123,10 +123,10 @@ public class PostMapper {
         OffsetDateTime updatedAt = entity.getUpdatedAt();
 
         List<Comment> comments = null;
-        if (entity.getComments() != null) {
+        if (needsComments && entity.getComments() != null) {
             comments = entity.getComments().stream().map(this::commentEntityToModel).toList();
         }
-
+        
         return new Post(id, title, content, account, subreddit,
                 upvotes, downvotes, score, commentCount, voteType,
                 photoPath, isDeleted, createdAt, updatedAt, comments);
