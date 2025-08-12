@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -91,32 +92,34 @@ public class PostMapper {
                 score, commentCount, userVote, createdAt, updatedAt);
     }
 
-    public Post entityToModel(PostEntity entity, boolean needsComments) {
+    public Post entityToModel(PostEntity entity) {
+        VoteEntity voteEntity = voteRepository.findByAccountAndVotableId(entity.getAccount(), entity.getPostID())
+                .orElse(null);
+
+        VoteType voteType = voteEntity != null ? voteEntity.getVoteType() : VoteType.NONE;
+
+        return createPostModel(entity, true, voteType);
+    }
+
+    public Post entityToModelWithVoteMap(PostEntity entity, Map<UUID, VoteType> voteMap) {
+        VoteType voteType = voteMap.getOrDefault(entity.getPostID(), VoteType.NONE);
+        return createPostModel(entity, false, voteType);
+    }
+
+    private Post createPostModel(PostEntity entity, boolean needsComments, VoteType voteType) {
         // Map Account
         Account account = accountMapper.entityToModel(entity.getAccount());
 
         // Map Subreddit
         Subreddit subreddit = subredditMapper.entityToModel(entity.getSubreddit());
 
-        // Map Post
         UUID id = entity.getPostID();
         String title = entity.getTitle();
         String content = entity.getContent();
         int upvotes = entity.getUpvotes();
         int downvotes = entity.getDownvotes();
-        int score = entity.getUpvotes() - entity.getDownvotes();
+        int score = upvotes - downvotes;
         int commentCount = entity.getCommentCount();
-
-        VoteEntity voteEntity = voteRepository.findByAccountAndVotableId(entity.getAccount(), entity.getPostID())
-                .orElse(null);
-
-        VoteType voteType;
-        if (voteEntity == null) {
-            voteType = VoteType.NONE;
-        } else {
-            voteType = voteEntity.getVoteType();
-        }
-
         String photoPath = entity.getPhotoPath();
         boolean isDeleted = entity.isDeleted();
         OffsetDateTime createdAt = entity.getCreatedAt();
@@ -124,9 +127,11 @@ public class PostMapper {
 
         List<Comment> comments = null;
         if (needsComments && entity.getComments() != null) {
-            comments = entity.getComments().stream().map(this::commentEntityToModel).toList();
+            comments = entity.getComments().stream()
+                    .map(this::commentEntityToModel)
+                    .toList();
         }
-        
+
         return new Post(id, title, content, account, subreddit,
                 upvotes, downvotes, score, commentCount, voteType,
                 photoPath, isDeleted, createdAt, updatedAt, comments);
