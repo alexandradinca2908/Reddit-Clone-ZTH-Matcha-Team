@@ -1,7 +1,6 @@
 package org.matcha.springbackend.repository;
 
 import org.matcha.springbackend.entities.PostEntity;
-import org.matcha.springbackend.enums.VoteType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,8 +21,15 @@ public interface PostRepository extends JpaRepository<PostEntity, UUID> {
 
     boolean existsByPostIDAndIsDeletedFalse(UUID uuid);
 
-    @Query("SELECT v.voteType FROM VoteEntity v WHERE v.account.accountId = :accountId AND v.votableId = :votableId")
-    Optional<VoteType> findVoteTypeByAccountAndVotableId(@Param("accountId") UUID accountId, @Param("votableId") UUID votableId);
+    @Modifying
+    @Query("UPDATE PostEntity p SET p.commentCount = COALESCE(p.commentCount, 0) + 1 " +
+            "WHERE p.postID = :postId AND p.isDeleted = false")
+    void incrementCommentCount(@Param("postId") UUID postId);
+
+    @Modifying
+    @Query("UPDATE PostEntity p SET p.commentCount = COALESCE(p.commentCount, 0) - 1 " +
+            "WHERE p.postID = :postId AND p.isDeleted = false")
+    void decrementCommentCount(@Param("postId") UUID postId);
 
     @Modifying
     @Query("UPDATE PostEntity p SET p.upvotes = p.upvotes + 1 WHERE p.postID = :postId")

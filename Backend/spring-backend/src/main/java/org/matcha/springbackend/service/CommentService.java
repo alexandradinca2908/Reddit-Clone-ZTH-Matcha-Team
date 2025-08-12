@@ -107,22 +107,7 @@ public class CommentService {
 
         //  Update comment counter for the parent post
         try {
-            PostEntity postEntity = postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(postId)).orElse(null);
-
-            if (postEntity == null) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found when trying to update " +
-                        "comment counter.");
-            }
-
-            int currentCount;
-            if (postEntity.getCommentCount() != null) {
-                currentCount = postEntity.getCommentCount();
-            } else {
-                currentCount = 0;
-            }
-
-            postEntity.setCommentCount(currentCount + 1);
-            postRepository.save(postEntity);
+            postRepository.incrementCommentCount(UUID.fromString(postId));
         } catch (Exception e) {
             Logger.error("[CommentService] Exception at post update: " + e.getMessage());
             throw e;
@@ -155,5 +140,13 @@ public class CommentService {
 
         commentEntity.setDeleted(true);
         commentRepository.save(commentEntity);
+
+        //  Update comment counter for the parent post
+        try {
+            postRepository.decrementCommentCount(commentEntity.getPost().getPostID());
+        } catch (Exception e) {
+            Logger.error("[CommentService] Exception at post update: " + e.getMessage());
+            throw e;
+        }
     }
 }
