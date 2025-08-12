@@ -142,13 +142,14 @@ public class PostController {
 
         Account currentAccount = accountSession.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
-        PostEntity postEntity = postRepository.findById(UUID.fromString(postId)).orElse(null);
 
         if (accountEntity == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account does not exist in DB or was deleted! id: " + currentAccount.getAccountId());
         }
-        if (postEntity == null || postEntity.isDeleted()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post does not exist in DB or was deleted! id: " + postId);
+
+        if (!postRepository.existsByPostIDAndIsDeletedFalse(UUID.fromString(postId))) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Post does not exist in DB or was deleted! id: " + postId);
         }
 
         Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(postId));
