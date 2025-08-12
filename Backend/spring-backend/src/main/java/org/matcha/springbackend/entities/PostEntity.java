@@ -21,10 +21,10 @@ public class PostEntity {
     @JoinColumn(name = "subreddit_id", foreignKey = @ForeignKey(name = "fk_post_subreddit"), nullable = false)
     private SubredditEntity subreddit;
 
-    @Column(name = "title", nullable = false)
+    @Column(nullable = false)
     private String title;
 
-    @Column(name = "content")
+    @Column
     private String content;
 
     @Column(name = "photo_path")
@@ -39,10 +39,10 @@ public class PostEntity {
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
-    @Column(name = "upvotes")
+    @Column
     private Integer upvotes;
 
-    @Column(name = "downvotes")
+    @Column
     private Integer downvotes;
 
     @Column(name = "comment_count")
