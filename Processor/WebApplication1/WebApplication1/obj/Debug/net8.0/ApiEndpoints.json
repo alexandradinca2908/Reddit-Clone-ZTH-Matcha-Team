@@ -1,0 +1,32 @@
+[
+  {
+    "ContainingType": "WebImageProcessor.Controllers.FilterListController",
+    "Method": "GetFilters",
+    "RelativePath": "filters",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebImageProcessor.Controllers.HomeController",
+    "Method": "GetHomePage",
+    "RelativePath": "home",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebImageProcessor.Controllers.TestController",
+    "Method": "GetHomePage",
+    "RelativePath": "test",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
