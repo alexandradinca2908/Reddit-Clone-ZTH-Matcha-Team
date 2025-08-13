@@ -1,5 +1,6 @@
 package org.matcha.springbackend.logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -92,9 +93,9 @@ public class LogManager extends Thread {
 
         //  Create current logger directory
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy_HH-mm-ss");
-        String timestamp = ".\\logging\\" + dtf.format(LocalDateTime.now());
+        String timestamp = "logging" + File.separator + dtf.format(LocalDateTime.now());
 
-        Path logDir = Paths.get(timestamp);
+        Path logDir = Paths.get("logging", dtf.format(LocalDateTime.now()));
 
         try {
             Files.createDirectories(logDir);
@@ -104,12 +105,12 @@ public class LogManager extends Thread {
         }
 
         //  Instantiate loggers
-        ILoggable verboseLogger = new FileLogger(LogLevel.VERBOSE, timestamp + "\\verbose.log");
-        ILoggable debugLogger = new FileLogger(LogLevel.DEBUG, timestamp + "\\debug.log");
-        ILoggable infoLogger = new FileLogger(LogLevel.INFO, timestamp + "\\info.log");
-        ILoggable warningLogger = new FileLogger(LogLevel.WARN,timestamp + "\\warnings.log");
-        ILoggable errorLogger = new FileLogger(LogLevel.ERROR, timestamp + "\\errors.log");
-        ILoggable fatalLogger = new FileLogger(LogLevel.FATAL, timestamp + "\\fatal.log");
+        ILoggable verboseLogger = new FileLogger(LogLevel.VERBOSE, timestamp + File.separator + "verbose.log");
+        ILoggable debugLogger = new FileLogger(LogLevel.DEBUG, timestamp + File.separator + "debug.log");
+        ILoggable infoLogger = new FileLogger(LogLevel.INFO, timestamp + File.separator + "info.log");
+        ILoggable warningLogger = new FileLogger(LogLevel.WARN,timestamp + File.separator + "warnings.log");
+        ILoggable errorLogger = new FileLogger(LogLevel.ERROR, timestamp + File.separator + "errors.log");
+        ILoggable fatalLogger = new FileLogger(LogLevel.FATAL, timestamp + File.separator + "fatal.log");
         LogManager.getInstance().registerMultipleLoggers(verboseLogger, debugLogger, errorLogger,
                 infoLogger, warningLogger, fatalLogger);
     }
