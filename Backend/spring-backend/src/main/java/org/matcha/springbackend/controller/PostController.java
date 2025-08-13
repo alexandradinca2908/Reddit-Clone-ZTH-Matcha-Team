@@ -25,6 +25,7 @@ import org.matcha.springbackend.service.PostService;
 import org.matcha.springbackend.service.VoteService;
 import org.matcha.springbackend.session.AccountSession;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -82,8 +83,8 @@ public class PostController {
         return ResponseEntity.ok(dataResponse);
     }
 
-    @PostMapping
-    public ResponseEntity<DataResponse<PostDto>> createPost(@RequestBody CreatePostBodyDto postDto) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<DataResponse<PostDto>> createPostNoImage(@RequestBody CreatePostBodyDto postDto) {
         Logger.debug("[PostService] addPost called for post title: " + postDto.title());
 
         Post post;
@@ -100,6 +101,12 @@ public class PostController {
         //  Send response
         DataResponse<PostDto> dataResponse = new DataResponse<>(true, postMapper.modelToDto(post));
         return ResponseEntity.ok(dataResponse);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<DataResponse<PostDto>> createPostWithImage(@RequestBody CreatePostBodyDto postDto) {
+        //  TODO: RECEIVE FORM DATA AND SEND TO C#
+        return null;
     }
 
     @PutMapping("{id}")
