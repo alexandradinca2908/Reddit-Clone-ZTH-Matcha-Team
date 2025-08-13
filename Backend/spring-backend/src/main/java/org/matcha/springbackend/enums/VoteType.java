@@ -14,6 +14,10 @@ public enum VoteType {
             return VoteType.DOWN;
         }
 
+        if (string.equalsIgnoreCase("NONE")) {
+            return VoteType.NONE;
+        }
+
         return null;
     }
 }

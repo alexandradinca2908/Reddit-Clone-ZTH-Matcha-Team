@@ -50,7 +50,7 @@ public class VoteService {
     public void addVoteForPost(String postId, VoteType newVoteType, Account currentAccount) {
         UUID postUUID = UUID.fromString(postId);
 
-        Vote vote = new Vote(null, postUUID, VotableType.COMMENT,
+        Vote vote = new Vote(null, postUUID, VotableType.POST,
                 newVoteType, currentAccount);
 
         VoteEntity entity = voteMapper.modelToEntity(vote);
@@ -132,6 +132,10 @@ public class VoteService {
             postRepository.decrementUpvotesAndIncrementDownvotes(postId);
         } else if (oldVoteType == VoteType.DOWN && newVoteType == VoteType.UP) {
             postRepository.decrementDownvotesAndIncrementUpvotes(postId);
+        } else if (oldVoteType ==  VoteType.UP && newVoteType == VoteType.UP) {
+            postRepository.decrementUpvotes(postId);
+        } else if (oldVoteType == VoteType.DOWN && newVoteType == VoteType.DOWN) {
+            postRepository.decrementDownvotes(postId);
         }
     }
 
@@ -151,6 +155,10 @@ public class VoteService {
             commentRepository.decrementUpvotesAndIncrementDownvotes(commentId);
         } else if (oldVoteType == VoteType.DOWN && newVoteType == VoteType.UP) {
             commentRepository.decrementDownvotesAndIncrementUpvotes(commentId);
+        } else if (oldVoteType ==  VoteType.UP && newVoteType == VoteType.UP) {
+            commentRepository.decrementUpvotes(commentId);
+        } else if (oldVoteType == VoteType.DOWN && newVoteType == VoteType.DOWN) {
+            commentRepository.decrementDownvotes(commentId);
         }
     }
 

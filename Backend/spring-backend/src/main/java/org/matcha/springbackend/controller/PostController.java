@@ -155,7 +155,7 @@ public class PostController {
         VoteType newVoteType = stringToVoteType(putVoteDto.voteType());
         boolean hasPreviousVote = currentVote != null;
 
-        // Double click or "none"
+        // "None" or double-click
         if (hasPreviousVote && (VoteType.NONE.equals(newVoteType)
                 || currentVote.getVoteType().equals(newVoteType))) {
             voteService.deleteVoteForPost(currentVote.getVoteID());
