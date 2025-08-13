@@ -104,7 +104,7 @@ public class PostController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<DataResponse<PostDto>> createPostWithImage(@RequestBody CreatePostBodyDto postDto) {
+    public ResponseEntity<DataResponse<PostDto>> createPostWithImage(@ModelAttribute CreatePostBodyDto postDto) {
         //  TODO: RECEIVE FORM DATA AND SEND TO C#
         return null;
     }
