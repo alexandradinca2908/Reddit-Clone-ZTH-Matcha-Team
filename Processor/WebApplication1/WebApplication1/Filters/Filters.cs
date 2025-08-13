@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebImageProcessor.Commons;
 using WebImageProcessor.Filters;
+using WebImageProcessor.Models;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace WebImageProcessor.Filters

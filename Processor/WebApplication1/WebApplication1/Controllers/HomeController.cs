@@ -7,13 +7,6 @@ namespace WebImageProcessor.Controllers;
 [Route("/home")]
 public class HomeController : ControllerBase
 {
-    private readonly TestApiService _apiService;
-
-    public HomeController(TestApiService apiService)
-    {
-        _apiService = apiService;
-    }
-
     [HttpGet]
     public IActionResult GetHomePage()
     {
@@ -24,7 +17,7 @@ public class HomeController : ControllerBase
         }
         catch (HttpRequestException e)
         {
-            return StatusCode(500, $"Eroare la apelarea GET /home: {e.Message}");
+            return StatusCode(500, e.Message);
         }
     }
 }
