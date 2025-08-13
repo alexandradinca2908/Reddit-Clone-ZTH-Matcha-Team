@@ -16,7 +16,7 @@ import org.matcha.springbackend.repository.VoteRepository;
 import org.matcha.springbackend.session.AccountSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.matcha.springbackend.loggerobject.Logger;
+import org.matcha.springbackend.logger.Logger;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.OffsetDateTime;

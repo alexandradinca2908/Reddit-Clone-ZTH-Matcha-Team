@@ -1,4 +1,4 @@
-package org.matcha.springbackend.loggerobject;
+package org.matcha.springbackend.logger;
 
 import java.io.FileWriter;
 import java.io.IOException;

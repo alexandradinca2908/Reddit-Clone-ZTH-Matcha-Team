@@ -1,20 +1,16 @@
 package org.matcha.springbackend.controller;
 
 import org.matcha.springbackend.dto.comment.CommentDto;
-import org.matcha.springbackend.dto.comment.requestbody.AddCommentBodyDTO;
 import org.matcha.springbackend.dto.comment.requestbody.EditCommentBodyDTO;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
-import org.matcha.springbackend.enums.VotableType;
 import org.matcha.springbackend.enums.VoteType;
-import org.matcha.springbackend.loggerobject.Logger;
+import org.matcha.springbackend.logger.Logger;
 import org.matcha.springbackend.mapper.CommentMapper;
-import org.matcha.springbackend.mapper.VoteMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.model.Vote;
-import org.matcha.springbackend.repository.CommentRepository;
 import org.matcha.springbackend.response.DataResponse;
 import org.matcha.springbackend.response.MessageResponse;
 import org.matcha.springbackend.service.AccountService;
@@ -26,7 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.UUID;
 
 import static org.matcha.springbackend.enums.VoteType.stringToVoteType;
@@ -74,20 +69,20 @@ public class CommentController {
                 || currentVote.getVoteType().equals(newVoteType))) {
             voteService.deleteVoteForComment(currentVote.getVoteID());
 
-            Logger.info("[VoteController] Vote deleted for account: " + currentAccount.getUsername() + " and comment: " + commentId);
+            Logger.info("[CommentController] Vote deleted for account: " + currentAccount.getUsername() + " and comment: " + commentId);
 
         // First time voting
         } else if (!hasPreviousVote && !VoteType.NONE.equals(newVoteType)) {
             voteService.addVoteForComment(commentId, newVoteType, currentAccount);
 
-            Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername() + " and comment: " + commentId);
+            Logger.info("[CommentController] Vote added for account: " + currentAccount.getUsername() + " and comment: " + commentId);
 
         // Change vote
         } else if (hasPreviousVote) {
             currentVote.setVoteType(newVoteType);
             voteService.updateVoteForComment(currentVote);
 
-            Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + commentId);
+            Logger.info("[CommentController] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + commentId);
         }
 
         AllVotesDto allVotesDto = voteService.getUpdatedComment(commentId, accountEntity);

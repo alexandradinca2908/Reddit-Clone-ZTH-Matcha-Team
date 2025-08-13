@@ -1,4 +1,4 @@
-package org.matcha.springbackend.loggerobject;
+package org.matcha.springbackend.logger;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +10,8 @@ public class Logger {
 
     private static void log(LogLevel level, String message) {
         String composedText = formatDate() + " [" + level.toString() + "] " + message;
-        LogManager.getInstance().log(level, composedText);
+        LogManager.getInstance().addMessage(new Message(composedText, level));
+        LogManager.getInstance().availableMessages.release();
     }
 
     public static void verbose(String message)  {

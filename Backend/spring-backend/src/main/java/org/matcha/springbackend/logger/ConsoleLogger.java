@@ -1,4 +1,4 @@
-package org.matcha.springbackend.loggerobject;
+package org.matcha.springbackend.logger;
 
 public class ConsoleLogger implements ILoggable {
     LogLevel level;

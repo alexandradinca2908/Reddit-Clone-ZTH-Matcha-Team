@@ -1,7 +1,7 @@
 package org.matcha.springbackend.service;
 
 import org.matcha.springbackend.entities.AccountEntity;
-import org.matcha.springbackend.loggerobject.Logger;
+import org.matcha.springbackend.logger.Logger;
 import org.matcha.springbackend.mapper.AccountMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.repository.AccountRepository;
