@@ -1,5 +1,51 @@
 [
   {
+    "ContainingType": "WebImageProcessor.Controllers.ApplyFilterController",
+    "Method": "ApplyFilter",
+    "RelativePath": "filter",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ContentType",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ContentDisposition",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Headers",
+        "Type": "Microsoft.AspNetCore.Http.IHeaderDictionary",
+        "IsRequired": false
+      },
+      {
+        "Name": "Length",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FileName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "filter",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WebImageProcessor.Controllers.FilterListController",
     "Method": "GetFilters",
     "RelativePath": "filters",
@@ -13,16 +59,6 @@
     "ContainingType": "WebImageProcessor.Controllers.HomeController",
     "Method": "GetHomePage",
     "RelativePath": "home",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WebImageProcessor.Controllers.TestController",
-    "Method": "GetHomePage",
-    "RelativePath": "test",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

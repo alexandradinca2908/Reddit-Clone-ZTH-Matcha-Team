@@ -24,7 +24,7 @@ namespace WebImageProcessor.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Eroare la obținerea filtrelor: {ex.Message}");
+                return StatusCode(500, $"Error while obtaining the filter names: {ex.Message}");
             }
         }
     }
