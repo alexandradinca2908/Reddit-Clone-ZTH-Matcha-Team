@@ -7,7 +7,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "comment")
+@Table(
+        name = "comment",
+        indexes = {
+                @Index(name = "idx_comment_id", columnList = "comment_id"),
+                @Index(name = "idx_comment_post_id", columnList = "post_id")
+        }
+)
 public class CommentEntity {
     @Id
     @GeneratedValue

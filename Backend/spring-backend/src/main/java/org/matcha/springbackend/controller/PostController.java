@@ -8,7 +8,6 @@ import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
-import org.matcha.springbackend.entities.PostEntity;
 import org.matcha.springbackend.enums.VoteType;
 import org.matcha.springbackend.loggerobject.Logger;
 import org.matcha.springbackend.mapper.CommentMapper;
@@ -142,13 +141,14 @@ public class PostController {
 
         Account currentAccount = accountSession.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
-        PostEntity postEntity = postRepository.findById(UUID.fromString(postId)).orElse(null);
 
         if (accountEntity == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account does not exist in DB or was deleted! id: " + currentAccount.getAccountId());
         }
-        if (postEntity == null || postEntity.isDeleted()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post does not exist in DB or was deleted! id: " + postId);
+
+        if (!postRepository.existsByPostIDAndIsDeletedFalse(UUID.fromString(postId))) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Post does not exist in DB or was deleted! id: " + postId);
         }
 
         Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(postId));
