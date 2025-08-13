@@ -93,9 +93,9 @@ public class VoteService {
         voteRepository.deleteByVoteId(id);
 
         if (VoteType.UP.equals(vote.getVoteType())) {
-            postRepository.decrementUpvotes(id);
+            postRepository.decrementUpvotes(vote.getVotableID());
         } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-            postRepository.decrementDownvotes(id);
+            postRepository.decrementDownvotes(vote.getVotableID());
         }
     }
 
@@ -108,9 +108,9 @@ public class VoteService {
         voteRepository.deleteByVoteId(id);
 
         if (VoteType.UP.equals(vote.getVoteType())) {
-            commentRepository.decrementUpvotes(id);
+            commentRepository.decrementUpvotes(vote.getVotableID());
         } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-            commentRepository.decrementDownvotes(id);
+            commentRepository.decrementDownvotes(vote.getVotableID());
         }
     }
 
