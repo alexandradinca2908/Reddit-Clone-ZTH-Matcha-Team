@@ -158,7 +158,7 @@ public class PostService {
     public void deletePost(String id) {
         PostEntity postEntity = postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found with id: " + id));
-        //TODO: Account check logic goes here
+        //  TODO: Account check logic goes here
         postEntity.setDeleted(true);
 
         postRepository.save(postEntity);
