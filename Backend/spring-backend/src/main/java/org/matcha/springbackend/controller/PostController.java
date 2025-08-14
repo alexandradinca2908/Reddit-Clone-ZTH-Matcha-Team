@@ -42,12 +42,12 @@ public class PostController {
     private final VoteService voteService;
     private final CommentService commentService;
     private final CommentMapper commentMapper;
-    private final PostRepository postRepository;
     private final ImageService imageService ;
 
     public PostController(AccountService accountService, AccountSession accountSession,
                           PostService postService, PostMapper postMapper,
-                          VoteService voteService, CommentService commentService, CommentMapper commentMapper, PostRepository postRepository, ImageService imageService) {
+                          CommentService commentService, CommentMapper commentMapper,
+                          VoteService voteService, ImageService imageService) {
         this.accountService = accountService;
         this.accountSession = accountSession;
         this.postService = postService;
@@ -55,7 +55,6 @@ public class PostController {
         this.voteService = voteService;
         this.commentService = commentService;
         this.commentMapper = commentMapper;
-        this.postRepository = postRepository;
         this.imageService = imageService;
     }
 
@@ -150,8 +149,6 @@ public class PostController {
     public ResponseEntity<MessageResponse> deletePost(@PathVariable String id) {
         try {
             postService.deletePost(id);
-        } catch (ResponseStatusException e) {
-            throw e;
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
@@ -164,47 +161,17 @@ public class PostController {
     @PutMapping("/{postId}/vote")
     public ResponseEntity<DataResponse<AllVotesDto>> votePost(@PathVariable String postId,
                                                               @RequestBody PutVoteBodyDto putVoteDto) {
-
+        //  Get current account data
         Account currentAccount = accountSession.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
 
         if (accountEntity == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account does not exist in DB or was deleted! id: " + currentAccount.getAccountId());
-        }
-
-        if (!postRepository.existsByPostIDAndIsDeletedFalse(UUID.fromString(postId))) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Post does not exist in DB or was deleted! id: " + postId);
+                    "Account does not exist in DB or was deleted! id: " + currentAccount.getAccountId());
         }
 
-        Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(postId));
-        VoteType newVoteType = stringToVoteType(putVoteDto.voteType());
-        boolean hasPreviousVote = currentVote != null;
-
-        // "None" or double-click
-        if (hasPreviousVote && (VoteType.NONE.equals(newVoteType)
-                || currentVote.getVoteType().equals(newVoteType))) {
-            voteService.deleteVoteForPost(currentVote.getVoteID());
-
-            Logger.info("[PostController] Vote deleted for account: " + currentAccount.getUsername()
-                    + " and post: " + postId);
-
-        // First time voting
-        } else if (!hasPreviousVote && !VoteType.NONE.equals(newVoteType)) {
-            voteService.addVoteForPost(postId, newVoteType, currentAccount);
-
-            Logger.info("[PostController] Vote added for account: " + currentAccount.getUsername()
-                    + " and post: " + postId);
-
-        //  Change vote
-        } else if (hasPreviousVote) {
-            currentVote.setVoteType(newVoteType);
-            voteService.updateVoteForPost(currentVote);
-
-            Logger.info("[PostController] Vote updated for account: " + currentAccount.getUsername()
-                    + " and post: " + postId);
-        }
-
+        //  Vote post
+        voteService.votePost(postId, putVoteDto, currentAccount, accountEntity);
         AllVotesDto allVotesDto = voteService.getUpdatedPost(postId, accountEntity);
 
         DataResponse<AllVotesDto> dataResponse = new DataResponse<>(true, allVotesDto);
@@ -213,11 +180,6 @@ public class PostController {
 
     @GetMapping("/{postId}/comments")
     public ResponseEntity<DataResponse<List<CommentDto>>> getCommentsFromPost(@PathVariable String postId) {
-        Post post = postService.getPostById(postId);
-        if (post == null || post.isDeleted()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Post with UUID %s not found", postId));
-        }
         //  Map Comments to CommentDTOs
         List<CommentDto> commentDtos = commentService.getCommentsByPostId(UUID.fromString(postId))
                 .stream()
@@ -231,17 +193,10 @@ public class PostController {
     @PostMapping("/{postId}/comments")
     public ResponseEntity<DataResponse<CommentDto>> addCommentToPost(@PathVariable String postId,
                                                                      @RequestBody AddCommentBodyDTO commentDTO) {
-        Post post = postService.getPostById(postId);
-        if (post == null || post.isDeleted()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Post with UUID %s not found", postId));
-        }
         Comment comment;
         try {
             comment = commentService.addComment(postId, commentDTO);
-        } catch (ResponseStatusException e) {
-            throw e;
-        }  catch (Exception e) {
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
 
