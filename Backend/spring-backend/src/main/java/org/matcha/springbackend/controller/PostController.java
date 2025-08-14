@@ -43,11 +43,14 @@ public class PostController {
     private final CommentService commentService;
     private final CommentMapper commentMapper;
     private final PostRepository postRepository;
-    private final ImageService imageService ;
+    private final ImageService imageService;
+    private final S3Service s3Service;
 
     public PostController(AccountService accountService, AccountSession accountSession,
                           PostService postService, PostMapper postMapper,
-                          VoteService voteService, CommentService commentService, CommentMapper commentMapper, PostRepository postRepository, ImageService imageService) {
+                          VoteService voteService, CommentService commentService,
+                          CommentMapper commentMapper, PostRepository postRepository,
+                          ImageService imageService, S3Service s3Service) {
         this.accountService = accountService;
         this.accountSession = accountSession;
         this.postService = postService;
@@ -57,6 +60,7 @@ public class PostController {
         this.commentMapper = commentMapper;
         this.postRepository = postRepository;
         this.imageService = imageService;
+        this.s3Service = s3Service;
     }
 
     @GetMapping
@@ -104,14 +108,18 @@ public class PostController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<DataResponse<PostDto>> createPostWithImage(@ModelAttribute CreatePostBodyDto postDto) {
-        //  Send image to image processor
         Logger.info("[PostService] Sending image to image processor for post with title: " + postDto.title());
         byte[] processedImage = imageService.applyFilterToImage(postDto.image(), postDto.filter());
 
-        //  TODO Save image on disk
-        String imageUrl = "processedImage";
+        String originalFilename = postDto.image().getOriginalFilename();
+        String fileExtension = "";
+        if (originalFilename != null && originalFilename.contains(".")) {
+            fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        }
+        String uniqueFileName = UUID.randomUUID() + fileExtension;
+        String imageUrl = s3Service.uploadFile(processedImage, uniqueFileName, postDto.image().getContentType());
+        Logger.info("Image uploaded to S3.");
 
-        Logger.debug("[PostService] addPostWithImage called for post title: " + postDto.title());
         Post post;
         try {
             post = postService.addPostWithImage(postDto, imageUrl);
@@ -123,7 +131,6 @@ public class PostController {
 
         Logger.debug("New post DTO looks like this:\n" + postMapper.modelToDto(post).toString());
 
-        //  Send response
         DataResponse<PostDto> dataResponse = new DataResponse<>(true, postMapper.modelToDto(post));
         return ResponseEntity.ok(dataResponse);
     }
