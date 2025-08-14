@@ -85,11 +85,11 @@ public class PostController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DataResponse<PostDto>> createPostNoImage(@RequestBody CreatePostBodyDto postDto) {
-        Logger.debug("[PostService] addPost called for post title: " + postDto.title());
+        Logger.debug("[PostService] addPostNoImage called for post title: " + postDto.title());
 
         Post post;
         try {
-            post = postService.addPost(postDto);
+            post = postService.addPostNoImage(postDto);
         } catch (ResponseStatusException e) {
             throw e;
         }  catch (Exception e) {
@@ -103,10 +103,27 @@ public class PostController {
         return ResponseEntity.ok(dataResponse);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<DataResponse<PostDto>> createPostWithImage(@ModelAttribute CreatePostBodyDto postDto) {
-        //  TODO: RECEIVE FORM DATA AND SEND TO C#
-        return null;
+        Logger.debug("[PostService] addPostWithImage called for post title: " + postDto.title());
+
+        //  TODO: Send to kestrel
+        Post post;
+        String imageUrl = "";  //  TODO
+
+        try {
+            post = postService.addPostWithImage(postDto, imageUrl);
+        } catch (ResponseStatusException e) {
+            throw e;
+        }  catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+
+        Logger.debug("New post DTO looks like this:\n" + postMapper.modelToDto(post).toString());
+
+        //  Send response
+        DataResponse<PostDto> dataResponse = new DataResponse<>(true, postMapper.modelToDto(post));
+        return ResponseEntity.ok(dataResponse);
     }
 
     @PutMapping("{id}")
