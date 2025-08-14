@@ -4,6 +4,7 @@ public record PostDto(
         String id,
         String title,
         String content,
+        String imageUrl,
         String author,
         String subreddit,
         Integer upvotes,

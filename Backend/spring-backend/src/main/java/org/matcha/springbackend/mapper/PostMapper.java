@@ -47,6 +47,7 @@ public class PostMapper {
         entity.setTitle(post.getTitle());
         entity.setContent(post.getContent());
         entity.setPhotoPath(post.getPhotoPath());
+        entity.setPhotoPath(post.getPhotoPath());
         entity.setDeleted(post.isDeleted());
         entity.setCreatedAt(post.getCreatedAt());
         entity.setUpdatedAt(post.getUpdatedAt());
@@ -78,6 +79,7 @@ public class PostMapper {
         String id = model.getPostID().toString();
         String title = model.getTitle();
         String content = model.getContent();
+        String imageUrl = model.getPhotoPath();
         String author = model.getAccount().getUsername();
         String subreddit = model.getSubreddit().getDisplayName();
         Integer upvotes = model.getUpvotes();
@@ -88,7 +90,7 @@ public class PostMapper {
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
 
-        return new PostDto(id, title, content, author, subreddit, upvotes, downvotes,
+        return new PostDto(id, title, content, imageUrl, author, subreddit, upvotes, downvotes,
                 score, commentCount, userVote, createdAt, updatedAt);
     }
 
