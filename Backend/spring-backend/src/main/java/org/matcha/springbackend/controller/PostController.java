@@ -88,9 +88,7 @@ public class PostController {
         Post post;
         try {
             post = postService.addPostNoImage(postDto);
-        } catch (ResponseStatusException e) {
-            throw e;
-        }  catch (Exception e) {
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
 
@@ -114,9 +112,7 @@ public class PostController {
         Post post;
         try {
             post = postService.addPostWithImage(postDto, imageUrl);
-        } catch (ResponseStatusException e) {
-            throw e;
-        }  catch (Exception e) {
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
 
