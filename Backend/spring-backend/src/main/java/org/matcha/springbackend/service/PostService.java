@@ -72,7 +72,15 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-    public Post addPost(CreatePostBodyDto postDto) {
+    public Post addPostNoImage(CreatePostBodyDto postDto) {
+        return addPost(postDto, null);
+    }
+
+    public Post addPostWithImage(CreatePostBodyDto postDto, String imageUrl) {
+        return addPost(postDto, imageUrl);
+    }
+
+    private Post addPost(CreatePostBodyDto postDto, String imageUrl) {
         Account account = accountService.findByUsername(postDto.author());
         if (account == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
@@ -87,8 +95,8 @@ public class PostService {
 
         //  Create and add post
         Post post = new Post(null, postDto.title(), postDto.content(), account, subreddit,
-                0, 0, 0, 0,  null, "", false,
-                createdAt, createdAt, new ArrayList<>());
+                0, 0, 0, 0, null, imageUrl != null ? imageUrl : "",
+                false, createdAt, createdAt, new ArrayList<>());
         PostEntity entity = postMapper.modelToEntity(post);
 
         Logger.debug("[PostService] PostEntity mapped: " + entity);
