@@ -104,12 +104,15 @@ public class PostController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<DataResponse<PostDto>> createPostWithImage(@ModelAttribute CreatePostBodyDto postDto) {
-        Logger.debug("[PostService] addPostWithImage called for post title: " + postDto.title());
+        //  Send image to image processor
+        Logger.info("[PostService] Sending image to image processor for post with title: " + postDto.title());
         byte[] processedImage = imageService.applyFilterToImage(postDto.image(), postDto.filter());
 
-        Post post;
-        String imageUrl = "processedImage";  //  TODO
+        //  TODO Save image on disk
+        String imageUrl = "processedImage";
 
+        Logger.debug("[PostService] addPostWithImage called for post title: " + postDto.title());
+        Post post;
         try {
             post = postService.addPostWithImage(postDto, imageUrl);
         } catch (ResponseStatusException e) {
