@@ -48,43 +48,17 @@ public class CommentController {
     @PutMapping("/{commentId}/vote")
     public ResponseEntity<DataResponse<AllVotesDto>> voteComment(@PathVariable String commentId,
                                                                  @RequestBody PutVoteBodyDto putVoteDto) {
-        Comment comment = commentService.getCommentById(commentId);
+        //  Get current account data
         Account currentAccount = accountSession.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
 
         if (accountEntity == null) {
-            throw new IllegalArgumentException("Current account does not exist in DB! id: " + currentAccount.getAccountId());
-        }
-        if (comment == null || comment.isDeleted()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Comment with UUID %s not found", commentId));
+            throw new IllegalArgumentException("Current account does not exist in DB! id: "
+                    + currentAccount.getAccountId());
         }
 
-        Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(commentId));
-        VoteType newVoteType = stringToVoteType(putVoteDto.voteType());
-        boolean hasPreviousVote = currentVote != null;
-
-        // Double click or "none"
-        if (hasPreviousVote && (VoteType.NONE.equals(newVoteType)
-                || currentVote.getVoteType().equals(newVoteType))) {
-            voteService.deleteVoteForComment(currentVote.getVoteID());
-
-            Logger.info("[CommentController] Vote deleted for account: " + currentAccount.getUsername() + " and comment: " + commentId);
-
-        // First time voting
-        } else if (!hasPreviousVote && !VoteType.NONE.equals(newVoteType)) {
-            voteService.addVoteForComment(commentId, newVoteType, currentAccount);
-
-            Logger.info("[CommentController] Vote added for account: " + currentAccount.getUsername() + " and comment: " + commentId);
-
-        // Change vote
-        } else if (hasPreviousVote) {
-            currentVote.setVoteType(newVoteType);
-            voteService.updateVoteForComment(currentVote);
-
-            Logger.info("[CommentController] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + commentId);
-        }
-
+        //  Vote comment
+        voteService.voteComment(commentId, putVoteDto, currentAccount, accountEntity);
         AllVotesDto allVotesDto = voteService.getUpdatedComment(commentId, accountEntity);
 
         DataResponse<AllVotesDto> dataResponse = new DataResponse<>(true, allVotesDto);
@@ -99,6 +73,7 @@ public class CommentController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.format("Comment with UUID %s not found", commentId));
         }
+
         try {
             comment = commentService.updateComment(commentId, contentDto.content());
             Logger.info("[CommentController] Comment updated successfully for id: " + commentId);
