@@ -72,52 +72,6 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-//    public Post addPostNoImage(CreatePostBodyDto postDto) {
-//        Account account = accountService.findByUsername(postDto.author());
-//        if (account == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
-//        }
-//
-//        Subreddit subreddit = subredditService.findByName(postDto.subreddit());
-//        if  (subreddit == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Subreddit not found");
-//        }
-//
-//        OffsetDateTime createdAt = OffsetDateTime.now();
-//
-//        //  Create and add post
-//        Post post = new Post(null, postDto.title(), postDto.content(), account, subreddit,
-//                0, 0, 0, 0,  null, "", false,
-//                createdAt, createdAt, new ArrayList<>());
-//        PostEntity entity = postMapper.modelToEntity(post);
-//
-//        Logger.debug("[PostService] PostEntity mapped: " + entity);
-//
-//        if (entity.getAccount() != null) {
-//            Logger.debug("[PostService] AccountEntity ID: " + entity.getAccount().getAccountId());
-//        }
-//
-//        if (entity.getSubreddit() != null) {
-//            Logger.debug("[PostService] SubredditEntity ID: " + entity.getSubreddit().getSubredditId());
-//        }
-//
-//        try {
-//            postRepository.save(entity);
-//            Logger.info("[PostService] Post saved with title: " + post.getTitle());
-//        } catch (Exception e) {
-//            Logger.error("[PostService] Exception at save: " + e.getMessage());
-//            throw e;
-//        }
-//
-//        //  Retrieve JPA-populated entity as model
-//        return postMapper.entityToModel(entity);
-//    }
-//
-//    public Post addPostWithImage(CreatePostBodyDto postDto, String imageUrl) {
-//        //  TODO
-//        return null;
-//    }
-
     public Post addPostNoImage(CreatePostBodyDto postDto) {
         return addPost(postDto, null);
     }
