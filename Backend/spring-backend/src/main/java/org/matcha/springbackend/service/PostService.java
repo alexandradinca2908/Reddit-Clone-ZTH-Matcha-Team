@@ -3,20 +3,26 @@ package org.matcha.springbackend.service;
 import jakarta.transaction.Transactional;
 import org.matcha.springbackend.dto.post.requestbody.CreatePostBodyDto;
 import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
+import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.PostEntity;
+import org.matcha.springbackend.entities.VoteEntity;
+import org.matcha.springbackend.enums.VoteType;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.model.Subreddit;
 import org.matcha.springbackend.repository.PostRepository;
+import org.matcha.springbackend.repository.VoteRepository;
+import org.matcha.springbackend.session.AccountSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.matcha.springbackend.loggerobject.Logger;
+import org.matcha.springbackend.logger.Logger;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -26,22 +32,101 @@ public class PostService {
     private final PostRepository postRepository;
     private final AccountService accountService;
     private final SubredditService subredditService;
+    private final VoteRepository voteRepository;
+    private final AccountSession accountSession;
 
-    public PostService(PostMapper postMapper, PostRepository postRepository, AccountService accountService, SubredditService subredditService) {
+    public PostService(PostMapper postMapper, PostRepository postRepository, AccountService accountService, SubredditService subredditService, VoteRepository voteRepository, AccountSession accountSession) {
         this.postMapper = postMapper;
         this.postRepository = postRepository;
         this.accountService = accountService;
         this.subredditService = subredditService;
+        this.voteRepository = voteRepository;
+        this.accountSession = accountSession;
     }
 
     public List<Post> getPosts() {
+        //  Get all posts from DB
         List<PostEntity> entities = postRepository.findAllByIsDeletedFalseOrderByCreatedAtDesc();
+
+        //  Take all post IDs
+        List<UUID> postIds = entities.stream()
+                .map(PostEntity::getPostID)
+                .collect(Collectors.toList());
+
+        //  Get all votes of current account
+        Account currentAccount = accountSession.getCurrentAccount();
+        AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
+        List<VoteEntity> userVotes = voteRepository.findByAccountAndVotableIdIn(
+                accountEntity, postIds).orElse(new ArrayList<>());
+
+        //  Create a vote map with the votes for O(1) vote lookup
+        Map<UUID, VoteType> voteMap = userVotes.stream()
+                .collect(Collectors.toMap(
+                        VoteEntity::getVotableId,
+                        VoteEntity::getVoteType
+                ));
+
+        //  Convert entities to models using the vote map
         return entities.stream()
-                .map(postMapper::entityToModel)
+                .map(entity -> postMapper.entityToModelWithVoteMap(entity, voteMap))
                 .collect(Collectors.toList());
     }
 
-    public Post addPost(CreatePostBodyDto postDto) {
+//    public Post addPostNoImage(CreatePostBodyDto postDto) {
+//        Account account = accountService.findByUsername(postDto.author());
+//        if (account == null) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
+//        }
+//
+//        Subreddit subreddit = subredditService.findByName(postDto.subreddit());
+//        if  (subreddit == null) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Subreddit not found");
+//        }
+//
+//        OffsetDateTime createdAt = OffsetDateTime.now();
+//
+//        //  Create and add post
+//        Post post = new Post(null, postDto.title(), postDto.content(), account, subreddit,
+//                0, 0, 0, 0,  null, "", false,
+//                createdAt, createdAt, new ArrayList<>());
+//        PostEntity entity = postMapper.modelToEntity(post);
+//
+//        Logger.debug("[PostService] PostEntity mapped: " + entity);
+//
+//        if (entity.getAccount() != null) {
+//            Logger.debug("[PostService] AccountEntity ID: " + entity.getAccount().getAccountId());
+//        }
+//
+//        if (entity.getSubreddit() != null) {
+//            Logger.debug("[PostService] SubredditEntity ID: " + entity.getSubreddit().getSubredditId());
+//        }
+//
+//        try {
+//            postRepository.save(entity);
+//            Logger.info("[PostService] Post saved with title: " + post.getTitle());
+//        } catch (Exception e) {
+//            Logger.error("[PostService] Exception at save: " + e.getMessage());
+//            throw e;
+//        }
+//
+//        //  Retrieve JPA-populated entity as model
+//        return postMapper.entityToModel(entity);
+//    }
+//
+//    public Post addPostWithImage(CreatePostBodyDto postDto, String imageUrl) {
+//        //  TODO
+//        return null;
+//    }
+
+    public Post addPostNoImage(CreatePostBodyDto postDto) {
+        return addPost(postDto, null);
+    }
+
+    public Post addPostWithImage(CreatePostBodyDto postDto, String imageUrl) {
+        return addPost(postDto, imageUrl);
+    }
+
+    private Post addPost(CreatePostBodyDto postDto, String imageUrl) {
         Account account = accountService.findByUsername(postDto.author());
         if (account == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
@@ -56,8 +141,8 @@ public class PostService {
 
         //  Create and add post
         Post post = new Post(null, postDto.title(), postDto.content(), account, subreddit,
-                0, 0, 0, 0,  null, "", false,
-                createdAt, createdAt, new ArrayList<>());
+                0, 0, 0, 0, null, imageUrl != null ? imageUrl : "",
+                false, createdAt, createdAt, new ArrayList<>());
         PostEntity entity = postMapper.modelToEntity(post);
 
         Logger.debug("[PostService] PostEntity mapped: " + entity);
@@ -109,7 +194,6 @@ public class PostService {
         return postMapper.entityToModel(entity);
     }
 
-    @Transactional
     public Post getPostById(String id) {
         return postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
                 .map(postMapper::entityToModel)

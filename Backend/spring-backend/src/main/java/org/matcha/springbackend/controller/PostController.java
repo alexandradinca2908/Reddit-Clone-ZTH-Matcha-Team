@@ -8,9 +8,8 @@ import org.matcha.springbackend.dto.post.requestbody.UpdatePostBodyDto;
 import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.dto.vote.requestbody.PutVoteBodyDto;
 import org.matcha.springbackend.entities.AccountEntity;
-import org.matcha.springbackend.entities.PostEntity;
 import org.matcha.springbackend.enums.VoteType;
-import org.matcha.springbackend.loggerobject.Logger;
+import org.matcha.springbackend.logger.Logger;
 import org.matcha.springbackend.mapper.CommentMapper;
 import org.matcha.springbackend.mapper.PostMapper;
 import org.matcha.springbackend.model.Account;
@@ -26,6 +25,7 @@ import org.matcha.springbackend.service.PostService;
 import org.matcha.springbackend.service.VoteService;
 import org.matcha.springbackend.session.AccountSession;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -83,13 +83,36 @@ public class PostController {
         return ResponseEntity.ok(dataResponse);
     }
 
-    @PostMapping
-    public ResponseEntity<DataResponse<PostDto>> createPost(@RequestBody CreatePostBodyDto postDto) {
-        Logger.debug("[PostService] addPost called for post title: " + postDto.title());
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<DataResponse<PostDto>> createPostNoImage(@RequestBody CreatePostBodyDto postDto) {
+        Logger.debug("[PostService] addPostNoImage called for post title: " + postDto.title());
 
         Post post;
         try {
-            post = postService.addPost(postDto);
+            post = postService.addPostNoImage(postDto);
+        } catch (ResponseStatusException e) {
+            throw e;
+        }  catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+
+        Logger.debug("New post DTO looks like this:\n" + postMapper.modelToDto(post).toString());
+
+        //  Send response
+        DataResponse<PostDto> dataResponse = new DataResponse<>(true, postMapper.modelToDto(post));
+        return ResponseEntity.ok(dataResponse);
+    }
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<DataResponse<PostDto>> createPostWithImage(@ModelAttribute CreatePostBodyDto postDto) {
+        Logger.debug("[PostService] addPostWithImage called for post title: " + postDto.title());
+
+        //  TODO: Send to kestrel
+        Post post;
+        String imageUrl = "";  //  TODO
+
+        try {
+            post = postService.addPostWithImage(postDto, imageUrl);
         } catch (ResponseStatusException e) {
             throw e;
         }  catch (Exception e) {
@@ -142,41 +165,42 @@ public class PostController {
 
         Account currentAccount = accountSession.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
-        PostEntity postEntity = postRepository.findById(UUID.fromString(postId)).orElse(null);
 
         if (accountEntity == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account does not exist in DB or was deleted! id: " + currentAccount.getAccountId());
         }
-        if (postEntity == null || postEntity.isDeleted()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post does not exist in DB or was deleted! id: " + postId);
+
+        if (!postRepository.existsByPostIDAndIsDeletedFalse(UUID.fromString(postId))) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Post does not exist in DB or was deleted! id: " + postId);
         }
 
         Vote currentVote = voteService.getVoteByAccountAndVotable(accountEntity, UUID.fromString(postId));
         VoteType newVoteType = stringToVoteType(putVoteDto.voteType());
         boolean hasPreviousVote = currentVote != null;
 
-        // Double click or "none"
+        // "None" or double-click
         if (hasPreviousVote && (VoteType.NONE.equals(newVoteType)
                 || currentVote.getVoteType().equals(newVoteType))) {
             voteService.deleteVoteForPost(currentVote.getVoteID());
 
-            Logger.info("[VoteController] Vote deleted for account: " + currentAccount.getUsername()
-                    + " and comment: " + postId);
+            Logger.info("[PostController] Vote deleted for account: " + currentAccount.getUsername()
+                    + " and post: " + postId);
 
         // First time voting
         } else if (!hasPreviousVote && !VoteType.NONE.equals(newVoteType)) {
             voteService.addVoteForPost(postId, newVoteType, currentAccount);
 
-            Logger.info("[VoteController] Vote added for account: " + currentAccount.getUsername()
-                    + " and comment: " + postId);
+            Logger.info("[PostController] Vote added for account: " + currentAccount.getUsername()
+                    + " and post: " + postId);
 
         //  Change vote
         } else if (hasPreviousVote) {
             currentVote.setVoteType(newVoteType);
             voteService.updateVoteForPost(currentVote);
 
-            Logger.info("[VoteController] Vote updated for account: " + currentAccount.getUsername()
-                    + " and comment: " + postId);
+            Logger.info("[PostController] Vote updated for account: " + currentAccount.getUsername()
+                    + " and post: " + postId);
         }
 
         AllVotesDto allVotesDto = voteService.getUpdatedPost(postId, accountEntity);

@@ -7,8 +7,15 @@ import org.matcha.springbackend.enums.VoteType;
 import java.util.UUID;
 
 @Entity
-@Table(name = "vote",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"account_id", "votable_id", "votable_type"}))
+@Table(
+        name = "vote",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"account_id", "votable_id", "votable_type"}),
+        indexes = {
+                @Index(name = "idx_vote_id", columnList = "vote_id"),
+                @Index(name = "idx_vote_votable_id", columnList = "votable_id"),
+                @Index(name = "idx_vote_account_id", columnList = "account_id")
+        }
+)
 public class VoteEntity {
     @Id
     @GeneratedValue

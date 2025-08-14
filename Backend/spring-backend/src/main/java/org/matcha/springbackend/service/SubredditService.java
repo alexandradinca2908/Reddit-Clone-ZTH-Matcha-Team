@@ -4,7 +4,7 @@ import org.matcha.springbackend.dto.subreddit.requestbody.CreateSubredditBodyDto
 import org.matcha.springbackend.dto.subreddit.requestbody.UpdateSubredditBodyDto;
 import org.matcha.springbackend.entities.PostEntity;
 import org.matcha.springbackend.entities.SubredditEntity;
-import org.matcha.springbackend.loggerobject.Logger;
+import org.matcha.springbackend.logger.Logger;
 import org.matcha.springbackend.mapper.SubredditMapper;
 import org.matcha.springbackend.model.Subreddit;
 import org.matcha.springbackend.repository.PostRepository;

@@ -47,39 +47,40 @@ public class VoteService {
     }
 
     @Transactional
-    public void addVoteForPost(String commentId, VoteType newVoteType, Account currentAccount) {
-        Vote vote = new Vote(null, UUID.fromString(commentId), VotableType.COMMENT,
+    public void addVoteForPost(String postId, VoteType newVoteType, Account currentAccount) {
+        UUID postUUID = UUID.fromString(postId);
+
+        Vote vote = new Vote(null, postUUID, VotableType.POST,
                 newVoteType, currentAccount);
 
         VoteEntity entity = voteMapper.modelToEntity(vote);
         voteRepository.save(entity);
 
         postRepository.findByPostIDAndIsDeletedFalse(vote.getVotableID()).ifPresent(post -> {
-            if (VoteType.UP.equals(vote.getVoteType())) {
-                post.setUpvotes(post.getUpvotes() + 1);
-            } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-                post.setDownvotes(post.getDownvotes() + 1);
+            if (VoteType.UP.equals(newVoteType)) {
+                postRepository.incrementUpvotes(postUUID);
+            } else if (VoteType.DOWN.equals(newVoteType)) {
+                postRepository.incrementDownvotes(postUUID);
             }
-
-            postRepository.save(post);
         });
     }
 
     @Transactional
-    public void addVoteForComment(String postId, VoteType newVoteType, Account currentAccount) {
-        Vote vote = new Vote(null, UUID.fromString(postId), VotableType.COMMENT,
+    public void addVoteForComment(String commentId, VoteType newVoteType, Account currentAccount) {
+        UUID commentUUID = UUID.fromString(commentId);
+
+        Vote vote = new Vote(null, commentUUID, VotableType.COMMENT,
                 newVoteType, currentAccount);
 
         VoteEntity entity = voteMapper.modelToEntity(vote);
         voteRepository.save(entity);
 
         commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
-            if (VoteType.UP.equals(vote.getVoteType())) {
-                comment.setUpvotes(comment.getUpvotes() + 1);
-            } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-                comment.setDownvotes(comment.getDownvotes() + 1);
+            if (VoteType.UP.equals(newVoteType)) {
+                commentRepository.incrementUpvotes(commentUUID);
+            } else if (VoteType.DOWN.equals(newVoteType)) {
+                commentRepository.incrementDownvotes(commentUUID);
             }
-            commentRepository.save(comment);
         });
     }
 
@@ -91,15 +92,11 @@ public class VoteService {
 
         voteRepository.deleteByVoteId(id);
 
-        postRepository.findByPostIDAndIsDeletedFalse(vote.getVotableID()).ifPresent(post -> {
-            if (VoteType.UP.equals(vote.getVoteType())) {
-                post.setUpvotes(post.getUpvotes() - 1);
-            } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-                post.setDownvotes(post.getDownvotes() - 1);
-            }
-
-            postRepository.save(post);
-        });
+        if (VoteType.UP.equals(vote.getVoteType())) {
+            postRepository.decrementUpvotes(vote.getVotableID());
+        } else if (VoteType.DOWN.equals(vote.getVoteType())) {
+            postRepository.decrementDownvotes(vote.getVotableID());
+        }
     }
 
     @Transactional
@@ -110,15 +107,11 @@ public class VoteService {
 
         voteRepository.deleteByVoteId(id);
 
-        commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
-            if (VoteType.UP.equals(vote.getVoteType())) {
-                comment.setUpvotes(comment.getUpvotes() - 1);
-            } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-                comment.setDownvotes(comment.getDownvotes() - 1);
-            }
-
-            commentRepository.save(comment);
-        });
+        if (VoteType.UP.equals(vote.getVoteType())) {
+            commentRepository.decrementUpvotes(vote.getVotableID());
+        } else if (VoteType.DOWN.equals(vote.getVoteType())) {
+            commentRepository.decrementDownvotes(vote.getVotableID());
+        }
     }
 
     @Transactional
@@ -126,20 +119,24 @@ public class VoteService {
         VoteEntity entity = voteRepository.findById(vote.getVoteID())
                 .orElseThrow(() -> new IllegalArgumentException("Vote with ID " + vote.getVoteID() + " does not exist."));
 
-        entity.setVoteType(vote.getVoteType());
+        VoteType oldVoteType = entity.getVoteType();
+        VoteType newVoteType = vote.getVoteType();
+        UUID postId = vote.getVotableID();
+
+        // Update vote
+        entity.setVoteType(newVoteType);
         voteRepository.save(entity);
 
-        postRepository.findByPostIDAndIsDeletedFalse(vote.getVotableID()).ifPresent(post -> {
-            if (VoteType.UP.equals(vote.getVoteType())) {
-                post.setUpvotes(post.getUpvotes() + 1);
-                post.setDownvotes(post.getDownvotes() - 1);
-            } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-                post.setDownvotes(post.getDownvotes() + 1);
-                post.setUpvotes(post.getUpvotes() - 1);
-            }
-
-            postRepository.save(post);
-        });
+        // Atomic update of vote counts
+        if (oldVoteType == VoteType.UP && newVoteType == VoteType.DOWN) {
+            postRepository.decrementUpvotesAndIncrementDownvotes(postId);
+        } else if (oldVoteType == VoteType.DOWN && newVoteType == VoteType.UP) {
+            postRepository.decrementDownvotesAndIncrementUpvotes(postId);
+        } else if (oldVoteType ==  VoteType.UP && newVoteType == VoteType.UP) {
+            postRepository.decrementUpvotes(postId);
+        } else if (oldVoteType == VoteType.DOWN && newVoteType == VoteType.DOWN) {
+            postRepository.decrementDownvotes(postId);
+        }
     }
 
     @Transactional
@@ -147,20 +144,22 @@ public class VoteService {
         VoteEntity entity = voteRepository.findById(vote.getVoteID())
                 .orElseThrow(() -> new IllegalArgumentException("Vote with ID " + vote.getVoteID() + " does not exist."));
 
-        entity.setVoteType(vote.getVoteType());
+        VoteType oldVoteType = entity.getVoteType();
+        VoteType newVoteType = vote.getVoteType();
+        UUID commentId = vote.getVotableID();
+
+        entity.setVoteType(newVoteType);
         voteRepository.save(entity);
 
-        commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
-            if (VoteType.UP.equals(vote.getVoteType())) {
-                comment.setUpvotes(comment.getUpvotes() + 1);
-                comment.setDownvotes(comment.getDownvotes() - 1);
-            } else if (VoteType.DOWN.equals(vote.getVoteType())) {
-                comment.setDownvotes(comment.getDownvotes() + 1);
-                comment.setUpvotes(comment.getUpvotes() - 1);
-            }
-
-            commentRepository.save(comment);
-        });
+        if (oldVoteType == VoteType.UP && newVoteType == VoteType.DOWN) {
+            commentRepository.decrementUpvotesAndIncrementDownvotes(commentId);
+        } else if (oldVoteType == VoteType.DOWN && newVoteType == VoteType.UP) {
+            commentRepository.decrementDownvotesAndIncrementUpvotes(commentId);
+        } else if (oldVoteType ==  VoteType.UP && newVoteType == VoteType.UP) {
+            commentRepository.decrementUpvotes(commentId);
+        } else if (oldVoteType == VoteType.DOWN && newVoteType == VoteType.DOWN) {
+            commentRepository.decrementDownvotes(commentId);
+        }
     }
 
     public AllVotesDto getUpdatedPost(String postId, AccountEntity accountEntity) {

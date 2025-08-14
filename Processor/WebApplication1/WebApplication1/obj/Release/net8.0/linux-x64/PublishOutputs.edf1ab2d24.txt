@@ -1,0 +1,8 @@
+C:\Users\DARIUS\Documents\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\WebImageProcessor
+C:\Users\DARIUS\Documents\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\appsettings.Development.json
+C:\Users\DARIUS\Documents\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\appsettings.json
+C:\Users\DARIUS\Documents\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\WebImageProcessor.dll
+C:\Users\DARIUS\Documents\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\WebImageProcessor.deps.json
+C:\Users\DARIUS\Documents\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\WebImageProcessor.runtimeconfig.json
+C:\Users\DARIUS\Documents\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\WebImageProcessor.pdb
+C:\Users\DARIUS\Documents\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\SixLabors.ImageSharp.dll

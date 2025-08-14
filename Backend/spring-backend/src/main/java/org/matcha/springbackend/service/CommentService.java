@@ -3,9 +3,8 @@ package org.matcha.springbackend.service;
 import jakarta.transaction.Transactional;
 import org.matcha.springbackend.dto.comment.requestbody.AddCommentBodyDTO;
 import org.matcha.springbackend.entities.CommentEntity;
-import org.matcha.springbackend.entities.PostEntity;
 import org.matcha.springbackend.enums.VoteType;
-import org.matcha.springbackend.loggerobject.Logger;
+import org.matcha.springbackend.logger.Logger;
 import org.matcha.springbackend.mapper.CommentMapper;
 import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
@@ -107,22 +106,7 @@ public class CommentService {
 
         //  Update comment counter for the parent post
         try {
-            PostEntity postEntity = postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(postId)).orElse(null);
-
-            if (postEntity == null) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found when trying to update " +
-                        "comment counter.");
-            }
-
-            int currentCount;
-            if (postEntity.getCommentCount() != null) {
-                currentCount = postEntity.getCommentCount();
-            } else {
-                currentCount = 0;
-            }
-
-            postEntity.setCommentCount(currentCount + 1);
-            postRepository.save(postEntity);
+            postRepository.incrementCommentCount(UUID.fromString(postId));
         } catch (Exception e) {
             Logger.error("[CommentService] Exception at post update: " + e.getMessage());
             throw e;
@@ -155,5 +139,13 @@ public class CommentService {
 
         commentEntity.setDeleted(true);
         commentRepository.save(commentEntity);
+
+        //  Update comment counter for the parent post
+        try {
+            postRepository.decrementCommentCount(commentEntity.getPost().getPostID());
+        } catch (Exception e) {
+            Logger.error("[CommentService] Exception at post update: " + e.getMessage());
+            throw e;
+        }
     }
 }
