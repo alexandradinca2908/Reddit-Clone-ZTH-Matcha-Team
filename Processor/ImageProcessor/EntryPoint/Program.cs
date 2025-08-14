@@ -9,6 +9,7 @@ namespace EntryPoint
         {
             var app = new App.App();
 
+            app.ConsoleMode();
             app.Start();
 
             Console.WriteLine("Press any key to exit.");

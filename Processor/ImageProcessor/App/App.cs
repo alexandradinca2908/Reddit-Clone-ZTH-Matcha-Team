@@ -6,6 +6,13 @@ using SixLabors.ImageSharp.Processing;
 
 namespace App;
 public class App {
+
+    public void ConsoleMode()
+    {
+        Console.WriteLine("Console mode is active. Press any key to continue...");
+        Console.ReadKey();
+        Console.Clear();
+    }
     public void Start()
     {   
         string imagePath = "C:\\Users\\DARIUS\\Desktop\\photos\\photo.jpeg";  //for easy testing
