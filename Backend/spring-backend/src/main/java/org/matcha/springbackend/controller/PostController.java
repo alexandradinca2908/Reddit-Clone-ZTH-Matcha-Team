@@ -19,10 +19,7 @@ import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.repository.PostRepository;
 import org.matcha.springbackend.response.DataResponse;
 import org.matcha.springbackend.response.MessageResponse;
-import org.matcha.springbackend.service.AccountService;
-import org.matcha.springbackend.service.CommentService;
-import org.matcha.springbackend.service.PostService;
-import org.matcha.springbackend.service.VoteService;
+import org.matcha.springbackend.service.*;
 import org.matcha.springbackend.session.AccountSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -46,10 +43,11 @@ public class PostController {
     private final CommentService commentService;
     private final CommentMapper commentMapper;
     private final PostRepository postRepository;
+    private final ImageService imageService ;
 
     public PostController(AccountService accountService, AccountSession accountSession,
                           PostService postService, PostMapper postMapper,
-                          VoteService voteService, CommentService commentService, CommentMapper commentMapper, PostRepository postRepository) {
+                          VoteService voteService, CommentService commentService, CommentMapper commentMapper, PostRepository postRepository, ImageService imageService) {
         this.accountService = accountService;
         this.accountSession = accountSession;
         this.postService = postService;
@@ -58,6 +56,7 @@ public class PostController {
         this.commentService = commentService;
         this.commentMapper = commentMapper;
         this.postRepository = postRepository;
+        this.imageService = imageService;
     }
 
     @GetMapping
