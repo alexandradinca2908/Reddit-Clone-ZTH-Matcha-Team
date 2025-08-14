@@ -21,7 +21,7 @@ public class ImageService {
     private final RestTemplate restTemplate;
     private final String csharpServiceUrl;
 
-    public ImageService(RestTemplate restTemplate, @Value("51.21.228.104") String baseUrl) {
+    public ImageService(RestTemplate restTemplate, @Value("http://51.21.228.104") String baseUrl) {
         this.restTemplate = restTemplate;
         this.csharpServiceUrl = baseUrl + "/filter";
     }
@@ -48,6 +48,7 @@ public class ImageService {
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         try {
+            System.out.println("Sending request to image processor service...");
             ResponseEntity<byte[]> response = restTemplate.postForEntity(csharpServiceUrl, requestEntity, byte[].class);
 
             return response.getBody();
