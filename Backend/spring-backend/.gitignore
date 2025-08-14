@@ -33,7 +33,7 @@ build/
 .vscode/
 
 # AWS credentials file
-aws.properties
+src/main/resources/aws.properties
 
 
 
