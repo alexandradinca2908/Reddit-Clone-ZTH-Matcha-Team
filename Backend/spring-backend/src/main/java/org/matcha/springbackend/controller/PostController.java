@@ -25,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -103,12 +104,15 @@ public class PostController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<DataResponse<PostDto>> createPostWithImage(@ModelAttribute CreatePostBodyDto postDto) {
+    public ResponseEntity<DataResponse<PostDto>> createPostWithImage(
+            @ModelAttribute CreatePostBodyDto postDto,         // Binds text fields like title, content
+            @RequestParam("imageFile") MultipartFile imageFile, // Binds the uploaded image
+            @RequestParam("filter") String filter               // Binds the filter type string
+    ) {
         Logger.debug("[PostService] addPostWithImage called for post title: " + postDto.title());
-
-        //  TODO: Send to kestrel
+        byte[] processedImage = imageService.applyFilterToImage(imageFile, filter);
         Post post;
-        String imageUrl = "";  //  TODO
+        String imageUrl = "processedImage";  //  TODO
 
         try {
             post = postService.addPostWithImage(postDto, imageUrl);
