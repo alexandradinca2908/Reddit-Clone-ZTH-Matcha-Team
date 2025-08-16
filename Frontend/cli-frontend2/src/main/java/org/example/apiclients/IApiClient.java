@@ -9,7 +9,7 @@ public interface IApiClient {
 
     JsonObject handlePost(String json);
 
-    JsonObject handlePut(String json);
+    JsonObject handlePut(String json, String id);
 
     void handleDelete(String UID);
 

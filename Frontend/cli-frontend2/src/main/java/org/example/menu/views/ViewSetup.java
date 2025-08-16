@@ -2,21 +2,11 @@ package org.example.menu.views;
 
 import org.example.menu.Availability;
 import org.example.menu.MenuOption;
-import org.example.menu.commandexecution.BackCommand;
-import org.example.menu.commandexecution.IMenuCommand;
-import org.example.menu.commandexecution.QuitCommand;
-import org.example.menu.commandexecution.ShowFeedCommand;
+import org.example.menu.commandexecution.*;
 import org.example.menu.commandexecution.mainmenu.*;
-import org.example.menu.commandexecution.oncomment.DownvoteCommentCommand;
-import org.example.menu.commandexecution.oncomment.ReplyCommand;
-import org.example.menu.commandexecution.oncomment.SelectReplyCommand;
-import org.example.menu.commandexecution.oncomment.UpvoteCommentCommand;
-import org.example.menu.commandexecution.onfeed.CreatePostCommand;
-import org.example.menu.commandexecution.onfeed.ExpandPostCommand;
-import org.example.menu.commandexecution.onpost.CommentCommand;
-import org.example.menu.commandexecution.onpost.DownvotePostCommand;
-import org.example.menu.commandexecution.onpost.SelectCommentCommand;
-import org.example.menu.commandexecution.onpost.UpvotePostCommand;
+import org.example.menu.commandexecution.oncomment.*;
+import org.example.menu.commandexecution.onfeed.*;
+import org.example.menu.commandexecution.onpost.*;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -65,6 +55,7 @@ public class ViewSetup {
         LinkedHashMap<MenuOption, Availability> menu = new LinkedHashMap<>();
         menu.put(MenuOption.EXPAND_POST, Availability.ANYTIME);
         menu.put(MenuOption.CREATE_POST, Availability.ANYTIME);
+        menu.put(MenuOption.DELETE_POST, Availability.ANYTIME);
         menu.put(MenuOption.BACK, Availability.ANYTIME);
         menu.put(MenuOption.QUIT, Availability.ANYTIME);
 
@@ -74,6 +65,7 @@ public class ViewSetup {
         HashMap<MenuOption, IMenuCommand> commands = new HashMap<>(Map.of(
                 MenuOption.EXPAND_POST, new ExpandPostCommand(),
                 MenuOption.CREATE_POST, new CreatePostCommand(),
+                MenuOption.DELETE_POST, new DeletePostCommand(),
                 MenuOption.BACK, new BackCommand(),
                 MenuOption.QUIT, new QuitCommand()
         ));
@@ -94,6 +86,7 @@ public class ViewSetup {
         menu.put(MenuOption.COMMENT, Availability.LOGGED_IN);
         menu.put(MenuOption.UPVOTE, Availability.LOGGED_IN);
         menu.put(MenuOption.DOWNVOTE, Availability.LOGGED_IN);
+        menu.put(MenuOption.EDIT_POST, Availability.LOGGED_IN);
         menu.put(MenuOption.SELECT_COMMENT, Availability.LOGGED_IN);
         menu.put(MenuOption.BACK, Availability.ANYTIME);
         menu.put(MenuOption.QUIT, Availability.ANYTIME);
@@ -101,6 +94,7 @@ public class ViewSetup {
         onPost.setMenu(menu);
 
         HashMap<MenuOption, IMenuCommand> commands = new HashMap<>(Map.of(
+                MenuOption.EDIT_POST, new EditPostCommand(),
                 MenuOption.COMMENT, new CommentCommand(),
                 MenuOption.UPVOTE, new UpvotePostCommand(),
                 MenuOption.DOWNVOTE, new DownvotePostCommand(),
