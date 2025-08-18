@@ -35,7 +35,9 @@ public class PostService {
     private final VoteRepository voteRepository;
     private final AccountSession accountSession;
 
-    public PostService(PostMapper postMapper, PostRepository postRepository, AccountService accountService, SubredditService subredditService, VoteRepository voteRepository, AccountSession accountSession) {
+    public PostService(PostMapper postMapper, PostRepository postRepository, AccountService accountService,
+                       SubredditService subredditService, VoteRepository voteRepository,
+                       AccountSession accountSession) {
         this.postMapper = postMapper;
         this.postRepository = postRepository;
         this.accountService = accountService;
@@ -124,7 +126,8 @@ public class PostService {
     @Transactional
     public Post updatePost(String id, UpdatePostBodyDto postDto) {
         // Get post by id
-        Post post = this.getPostById(id);
+        PostEntity post = postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
+                .orElse(null);
 
         if (post == null) {
             Logger.warn("[PostService] Post not found for id: " + id);
@@ -137,15 +140,9 @@ public class PostService {
         post.setTitle(postDto.title());
         post.setContent("[edit] " + postDto.content());
 
-        PostEntity entity = postMapper.modelToEntity(post);
+        postRepository.save(post);
 
-        if (postRepository.existsById(entity.getPostID())) {
-            postRepository.save(entity);
-        } else {
-            throw new IllegalArgumentException("Post with ID " + entity.getPostID() + " does not exist.");
-        }
-
-        return postMapper.entityToModel(entity);
+        return postMapper.entityToModel(post);
     }
 
     public Post getPostById(String id) {
