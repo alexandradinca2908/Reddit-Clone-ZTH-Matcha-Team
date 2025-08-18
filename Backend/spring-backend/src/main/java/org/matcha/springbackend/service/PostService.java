@@ -14,6 +14,8 @@ import org.matcha.springbackend.model.Subreddit;
 import org.matcha.springbackend.repository.PostRepository;
 import org.matcha.springbackend.repository.VoteRepository;
 import org.matcha.springbackend.session.AccountSession;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.matcha.springbackend.logger.Logger;
@@ -34,21 +36,23 @@ public class PostService {
     private final SubredditService subredditService;
     private final VoteRepository voteRepository;
     private final AccountSession accountSession;
+    private final CacheService cacheService;
 
     public PostService(PostMapper postMapper, PostRepository postRepository, AccountService accountService,
                        SubredditService subredditService, VoteRepository voteRepository,
-                       AccountSession accountSession) {
+                       AccountSession accountSession, CacheService cacheService) {
         this.postMapper = postMapper;
         this.postRepository = postRepository;
         this.accountService = accountService;
         this.subredditService = subredditService;
         this.voteRepository = voteRepository;
         this.accountSession = accountSession;
+        this.cacheService = cacheService;
     }
 
     public List<Post> getPosts() {
         //  Get all posts from DB
-        List<PostEntity> entities = postRepository.findAllByIsDeletedFalseOrderByCreatedAtDesc();
+        List<PostEntity> entities = cacheService.getAllPostsFromDb();
 
         //  Take all post IDs
         List<UUID> postIds = entities.stream()
@@ -58,8 +62,7 @@ public class PostService {
         //  Get all votes of current account
         Account currentAccount = accountSession.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
-        List<VoteEntity> userVotes = voteRepository.findByAccountAndVotableIdIn(
-                accountEntity, postIds).orElse(new ArrayList<>());
+        List<VoteEntity> userVotes = cacheService.getUserVotes(accountEntity, postIds);
 
         //  Create a vote map with the votes for O(1) vote lookup
         Map<UUID, VoteType> voteMap = userVotes.stream()
@@ -74,10 +77,12 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    @CacheEvict(value = "posts", allEntries = true)
     public Post addPostNoImage(CreatePostBodyDto postDto) {
         return addPost(postDto, null);
     }
 
+    @CacheEvict(value = "posts", allEntries = true)
     public Post addPostWithImage(CreatePostBodyDto postDto, String imageUrl) {
         return addPost(postDto, imageUrl);
     }
@@ -124,6 +129,7 @@ public class PostService {
     }
 
     @Transactional
+    @CacheEvict(value = "posts", allEntries = true)
     public Post updatePost(String id, UpdatePostBodyDto postDto) {
         // Get post by id
         PostEntity post = postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
@@ -152,6 +158,7 @@ public class PostService {
     }
 
     @Transactional
+    @CacheEvict(value = "posts", allEntries = true)
     public void deletePost(String id) {
         PostEntity postEntity = postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found with id: " + id));

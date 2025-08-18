@@ -16,6 +16,9 @@ import org.matcha.springbackend.repository.CommentRepository;
 import org.matcha.springbackend.repository.PostRepository;
 import org.matcha.springbackend.repository.VoteRepository;
 import org.matcha.springbackend.session.AccountSession;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,6 +59,10 @@ public class VoteService {
 
     //  POST VOTING
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "posts", allEntries = true),
+            @CacheEvict(value = "userVotes", key = "#currentAccount.accountId")
+    })
     public void votePost(String postId, PutVoteBodyDto putVoteDto,
                          Account currentAccount, AccountEntity accountEntity) {
 
