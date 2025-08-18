@@ -60,9 +60,9 @@ public class ApiPostClient implements IApiClient {
         return null;
     }
 
-    public JsonObject handlePut(String json) {
+    public JsonObject handlePut(String json, String id) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/posts"))
+                .uri(URI.create(BASE_URL + "/posts/" + id))
                 .header("Content-Type", "application/json")
                 .PUT(HttpRequest.BodyPublishers.ofString(json))
                 .build();
@@ -79,12 +79,13 @@ public class ApiPostClient implements IApiClient {
 
     public void handleDelete(String id) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/posts" + id))
+                .uri(URI.create(BASE_URL + "/posts/" + id))
                 .DELETE()
                 .build();
 
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            response.body();
         } catch (IOException | InterruptedException e) {
             System.err.println("Couldn't connect to server");
         }

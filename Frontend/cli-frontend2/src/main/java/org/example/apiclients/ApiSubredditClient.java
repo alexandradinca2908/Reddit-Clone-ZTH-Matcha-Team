@@ -59,7 +59,7 @@ public class ApiSubredditClient {
         return null;
     }
 
-    public JsonObject handlePut(String json) {
+    public JsonObject handlePut(String json, String id) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/subreddits"))
                 .header("Content-Type", "application/json")

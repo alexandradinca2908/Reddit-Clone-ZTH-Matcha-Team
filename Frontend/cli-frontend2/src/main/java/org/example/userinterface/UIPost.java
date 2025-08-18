@@ -43,7 +43,7 @@ public class UIPost {
         }
         return instance;
     }
-
+    //title, body, username, subreddit
     public ArrayList<String> getPostDetailsFromUser(User user) {
         Scanner sc = new Scanner(System.in);
         ArrayList<String> postData = new ArrayList<>();
@@ -80,6 +80,41 @@ public class UIPost {
 
         System.out.println("Please enter subreddit:");
         postData.add(sc.nextLine());
+
+        return postData;
+    }
+
+    public ArrayList<String> getUpdatedPostDetailsFromUser() {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<String> postData = new ArrayList<>();
+
+        System.out.println(PROMPT_TITLE);
+        String title = sc.nextLine();
+        try{
+            title = profanityFilter.filter(title);
+        } catch (FileNotFoundException e) {
+            System.out.println("Config file could not be found.");
+        }
+
+        while (title.length() < UIPost.MIN_TITLE_LENGTH || title.length() > UIPost.MAX_TITLE_LENGTH) {
+            System.out.printf((ERROR_TITLE_TOO_SHORT) + "%n", UIPost.MIN_TITLE_LENGTH);
+            System.out.printf((ERROR_TITLE_TOO_LONG) + "%n", UIPost.MAX_TITLE_LENGTH);
+            title = sc.nextLine();
+        }
+        postData.add(title);
+
+        System.out.println(PROMPT_DESCRIPTION);
+        String body = sc.nextLine();
+        try{
+            body = profanityFilter.filter(body);
+        } catch (FileNotFoundException e) {
+            System.out.println("Config file could not be found.");
+        }
+        while (body.isEmpty()) {
+            System.out.println(ERROR_DESCRIPTION_EMPTY);
+            body = sc.nextLine();
+        }
+        postData.add(body);
 
         return postData;
     }

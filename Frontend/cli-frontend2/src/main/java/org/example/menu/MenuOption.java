@@ -6,6 +6,8 @@ public enum MenuOption {
     SHOW_FEED,
     QUIT,
     CREATE_POST,
+    DELETE_POST,
+    EDIT_POST,
     LOGOUT,
     DELETE_ACCOUNT,
     EXPAND_POST,

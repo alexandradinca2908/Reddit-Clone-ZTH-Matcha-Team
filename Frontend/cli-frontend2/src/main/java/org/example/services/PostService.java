@@ -127,5 +127,41 @@ public class PostService {
         subreddit.addPost(post);
     }
 
+    public void deletePost(Subreddit subreddit) {
+        boolean success = false;
+        do {
+            String displayId = uiPost.pleaseEnterPostId();
+            for (Post post : subreddit.getPosts()) {
+                if (post.getDisplayId().equals(displayId)) {
+                    apiManager.getApiPostClient().handleDelete(post.getId());
+                    subreddit.getPosts().remove(post);
+                    success = true;
+                    break;
+                }
+            }
+            if(success) break;
+        } while (uiPost.invalidId().equals("n"));
+
+
+    }
+
+    public int editPost(Subreddit subreddit, Post post) {
+        ArrayList<String> postDetails = uiPost.getUpdatedPostDetailsFromUser();
+        String json = String.format("""
+                {
+                    "title": "%s",
+                    "content": "%s"
+                }
+                """, postDetails.get(0), postDetails.get(1));
+
+        int idx = subreddit.getPosts().size() - 1 - Integer.parseInt(post.getDisplayId());
+        String displayId = post.getDisplayId();
+        subreddit.getPosts().remove(post);
+        Post changedPost = gson.fromJson(apiManager.getApiPostClient().handlePut(json, post.getId()), Post.class);
+        changedPost.setDisplayId(displayId);
+        subreddit.getPosts().add(idx, changedPost);
+        return idx;
+    }
+
 
 }

@@ -60,7 +60,7 @@ public class ApiCommentClient implements IApiClient {
         return null;
     }
 
-    public JsonObject handlePut(String json) {
+    public JsonObject handlePut(String json, String id) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/comments"))
                 .header("Content-Type", "application/json")

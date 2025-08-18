@@ -14,3 +14,6 @@ logging
 ./Processor/ImageProcessor/Common/bin/
 ./Processor/ImageProcessor/ImageProcessor/obj/
 ./Processor/ImageProcessor/ImageProcessor/bin/
+
+# AWS credentials file
+Backend/spring-backend/main/resources/aws.properties
