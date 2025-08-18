@@ -100,7 +100,7 @@ namespace WebImageProcessor.Filters
         }
     }
 
-    public class FlipFilter : IFilter
+    public class VerticalFlipFilter : IFilter
     {
         public RawImage Apply(RawImage originalImage)
         {
