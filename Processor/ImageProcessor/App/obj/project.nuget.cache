@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "m9oQFhb+V0E=",
+  "dgSpecHash": "8tQWF2UpnCM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\App\\App.csproj",
+  "projectFilePath": "D:\\Cognyte\\Matcha\\Processor\\ImageProcessor\\App\\App.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\DARIUS\\.nuget\\packages\\sixlabors.imagesharp\\3.1.11\\sixlabors.imagesharp.3.1.11.nupkg.sha512"
+    "C:\\Users\\alexa\\.nuget\\packages\\sixlabors.imagesharp\\3.1.11\\sixlabors.imagesharp.3.1.11.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.5\\microsoft.windowsdesktop.app.ref.9.0.5.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.5\\microsoft.netcore.app.ref.9.0.5.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.5\\microsoft.aspnetcore.app.ref.9.0.5.nupkg.sha512"
   ],
   "logs": []
 }

@@ -10,6 +10,7 @@ namespace Filters
             Sepia,
             Invert,
             Nothing,
+            Flip,
         }
     }
 }

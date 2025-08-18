@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "HFRamhqtRO0=",
+  "dgSpecHash": "FVcKUQH1te4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\WebApplication1\\WebApplication1\\WebImageProcessor.csproj",
+  "projectFilePath": "D:\\Cognyte\\Matcha\\Processor\\WebApplication1\\WebApplication1\\WebImageProcessor.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\DARIUS\\.nuget\\packages\\sixlabors.imagesharp\\3.1.11\\sixlabors.imagesharp.3.1.11.nupkg.sha512",
-    "C:\\Users\\DARIUS\\.nuget\\packages\\microsoft.netcore.app.host.linux-x64\\8.0.18\\microsoft.netcore.app.host.linux-x64.8.0.18.nupkg.sha512"
+    "C:\\Users\\alexa\\.nuget\\packages\\sixlabors.imagesharp\\3.1.11\\sixlabors.imagesharp.3.1.11.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.16\\microsoft.netcore.app.ref.8.0.16.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.16\\microsoft.windowsdesktop.app.ref.8.0.16.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.16\\microsoft.aspnetcore.app.ref.8.0.16.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\microsoft.netcore.app.host.linux-x64\\8.0.16\\microsoft.netcore.app.host.linux-x64.8.0.16.nupkg.sha512"
   ],
   "logs": []
 }

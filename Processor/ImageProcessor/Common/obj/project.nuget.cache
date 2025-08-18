@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "TCz2X8v1kpA=",
+  "dgSpecHash": "YTja50PJ2BE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\ImageProcessor\\Common\\Common.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\Cognyte\\Matcha\\Processor\\ImageProcessor\\Common\\Common.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\alexa\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.5\\microsoft.windowsdesktop.app.ref.9.0.5.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.5\\microsoft.netcore.app.ref.9.0.5.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.5\\microsoft.aspnetcore.app.ref.9.0.5.nupkg.sha512"
+  ],
   "logs": []
 }

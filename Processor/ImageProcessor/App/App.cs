@@ -8,7 +8,7 @@ namespace App;
 public class App {
     public void Start()
     {   
-        string imagePath = "C:\\Users\\DARIUS\\Desktop\\photos\\photo.jpeg";  //for easy testing
+        string imagePath = "C:\\Users\\alexa\\OneDrive\\Desktop\\matcha_cups.webp";  //for easy testing
 
         if (!File.Exists(imagePath))
         {
@@ -25,7 +25,8 @@ public class App {
             1. {FiltersEnum.FilterTypes.Grayscale}
             2. {FiltersEnum.FilterTypes.Sepia}
             3. {FiltersEnum.FilterTypes.Invert}
-            4. {FiltersEnum.FilterTypes.Nothing}
+            4. {FiltersEnum.FilterTypes.Flip}
+            5. {FiltersEnum.FilterTypes.Nothing}
             """);
 
         string input = Console.ReadLine();
@@ -55,6 +56,9 @@ public class App {
                 filter = new Filters.InvertFilter();
                 break;
             case "4":
+                filter = new Filters.FlipFilter();
+                break;
+            case "5":
                 break;
             default:
                 Console.WriteLine("Invalid option selected. No filter will be applied.");

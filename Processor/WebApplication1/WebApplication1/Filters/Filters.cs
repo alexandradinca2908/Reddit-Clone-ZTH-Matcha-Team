@@ -99,5 +99,37 @@ namespace WebImageProcessor.Filters
             return new RawImage(originalImage.PixelData, originalImage.Width, originalImage.Height, originalImage.BytesPerPixel);
         }
     }
+
+    public class FlipFilter : IFilter
+    {
+        public RawImage Apply(RawImage originalImage)
+        {
+            byte[] pixelData = (byte[]) originalImage.PixelData.Clone();
+            int width = originalImage.Width;
+            int height = originalImage.Height;
+            int bpp = originalImage.BytesPerPixel;
+            int rowStride = width * bpp;
+
+            for (int y = 0; y < height; y++)
+            {
+                int rowStart = y * rowStride;
+                for (int x = 0; x < width / 2; x++)
+                {
+                    int leftIndex = rowStart + x * bpp;
+                    int rightIndex = rowStart + (width - 1 - x) * bpp;
+
+                    //  Swap each pixel
+                    for (int c = 0; c < bpp; c++)
+                    {
+                        byte tmp = pixelData[leftIndex + c];
+                        pixelData[leftIndex + c] = pixelData[rightIndex + c];
+                        pixelData[rightIndex + c] = tmp;
+                    }
+                }
+            }
+
+            return new RawImage(pixelData, width, height, bpp);
+        }
+    }
 }
 

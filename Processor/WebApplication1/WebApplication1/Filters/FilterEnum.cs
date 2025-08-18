@@ -10,7 +10,7 @@ namespace WebImageProcessor.Filters
             Grayscale,
             Sepia,
             Invert,
-            
+            Flip,
         }
     }
 }

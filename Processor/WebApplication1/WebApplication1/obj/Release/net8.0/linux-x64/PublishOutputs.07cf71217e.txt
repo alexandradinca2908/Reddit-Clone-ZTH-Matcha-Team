@@ -1,0 +1,8 @@
+D:\Cognyte\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\WebImageProcessor
+D:\Cognyte\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\appsettings.Development.json
+D:\Cognyte\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\appsettings.json
+D:\Cognyte\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\WebImageProcessor.dll
+D:\Cognyte\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\WebImageProcessor.deps.json
+D:\Cognyte\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\WebImageProcessor.runtimeconfig.json
+D:\Cognyte\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\WebImageProcessor.pdb
+D:\Cognyte\Matcha\Processor\WebApplication1\WebApplication1\bin\Release\net8.0\linux-x64\publish\SixLabors.ImageSharp.dll
