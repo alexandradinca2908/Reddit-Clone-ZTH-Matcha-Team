@@ -41,8 +41,8 @@ namespace WebImageProcessor.Services
                     case FiltersEnum.FilterTypes.Invert:
                         filter = new Filters.InvertFilter();
                         break;
-                    case FiltersEnum.FilterTypes.VerticalFlip:
-                        filter = new Filters.VerticalFlipFilter();
+                    case FiltersEnum.FilterTypes.HorizontalFlip:
+                        filter = new Filters.HorizontalFlipFilter();
                         break;
                     default:
                         throw new NotSupportedException($"Filter type '{filterType}' is not supported.");
