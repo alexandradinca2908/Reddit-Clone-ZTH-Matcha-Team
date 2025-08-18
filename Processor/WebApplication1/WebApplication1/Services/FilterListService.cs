@@ -17,7 +17,8 @@ namespace WebImageProcessor.Services
                 new FilterInfo { Id = (int)FiltersEnum.FilterTypes.Nothing, Name = "none", Label = "NoFilter" },
                 new FilterInfo { Id = (int)FiltersEnum.FilterTypes.Grayscale, Name = "grayscale", Label = "Black and White" },
                 new FilterInfo { Id = (int)FiltersEnum.FilterTypes.Sepia, Name = "sepia", Label = "Sepia" },
-                new FilterInfo { Id = (int)FiltersEnum.FilterTypes.Invert, Name = "invert", Label = "Inverted" }
+                new FilterInfo { Id = (int)FiltersEnum.FilterTypes.Invert, Name = "invert", Label = "Inverted" },
+                new FilterInfo { Id = (int)FiltersEnum.FilterTypes.Flip, Name = "flip", Label = "Flip" }
             };
 
             return FilterList;
