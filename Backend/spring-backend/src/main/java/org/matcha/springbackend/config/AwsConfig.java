@@ -10,7 +10,7 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 
 @Configuration
-@PropertySource("file:${aws.credentials.file.path}")
+@PropertySource("classpath:aws.properties")
 public class AwsConfig {
 
     @Value("${aws.accessKeyId}")
