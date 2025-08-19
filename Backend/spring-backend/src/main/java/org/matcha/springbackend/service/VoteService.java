@@ -83,14 +83,14 @@ public class VoteService {
             Logger.info("[PostController] Vote deleted for account: " + currentAccount.getUsername()
                     + " and post: " + postId);
 
-            // First time voting
+        // First time voting
         } else if (!hasPreviousVote && !VoteType.NONE.equals(newVoteType)) {
             addVoteForPost(postId, newVoteType, currentAccount);
 
             Logger.info("[PostController] Vote added for account: " + currentAccount.getUsername()
                     + " and post: " + postId);
 
-            //  Change vote
+        //  Change vote
         } else if (hasPreviousVote) {
             currentVote.setVoteType(newVoteType);
             updateVoteForPost(currentVote);

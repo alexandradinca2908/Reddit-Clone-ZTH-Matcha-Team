@@ -34,18 +34,16 @@ public class PostService {
     private final PostRepository postRepository;
     private final AccountService accountService;
     private final SubredditService subredditService;
-    private final VoteRepository voteRepository;
     private final AccountSession accountSession;
     private final CacheService cacheService;
 
-    public PostService(PostMapper postMapper, PostRepository postRepository, AccountService accountService,
-                       SubredditService subredditService, VoteRepository voteRepository,
+    public PostService(PostMapper postMapper, PostRepository postRepository,
+                       AccountService accountService, SubredditService subredditService,
                        AccountSession accountSession, CacheService cacheService) {
         this.postMapper = postMapper;
         this.postRepository = postRepository;
         this.accountService = accountService;
         this.subredditService = subredditService;
-        this.voteRepository = voteRepository;
         this.accountSession = accountSession;
         this.cacheService = cacheService;
     }
@@ -161,7 +159,8 @@ public class PostService {
     @CacheEvict(value = "posts", allEntries = true)
     public void deletePost(String id) {
         PostEntity postEntity = postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found with id: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found with id: " + id));
+        
         //  TODO: Account check logic goes here
         postEntity.setDeleted(true);
 
