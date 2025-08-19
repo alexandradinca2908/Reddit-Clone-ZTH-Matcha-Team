@@ -1,0 +1,24 @@
+<changelist name="Uncommitted_changes_before_Update_at_7_18_2025_3_57_PM_[Changes]" date="1752843446268" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_7_18_2025_3_57_PM_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 7/18/2025 3:57 PM [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="../../out/production/Matcha/org/example/Main.class" />
+    <option name="AFTER_PATH" value="../../out/production/Matcha/org/example/Main.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_7_18_2025_3_57_PM_[Changes]/Main.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../../out/production/Matcha/org/example/services/CommentService.class" />
+    <option name="AFTER_PATH" value="../../out/production/Matcha/org/example/services/CommentService.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_7_18_2025_3_57_PM_[Changes]/CommentService.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../../out/production/Matcha/org/example/userinterface/UIPost.class" />
+    <option name="AFTER_PATH" value="../../out/production/Matcha/org/example/userinterface/UIPost.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_7_18_2025_3_57_PM_[Changes]/UIPost.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="../../out/production/Matcha/org/example/models/User.class" />
+    <option name="AFTER_PATH" value="../../out/production/Matcha/org/example/models/User.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_7_18_2025_3_57_PM_[Changes]/User.class" />
+  </binary>
+</changelist>

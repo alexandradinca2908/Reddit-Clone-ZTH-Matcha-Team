@@ -62,7 +62,7 @@ public class ApiCommentClient implements IApiClient {
 
     public JsonObject handlePut(String json, String id) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/comments"))
+                .uri(URI.create("http://13.48.209.206:8080" + "/comments/" + id))
                 .header("Content-Type", "application/json")
                 .PUT(HttpRequest.BodyPublishers.ofString(json))
                 .build();
@@ -79,7 +79,7 @@ public class ApiCommentClient implements IApiClient {
 
     public void handleDelete(String id) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/comments" + id))
+                .uri(URI.create("http://13.48.209.206:8080" + "/comments/" + id))
                 .DELETE()
                 .build();
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Comment {
     private String id;
     private int displayId;
-    private static int dsiplayCounter = 0;
+    private static int displayCounter = 0;
     private String postId;
     private String parentId;
     private String content;
@@ -17,12 +17,16 @@ public class Comment {
     private ArrayList<Comment> replies;
 
     public Comment() {
-        displayId = dsiplayCounter++;
+        displayId = displayCounter++;
         replies = new ArrayList<Comment>();
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setDisplayId(int displayId) {
+        this.displayId = displayId;
     }
 
     public int getDisplayId() {
