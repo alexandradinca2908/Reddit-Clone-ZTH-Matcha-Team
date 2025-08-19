@@ -33,7 +33,7 @@ public class UIComment {
         return instance;
     }
 
-    public String getPostDetailsFromUser() {
+    public String getCommentDetailsFromUser() {
         Scanner sc = new Scanner(System.in);
         System.out.println(PLEASE_ENTER_COMMENT);
         return sc.nextLine();

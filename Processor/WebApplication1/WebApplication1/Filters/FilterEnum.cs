@@ -8,7 +8,8 @@ namespace WebImageProcessor.Filters
         Grayscale = 2,
         Sepia = 3,
         Invert = 4,
-        HorizontalFlip = 5
+        HorizontalFlip = 5,
+        Blur = 6
     }
 }
 

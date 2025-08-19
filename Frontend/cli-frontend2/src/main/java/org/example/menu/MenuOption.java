@@ -15,6 +15,8 @@ public enum MenuOption {
     UPVOTE,
     DOWNVOTE,
     SELECT_COMMENT,
+    EDIT_COMMENT,
+    DELETE_COMMENT,
     BACK,
     REPLY,
     SELECT_REPLY,

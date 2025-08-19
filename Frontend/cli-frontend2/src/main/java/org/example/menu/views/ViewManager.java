@@ -27,6 +27,7 @@ public class ViewManager {
     protected boolean isLoggedIn;
     private User user;
     private Post post;
+    private Comment parentComment;
     private Comment comment;
     private Subreddit subreddit;
 
@@ -109,6 +110,14 @@ public class ViewManager {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public Comment getParentComment() {
+        return parentComment;
+    }
+
+    public void setParentComment(Comment parentComment) {
+        this.parentComment = parentComment;
     }
 
     public Comment getComment() {

@@ -154,7 +154,7 @@ public class PostService {
                 }
                 """, postDetails.get(0), postDetails.get(1));
 
-        int idx = subreddit.getPosts().size() - 1 - Integer.parseInt(post.getDisplayId());
+        int idx = subreddit.getPosts().indexOf(post);
         String displayId = post.getDisplayId();
         subreddit.getPosts().remove(post);
         Post changedPost = gson.fromJson(apiManager.getApiPostClient().handlePut(json, post.getId()), Post.class);
