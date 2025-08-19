@@ -1,4 +1,4 @@
-package org.matcha.springbackend.service;
+package org.matcha.springbackend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -6,6 +6,7 @@ import org.matcha.springbackend.entities.VoteEntity;
 import org.matcha.springbackend.repository.PostRepository;
 import org.matcha.springbackend.repository.VoteRepository;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
