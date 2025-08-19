@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebImageProcessor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+269fb6944135710644a54e4cfe583d55376de272")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d952649550325b91fe923dd56d64dfa35eacc35d")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebImageProcessor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebImageProcessor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -44,7 +44,7 @@ namespace WebImageProcessor.Services
                     case FiltersEnum.HorizontalFlip:
                         filter = new Filters.HorizontalFlipFilter();
                         break;
-                    case FiltersEnum.FilterTypes.Blur:
+                    case FiltersEnum.Blur:
                         filter = new Filters.BlurFilter();
                         break;
                     default:
