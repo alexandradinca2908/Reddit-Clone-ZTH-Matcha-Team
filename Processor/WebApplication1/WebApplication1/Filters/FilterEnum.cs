@@ -2,16 +2,13 @@
 
 namespace WebImageProcessor.Filters
 {
-    public static class FiltersEnum
+    public enum FiltersEnum
     {
-        public enum FilterTypes
-        {
-            Nothing,
-            Grayscale,
-            Sepia,
-            Invert,
-            HorizontalFlip
-        }
+        Nothing = 1,
+        Grayscale = 2,
+        Sepia = 3,
+        Invert = 4,
+        HorizontalFlip = 5
     }
 }
 
