@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebImageProcessor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5871f9c6ff42e5da4e00c13588cd457e633e8fe2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0d7241ce533f7cf13fa7fd55cbebf380b3723d5")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebImageProcessor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebImageProcessor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
