@@ -22,6 +22,8 @@ public class InputTranslator {
             case "upvote" -> MenuOption.UPVOTE;
             case "downvote" -> MenuOption.DOWNVOTE;
             case "select comment" -> MenuOption.SELECT_COMMENT;
+            case "edit comment" -> MenuOption.EDIT_COMMENT;
+            case "delete comment" -> MenuOption.DELETE_COMMENT;
             case "reply" -> MenuOption.REPLY;
             case "select reply" -> MenuOption.SELECT_REPLY;
             case "back" -> MenuOption.BACK;
@@ -114,15 +116,17 @@ public class InputTranslator {
     }
 
     private static String translateOnCommentInput(String input) {
-        //  1. Reply, 2. Upvote, 3. Downvote
-        //  4. Select reply, 5. Back, 6. Quit
+        //  1. Reply, 2. Upvote, 3. Downvote, 4. Edit Comment,
+        //  5. Delete Comment, 6. Select reply, 7. Back, 8. Quit
         return switch (input) {
             case "1" -> "reply";
             case "2" -> "upvote";
             case "3" -> "downvote";
-            case "4" -> "select reply";
-            case "5" -> "back";
-            case "6" -> "quit";
+            case "4" -> "edit comment";
+            case "5" -> "delete comment";
+            case "6" -> "select reply";
+            case "7" -> "back";
+            case "8" -> "quit";
             default -> input;
         };
     }

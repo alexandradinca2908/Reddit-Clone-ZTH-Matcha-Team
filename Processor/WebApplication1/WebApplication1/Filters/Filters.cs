@@ -1,4 +1,5 @@
-﻿using SixLabors.ImageSharp;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using System;
 using System.Collections.Generic;
@@ -129,6 +130,63 @@ namespace WebImageProcessor.Filters
             }
 
             return new RawImage(pixelData, width, height, bpp);
+        }
+    }
+
+    public class BlurFilter : IFilter 
+    { 
+        public RawImage Apply(RawImage originalImage)
+        {
+            int radius = 1;
+            int width = originalImage.Width;
+            int height = originalImage.Height;
+            int bpp = originalImage.BytesPerPixel;
+            int stride = width * bpp;
+
+            byte[] src = originalImage.PixelData;
+            byte[] dst = new byte[src.Length];
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int r = 0, g = 0, b = 0, a = 0;
+                    int count = 0;
+
+                    
+                    for (int ky = -radius; ky <= radius; ky++)
+                    {
+                        int ny = y + ky;
+                        if (ny < 0 || ny >= height) continue;
+
+                        for (int kx = -radius; kx <= radius; kx++)
+                        {
+                            int nx = x + kx;
+                            if (nx < 0 || nx >= width) continue;
+
+                            int index = ny * stride + nx * bpp;
+
+                            b += src[index];       
+                            g += src[index + 1];   
+                            r += src[index + 2];   
+                            if (bpp == 4)
+                                a += src[index + 3]; 
+
+                            count++;
+                        }
+                    }
+
+                    
+                    int dstIndex = y * stride + x * bpp;
+                    dst[dstIndex] = (byte)(b / count);
+                    dst[dstIndex + 1] = (byte)(g / count);
+                    dst[dstIndex + 2] = (byte)(r / count);
+                    if (bpp == 4)
+                        dst[dstIndex + 3] = (byte)(a / count);
+                }
+            }
+
+            return new RawImage(dst, width, height, bpp);
         }
     }
 }

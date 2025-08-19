@@ -69,7 +69,7 @@ public class CommentService {
     }
 
     public void createComment(Post post, User user) {
-        String content = uiComment.getPostDetailsFromUser();
+        String content = uiComment.getCommentDetailsFromUser();
         String author = user.getUsername();
 
         String json = String.format("""
@@ -85,8 +85,43 @@ public class CommentService {
         post.addComment(comment);
     }
 
+    public int editComment(Post post, Comment comment, Comment parentComment) {
+        String content = uiComment.getCommentDetailsFromUser();
+        String json = String.format("""
+                {
+                    "content": "%s"
+                }
+                """, content);
+        int idx = -1;
+        Comment newComment = gson.fromJson(apiManager.getApiCommentClient().handlePut(json, comment.getId()), Comment.class);
+        newComment.setDisplayId(comment.getDisplayId());
+        if(parentComment == null) {
+            idx = post.getComments().indexOf(comment);
+            post.getComments().remove(comment);
+            post.getComments().add(idx, newComment);
+
+        } else {
+            idx = parentComment.getReplies().indexOf(comment);
+            parentComment.getReplies().remove(comment);
+            parentComment.getReplies().add(idx, newComment);
+
+        }
+
+        return idx;
+    }
+
+    public void deleteComment(Post post, Comment comment, Comment parentComment) {
+        String id = comment.getId();
+        if (parentComment == null) {
+            post.getComments().remove(comment);
+        } else {
+            parentComment.getReplies().remove(comment);
+        }
+        apiManager.getApiCommentClient().handleDelete(id);
+    }
+
     public void createReply(Post post, Comment comment, User user) {
-        String content = uiComment.getPostDetailsFromUser();
+        String content = uiComment.getCommentDetailsFromUser();
         String author = user.getUsername();
         String parentId =  comment.getId();
 

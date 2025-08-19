@@ -119,6 +119,8 @@ public class ViewSetup {
         menu.put(MenuOption.REPLY, Availability.LOGGED_IN);
         menu.put(MenuOption.UPVOTE, Availability.LOGGED_IN);
         menu.put(MenuOption.DOWNVOTE, Availability.LOGGED_IN);
+        menu.put(MenuOption.EDIT_COMMENT, Availability.LOGGED_IN);
+        menu.put(MenuOption.DELETE_COMMENT, Availability.LOGGED_IN);
         menu.put(MenuOption.SELECT_REPLY, Availability.LOGGED_IN);
         menu.put(MenuOption.BACK, Availability.ANYTIME);
         menu.put(MenuOption.QUIT, Availability.ANYTIME);
@@ -130,6 +132,8 @@ public class ViewSetup {
                 MenuOption.REPLY, new ReplyCommand(),
                 MenuOption.UPVOTE, new UpvoteCommentCommand(),
                 MenuOption.DOWNVOTE, new DownvoteCommentCommand(),
+                MenuOption.EDIT_COMMENT, new EditCommentCommand(),
+                MenuOption.DELETE_COMMENT, new DeleteCommentCommand(),
                 MenuOption.SELECT_REPLY, new SelectReplyCommand(),
                 MenuOption.BACK, new BackCommand(),
                 MenuOption.QUIT, new QuitCommand()
