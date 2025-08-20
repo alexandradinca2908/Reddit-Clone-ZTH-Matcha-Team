@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "hMlkyrgokj0=",
+  "dgSpecHash": "gOv7v5QRh6w=",
   "success": true,
-  "projectFilePath": "D:\\Cognyte\\Matcha\\Processor\\WebApplication1\\WebApplication1\\WebImageProcessor.csproj",
+  "projectFilePath": "C:\\Users\\DARIUS\\Documents\\Matcha\\Processor\\WebApplication1\\WebApplication1\\WebImageProcessor.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Matei\\.nuget\\packages\\sixlabors.imagesharp\\3.1.11\\sixlabors.imagesharp.3.1.11.nupkg.sha512",
-    "C:\\Users\\Matei\\.nuget\\packages\\microsoft.netcore.app.host.linux-x64\\8.0.19\\microsoft.netcore.app.host.linux-x64.8.0.19.nupkg.sha512"
+    "C:\\Users\\DARIUS\\.nuget\\packages\\sixlabors.imagesharp\\3.1.11\\sixlabors.imagesharp.3.1.11.nupkg.sha512"
   ],
   "logs": []
 }

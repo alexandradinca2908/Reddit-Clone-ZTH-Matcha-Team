@@ -21,7 +21,7 @@ namespace WebImageProcessor.Controllers
         [HttpPost]
         public async Task<IActionResult> ApplyFilter(
             [FromForm] IFormFile imageFile,
-            [FromForm] FiltersEnum.FilterTypes filter)
+            [FromForm] FiltersEnum filter)
         {
 
             try

@@ -37,9 +37,9 @@ public class PostService {
     private final AccountSession accountSession;
     private final CacheService cacheService;
 
-    public PostService(PostMapper postMapper, PostRepository postRepository,
-                       AccountService accountService, SubredditService subredditService,
-                       AccountSession accountSession, CacheService cacheService) {
+    public PostService(PostMapper postMapper, PostRepository postRepository, AccountService accountService,
+                       SubredditService subredditService, AccountSession accountSession,
+                       CacheService cacheService) {
         this.postMapper = postMapper;
         this.postRepository = postRepository;
         this.accountService = accountService;
@@ -160,7 +160,7 @@ public class PostService {
     public void deletePost(String id) {
         PostEntity postEntity = postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found with id: " + id));
-        
+
         //  TODO: Account check logic goes here
         postEntity.setDeleted(true);
 

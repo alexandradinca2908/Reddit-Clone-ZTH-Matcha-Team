@@ -22,29 +22,29 @@ namespace WebImageProcessor.Services
                 return memoryStream.ToArray();
             }
         }
-        public byte[] ApplyFilter(byte[] imageBytes, FiltersEnum.FilterTypes filterType)
+        public byte[] ApplyFilter(byte[] imageBytes, FiltersEnum filterType)
         {
             using (var originalImage = Image.Load<Rgba32>(imageBytes))
             {
                 IFilter filter;
                 switch (filterType)
                 {
-                    case FiltersEnum.FilterTypes.Nothing:
+                    case FiltersEnum.Nothing:
                         filter = new Filters.DoNothingFilter();
                         break;
-                    case FiltersEnum.FilterTypes.Grayscale:
+                    case FiltersEnum.Grayscale:
                         filter = new Filters.GrayScaleFilter();
                         break;
-                    case FiltersEnum.FilterTypes.Sepia:
+                    case FiltersEnum.Sepia:
                         filter = new Filters.SepiaFilter();
                         break;
-                    case FiltersEnum.FilterTypes.Invert:
+                    case FiltersEnum.Invert:
                         filter = new Filters.InvertFilter();
                         break;
-                    case FiltersEnum.FilterTypes.HorizontalFlip:
+                    case FiltersEnum.HorizontalFlip:
                         filter = new Filters.HorizontalFlipFilter();
                         break;
-                    case FiltersEnum.FilterTypes.Blur:
+                    case FiltersEnum.Blur:
                         filter = new Filters.BlurFilter();
                         break;
                     default:
