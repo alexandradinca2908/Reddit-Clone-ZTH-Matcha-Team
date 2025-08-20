@@ -78,8 +78,10 @@ public class UIPost {
 
         postData.add(user.getUsername());
 
-        System.out.println("Please enter subreddit:");
-        postData.add(sc.nextLine());
+        postData.add("echipa1_general");
+
+        postData.add(null);
+        postData.add(null);
 
         return postData;
     }
@@ -290,7 +292,7 @@ public class UIPost {
 
     public String invalidId() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Invalid ID! Do you wish to continue? (y/n)");
+        System.out.println("Invalid ID! Do you wish to go back to feed? (y/n)");
         return sc.nextLine();
     }
 

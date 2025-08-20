@@ -2,6 +2,7 @@ package org.example.menu.commandexecution.onfeed;
 
 import org.example.menu.commandexecution.IMenuCommand;
 import org.example.menu.views.View;
+import org.example.menu.views.ViewID;
 import org.example.menu.views.ViewManager;
 import org.example.models.Subreddit;
 import org.example.models.User;
@@ -14,6 +15,7 @@ public class CreatePostCommand implements IMenuCommand {
         User user = viewManager.getUser();
 
         viewManager.getServiceManager().getPostService().createPost(subreddit, user);
+        viewManager.switchToNextView(ViewID.ON_FEED);
 
         return true;
     }
