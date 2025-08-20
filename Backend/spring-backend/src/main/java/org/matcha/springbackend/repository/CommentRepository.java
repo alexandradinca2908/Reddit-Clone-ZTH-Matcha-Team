@@ -1,6 +1,7 @@
 package org.matcha.springbackend.repository;
 
 import org.matcha.springbackend.entities.CommentEntity;
+import org.matcha.springbackend.model.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -41,4 +42,6 @@ public interface CommentRepository extends JpaRepository<CommentEntity, UUID> {
     void decrementDownvotesAndIncrementUpvotes(@Param("commentId") UUID commentId);
 
     boolean existsByCommentIdAndIsDeletedFalse(UUID commentId);
+
+    Optional<CommentEntity> findByCommentIdAndIsDeletedFalse(UUID votableID);
 }

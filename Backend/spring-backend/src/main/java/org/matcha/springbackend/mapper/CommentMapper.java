@@ -104,8 +104,6 @@ public class CommentMapper {
     }
 
     public Comment entityToModel(CommentEntity entity) {
-        if (entity == null) return null;
-
         UUID id = entity.getCommentId();
 
         //  Map account

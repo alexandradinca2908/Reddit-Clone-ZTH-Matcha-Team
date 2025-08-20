@@ -161,6 +161,7 @@ public class VoteService {
 
     //  COMMENT VOTING
     @Transactional
+    @CacheEvict(value = "userVotes", key = "#currentAccount.accountId")
     public void voteComment(String commentId, PutVoteBodyDto putVoteDto,
                             Account currentAccount, AccountEntity accountEntity) {
         if (!commentRepository.existsByCommentIdAndIsDeletedFalse(UUID.fromString(commentId))) {
@@ -210,7 +211,7 @@ public class VoteService {
         VoteEntity entity = voteMapper.modelToEntity(vote);
         voteRepository.save(entity);
 
-        commentRepository.findByCommentId(vote.getVotableID()).ifPresent(_ -> {
+        commentRepository.findByCommentIdAndIsDeletedFalse(vote.getVotableID()).ifPresent(_ -> {
             if (VoteType.UP.equals(newVoteType)) {
                 commentRepository.incrementUpvotes(commentUUID);
             } else if (VoteType.DOWN.equals(newVoteType)) {

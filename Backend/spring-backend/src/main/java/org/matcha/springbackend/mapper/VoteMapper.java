@@ -42,6 +42,7 @@ public class VoteMapper {
             }
             entity.setAccount(accountEntity);
         }
+
         return entity;
     }
 
@@ -62,16 +63,5 @@ public class VoteMapper {
             entity.getVoteType(),
             account
         );
-    }
-
-    //TODO
-    public AllVotesDto modelToDto(Vote model) {
-        if (model == null) return null;
-        Integer upvotes = null;
-        Integer downvotes = null;
-        Integer score = null;
-        String userVote = model.getVoteType().toString().toLowerCase();
-
-        return new AllVotesDto(upvotes, downvotes, score, userVote);
     }
 }
