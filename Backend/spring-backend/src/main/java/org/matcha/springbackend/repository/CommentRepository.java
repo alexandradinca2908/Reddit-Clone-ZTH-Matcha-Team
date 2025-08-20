@@ -39,4 +39,6 @@ public interface CommentRepository extends JpaRepository<CommentEntity, UUID> {
     @Modifying
     @Query("UPDATE CommentEntity c SET c.downvotes = c.downvotes - 1, c.upvotes = c.upvotes + 1 WHERE c.commentId = :commentId")
     void decrementDownvotesAndIncrementUpvotes(@Param("commentId") UUID commentId);
+
+    boolean existsByCommentIdAndIsDeletedFalse(UUID commentId);
 }

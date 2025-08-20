@@ -80,14 +80,14 @@ public class VoteService {
                 || currentVote.getVoteType().equals(newVoteType))) {
             deleteVoteForPost(currentVote.getVoteID());
 
-            Logger.info("[PostController] Vote deleted for account: " + currentAccount.getUsername()
+            Logger.info("[VoteService] Vote deleted for account: " + currentAccount.getUsername()
                     + " and post: " + postId);
 
         // First time voting
         } else if (!hasPreviousVote && !VoteType.NONE.equals(newVoteType)) {
             addVoteForPost(postId, newVoteType, currentAccount);
 
-            Logger.info("[PostController] Vote added for account: " + currentAccount.getUsername()
+            Logger.info("[VoteService] Vote added for account: " + currentAccount.getUsername()
                     + " and post: " + postId);
 
         //  Change vote
@@ -95,7 +95,7 @@ public class VoteService {
             currentVote.setVoteType(newVoteType);
             updateVoteForPost(currentVote);
 
-            Logger.info("[PostController] Vote updated for account: " + currentAccount.getUsername()
+            Logger.info("[VoteService] Vote updated for account: " + currentAccount.getUsername()
                     + " and post: " + postId);
         }
     }
@@ -110,7 +110,7 @@ public class VoteService {
         VoteEntity entity = voteMapper.modelToEntity(vote);
         voteRepository.save(entity);
 
-        postRepository.findByPostIDAndIsDeletedFalse(vote.getVotableID()).ifPresent(post -> {
+        postRepository.findByPostIDAndIsDeletedFalse(vote.getVotableID()).ifPresent(_ -> {
             if (VoteType.UP.equals(newVoteType)) {
                 postRepository.incrementUpvotes(postUUID);
             } else if (VoteType.DOWN.equals(newVoteType)) {
@@ -163,9 +163,7 @@ public class VoteService {
     @Transactional
     public void voteComment(String commentId, PutVoteBodyDto putVoteDto,
                             Account currentAccount, AccountEntity accountEntity) {
-        Comment comment = commentService.getCommentById(commentId);
-
-        if (comment == null || comment.isDeleted()) {
+        if (!commentRepository.existsByCommentIdAndIsDeletedFalse(UUID.fromString(commentId))) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.format("Comment with UUID %s not found", commentId));
         }
@@ -174,25 +172,31 @@ public class VoteService {
         VoteType newVoteType = stringToVoteType(putVoteDto.voteType());
         boolean hasPreviousVote = currentVote != null;
 
+        Logger.debug("hasPreviousVote: " + hasPreviousVote);
+        if (hasPreviousVote) {
+            Logger.info("[VoteService] Vote is currently: " + currentVote.getVoteType()
+                    + " and new vote request is " + newVoteType);
+        }
+
         // Double click or "none"
         if (hasPreviousVote && (VoteType.NONE.equals(newVoteType)
                 || currentVote.getVoteType().equals(newVoteType))) {
             deleteVoteForComment(currentVote.getVoteID());
 
-            Logger.info("[CommentController] Vote deleted for account: " + currentAccount.getUsername() + " and comment: " + commentId);
+            Logger.info("[VoteService] Vote deleted for account: " + currentAccount.getUsername() + " and comment: " + commentId);
 
-            // First time voting
+        // First time voting
         } else if (!hasPreviousVote && !VoteType.NONE.equals(newVoteType)) {
             addVoteForComment(commentId, newVoteType, currentAccount);
 
-            Logger.info("[CommentController] Vote added for account: " + currentAccount.getUsername() + " and comment: " + commentId);
+            Logger.info("[VoteService] Vote added for account: " + currentAccount.getUsername() + " and comment: " + commentId);
 
-            // Change vote
+        // Change vote
         } else if (hasPreviousVote) {
             currentVote.setVoteType(newVoteType);
             updateVoteForComment(currentVote);
 
-            Logger.info("[CommentController] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + commentId);
+            Logger.info("[VoteService] Vote updated for account: " + currentAccount.getUsername() + " and comment: " + commentId);
         }
     }
 
@@ -206,7 +210,7 @@ public class VoteService {
         VoteEntity entity = voteMapper.modelToEntity(vote);
         voteRepository.save(entity);
 
-        commentRepository.findByCommentId(vote.getVotableID()).ifPresent(comment -> {
+        commentRepository.findByCommentId(vote.getVotableID()).ifPresent(_ -> {
             if (VoteType.UP.equals(newVoteType)) {
                 commentRepository.incrementUpvotes(commentUUID);
             } else if (VoteType.DOWN.equals(newVoteType)) {

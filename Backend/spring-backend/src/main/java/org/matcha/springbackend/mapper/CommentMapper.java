@@ -107,6 +107,8 @@ public class CommentMapper {
         if (entity == null) return null;
 
         UUID id = entity.getCommentId();
+
+        //  Map account
         Account author = accountMapper.entityToModel(entity.getAccount());
 
         UUID parentCommentId;
@@ -119,8 +121,8 @@ public class CommentMapper {
         UUID postId = entity.getPost().getPostID();
         String text = entity.getContent();
         boolean deleted = entity.isDeleted();
-        int upvotes = entity.getUpvotes() == null ? 0 : entity.getUpvotes();
-        int downvotes = entity.getDownvotes() == null ? 0 : entity.getDownvotes();
+        int upvotes = entity.getUpvotes();
+        int downvotes = entity.getDownvotes();
         int score = upvotes - downvotes;
 
         VoteEntity voteEntity = voteRepository.findByAccountAndVotableId(entity.getAccount(), id).orElse(null);
