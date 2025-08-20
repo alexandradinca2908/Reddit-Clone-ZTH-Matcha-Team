@@ -102,15 +102,15 @@ public class PostMapper {
 
         VoteType voteType = voteEntity != null ? voteEntity.getVoteType() : VoteType.NONE;
 
-        return createPostModel(entity, true, voteType);
+        return createPostModel(entity, voteType);
     }
 
     public Post entityToModelWithVoteMap(PostEntity entity, Map<UUID, VoteType> voteMap) {
         VoteType voteType = voteMap.getOrDefault(entity.getPostID(), VoteType.NONE);
-        return createPostModel(entity, false, voteType);
+        return createPostModel(entity, voteType);
     }
 
-    private Post createPostModel(PostEntity entity, boolean needsComments, VoteType voteType) {
+    private Post createPostModel(PostEntity entity, VoteType voteType) {
         // Map Account
         Account account = accountMapper.entityToModel(entity.getAccount());
 
@@ -129,12 +129,8 @@ public class PostMapper {
         OffsetDateTime createdAt = entity.getCreatedAt();
         OffsetDateTime updatedAt = entity.getUpdatedAt();
 
-        List<Comment> comments = null;
-        if (needsComments && entity.getComments() != null) {
-            comments = entity.getComments().stream()
-                    .map(commentMapper::entityToModel)
-                    .toList();
-        }
+        //  Comments are extracted separately
+        List<Comment> comments = new ArrayList<>();
 
         return new Post(id, title, content, account, subreddit,
                 upvotes, downvotes, score, commentCount, voteType,

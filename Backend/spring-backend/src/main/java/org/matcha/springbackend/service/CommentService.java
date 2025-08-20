@@ -12,6 +12,7 @@ import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.repository.CommentRepository;
 import org.matcha.springbackend.repository.PostRepository;
+import org.matcha.springbackend.repository.VoteRepository;
 import org.matcha.springbackend.session.AccountSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,10 +31,11 @@ public class CommentService {
     private final PostRepository postRepository;
     private final CacheService cacheService;
     private final AccountService accountService;
+    private final VoteRepository voteRepository;
 
     public CommentService(CommentMapper commentMapper, CommentRepository commentRepository,
                           AccountSession accountSession, PostService postService,
-                          PostRepository postRepository, CacheService cacheService, AccountService accountService) {
+                          PostRepository postRepository, CacheService cacheService, AccountService accountService, VoteRepository voteRepository) {
         this.commentMapper = commentMapper;
         this.commentRepository = commentRepository;
         this.accountSession = accountSession;
@@ -41,6 +43,7 @@ public class CommentService {
         this.postRepository = postRepository;
         this.cacheService = cacheService;
         this.accountService = accountService;
+        this.voteRepository = voteRepository;
     }
 
     public List<Comment> getCommentsByPostId(UUID postId) {
@@ -56,7 +59,8 @@ public class CommentService {
         //  Get all votes of current account
         Account currentAccount = accountSession.getCurrentAccount();
         AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
-        List<VoteEntity> userVotes = cacheService.getUserVotes(accountEntity, commentIds);
+        List<VoteEntity> userVotes = voteRepository.findByAccountAndVotableIdIn(accountEntity, commentIds)
+                .orElse(new ArrayList<>());
 
         // Build the vote map (commentId -> VoteType)
         Map<UUID, VoteType> voteMap = userVotes.stream()

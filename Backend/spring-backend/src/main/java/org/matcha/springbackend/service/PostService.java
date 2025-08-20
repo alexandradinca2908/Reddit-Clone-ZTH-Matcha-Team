@@ -169,11 +169,6 @@ public class PostService {
         postRepository.save(postEntity);
     }
 
-    public PostEntity getPostEntityById(String id) {
-        return postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
-                .orElseThrow(() -> new IllegalArgumentException("Post not found in DB for id: " + id));
-    }
-
     public List<Post> getPostsBySubredditName(String subredditName) {
         List<PostEntity> entities = postRepository.findAllBySubreddit_Name(subredditName);
         return entities.stream()

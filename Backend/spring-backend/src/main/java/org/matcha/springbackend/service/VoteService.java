@@ -161,7 +161,6 @@ public class VoteService {
 
     //  COMMENT VOTING
     @Transactional
-    @CacheEvict(value = "userVotes", key = "#currentAccount.accountId")
     public void voteComment(String commentId, PutVoteBodyDto putVoteDto,
                             Account currentAccount, AccountEntity accountEntity) {
         if (!commentRepository.existsByCommentIdAndIsDeletedFalse(UUID.fromString(commentId))) {
@@ -280,10 +279,13 @@ public class VoteService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found with id: " + commentId);
         }
 
-        Vote finalVote = getVoteByAccountAndVotable(accountEntity, UUID.fromString(commentId));
-        String userVoteString = (finalVote != null) ? finalVote.getVoteType().toString().toLowerCase() : "none";
+        Vote newVoteState = getVoteByAccountAndVotable(accountEntity, UUID.fromString(commentId));
+        String userVote = "none";
+        if (newVoteState != null) {
+            userVote = newVoteState.getVoteType().toString().toLowerCase();
+        }
 
         return new AllVotesDto(comment.getUpvotes(), comment.getDownvotes(),
-                comment.getScore(), userVoteString);
+                comment.getScore(), userVote);
     }
 }

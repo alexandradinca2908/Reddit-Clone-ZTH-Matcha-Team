@@ -85,7 +85,7 @@ public class CommentMapper {
         int upvotes = model.getUpvotes();
         int downvotes = model.getDownvotes();
         int score = upvotes - downvotes;
-        String userVote = model.getUserVote().toString();
+        String userVote = model.getUserVote().toString().toLowerCase();
         String createdAt = model.getCreatedAt().toString();
         String updatedAt = model.getUpdatedAt().toString();
 
@@ -99,7 +99,6 @@ public class CommentMapper {
             replies = new ArrayList<>();
         }
 
-
         return new CommentDto(id, postId, parentId, content, author,
                 upvotes, downvotes, score, userVote, createdAt, updatedAt, replies);
     }
@@ -111,15 +110,15 @@ public class CommentMapper {
 
         VoteType voteType = (voteEntity != null) ? voteEntity.getVoteType() : VoteType.NONE;
 
-        return createCommentModel(entity, true, voteType);
+        return createCommentModel(entity, voteType);
     }
 
     public Comment entityToModelWithVoteMap(CommentEntity entity, Map<UUID, VoteType> voteMap) {
         VoteType voteType = voteMap.getOrDefault(entity.getCommentId(), VoteType.NONE);
-        return createCommentModel(entity, false, voteType);
+        return createCommentModel(entity, voteType);
     }
 
-    private Comment createCommentModel(CommentEntity entity, boolean needsReplies, VoteType voteType) {
+    private Comment createCommentModel(CommentEntity entity, VoteType voteType) {
         UUID id = entity.getCommentId();
 
         // Map account
@@ -142,11 +141,9 @@ public class CommentMapper {
         OffsetDateTime createdAt = entity.getCreatedAt();
         OffsetDateTime updatedAt = entity.getUpdatedAt();
 
-        // Map replies recursively
         List<Comment> replies = new ArrayList<>();
 
         return new Comment(id, author, parentCommentId, postId, text, deleted,
-                upvotes, downvotes, score, voteType, createdAt, updatedAt, replies
-        );
+                upvotes, downvotes, score, voteType, createdAt, updatedAt, replies);
     }
 }
