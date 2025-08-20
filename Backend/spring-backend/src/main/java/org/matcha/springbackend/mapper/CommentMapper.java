@@ -22,17 +22,15 @@ import java.util.List;
 
 @Component
 public class CommentMapper {
-    private final PostMapper postMapper;
     private final AccountMapper accountMapper;
     private final VoteRepository voteRepository;
     private final AccountService accountService;
     private final PostService postService;
     private final CommentRepository commentRepository;
 
-    public CommentMapper(PostMapper postMapper, AccountMapper accountMapper,
+    public CommentMapper(AccountMapper accountMapper,
                          VoteRepository voteRepository, AccountService accountService,
                          PostService postService, CommentRepository commentRepository) {
-        this.postMapper = postMapper;
         this.accountMapper = accountMapper;
         this.voteRepository = voteRepository;
         this.accountService = accountService;
