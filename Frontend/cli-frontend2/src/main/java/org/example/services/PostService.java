@@ -114,35 +114,25 @@ public class PostService {
 
     public void createPost(Subreddit subreddit, User user) {
         ArrayList<String> postDetails = uiPost.getPostDetailsFromUser(user);
+
         String json = String.format("""
                 {
                     "title" : "%s",
                     "content" : "%s",
                     "author" : "%s",
                     "subreddit" : "%s",
+                    "image" : null,
+                    "filter" : 1
                 }
-                """, postDetails.get(0), postDetails.get(1), postDetails.get(2), postDetails.get(3));
+                """, postDetails.get(0), postDetails.get(1), postDetails.get(2), postDetails.get(3), postDetails.get(4), postDetails.get(5));
 
         Post post = gson.fromJson(apiManager.getApiPostClient().handlePost(json), Post.class);
         subreddit.addPost(post);
     }
 
-    public void deletePost(Subreddit subreddit) {
-        boolean success = false;
-        do {
-            String displayId = uiPost.pleaseEnterPostId();
-            for (Post post : subreddit.getPosts()) {
-                if (post.getDisplayId().equals(displayId)) {
-                    apiManager.getApiPostClient().handleDelete(post.getId());
-                    subreddit.getPosts().remove(post);
-                    success = true;
-                    break;
-                }
-            }
-            if(success) break;
-        } while (uiPost.invalidId().equals("n"));
-
-
+    public void deletePost(Subreddit subreddit, Post post) {
+        subreddit.getPosts().remove(post);
+        apiManager.getApiPostClient().handleDelete(post.getId());
     }
 
     public int editPost(Subreddit subreddit, Post post) {

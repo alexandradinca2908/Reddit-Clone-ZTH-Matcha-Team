@@ -42,9 +42,17 @@ public class ViewManager {
         if (viewManager == null) {
             viewManager = new ViewManager();
             viewManager.initAllViews();
+            viewManager.initFeed(viewManager.getSubreddit());
         }
 
         return viewManager;
+    }
+
+    private void initFeed(Subreddit subreddit) {
+        serviceManager.getPostService().populateSubreddit(subreddit);
+        if (subreddit.getPosts().isEmpty()) {
+            System.err.println("Failed to load feed");
+        }
     }
 
     private void initAllViews() {
@@ -151,7 +159,7 @@ public class ViewManager {
         UIView.accountsDisabled = disable;
         if (disable) {
             System.out.println(AnsiColors.toBlue(ACCOUNTS_DISABLED));
-            User dummyuser = new User("TEST_USER_MATCHA", "test@gmail.com", "12345678aA!");
+            User dummyuser = new User("current_user", "test@gmail.com", "12345678aA!");
             this.setUser(dummyuser);
             this.setLoggedIn(true);
         }

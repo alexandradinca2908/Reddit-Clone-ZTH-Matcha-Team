@@ -55,7 +55,6 @@ public class ViewSetup {
         LinkedHashMap<MenuOption, Availability> menu = new LinkedHashMap<>();
         menu.put(MenuOption.EXPAND_POST, Availability.ANYTIME);
         menu.put(MenuOption.CREATE_POST, Availability.ANYTIME);
-        menu.put(MenuOption.DELETE_POST, Availability.ANYTIME);
         menu.put(MenuOption.BACK, Availability.ANYTIME);
         menu.put(MenuOption.QUIT, Availability.ANYTIME);
 
@@ -65,7 +64,6 @@ public class ViewSetup {
         HashMap<MenuOption, IMenuCommand> commands = new HashMap<>(Map.of(
                 MenuOption.EXPAND_POST, new ExpandPostCommand(),
                 MenuOption.CREATE_POST, new CreatePostCommand(),
-                MenuOption.DELETE_POST, new DeletePostCommand(),
                 MenuOption.BACK, new BackCommand(),
                 MenuOption.QUIT, new QuitCommand()
         ));
@@ -87,6 +85,7 @@ public class ViewSetup {
         menu.put(MenuOption.UPVOTE, Availability.LOGGED_IN);
         menu.put(MenuOption.DOWNVOTE, Availability.LOGGED_IN);
         menu.put(MenuOption.EDIT_POST, Availability.LOGGED_IN);
+        menu.put(MenuOption.DELETE_POST, Availability.LOGGED_IN);
         menu.put(MenuOption.SELECT_COMMENT, Availability.LOGGED_IN);
         menu.put(MenuOption.BACK, Availability.ANYTIME);
         menu.put(MenuOption.QUIT, Availability.ANYTIME);
@@ -95,6 +94,7 @@ public class ViewSetup {
 
         HashMap<MenuOption, IMenuCommand> commands = new HashMap<>(Map.of(
                 MenuOption.EDIT_POST, new EditPostCommand(),
+                MenuOption.DELETE_POST, new DeletePostCommand(),
                 MenuOption.COMMENT, new CommentCommand(),
                 MenuOption.UPVOTE, new UpvotePostCommand(),
                 MenuOption.DOWNVOTE, new DownvotePostCommand(),

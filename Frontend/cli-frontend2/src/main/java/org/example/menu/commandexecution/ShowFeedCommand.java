@@ -11,9 +11,7 @@ public class ShowFeedCommand implements IMenuCommand {
     public boolean execute(View view) {
         User user = view.getViewManager().getUser();
         Subreddit subreddit = view.getViewManager().getSubreddit();
-        if (subreddit.getPosts().isEmpty()) {
-            view.getViewManager().getServiceManager().getPostService().populateSubreddit(subreddit);
-        }
+
         view.getViewManager().getUiPost().showFeed(user, subreddit.getPosts());
         view.getViewManager().switchToNextView(ViewID.ON_FEED);
 

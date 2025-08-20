@@ -78,8 +78,10 @@ public class UIPost {
 
         postData.add(user.getUsername());
 
-        System.out.println("Please enter subreddit:");
-        postData.add(sc.nextLine());
+        postData.add("echipa1_general");
+
+        postData.add(null);
+        postData.add(null);
 
         return postData;
     }
