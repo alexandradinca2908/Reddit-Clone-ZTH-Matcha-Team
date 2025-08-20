@@ -7,6 +7,7 @@ import org.matcha.springbackend.model.Account;
 import org.matcha.springbackend.model.Comment;
 import org.matcha.springbackend.model.Post;
 import org.matcha.springbackend.repository.CommentRepository;
+import org.matcha.springbackend.repository.PostRepository;
 import org.matcha.springbackend.repository.VoteRepository;
 import org.matcha.springbackend.service.AccountService;
 import org.matcha.springbackend.enums.VoteType;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.List;
@@ -25,17 +27,17 @@ public class CommentMapper {
     private final AccountMapper accountMapper;
     private final VoteRepository voteRepository;
     private final AccountService accountService;
-    private final PostService postService;
     private final CommentRepository commentRepository;
+    private final PostRepository postRepository;
 
     public CommentMapper(AccountMapper accountMapper,
                          VoteRepository voteRepository, AccountService accountService,
-                         PostService postService, CommentRepository commentRepository) {
+                         CommentRepository commentRepository, PostRepository postRepository) {
         this.accountMapper = accountMapper;
         this.voteRepository = voteRepository;
         this.accountService = accountService;
-        this.postService = postService;
         this.commentRepository = commentRepository;
+        this.postRepository = postRepository;
     }
 
     public CommentEntity modelToEntity(Comment model) {
@@ -55,7 +57,8 @@ public class CommentMapper {
         }
         entity.setParent(parent);
 
-        entity.setPost(postService.getPostEntityById(model.getPostId().toString()));
+        entity.setPost(postRepository.findByPostIDAndIsDeletedFalse(model.getPostId())
+                .orElse(null));
         entity.setContent(model.getText());
         entity.setDeleted(model.isDeleted());
         entity.setUpvotes(model.getUpvotes());
@@ -102,46 +105,48 @@ public class CommentMapper {
     }
 
     public Comment entityToModel(CommentEntity entity) {
+        VoteEntity voteEntity = voteRepository.findByAccountAndVotableId(
+                entity.getAccount(), entity.getCommentId()
+        ).orElse(null);
+
+        VoteType voteType = (voteEntity != null) ? voteEntity.getVoteType() : VoteType.NONE;
+
+        return createCommentModel(entity, true, voteType);
+    }
+
+    public Comment entityToModelWithVoteMap(CommentEntity entity, Map<UUID, VoteType> voteMap) {
+        VoteType voteType = voteMap.getOrDefault(entity.getCommentId(), VoteType.NONE);
+        return createCommentModel(entity, false, voteType);
+    }
+
+    private Comment createCommentModel(CommentEntity entity, boolean needsReplies, VoteType voteType) {
         UUID id = entity.getCommentId();
 
-        //  Map account
+        // Map account
         Account author = accountMapper.entityToModel(entity.getAccount());
 
-        UUID parentCommentId;
-        if (entity.getParent() != null) {
-            parentCommentId = entity.getParent().getCommentId();
-        } else {
-            parentCommentId = null;
-        }
+        // Parent comment ID (nullable)
+        UUID parentCommentId = (entity.getParent() != null)
+                ? entity.getParent().getCommentId()
+                : null;
 
+        // Post ID
         UUID postId = entity.getPost().getPostID();
+
         String text = entity.getContent();
         boolean deleted = entity.isDeleted();
         int upvotes = entity.getUpvotes();
         int downvotes = entity.getDownvotes();
         int score = upvotes - downvotes;
 
-        VoteEntity voteEntity = voteRepository.findByAccountAndVotableId(entity.getAccount(), id).orElse(null);
-
-        VoteType voteType;
-        if (voteEntity == null) {
-            voteType = VoteType.NONE;
-        } else {
-            voteType = voteEntity.getVoteType();
-        }
-
         OffsetDateTime createdAt = entity.getCreatedAt();
         OffsetDateTime updatedAt = entity.getUpdatedAt();
 
-        List<Comment> replies = null;
-        if (entity.getReplies() != null && !entity.getReplies().isEmpty()) {
-            replies = entity.getReplies().stream()
-                    .map(this::entityToModel)
-                    .collect(Collectors.toList());
-        }
+        // Map replies recursively
+        List<Comment> replies = new ArrayList<>();
 
-        return new Comment(id, author, parentCommentId, postId, text,
-                deleted, upvotes, downvotes, score, voteType,
-                createdAt, updatedAt, replies);
+        return new Comment(id, author, parentCommentId, postId, text, deleted,
+                upvotes, downvotes, score, voteType, createdAt, updatedAt, replies
+        );
     }
 }

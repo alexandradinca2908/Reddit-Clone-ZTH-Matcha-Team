@@ -4,7 +4,6 @@ import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.VoteEntity;
 import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.model.Account;
-import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.repository.AccountRepository;
 import org.springframework.stereotype.Component;
 

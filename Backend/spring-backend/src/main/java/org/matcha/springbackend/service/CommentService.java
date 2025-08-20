@@ -2,7 +2,9 @@ package org.matcha.springbackend.service;
 
 import jakarta.transaction.Transactional;
 import org.matcha.springbackend.dto.comment.requestbody.AddCommentBodyDTO;
+import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.CommentEntity;
+import org.matcha.springbackend.entities.VoteEntity;
 import org.matcha.springbackend.enums.VoteType;
 import org.matcha.springbackend.logger.Logger;
 import org.matcha.springbackend.mapper.CommentMapper;
@@ -17,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.OffsetDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
@@ -25,22 +28,47 @@ public class CommentService {
     private final AccountSession accountSession;
     private final PostService postService;
     private final PostRepository postRepository;
+    private final CacheService cacheService;
+    private final AccountService accountService;
 
     public CommentService(CommentMapper commentMapper, CommentRepository commentRepository,
                           AccountSession accountSession, PostService postService,
-                          PostRepository postRepository) {
+                          PostRepository postRepository, CacheService cacheService, AccountService accountService) {
         this.commentMapper = commentMapper;
         this.commentRepository = commentRepository;
         this.accountSession = accountSession;
         this.postService = postService;
         this.postRepository = postRepository;
+        this.cacheService = cacheService;
+        this.accountService = accountService;
     }
 
     public List<Comment> getCommentsByPostId(UUID postId) {
-        List<CommentEntity> entities = commentRepository.findByPost_PostIDAndIsDeletedFalseOrderByCreatedAtAsc(postId)
+        List<CommentEntity> entities = commentRepository
+                .findByPost_PostIDAndIsDeletedFalseOrderByCreatedAtAsc(postId)
                 .orElse(new ArrayList<>());
 
-        List<Comment> models = entities.stream().map(commentMapper::entityToModel).toList();
+        // Extract all comment IDs for this post
+        List<UUID> commentIds = entities.stream()
+                .map(CommentEntity::getCommentId)
+                .toList();
+
+        //  Get all votes of current account
+        Account currentAccount = accountSession.getCurrentAccount();
+        AccountEntity accountEntity = accountService.getAccountEntityById(currentAccount.getAccountId());
+        List<VoteEntity> userVotes = cacheService.getUserVotes(accountEntity, commentIds);
+
+        // Build the vote map (commentId -> VoteType)
+        Map<UUID, VoteType> voteMap = userVotes.stream()
+                .collect(Collectors.toMap(
+                        VoteEntity::getVotableId,
+                        VoteEntity::getVoteType
+                ));
+
+        //  Map entities to models using the voteMap
+        List<Comment> models = entities.stream()
+                .map(entity -> commentMapper.entityToModelWithVoteMap(entity, voteMap))
+                .toList();
 
         //  Return organized comments
         return organizeCommentsByHierarchy(models);
