@@ -31,8 +31,7 @@ public class CommentService {
     }
 
     public void populatePost(Post post) {
-        Type commentList = new TypeToken<List<Comment>>() {
-        }.getType();
+        Type commentList = new TypeToken<List<Comment>>() {}.getType();
         apiManager.getApiCommentClient().setCurrentPostID(post.getId());
         List<Comment> comments = gson.fromJson(apiManager.getApiCommentClient().handleGet(), commentList);
         comments = comments.reversed();

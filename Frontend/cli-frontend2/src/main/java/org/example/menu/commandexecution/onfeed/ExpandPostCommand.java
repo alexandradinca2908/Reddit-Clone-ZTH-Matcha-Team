@@ -16,6 +16,10 @@ public class ExpandPostCommand implements IMenuCommand {
         Subreddit subreddit = viewManager.getSubreddit();
         Post post = viewManager.getServiceManager().getPostService().openPost(subreddit);
 
+        if (post == null) {
+            return true;
+        }
+
         viewManager.getServiceManager().getCommentService().populatePost(post);
         //TODO la fel ca la comment daca post e null gen s-a saturat ala sa bage id-uri gresite dai back la feed
         viewManager.setPost(post);

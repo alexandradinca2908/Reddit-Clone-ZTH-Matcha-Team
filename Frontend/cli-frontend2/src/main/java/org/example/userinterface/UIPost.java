@@ -292,7 +292,7 @@ public class UIPost {
 
     public String invalidId() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Invalid ID! Do you wish to continue? (y/n)");
+        System.out.println("Invalid ID! Do you wish to go back to feed? (y/n)");
         return sc.nextLine();
     }
 

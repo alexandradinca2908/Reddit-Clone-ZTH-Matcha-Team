@@ -32,17 +32,16 @@ public class PostService {
     }
 
     public Post openPost(Subreddit subreddit) {
-        while (true) {
+        boolean success = true;
+        do {
             String id = uiPost.pleaseEnterPostId();
             for (Post post : subreddit.getPosts()) {
                 if (post.getDisplayId().equals(id)) {
                     return post;
                 }
             }
-            if (!uiPost.invalidId().equals("y")) {
-                return null;
-            }
-        }
+        } while(!uiPost.invalidId().equals("y"));
+        return null;
     }
 
     public void upvote(Post post) {
