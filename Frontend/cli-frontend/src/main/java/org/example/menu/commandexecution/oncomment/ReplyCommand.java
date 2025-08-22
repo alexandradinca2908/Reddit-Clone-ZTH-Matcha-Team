@@ -14,7 +14,9 @@ public class ReplyCommand implements IMenuCommand {
         Post post = view.getViewManager().getPost();
 
         view.getViewManager().getServiceManager().getCommentService().createReply(post, comment, user);
-        view.getViewManager().getUiComment().showAllCommentsAndReplies(post, user);
+
+        view.getViewManager().getUiComment().showComment(user.getUsername(), comment, 0);
+        //view.getViewManager().getUiComment().showAllCommentsAndReplies(post, user);
 
         return true;
     }

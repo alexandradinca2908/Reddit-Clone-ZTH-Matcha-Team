@@ -6,6 +6,7 @@ import org.example.models.User;
 import org.example.textprocessors.AnsiColors;
 import org.example.textprocessors.TextSymbols;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UIComment {
@@ -67,8 +68,8 @@ public class UIComment {
                 comment.getContent(), comment.getScore()));
 
         String votes;
-        if (!comment.getUserVote().equals("NONE")) {
-            if (comment.getUserVote().equals("UP")) {
+        if (!comment.getUserVote().equalsIgnoreCase("NONE")) {
+            if (comment.getUserVote().equalsIgnoreCase("UP")) {
                 votes = AnsiColors.toRed("UP " + comment.getScore()) + " DOWN";
             } else {
                 votes = "UP " + AnsiColors.toBlue(comment.getScore() + " DOWN");

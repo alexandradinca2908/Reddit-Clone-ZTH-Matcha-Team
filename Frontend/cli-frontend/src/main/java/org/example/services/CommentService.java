@@ -144,18 +144,18 @@ public class CommentService {
                 }
                 """;
         switch (comment.getUserVote()) {
-            case "UP":
-                comment.setUserVote("NONE");
+            case "up":
+                comment.setUserVote("none");
                 comment.setScore(comment.getScore() - 1);
                 break;
 
-            case "DOWN":
-                comment.setUserVote("UP");
+            case "down":
+                comment.setUserVote("up");
                 comment.setScore(comment.getScore() + 2);
                 break;
 
-            case "NONE":
-                comment.setUserVote("UP");
+            case "none":
+                comment.setUserVote("up");
                 comment.setScore(comment.getScore() + 1);
                 break;
 
@@ -173,18 +173,18 @@ public class CommentService {
                 }
                 """;
         switch (comment.getUserVote()) {
-            case "DOWN":
-                comment.setUserVote("NONE");
+            case "down":
+                comment.setUserVote("none");
                 comment.setScore(comment.getScore() + 1);
                 break;
 
-            case "UP":
-                comment.setUserVote("DOWN");
+            case "up":
+                comment.setUserVote("down");
                 comment.setScore(comment.getScore() - 2);
                 break;
 
-            case "NONE":
-                comment.setUserVote("DOWN");
+            case "none":
+                comment.setUserVote("down");
                 comment.setScore(comment.getScore() - 1);
                 break;
 

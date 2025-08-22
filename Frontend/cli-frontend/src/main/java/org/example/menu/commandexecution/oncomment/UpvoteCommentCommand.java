@@ -11,11 +11,12 @@ public class UpvoteCommentCommand implements IMenuCommand {
     public boolean execute(View view) {
         User user = view.getViewManager().getUser();
         Comment comment = view.getViewManager().getComment();
-        Post post = view.getViewManager().getPost();
 
         view.getViewManager().getServiceManager().getCommentService().upvote(comment);
 
-        view.getViewManager().getUiComment().showAllCommentsAndReplies(post, user);
+
+        view.getViewManager().getUiComment().showComment(user.getUsername(), comment, 0);
+        //view.getViewManager().getUiComment().showAllCommentsAndReplies(post, user);
 
         return true;
     }

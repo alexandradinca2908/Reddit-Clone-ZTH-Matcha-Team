@@ -5,6 +5,7 @@ import org.example.menu.views.View;
 import org.example.menu.views.ViewManager;
 import org.example.models.Comment;
 import org.example.models.Post;
+import org.example.models.User;
 
 public class SelectReplyCommand implements IMenuCommand {
     @Override
@@ -12,12 +13,14 @@ public class SelectReplyCommand implements IMenuCommand {
         ViewManager viewManager = view.getViewManager();
         Comment comment = viewManager.getComment();
         viewManager.setParentComment(comment);
-        Post post = viewManager.getPost();
+        User user = viewManager.getUser();
 
 
         Comment reply = viewManager.getServiceManager().getCommentService().openReply(comment);
         viewManager.setComment(reply);
-        viewManager.getUiComment().showAllCommentsAndReplies(post, viewManager.getUser());
+
+        view.getViewManager().getUiComment().showComment(user.getUsername(), reply, 0);
+        //viewManager.getUiComment().showAllCommentsAndReplies(post, viewManager.getUser());
         return true;
     }
 }

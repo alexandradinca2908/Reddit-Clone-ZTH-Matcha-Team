@@ -6,6 +6,7 @@ import org.example.menu.views.ViewID;
 import org.example.menu.views.ViewManager;
 import org.example.models.Post;
 import org.example.models.Subreddit;
+import org.example.models.User;
 
 public class DeletePostCommand implements IMenuCommand {
 
@@ -13,9 +14,11 @@ public class DeletePostCommand implements IMenuCommand {
         ViewManager viewManager = ViewManager.getInstance();
         Subreddit subreddit = viewManager.getSubreddit();
         Post post = viewManager.getPost();
+        User user = viewManager.getUser();
 
         viewManager.getServiceManager().getPostService().deletePost(subreddit, post);
 
+        view.getViewManager().getUiPost().showFeed(user, subreddit.getPosts());
         viewManager.switchToNextView(ViewID.ON_FEED);
         return true;
     }
