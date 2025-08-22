@@ -13,6 +13,8 @@ public class InputTranslator {
             case "show feed" -> MenuOption.SHOW_FEED;
             case "quit" -> MenuOption.QUIT;
             case "create post" -> MenuOption.CREATE_POST;
+            case "delete post" -> MenuOption.DELETE_POST;
+            case "edit post"  -> MenuOption.EDIT_POST;
             case "logout" -> MenuOption.LOGOUT;
             case "delete account" -> MenuOption.DELETE_ACCOUNT;
             case "expand post" -> MenuOption.EXPAND_POST;
@@ -20,6 +22,8 @@ public class InputTranslator {
             case "upvote" -> MenuOption.UPVOTE;
             case "downvote" -> MenuOption.DOWNVOTE;
             case "select comment" -> MenuOption.SELECT_COMMENT;
+            case "edit comment" -> MenuOption.EDIT_COMMENT;
+            case "delete comment" -> MenuOption.DELETE_COMMENT;
             case "reply" -> MenuOption.REPLY;
             case "select reply" -> MenuOption.SELECT_REPLY;
             case "back" -> MenuOption.BACK;
@@ -65,23 +69,24 @@ public class InputTranslator {
     }
 
     private static String translateMenuInputLoggedIn(String input) {
-        //  1. Show feed, 2. Create post, 3. Logout, 4. Delete Account, 5. Quit
+        //  1. Show feed, 2. Logout, 3. Delete Account, 4. Quit
         return switch (input) {
             case "1" -> "show feed";
-            case "2" -> "create post";
+            case "2" -> "logout";
             case "3" -> "delete account";
-            case "4" -> "logout";
-            case "5" -> "quit";
+            case "4" -> "quit";
             default -> input;
         };
     }
 
     private static String translateOnFeedInput(String input) {
-        //  1. Expand post, 2. Back, 3. Quit
+        //  1. Expand post, 2. Create post, 3. Delete post, 4. Back, 5. Quit
         return switch (input) {
             case "1" -> "expand post";
-            case "2" -> "back";
-            case "3" -> "quit";
+            case "2" -> "create post";
+            case "3" -> "delete post";
+            case "4" -> "back";
+            case "5" -> "quit";
             default -> input;
         };
     }
@@ -96,29 +101,32 @@ public class InputTranslator {
     }
 
     private static String translatePostInputLoggedIn(String input) {
-        //  1. Comment, 2. Upvote, 3. Downvote, 4. Select comment
-        //  5. Back, 6. Logout, 7. Quit
+        //  1. Comment, 2. Upvote, 3. Downvote, 4. Edit post, 5. Select comment
+        //  6. Back, 7. Logout, 8. Quit
         return switch (input) {
             case "1" -> "comment";
             case "2" -> "upvote";
             case "3" -> "downvote";
-            case "4" -> "select comment";
-            case "5" -> "back";
-            case "6" -> "quit";
+            case "4" -> "edit post";
+            case "5" -> "select comment";
+            case "6" -> "back";
+            case "7" -> "quit";
             default -> input;
         };
     }
 
     private static String translateOnCommentInput(String input) {
-        //  1. Reply, 2. Upvote, 3. Downvote
-        //  4. Select reply, 5. Back, 6. Quit
+        //  1. Reply, 2. Upvote, 3. Downvote, 4. Edit Comment,
+        //  5. Delete Comment, 6. Select reply, 7. Back, 8. Quit
         return switch (input) {
             case "1" -> "reply";
             case "2" -> "upvote";
             case "3" -> "downvote";
-            case "4" -> "select reply";
-            case "5" -> "back";
-            case "6" -> "quit";
+            case "4" -> "edit comment";
+            case "5" -> "delete comment";
+            case "6" -> "select reply";
+            case "7" -> "back";
+            case "8" -> "quit";
             default -> input;
         };
     }

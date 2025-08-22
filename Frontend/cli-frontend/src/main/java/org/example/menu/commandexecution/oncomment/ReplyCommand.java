@@ -1,10 +1,10 @@
 package org.example.menu.commandexecution.oncomment;
 
+import org.example.menu.commandexecution.IMenuCommand;
+import org.example.menu.views.View;
 import org.example.models.Comment;
 import org.example.models.Post;
 import org.example.models.User;
-import org.example.menu.views.View;
-import org.example.menu.commandexecution.IMenuCommand;
 
 public class ReplyCommand implements IMenuCommand {
     @Override
@@ -13,7 +13,7 @@ public class ReplyCommand implements IMenuCommand {
         Comment comment = view.getViewManager().getComment();
         Post post = view.getViewManager().getPost();
 
-        view.getViewManager().getCommentApi().addReply(user, comment);
+        view.getViewManager().getServiceManager().getCommentService().createReply(post, comment, user);
         view.getViewManager().getUiComment().showAllCommentsAndReplies(post, user);
 
         return true;

@@ -1,22 +1,22 @@
 package org.example.menu.views;
 
-import org.example.api.*;
+import com.google.gson.Gson;
 import org.example.loggerobjects.Logger;
-import org.example.models.Comment;
-import org.example.models.Post;
-import org.example.models.User;
+import org.example.models.*;
+import org.example.services.ServiceManager;
 import org.example.textprocessors.AnsiColors;
-import org.example.userinterface.UIComment;
-import org.example.userinterface.UIPost;
-import org.example.userinterface.UIView;
+import org.example.userinterface.*;
 
+import java.net.http.HttpClient;
 import java.util.HashMap;
 
 public class ViewManager {
-    //public static final String BACKEND_API_URL = "http://13.48.209.206:8080";  //to be moved soon
-    public static final String BACKEND_API_URL = "http://localhost:8080"; //to be moved soon
     private static final String ACCOUNTS_DISABLED = "Accounts have been disabled! Logging in as TEST USER";
-    private final ApiManager apiManager = ApiManager.getInstance(BACKEND_API_URL);
+    private static final HttpClient client = HttpClient.newHttpClient();
+    private static final Gson gson = new Gson();
+
+    private final ServiceManager serviceManager = ServiceManager.getInstance(client, gson);
+
     private final UIPost uiPost = UIPost.getInstance();
     private final UIComment uiComment = UIComment.getInstance();
     private final UIView uiView = UIView.getInstance();
@@ -27,11 +27,14 @@ public class ViewManager {
     protected boolean isLoggedIn;
     private User user;
     private Post post;
+    private Comment parentComment;
     private Comment comment;
+    private Subreddit subreddit;
 
     private ViewManager() {
         this.views = new HashMap<>();
         currentViewID = ViewID.MAIN_MENU;
+        subreddit = new Subreddit("echipa1_general", "echipa1_general");
         isLoggedIn = false;
     }
 
@@ -53,20 +56,8 @@ public class ViewManager {
         ViewSetup.linkViews(views);
     }
 
-    public UserApiClient getUserApi() {
-        return apiManager.getUserApiClient();
-    }
-
-    public PostApiClient getPostApi() {
-        return apiManager.getPostApiClient();
-    }
-
-    public CommentApiClient getCommentApi() {
-        return apiManager.getCommentApiClient();
-    }
-
-    public VotingApiClient getVotingApi() {
-        return apiManager.getVotingApiClient();
+    public ServiceManager getServiceManager() {
+        return serviceManager;
     }
 
     public UIPost getUiPost() {
@@ -97,6 +88,14 @@ public class ViewManager {
         isLoggedIn = loggedIn;
     }
 
+    public Subreddit getSubreddit() {
+        return subreddit;
+    }
+
+    public void setSubreddit(Subreddit subreddit) {
+        this.subreddit = subreddit;
+    }
+
     public User getUser() {
         return user;
     }
@@ -111,6 +110,14 @@ public class ViewManager {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public Comment getParentComment() {
+        return parentComment;
+    }
+
+    public void setParentComment(Comment parentComment) {
+        this.parentComment = parentComment;
     }
 
     public Comment getComment() {

@@ -6,6 +6,8 @@ import org.example.models.User;
 import org.example.textprocessors.AnsiColors;
 import org.example.textprocessors.TextSymbols;
 
+import java.util.Scanner;
+
 public class UIComment {
     private static UIComment instance;
     private static final int COMMENT_INDENT = 0;
@@ -21,7 +23,8 @@ public class UIComment {
     private static final String PLEASE_ENTER_REPLY_ID = "Please enter the ReplyID: ";
     private static final String INVALID_INPUT = AnsiColors.toYellow("Invalid input. Please enter a valid number.");
 
-    private UIComment() {}
+    private UIComment() {
+    }
 
     public static UIComment getInstance() {
         if (instance == null) {
@@ -30,8 +33,15 @@ public class UIComment {
         return instance;
     }
 
+    public String getCommentDetailsFromUser() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(PLEASE_ENTER_COMMENT);
+        return sc.nextLine();
+
+    }
+
     public void showAllCommentsAndReplies(Post post, User user) {
-        if (post.getCommentList().isEmpty()) {
+        if (post.getComments().isEmpty()) {
             System.out.println(AnsiColors.toGreen("\t\t\t=== No comments yet. ==="));
         } else {
             System.out.println(AnsiColors.toGreen("\t=== Showing all comments and replies ==="));
@@ -42,7 +52,7 @@ public class UIComment {
             } else {
                 username = user.getUsername();
             }
-            for (Comment comment : post.getCommentList()) {
+            for (Comment comment : post.getComments()) {
                 showComment(username, comment, COMMENT_INDENT);
             }
         }
@@ -52,25 +62,25 @@ public class UIComment {
         String indent = "    ".repeat(indentLevel);
 
         System.out.println(indent + TextSymbols.LEFT_BORDER + AnsiColors.toOrange(String.format(TextSymbols.HEADER,
-                comment.getCommentID(), comment.getParentUser().getUsername())));
+                comment.getDisplayId(), comment.getAuthor())));
         System.out.println(indent + TextSymbols.LEFT_BORDER + TextSymbols.addReward(
-                comment.getCommentText(), comment.getVotes()));
+                comment.getContent(), comment.getScore()));
 
         String votes;
-        if (comment.votingUserID.containsKey(username)) {
-            if (comment.votingUserID.get(username) == 1) {
-                votes = AnsiColors.toRed("UP " + comment.getVotes()) + " DOWN";
+        if (!comment.getUserVote().equals("NONE")) {
+            if (comment.getUserVote().equals("UP")) {
+                votes = AnsiColors.toRed("UP " + comment.getScore()) + " DOWN";
             } else {
-                votes = "UP " + AnsiColors.toBlue(comment.getVotes() + " DOWN");
+                votes = "UP " + AnsiColors.toBlue(comment.getScore() + " DOWN");
             }
         } else {
-            votes = "UP " + comment.getVotes() + " DOWN";
+            votes = "UP " + comment.getScore() + " DOWN";
         }
         System.out.print(indent + TextSymbols.LEFT_BORDER + votes);
-        System.out.println(" | " + comment.replyList.size() + " replies");
+        System.out.println(" | " + comment.getReplies().size() + " replies");
         System.out.println(indent + TextSymbols.LOWER_LEFT_CORNER + TextSymbols.LINE_SEPARATOR);
 
-        for (Comment reply : comment.replyList) {
+        for (Comment reply : comment.getReplies()) {
             showComment(username, reply, indentLevel + 1);
         }
     }
@@ -85,16 +95,21 @@ public class UIComment {
                 System.out.println(PLEASE_ENTER_REPLY);
                 break;
 
-            case "commentID":
-                System.out.print(PLEASE_ENTER_COMMENT_ID);
-                break;
-
-            case "replyID":
-                System.out.print(PLEASE_ENTER_REPLY_ID);
-
             default:
                 break;
         }
+    }
+
+    public int pleaseEnterCommentId() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please enter the CommentID: ");
+        return sc.nextInt();
+    }
+
+    public String invalidId() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Invalid ID! Do you wish to continue? (y/n)");
+        return sc.nextLine();
     }
 
     public void addedSuccessfully(String what) {
@@ -106,7 +121,7 @@ public class UIComment {
     }
 
     public void wentWrong(String what) {
-        if(what.equalsIgnoreCase("comment")) {
+        if (what.equalsIgnoreCase("comment")) {
             System.out.println(CANT_ADD_COMMENT);
         } else if (what.equalsIgnoreCase("reply")) {
             System.out.println(CANT_ADD_REPLY);

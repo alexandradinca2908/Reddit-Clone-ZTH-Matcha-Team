@@ -2,12 +2,12 @@ package org.example.userinterface;
 
 import org.example.models.Post;
 import org.example.models.User;
-import org.example.api.PostApiClient;
 import org.example.textprocessors.AnsiColors;
 import org.example.textprocessors.ProfanityFilter;
 import org.example.textprocessors.TextSymbols;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class UIPost {
     private static UIPost instance;
     private static final ProfanityFilter profanityFilter = ProfanityFilter.getInstance();
+
     public static final String POST_COUNT_HEADER_FORMAT = "\t\t=== Showing a total of %d posts ===";
     public static final int MAX_BODY_PREVIEW = 20;
     public static final int MIN_TITLE_LENGTH = 10;
@@ -42,10 +43,10 @@ public class UIPost {
         }
         return instance;
     }
-
-    public static Map<String, String> getPostDetailsFromUser() {
+    //title, body, username, subreddit
+    public ArrayList<String> getPostDetailsFromUser(User user) {
         Scanner sc = new Scanner(System.in);
-        Map<String, String> postData = new HashMap<>();
+        ArrayList<String> postData = new ArrayList<>();
 
         System.out.println(PROMPT_TITLE);
         String title = sc.nextLine();
@@ -60,7 +61,7 @@ public class UIPost {
             System.out.printf((ERROR_TITLE_TOO_LONG) + "%n", UIPost.MAX_TITLE_LENGTH);
             title = sc.nextLine();
         }
-        postData.put("title", title);
+        postData.add(title);
 
         System.out.println(PROMPT_DESCRIPTION);
         String body = sc.nextLine();
@@ -73,17 +74,57 @@ public class UIPost {
             System.out.println(ERROR_DESCRIPTION_EMPTY);
             body = sc.nextLine();
         }
-        postData.put("body", body);
+        postData.add(body);
+
+        postData.add(user.getUsername());
+
+        System.out.println("Please enter subreddit:");
+        postData.add(sc.nextLine());
 
         return postData;
     }
 
-    public void showFeed(User user) {
-        String headerText = String.format(UIPost.POST_COUNT_HEADER_FORMAT, PostApiClient.posts.size());
+    public ArrayList<String> getUpdatedPostDetailsFromUser() {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<String> postData = new ArrayList<>();
+
+        System.out.println(PROMPT_TITLE);
+        String title = sc.nextLine();
+        try{
+            title = profanityFilter.filter(title);
+        } catch (FileNotFoundException e) {
+            System.out.println("Config file could not be found.");
+        }
+
+        while (title.length() < UIPost.MIN_TITLE_LENGTH || title.length() > UIPost.MAX_TITLE_LENGTH) {
+            System.out.printf((ERROR_TITLE_TOO_SHORT) + "%n", UIPost.MIN_TITLE_LENGTH);
+            System.out.printf((ERROR_TITLE_TOO_LONG) + "%n", UIPost.MAX_TITLE_LENGTH);
+            title = sc.nextLine();
+        }
+        postData.add(title);
+
+        System.out.println(PROMPT_DESCRIPTION);
+        String body = sc.nextLine();
+        try{
+            body = profanityFilter.filter(body);
+        } catch (FileNotFoundException e) {
+            System.out.println("Config file could not be found.");
+        }
+        while (body.isEmpty()) {
+            System.out.println(ERROR_DESCRIPTION_EMPTY);
+            body = sc.nextLine();
+        }
+        postData.add(body);
+
+        return postData;
+    }
+
+    public void showFeed(User user, ArrayList<Post> posts) {
+        String headerText = String.format(UIPost.POST_COUNT_HEADER_FORMAT, posts.size());
         System.out.println(AnsiColors.toGreen(headerText));
-        int postCount = PostApiClient.posts.size();
+        int postCount = posts.size();
         for (int i = postCount - 1; i >= 0; i--) {
-            Post iter = PostApiClient.posts.get(i);
+            Post iter = posts.get(i);
             this.showPost(false, iter, user);
         }
     }
@@ -96,14 +137,14 @@ public class UIPost {
             username = user.getUsername();
         }
         printTopBorder();
-        printHeader(post.getPostID(), post.getAuthorName());
+        printHeader(post.getDisplayId(), post.getAuthor());
         printSeparator();
-        printTitleLine(post.getTitle(), post.getVotes());
+        printTitleLine(post.getTitle(), post.getScore());
         printSeparator();
         printContentLine(isExpanded, post.getContent());
         printEmptyContentLine();
         printSeparator();
-        printFooter(post.getVotes(), post.getCommentsCounter(), post.getVotingUserID(), username);
+        printFooter(post.getScore(), post.getCommentCount(), post.getUserVote(), username);
         printBottomBorder(isExpanded);
         if (isExpanded) {
             uiComment.showAllCommentsAndReplies(post, user);
@@ -139,7 +180,7 @@ public class UIPost {
         System.out.println("╣");
     }
 
-    private void printHeader(int postId, String user) {
+    private void printHeader(String postId, String user) {
         String postLabel = "ID: " + postId;
         String userLabel = "USER: " + user;
         int totalLength = postLabel.length() + userLabel.length();
@@ -214,10 +255,10 @@ public class UIPost {
         }
     }
 
-    private void printFooter(int score, int comments, HashMap<String, Integer> votingUserID, String username) {
+    private void printFooter(int score, int comments, String userVote, String username) {
         String votes;
-        if (votingUserID.containsKey(username)) {
-            if (votingUserID.get(username) == 1) {
+        if (!userVote.equals("none")) {
+            if (userVote.equals("up")) {
                 votes = AnsiColors.toRed("UP " + score) + " DOWN";
             } else {
                 votes = "UP " + AnsiColors.toBlue(score + " DOWN");
@@ -241,8 +282,16 @@ public class UIPost {
         System.out.println(POST_ADDED_SUCCESSFULLY);
     }
 
-    public static void pleaseEnterPostId() {
+    public String pleaseEnterPostId() {
+        Scanner sc = new Scanner(System.in);
         System.out.println(PLEASE_ENTER_POST_ID);
+        return sc.nextLine();
+    }
+
+    public String invalidId() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Invalid ID! Do you wish to continue? (y/n)");
+        return sc.nextLine();
     }
 
     public static void invalidInput() {

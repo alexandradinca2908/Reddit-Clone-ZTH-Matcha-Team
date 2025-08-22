@@ -1,17 +1,26 @@
 package org.example.models;
 
 public class User {
-    String userName;
-    String email;
-    String password;
+    private String id;
+    private String username;
+    private String email;
+    private String password;
 
-    public User(String userName, String email, String password) {
-        this.userName = userName;
+    public User(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
     }
 
     public String getUsername() {
-        return userName;
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

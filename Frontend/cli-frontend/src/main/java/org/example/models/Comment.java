@@ -1,59 +1,83 @@
 package org.example.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class Comment extends Likeable {
-    private static int commentCounter = 1;
-    private final int commentID;
-    private String UUID;
-    private String commentText;
-    private final Post parentPost;
-    private final Comment parentComment;
-    private final User parentUser;
-    public HashMap<String, Integer> votingUserID;
-    public ArrayList<Comment> replyList;
+public class Comment {
+    private String id;
+    private int displayId;
+    private static int displayCounter = 0;
+    private String postId;
+    private String parentId;
+    private String content;
+    private String author;
+    private int score;
+    private String userVote;
+    private String createdAt;
+    private String updatedAt;
+    private ArrayList<Comment> replies;
 
-    public Comment(Post parentPost, User parentUser, String commentText) {
-        this.parentPost = parentPost;
-        this.parentComment = null;
-        this.parentUser = parentUser;
-        this.commentText = commentText;
-        this.replyList = new ArrayList<>();
-        this.voteCount = 0;
-        this.votingUserID = new HashMap<>();
-        this.commentID = commentCounter++;
+    public Comment() {
+        displayId = displayCounter++;
+        replies = new ArrayList<Comment>();
     }
 
-    public Comment(Comment parentComment, User parentUser, String commentText) {
-        this.parentPost = null;
-        this.parentComment = parentComment;
-        this.parentUser = parentUser;
-        this.commentText = commentText;
-        this.replyList = new ArrayList<>();
-        this.voteCount = 0;
-        this.votingUserID = new HashMap<>();
-        this.commentID = commentCounter++;
+    public String getId() {
+        return id;
     }
 
-    public String getCommentText() {
-        return commentText;
+    public void setDisplayId(int displayId) {
+        this.displayId = displayId;
     }
 
-    public int getCommentID() {
-        return commentID;
+    public int getDisplayId() {
+        return displayId;
     }
 
-    public User getParentUser() {
-        return parentUser;
+    public String getPostId() {
+        return postId;
     }
 
-    public ArrayList<Comment> getReplyList() {
-        return replyList;
+    public String getParentId() {
+        return parentId;
     }
 
-    public Comment getParentComment() {
-        return this.parentComment;
+    public String getContent() {
+        return content;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public String getUserVote() {
+        return userVote;
+    }
+
+    public void setUserVote(String userVote) {
+        this.userVote = userVote;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public ArrayList<Comment> getReplies() {
+        return replies;
+    }
+
+    public void addReply(Comment reply) {
+        replies.add(reply);
+    }
 }

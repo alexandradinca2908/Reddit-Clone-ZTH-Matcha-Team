@@ -1,9 +1,9 @@
 package org.example.menu.commandexecution.onpost;
 
+import org.example.menu.commandexecution.IMenuCommand;
+import org.example.menu.views.View;
 import org.example.models.Post;
 import org.example.models.User;
-import org.example.menu.views.View;
-import org.example.menu.commandexecution.IMenuCommand;
 
 public class DownvotePostCommand implements IMenuCommand {
 
@@ -12,7 +12,7 @@ public class DownvotePostCommand implements IMenuCommand {
         User user = view.getViewManager().getUser();
         Post post = view.getViewManager().getPost();
 
-        view.getViewManager().getVotingApi().votePost(user, post, false);
+        view.getViewManager().getServiceManager().getPostService().downvote(post);
         view.getViewManager().getUiPost().showPost(true, post, user);
 
         return true;

@@ -2,12 +2,10 @@ package org.example;
 
 import org.example.loggerobjects.*;
 import org.example.textprocessors.AnsiColors;
-import org.example.api.*;
 import org.example.menu.MenuOption;
 import org.example.menu.views.View;
 import org.example.menu.views.ViewID;
 import org.example.menu.views.ViewManager;
-import org.example.userinterface.UIView;
 
 import java.util.Scanner;
 

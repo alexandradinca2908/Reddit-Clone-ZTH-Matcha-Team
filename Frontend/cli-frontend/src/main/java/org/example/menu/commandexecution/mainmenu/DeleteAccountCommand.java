@@ -1,9 +1,9 @@
 package org.example.menu.commandexecution.mainmenu;
 
-import org.example.models.User;
+import org.example.menu.commandexecution.IMenuCommand;
 import org.example.menu.views.View;
 import org.example.menu.views.ViewManager;
-import org.example.menu.commandexecution.IMenuCommand;
+import org.example.models.User;
 
 public class DeleteAccountCommand implements IMenuCommand {
 
@@ -12,11 +12,11 @@ public class DeleteAccountCommand implements IMenuCommand {
         ViewManager viewManager = view.getViewManager();
 
         User user = viewManager.getUser();
-        boolean isDeleted = viewManager.getUserApi().userDeleteCLI(user);
+        //boolean isDeleted = viewManager.getUserApi().userDeleteCLI(user);
 
-        if (isDeleted) {
-            viewManager.setLoggedIn(false);
-        }
+        //if (isDeleted) {
+       //     viewManager.setLoggedIn(false);
+        //}
 
         return true;
     }

@@ -2,8 +2,8 @@ package org.example.menu.views;
 
 import org.example.menu.Availability;
 import org.example.menu.MenuOption;
-import org.example.userinterface.UIView;
 import org.example.menu.commandexecution.IMenuCommand;
+import org.example.userinterface.UIView;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

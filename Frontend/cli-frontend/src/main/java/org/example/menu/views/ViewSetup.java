@@ -4,11 +4,8 @@ import org.example.menu.Availability;
 import org.example.menu.MenuOption;
 import org.example.menu.commandexecution.*;
 import org.example.menu.commandexecution.mainmenu.*;
-import org.example.menu.commandexecution.oncomment.DownvoteCommentCommand;
-import org.example.menu.commandexecution.oncomment.ReplyCommand;
-import org.example.menu.commandexecution.oncomment.SelectReplyCommand;
-import org.example.menu.commandexecution.oncomment.UpvoteCommentCommand;
-import org.example.menu.commandexecution.onfeed.ExpandPostCommand;
+import org.example.menu.commandexecution.oncomment.*;
+import org.example.menu.commandexecution.onfeed.*;
 import org.example.menu.commandexecution.onpost.*;
 
 import java.util.HashMap;
@@ -27,7 +24,6 @@ public class ViewSetup {
         menu.put(MenuOption.LOGIN, Availability.LOGGED_OUT);
         menu.put(MenuOption.REGISTER, Availability.LOGGED_OUT);
         menu.put(MenuOption.SHOW_FEED, Availability.ANYTIME);
-        menu.put(MenuOption.CREATE_POST, Availability.LOGGED_IN);
         menu.put(MenuOption.DELETE_ACCOUNT, Availability.LOGGED_IN);
         menu.put(MenuOption.LOGOUT, Availability.LOGGED_IN);
         menu.put(MenuOption.QUIT, Availability.ANYTIME);
@@ -39,7 +35,6 @@ public class ViewSetup {
                 MenuOption.LOGIN, new LoginCommand(),
                 MenuOption.REGISTER, new RegisterCommand(),
                 MenuOption.SHOW_FEED, new ShowFeedCommand(),
-                MenuOption.CREATE_POST, new CreatePostCommand(),
                 MenuOption.LOGOUT, new LogoutCommand(),
                 MenuOption.DELETE_ACCOUNT, new DeleteAccountCommand(),
                 MenuOption.QUIT, new QuitCommand()
@@ -59,6 +54,8 @@ public class ViewSetup {
         //  Set menu
         LinkedHashMap<MenuOption, Availability> menu = new LinkedHashMap<>();
         menu.put(MenuOption.EXPAND_POST, Availability.ANYTIME);
+        menu.put(MenuOption.CREATE_POST, Availability.ANYTIME);
+        menu.put(MenuOption.DELETE_POST, Availability.ANYTIME);
         menu.put(MenuOption.BACK, Availability.ANYTIME);
         menu.put(MenuOption.QUIT, Availability.ANYTIME);
 
@@ -67,6 +64,8 @@ public class ViewSetup {
         //  Set commands
         HashMap<MenuOption, IMenuCommand> commands = new HashMap<>(Map.of(
                 MenuOption.EXPAND_POST, new ExpandPostCommand(),
+                MenuOption.CREATE_POST, new CreatePostCommand(),
+                MenuOption.DELETE_POST, new DeletePostCommand(),
                 MenuOption.BACK, new BackCommand(),
                 MenuOption.QUIT, new QuitCommand()
         ));
@@ -87,6 +86,7 @@ public class ViewSetup {
         menu.put(MenuOption.COMMENT, Availability.LOGGED_IN);
         menu.put(MenuOption.UPVOTE, Availability.LOGGED_IN);
         menu.put(MenuOption.DOWNVOTE, Availability.LOGGED_IN);
+        menu.put(MenuOption.EDIT_POST, Availability.LOGGED_IN);
         menu.put(MenuOption.SELECT_COMMENT, Availability.LOGGED_IN);
         menu.put(MenuOption.BACK, Availability.ANYTIME);
         menu.put(MenuOption.QUIT, Availability.ANYTIME);
@@ -94,6 +94,7 @@ public class ViewSetup {
         onPost.setMenu(menu);
 
         HashMap<MenuOption, IMenuCommand> commands = new HashMap<>(Map.of(
+                MenuOption.EDIT_POST, new EditPostCommand(),
                 MenuOption.COMMENT, new CommentCommand(),
                 MenuOption.UPVOTE, new UpvotePostCommand(),
                 MenuOption.DOWNVOTE, new DownvotePostCommand(),
@@ -118,6 +119,8 @@ public class ViewSetup {
         menu.put(MenuOption.REPLY, Availability.LOGGED_IN);
         menu.put(MenuOption.UPVOTE, Availability.LOGGED_IN);
         menu.put(MenuOption.DOWNVOTE, Availability.LOGGED_IN);
+        menu.put(MenuOption.EDIT_COMMENT, Availability.LOGGED_IN);
+        menu.put(MenuOption.DELETE_COMMENT, Availability.LOGGED_IN);
         menu.put(MenuOption.SELECT_REPLY, Availability.LOGGED_IN);
         menu.put(MenuOption.BACK, Availability.ANYTIME);
         menu.put(MenuOption.QUIT, Availability.ANYTIME);
@@ -129,6 +132,8 @@ public class ViewSetup {
                 MenuOption.REPLY, new ReplyCommand(),
                 MenuOption.UPVOTE, new UpvoteCommentCommand(),
                 MenuOption.DOWNVOTE, new DownvoteCommentCommand(),
+                MenuOption.EDIT_COMMENT, new EditCommentCommand(),
+                MenuOption.DELETE_COMMENT, new DeleteCommentCommand(),
                 MenuOption.SELECT_REPLY, new SelectReplyCommand(),
                 MenuOption.BACK, new BackCommand(),
                 MenuOption.QUIT, new QuitCommand()
