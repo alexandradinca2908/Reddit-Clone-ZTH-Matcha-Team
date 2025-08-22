@@ -88,11 +88,13 @@ public class PostService {
     private Post addPost(CreatePostBodyDto postDto, String imageUrl) {
         Account account = accountService.findByUsername(postDto.author());
         if (account == null) {
+            Logger.error("Account not found");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
         }
 
         Subreddit subreddit = subredditService.findByName(postDto.subreddit());
         if  (subreddit == null) {
+            Logger.error("Subreddit not found");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Subreddit not found");
         }
 
@@ -165,11 +167,6 @@ public class PostService {
         postEntity.setDeleted(true);
 
         postRepository.save(postEntity);
-    }
-
-    public PostEntity getPostEntityById(String id) {
-        return postRepository.findByPostIDAndIsDeletedFalse(UUID.fromString(id))
-                .orElseThrow(() -> new IllegalArgumentException("Post not found in DB for id: " + id));
     }
 
     public List<Post> getPostsBySubredditName(String subredditName) {

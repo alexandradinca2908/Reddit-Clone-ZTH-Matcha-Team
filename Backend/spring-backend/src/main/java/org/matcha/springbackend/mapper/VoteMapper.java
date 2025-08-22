@@ -4,7 +4,6 @@ import org.matcha.springbackend.entities.AccountEntity;
 import org.matcha.springbackend.entities.VoteEntity;
 import org.matcha.springbackend.model.Vote;
 import org.matcha.springbackend.model.Account;
-import org.matcha.springbackend.dto.vote.AllVotesDto;
 import org.matcha.springbackend.repository.AccountRepository;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +41,7 @@ public class VoteMapper {
             }
             entity.setAccount(accountEntity);
         }
+
         return entity;
     }
 
@@ -62,16 +62,5 @@ public class VoteMapper {
             entity.getVoteType(),
             account
         );
-    }
-
-    //TODO
-    public AllVotesDto modelToDto(Vote model) {
-        if (model == null) return null;
-        Integer upvotes = null;
-        Integer downvotes = null;
-        Integer score = null;
-        String userVote = model.getVoteType().toString().toLowerCase();
-
-        return new AllVotesDto(upvotes, downvotes, score, userVote);
     }
 }

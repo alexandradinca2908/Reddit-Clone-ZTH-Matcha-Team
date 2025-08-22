@@ -24,15 +24,17 @@ public class PostMapper {
     private final VoteRepository voteRepository;
     private final AccountMapper accountMapper;
     private final SubredditMapper subredditMapper;
+    private final CommentMapper commentMapper;
 
     public PostMapper(AccountRepository accountRepository, SubredditRepository subredditRepository,
                       VoteRepository voteRepository, AccountMapper accountMapper,
-                      SubredditMapper subredditMapper) {
+                      SubredditMapper subredditMapper, CommentMapper commentMapper) {
         this.accountRepository = accountRepository;
         this.subredditRepository = subredditRepository;
         this.voteRepository = voteRepository;
         this.accountMapper = accountMapper;
         this.subredditMapper = subredditMapper;
+        this.commentMapper = commentMapper;
     }
 
     public PostEntity modelToEntity(Post post) {
@@ -100,15 +102,15 @@ public class PostMapper {
 
         VoteType voteType = voteEntity != null ? voteEntity.getVoteType() : VoteType.NONE;
 
-        return createPostModel(entity, true, voteType);
+        return createPostModel(entity, voteType);
     }
 
     public Post entityToModelWithVoteMap(PostEntity entity, Map<UUID, VoteType> voteMap) {
         VoteType voteType = voteMap.getOrDefault(entity.getPostID(), VoteType.NONE);
-        return createPostModel(entity, false, voteType);
+        return createPostModel(entity, voteType);
     }
 
-    private Post createPostModel(PostEntity entity, boolean needsComments, VoteType voteType) {
+    private Post createPostModel(PostEntity entity, VoteType voteType) {
         // Map Account
         Account account = accountMapper.entityToModel(entity.getAccount());
 
@@ -127,57 +129,11 @@ public class PostMapper {
         OffsetDateTime createdAt = entity.getCreatedAt();
         OffsetDateTime updatedAt = entity.getUpdatedAt();
 
-        List<Comment> comments = null;
-        if (needsComments && entity.getComments() != null) {
-            comments = entity.getComments().stream()
-                    .map(this::commentEntityToModel)
-                    .toList();
-        }
+        //  Comments are extracted separately
+        List<Comment> comments = new ArrayList<>();
 
         return new Post(id, title, content, account, subreddit,
                 upvotes, downvotes, score, commentCount, voteType,
                 photoPath, isDeleted, createdAt, updatedAt, comments);
-    }
-
-    public Comment commentEntityToModel(CommentEntity entity) {
-        UUID id = entity.getCommentId();
-        Account author = accountMapper.entityToModel(entity.getAccount());
-
-        UUID parentCommentId;
-        if (entity.getParent() != null) {
-            parentCommentId = entity.getParent().getCommentId();
-        } else {
-            parentCommentId = null;
-        }
-
-        UUID postId = entity.getPost().getPostID();
-        String text = entity.getContent();
-        boolean deleted = entity.isDeleted();
-        Integer upvotes = entity.getUpvotes();
-        Integer downvotes = entity.getDownvotes();
-        int score = upvotes - downvotes;
-
-        VoteEntity voteEntity = voteRepository.findByAccountAndVotableId(entity.getAccount(), id).orElse(null);
-
-        VoteType voteType;
-        if (voteEntity == null) {
-            voteType = VoteType.NONE;
-        } else {
-            voteType = voteEntity.getVoteType();
-        }
-
-        OffsetDateTime createdAt = entity.getCreatedAt();
-        OffsetDateTime updatedAt = entity.getUpdatedAt();
-
-        List<Comment> replies = null;
-        if (entity.getReplies() != null && !entity.getReplies().isEmpty()) {
-            replies = entity.getReplies().stream()
-                    .map(this::commentEntityToModel)
-                    .collect(Collectors.toList());
-        }
-
-        return new Comment(id, author, parentCommentId, postId, text,
-                deleted, upvotes, downvotes, score, voteType,
-                createdAt, updatedAt, replies);
     }
 }
